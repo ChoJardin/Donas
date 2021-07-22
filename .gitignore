@@ -1,7 +1,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/jetbrains,java,vue,vuejs,django,venv,python,macos,windows,visualstudiocode,pycharm,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=jetbrains,java,vue,vuejs,django,venv,python,macos,windows,visualstudiocode,pycharm,intellij
-
+       
 .idea/
 idea/
 
