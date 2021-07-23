@@ -9,13 +9,12 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "email-validator": "^2.0.4",
+    "password-validator": "^5.1.1",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
     "vue-router": "^3.2.0",
-<<<<<<< HEAD
     "vuetify": "^2.4.0",
-=======
->>>>>>> 1cb03f537eef4efe2b386b814a3a388a1104fc48
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -27,15 +26,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-<<<<<<< HEAD
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.4.1",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
-=======
-    "vue-template-compiler": "^2.6.11"
->>>>>>> 1cb03f537eef4efe2b386b814a3a388a1104fc48
   },
   "eslintConfig": {
     "root": true,
@@ -49,7 +44,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",
