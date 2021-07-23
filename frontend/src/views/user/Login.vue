@@ -28,7 +28,6 @@
 
     <button class="button" :disabled="!isSubmit" @click="onLogin">로그인</button>
 
-    <Footer/>
   </div>
 </template>
 
@@ -36,11 +35,8 @@
 import * as EmailValidator from "email-validator"
 import PV from "password-validator"
 
-import Footer from "../../components/common/Footer";
-
 export default {
   name: "Login",
-  components: {Footer},
   // components
   // props
   // data
