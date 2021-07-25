@@ -131,7 +131,6 @@ export default {
         );
       }
     },
-    },
 
     // enter 입력시 다음 칸으로 포커스 이동
     moveFocusToEmail() {
