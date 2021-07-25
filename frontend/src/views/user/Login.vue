@@ -34,6 +34,7 @@
 <script>
 import * as EmailValidator from "email-validator"
 import PV from "password-validator"
+import UserApi from "@/api/UserApi";
 
 export default {
   name: "Login",
@@ -52,27 +53,12 @@ export default {
      isSubmit: false,
      loginError: {
        isFailed: false,
-       message: ""
+       message: "입력하신 정보와 일치하는 이메일 혹은 비밀번호가 존재하지 않습니다."
      },
    }
   },
   // methods
   methods: {
-    // 로그인
-    onLogin() {
-      if (this.isSubmit) {
-        let {email, password} = this
-        let data = {
-          email,
-          password
-        }
-
-        // 서버에 데이터 전송
-        // -> 만약 로그인 실패하는 경우 입력된 값들 지울 것인가?
-
-      }
-    },
-
     // 형식 검증
     checkForm() {
       // 이메일 형식 검증
@@ -85,11 +71,39 @@ export default {
         this.isSubmit = true
     },
 
+    // 로그인
+    onLogin() {
+      if (this.isSubmit) {
+        let {email, password} = this
+        let data = {
+          email,
+          password
+        }
+
+        // 버튼 비활성화
+        this.isSubmit = false
+
+        UserApi.requestLogin(
+            data,
+            res => {
+              // 유저 닉네임 저장
+              this.$store.dispatch('login', res)
+              // 로그인 누르기 전 있던 곳으로
+              this.$router.go(-1)
+            },
+            error => {
+              this.loginError.isFailed = true
+              this.email = ""
+              this.password = ""
+            }
+        )
+      }
+    },
+
     // 로그인 실패 에러메시지가 노출되어 있을 때,
     // 새로 로그인을 시도하는 경우, 해당 메시지 사라지도록
     onFocus() {
       this.loginError.isFailed = false
-      this.loginError.message = ""
     },
 
     // 입력 칸 포커스 이동
