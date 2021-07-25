@@ -2,16 +2,24 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Main</router-link> |
-      <router-link to="/login">Login</router-link>
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/signup">Signup</router-link>
     </div>
     <router-view/>
+
+    <Footer id="footer"/>
   </div>
 </template>
 
 <script>
+import Footer from "@/components/common/Footer";
+
 export default {
   name: 'App',
   // components
+  components: {
+    Footer
+  },
   // props
   // data
   // methods
@@ -23,6 +31,14 @@ export default {
 </script>
 
 <style>
+#footer {
+  background-color: rosybrown;
+  height: 50px;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
