@@ -43,4 +43,11 @@ public class UserService {
 		return true;
 	}
 
+	public boolean addNickname(long id, String nickname) {
+		User user = userRepo.findById(id);
+		user.setNickname(nickname);
+		
+		return true;
+	}
+
 }

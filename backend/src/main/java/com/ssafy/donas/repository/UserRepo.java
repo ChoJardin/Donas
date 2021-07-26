@@ -9,6 +9,8 @@ import com.ssafy.donas.domain.User;
 public interface UserRepo extends JpaRepository<User, Long>{
 
 	User findUserByEmailAndPassword(String email, String password);
+	User findById(long id);
+	
 	Optional<User> findUserByEmail(String email);
 	Optional<User> findUserByNickname(String nickname);
 	
