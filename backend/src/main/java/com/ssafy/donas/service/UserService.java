@@ -36,4 +36,11 @@ public class UserService {
 		return true;
 	}
 
+	public boolean join(String email, String password, String nickname) {
+		User user = new User(email, password, nickname);
+		userRepo.save(user);
+		
+		return true;
+	}
+
 }

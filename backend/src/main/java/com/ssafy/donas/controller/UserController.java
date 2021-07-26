@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.SigninRequest;
+import com.ssafy.donas.domain.SignupRequest;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.service.UserService;
@@ -36,14 +37,6 @@ public class UserController {
 		
 		String email = request.getEmail();
 		String password = request.getPassword();
-
-		if (!userService.checkEmail(email)) {
-			result.id = -1;
-			result.nickname = "";
-			result.questCnt = -1;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-			return response;
-		}
 		
 		User user = userService.checkPassword(email, password);
 		
@@ -81,6 +74,12 @@ public class UserController {
 		return HttpStatus.OK;
 	}
 	
-	
-	
+	@PostMapping("/signup")
+	@ApiOperation(value = "회원가입")
+	public Object join(@Valid @RequestBody SignupRequest request) {		
+		if(!userService.join(request.getEmail(), request.getPassword(), request.getNickname()))
+			return HttpStatus.CONFLICT;
+		
+		return HttpStatus.OK;
+	}	
 }
