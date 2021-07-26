@@ -1,6 +1,7 @@
-package com.ssafy.donas.domain;
+package com.ssafy.donas.request;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
 import com.sun.istack.NotNull;
 
@@ -9,7 +10,7 @@ import lombok.ToString;
 
 @Valid
 @ToString
-public class SignupRequest {
+public class SigninRequest {
     @ApiModelProperty(required = true)
     @NotNull
     String email;
@@ -18,10 +19,6 @@ public class SignupRequest {
     @NotNull
 //    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
     String password;
-    
-    @ApiModelProperty(required = true)
-    @NotNull
-    String nickname;
 
     public String getEmail() {
         return email;
@@ -39,12 +36,4 @@ public class SignupRequest {
         this.password = password;
     }
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-    
 }

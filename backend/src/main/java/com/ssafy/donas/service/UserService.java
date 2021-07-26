@@ -50,4 +50,12 @@ public class UserService {
 		return true;
 	}
 
+	public boolean checkPassword(long id, String password) {
+		Optional<User> user = userRepo.findUserByIdAndPassword(id, password);
+		if(user.isPresent())
+			return true;
+		
+		return false;
+	}
+
 }
