@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
@@ -63,11 +63,12 @@ public class User {
 	
 	@ColumnDefault("TRUE")
 	private boolean status;
+	
+	private String description;
 
 //	@OneToMany(fetch = FetchType.LAZY)
 	
 	public User() {
-		
 	}
 
 	@Builder
@@ -75,50 +76,6 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public long getMileage() {
-		return mileage;
-	}
-
-	public Date getJoindate() {
-		return joindate;
-	}
-
-	public int getQuestCnt() {
-		return questCnt;
-	}
-
-	public int getQuestPercent() {
-		return questPercent;
-	}
-
-	public String getPicture() {
-		return picture;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 }

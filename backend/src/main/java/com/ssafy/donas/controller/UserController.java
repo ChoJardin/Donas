@@ -7,15 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.donas.domain.SigninRequest;
-import com.ssafy.donas.domain.SignupRequest;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.request.CheckPasswordRequest;
+import com.ssafy.donas.request.SigninRequest;
+import com.ssafy.donas.request.SignupRequest;
+import com.ssafy.donas.request.UserInfoRequest;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.service.UserService;
 
@@ -56,7 +60,7 @@ public class UserController {
 		return response;
 	}
 	
-	@GetMapping("/checkem")
+	@GetMapping("/email")
 	@ApiOperation(value = "이메일 중복 확인")
 	public Object checkEmail(@RequestParam String email) {
 		if(userService.checkEmail(email))
@@ -65,7 +69,7 @@ public class UserController {
 		return HttpStatus.OK;
 	}
 	
-	@GetMapping("/checknn")
+	@GetMapping("/nickname")
 	@ApiOperation(value = "닉네임 중복 확인")
 	public Object checkNickname(@RequestParam String nickname) {
 		if(userService.checkNickname(nickname))
@@ -82,4 +86,32 @@ public class UserController {
 		
 		return HttpStatus.OK;
 	}	
+	
+	@PatchMapping("/nickname/{id}")
+	@ApiOperation(value = "닉네임 추가")
+	public Object addNickname(@PathVariable long id, @RequestBody UserInfoRequest request) {
+		if(!userService.addNickname(id, request.getNickname()))
+			return HttpStatus.CONFLICT;
+		
+		return HttpStatus.OK;
+	}
+	
+	@PostMapping("/password")
+	@ApiOperation(value = "비밀번호 확인")
+	public Object checkPassword(@RequestBody CheckPasswordRequest request) {
+		if(!userService.checkPassword(request.getId(), request.getPassword()))
+			return HttpStatus.NOT_FOUND;
+		
+		return HttpStatus.OK;
+	}
+	
+	@PatchMapping("/profile/{id}")
+	@ApiOperation(value = "회원 정보 변경")
+	public Object updateUserInfo(@PathVariable long id, @RequestBody UserInfoRequest request) {
+		if(!userService.updateUserInfo(id, request.getNickname(), request.getPicture(), request.getDescription()))
+			return HttpStatus.BAD_REQUEST;
+		
+		return HttpStatus.OK;
+	}
+	
 }

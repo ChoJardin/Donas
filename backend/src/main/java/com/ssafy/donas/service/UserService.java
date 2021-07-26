@@ -43,4 +43,28 @@ public class UserService {
 		return true;
 	}
 
+	public boolean addNickname(long id, String nickname) {
+		User user = userRepo.findById(id);
+		user.setNickname(nickname);
+		
+		return true;
+	}
+
+	public boolean checkPassword(long id, String password) {
+		Optional<User> user = userRepo.findUserByIdAndPassword(id, password);
+		if(user.isPresent())
+			return true;
+		
+		return false;
+	}
+
+	public boolean updateUserInfo(long id, String nickname, String picture, String description) {
+		User user = userRepo.getById(id);
+		user.setNickname(nickname);
+		user.setPicture(picture);
+		user.setDescription(description);
+		
+		return true;
+	}
+
 }
