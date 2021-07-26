@@ -72,7 +72,14 @@ public class UserController {
 		return HttpStatus.OK;
 	}
 	
-
+	@GetMapping("/checknn")
+	@ApiOperation(value = "닉네임 중복 확인")
+	public Object checkNickname(@RequestParam String nickname) {
+		if(userService.checkNickname(nickname))
+			return HttpStatus.CONFLICT;
+		
+		return HttpStatus.OK;
+	}
 	
 	
 	
