@@ -5,12 +5,18 @@ import Login from "@/views/user/Login";
 import Signup from "@/views/user/Signup";
 import Main from "@/views/Main";
 import QuestAll from "@/views/quests/QuestAll";
+import CreateQuest from "@/views/quests/CreateQuest";
 import Feed from "@/views/articles/Feed";
 import Mileage from "@/views/mileages/Mileage";
 import Profile from "@/views/user/Profile";
 
 import Donation from "@/components/mileages/Donation";
 import CashOut from "@/components/mileages/CashOut";
+
+import SoloQuest from "@/components/quests/SoloQuest"
+import RelayQuest from "@/components/quests/RelayQuest"
+import GroupQuest from "@/components/quests/GroupQuest"
+
 
 Vue.use(VueRouter)
 
@@ -23,7 +29,15 @@ const routes = [
   // 메인
   {path: '/', name: 'Main', component: Main},
   // 전체 퀘스트
-  {path: '/quests', name: 'QuestAll', component: QuestAll},
+  {path: '/quests', name: 'QuestAll', component: QuestAll,
+    children: [
+      {path: 'solo', name: 'SoloQuest', component: SoloQuest},
+      {path: 'group', name: 'GroupQuest', component: GroupQuest},
+      {path: 'relay', name: 'RelayQuest', component: RelayQuest},
+    ]
+  },
+  {path: '/quests/create', name: CreateQuest, component: CreateQuest},
+
   // 피드
   {path: '/user/feed', name: 'Feed', component: Feed},
   // 마일리지
