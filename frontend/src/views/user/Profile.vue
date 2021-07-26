@@ -2,7 +2,7 @@
   <div>
     <h1>{{this.$route.params.nickname}}의 프로필</h1>
     <div>
-      <img class="picture" src="@/assets/logo.png" alt="">
+      <img class="picture" src="@/assets/도넛1.png" alt="">
     </div>
     
 
@@ -18,7 +18,7 @@
       남의 프로필
     </div>
 
-    <ArticleImage :v-for="n in 21">{{n}}</ArticleImage>
+    <ArticleImage v-for="n in 21" :key="n"/>
 
 
 
