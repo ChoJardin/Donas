@@ -1,26 +1,36 @@
 <template>
   <div>
-    <h1>{{this.$route.params.nickname}}의 프로필</h1>
-    <div>
-      <img class="picture" src="@/assets/도넛1.png" alt="">
+    <div id="flex-container">
+      <div id="profile-wrap">
+        <img id="profile-image" src="@/assets/도넛1.png" alt="">
+        <div id="profile-info">
+          <h1 id="username">{{this.$route.params.nickname}}</h1>
+          <div id="badges">뱃지</div>
+        </div>
+
+        <div v-if="nickname === this.$route.params.nickname">
+          <button>
+            정보수정
+          </button>
+        </div>
+      </div>
+
+      <div id="description">
+        소개글
+      </div>
+
+      <div id="on-going-quests">
+        진행 중 퀘스트
+      </div>
+
     </div>
-    
+    <!--profile end-->
 
-    <div v-if="nickname === this.$route.params.nickname">
-      내 프로필
-
-      <button>
-        정보수정
-      </button>
-
+    <!--article start-->
+    <div id="article-wrap">
+      <ArticleImage class="article-image" v-for="n in 21" :key="n"/>
     </div>
-    <div v-else>
-      남의 프로필
-    </div>
-
-    <ArticleImage v-for="n in 21" :key="n"/>
-
-
+    <!--article end-->
 
   </div>
 </template>
@@ -51,8 +61,58 @@ export default {
 </script>
 
 <style scoped>
-.picture {
-  background-color: #2c3e50;
+#flex-container {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  margin: 15px;
+}
+
+#profile-wrap {
+  display: flex;
+}
+
+#profile-image {
+  width: 100px;
+  flex: 1 1 0;
+}
+
+#profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 2 2 0;
+}
+
+#description {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+#on-going-quests {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+#username {
+
+}
+
+#badges {
+
+}
+
+#article-wrap {
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#article-wrap .article-image {
+  width: 33%;
 }
 
 </style>
