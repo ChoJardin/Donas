@@ -35,7 +35,7 @@ const routes = [
     ]
   },
   // 프로필
-  {path: '/user/profile', name: 'Profile', component: Profile},
+  {path: '/user/profile/:nickname', name: 'Profile', component: Profile},
   // {path: '/user/:nickname', name: 'Profile', component: Profile, props: route => },
 ]
 

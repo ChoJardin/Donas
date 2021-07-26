@@ -5,7 +5,7 @@
       <a href="/quests">퀘스트</a>
       <a href="/user/feed">피드</a>
       <a href="/user/mileage">마일리지</a>
-      <a href="/user/profile">마이페이지</a>
+      <a :href="`/user/profile/:${nickname}`">마이페이지</a>
     </div>
   </div>
 </template>
