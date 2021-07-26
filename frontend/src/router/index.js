@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Login from "@/views/user/Login";
 import Signup from "@/views/user/Signup";
 import Main from "@/views/Main";
-import QuestAll from "@/views/quests/QuestAll";
+import Quest from "@/views/quests/Quest";
 import CreateQuest from "@/views/quests/CreateQuest";
 import Feed from "@/views/articles/Feed";
 import Mileage from "@/views/mileages/Mileage";
@@ -16,6 +16,7 @@ import CashOut from "@/components/mileages/CashOut";
 import SoloQuest from "@/components/quests/SoloQuest"
 import RelayQuest from "@/components/quests/RelayQuest"
 import GroupQuest from "@/components/quests/GroupQuest"
+import AllQuest from "@/components/quests/AllQuest";
 
 
 Vue.use(VueRouter)
@@ -29,8 +30,9 @@ const routes = [
   // 메인
   {path: '/', name: 'Main', component: Main},
   // 전체 퀘스트
-  {path: '/quests', name: 'QuestAll', component: QuestAll,
+  {path: '/quests', component: Quest,
     children: [
+      {path: '', name: 'AllQuest', component: AllQuest},
       {path: 'solo', name: 'SoloQuest', component: SoloQuest},
       {path: 'group', name: 'GroupQuest', component: GroupQuest},
       {path: 'relay', name: 'RelayQuest', component: RelayQuest},
@@ -42,7 +44,7 @@ const routes = [
   {path: '/user/feed', name: 'Feed', component: Feed},
   // 마일리지
   {
-    path: '/user/mileage', name: 'Mileage', component: Mileage,
+    path: '/user/mileage', component: Mileage,
     children: [
       {path: '', name: 'Donation', component: Donation},
       {path: 'cashout', name: 'CashOut', component: CashOut}

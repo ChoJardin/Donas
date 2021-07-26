@@ -46,7 +46,8 @@
     <br>
     <div>
       <h4>인증 방법을 입력하세요</h4>
-      <input type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
+      <textarea type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
+      </textarea>
     </div>
   </div>
 </template>

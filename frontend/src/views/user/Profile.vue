@@ -106,7 +106,6 @@ export default {
 
 #article-wrap {
   width: 100%;
-  margin: 10px;
   display: flex;
   flex-wrap: wrap;
 }
