@@ -1,4 +1,4 @@
-package com.web.curation.model;
+package com.ssafy.donas.response;
 
 import io.swagger.annotations.ApiModelProperty;
 
