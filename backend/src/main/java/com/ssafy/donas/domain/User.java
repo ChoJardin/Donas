@@ -63,6 +63,8 @@ public class User {
 	
 	@ColumnDefault("TRUE")
 	private boolean status;
+	
+	private String description;
 
 //	@OneToMany(fetch = FetchType.LAZY)
 	

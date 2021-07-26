@@ -19,6 +19,7 @@ import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.CheckPasswordRequest;
 import com.ssafy.donas.request.SigninRequest;
 import com.ssafy.donas.request.SignupRequest;
+import com.ssafy.donas.request.UserInfoRequest;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.service.UserService;
 
@@ -86,9 +87,9 @@ public class UserController {
 		return HttpStatus.OK;
 	}	
 	
-	@PatchMapping("/profile/{id}")
+	@PatchMapping("/nickname/{id}")
 	@ApiOperation(value = "닉네임 추가")
-	public Object addNickname(@PathVariable long id, @RequestBody SignupRequest request) {
+	public Object addNickname(@PathVariable long id, @RequestBody UserInfoRequest request) {
 		if(!userService.addNickname(id, request.getNickname()))
 			return HttpStatus.CONFLICT;
 		
@@ -100,6 +101,15 @@ public class UserController {
 	public Object checkPassword(@RequestBody CheckPasswordRequest request) {
 		if(!userService.checkPassword(request.getId(), request.getPassword()))
 			return HttpStatus.NOT_FOUND;
+		
+		return HttpStatus.OK;
+	}
+	
+	@PatchMapping("/profile/{id}")
+	@ApiOperation(value = "회원 정보 변경")
+	public Object updateUserInfo(@PathVariable long id, @RequestBody UserInfoRequest request) {
+		if(!userService.updateUserInfo(id, request.getNickname(), request.getPicture(), request.getDescription()))
+			return HttpStatus.BAD_REQUEST;
 		
 		return HttpStatus.OK;
 	}

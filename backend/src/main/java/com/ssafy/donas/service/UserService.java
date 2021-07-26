@@ -58,4 +58,13 @@ public class UserService {
 		return false;
 	}
 
+	public boolean updateUserInfo(long id, String nickname, String picture, String description) {
+		User user = userRepo.getById(id);
+		user.setNickname(nickname);
+		user.setPicture(picture);
+		user.setDescription(description);
+		
+		return true;
+	}
+
 }
