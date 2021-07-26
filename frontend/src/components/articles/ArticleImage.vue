@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>A</h1>
+  <div id="wrap">
+    <img id="image" src="@/assets/logo3.png" alt="">
   </div>
 </template>
 
@@ -11,5 +11,13 @@ export default {
 </script>
 
 <style scoped>
+#wrap {
+  display: flex;
+  align-items: center;
+}
+
+#image {
+  width: 100%;
+}
 
 </style>
