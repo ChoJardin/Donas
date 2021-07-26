@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Main</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/signup">Signup</router-link>
+    <div id="content">
+      <div id="nav">
+        <router-link to="/">Main</router-link> |
+        <router-link to="/login">Login</router-link> |
+        <router-link to="/signup">Signup</router-link>
+      </div>
+      <router-view/>
     </div>
-    <router-view/>
 
     <Footer id="footer"/>
   </div>
@@ -31,6 +33,10 @@ export default {
 </script>
 
 <style>
+#content {
+  padding-bottom: 50px;
+}
+
 #footer {
   background-color: rosybrown;
   height: 50px;
