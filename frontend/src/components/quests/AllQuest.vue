@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>개별 퀘스트</h1>
+    <h1>All Quests</h1>
     <v-app>
         <QuestSingle class="quest-single" v-for="n in 21" :key="n"/>
     </v-app>
@@ -10,8 +10,9 @@
 <script>
 import QuestSingle from "@/components/quests/QuestSingle";
 
+
 export default {
-  name: "SoloQuest",
+  name: "QuestAll",
   // components
   components: {
     QuestSingle
