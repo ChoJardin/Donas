@@ -28,5 +28,12 @@ public class UserService {
 			return false;
 		return true;
 	}
+	
+	public boolean checkNickname(String nickname) {
+		Optional<User> user = userRepo.findUserByNickname(nickname);
+		if(user.isEmpty())
+			return false;
+		return true;
+	}
 
 }

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.SigninRequest;
@@ -61,7 +63,17 @@ public class UserController {
 		return response;
 	}
 	
-	
+	@GetMapping("/checkem")
+	@ApiOperation(value = "이메일 중복 확인")
+	public Object checkEmail(@RequestParam String email) {
+		if(userService.checkEmail(email))
+			return HttpStatus.CONFLICT;
+		
+		return HttpStatus.OK;
+	}
 	
 
+	
+	
+	
 }
