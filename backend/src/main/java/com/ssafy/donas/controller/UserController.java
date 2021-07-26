@@ -1,14 +1,11 @@
 package com.ssafy.donas.controller;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.SigninRequest;
 import com.ssafy.donas.domain.User;
-import com.ssafy.donas.response.BasicResponse;
-import com.ssafy.donas.response.ErrorResponse;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -43,6 +36,7 @@ public class UserController {
 		String password = request.getPassword();
 
 		if (!userService.checkEmail(email)) {
+			result.id = -1;
 			result.nickname = "";
 			result.questCnt = -1;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
@@ -52,17 +46,22 @@ public class UserController {
 		User user = userService.checkPassword(email, password);
 		
 		if(user==null) {
+			result.id = -1;
 			result.nickname = "";
 			result.questCnt = -1;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		}
 
+		result.id = user.getId();
 		result.nickname = user.getNickname();
 		result.questCnt = user.getQuestCnt();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 
 		return response;
 	}
+	
+	
+	
 
 }
