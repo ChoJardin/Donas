@@ -37,23 +37,24 @@ public class UserController {
 	@ApiOperation(value = "로그인")
 	public Object login(@Valid @RequestBody SigninRequest request) {
 		final LoginResponse result = new LoginResponse();
-		final ErrorResponse error = new ErrorResponse();
 		ResponseEntity response = null;
 		
 		String email = request.getEmail();
 		String password = request.getPassword();
 
 		if (!userService.checkEmail(email)) {
-			error.reason = "email";
-			response = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+			result.nickname = "";
+			result.questCnt = -1;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		}
 		
 		User user = userService.checkPassword(email, password);
 		
 		if(user==null) {
-			error.reason = "password";
-			response = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+			result.nickname = "";
+			result.questCnt = -1;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		}
 
