@@ -4,7 +4,10 @@ import cookies from 'vue-cookies'
 //
 
 const state ={
-    userNickname: 'test'
+  loginUser: {
+    id: '',
+    nickname:'test'
+  }
 }
 
 const getters = {
@@ -12,16 +15,19 @@ const getters = {
 }
 
 const mutations = {
-  SET_USER(state, nickname) {
-    state.userNickname = nickname
+  SET_USER(state, loginUser) {
+    state.loginUser = loginUser
+    // 혹시 나눠서 저장이 필요한 경우
+    // state.loginUser.id = loginUser.id
+    // state.loginUser.nickname = loginUser.nickname
   },
 }
 
 const actions = {
     // 로그인된 유저 정보 저장
     login({commit, dispatch}, res) {
-        commit('SET_USER', res.data.nickname)
-        cookies.set('nickname', res.data.nickname, '2d')
+        commit('SET_USER', res.data)
+        cookies.set('login-user', res.data, '2d')
     }
 }
 
