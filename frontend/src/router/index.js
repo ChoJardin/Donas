@@ -9,6 +9,7 @@ import SoloQuest from "@/components/quests/SoloQuest"
 import RelayQuest from "@/components/quests/RelayQuest"
 import GroupQuest from "@/components/quests/GroupQuest"
 import AllQuest from "@/components/quests/AllQuest";
+import QuestDetail from "@/views/quests/QuestDetail";
 
 import Feed from "@/views/articles/Feed";
 import VerticalFeed from "@/views/articles/VerticalFeed";
@@ -40,7 +41,8 @@ const routes = [
       {path: 'relay', name: 'RelayQuest', component: RelayQuest},
     ]
   },
-  {path: '/quests/create', name: CreateQuest, component: CreateQuest},
+  {path: '/quests/create', name: 'CreateQuest', component: CreateQuest},
+  {path: '/quests/:questID', name: 'QuestDetail', component: QuestDetail},
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},

@@ -1,13 +1,18 @@
 package com.ssafy.donas.domain;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,10 +71,13 @@ public class User {
 	
 	private String description;
 
-//	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Follow> followers = new ArrayList<Follow>();
 	
-	public User() {
-	}
+	@OneToMany(mappedBy = "followee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Follow> followees = new ArrayList<Follow>();
+	
+	public User() {}
 
 	@Builder
 	public User(String email, String password, String nickname) {
