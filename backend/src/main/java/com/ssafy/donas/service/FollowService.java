@@ -1,5 +1,7 @@
 package com.ssafy.donas.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,18 @@ public class FollowService {
 		followee.getFollowers().add(follow);
 		
 		return true;
+	}
+
+	public void delete(User follower, User followee) {
+		Optional<Follow> follow = followRepo.findFollowByFollowerAndFollowee(follower, followee);		
+		
+		follower.getFollowees().remove(follow.get());
+		followee.getFollowers().remove(follow.get());
+		
+		follow.ifPresent(selectFollow ->{
+			followRepo.delete(selectFollow);
+		});
+		
 	}
 
 }

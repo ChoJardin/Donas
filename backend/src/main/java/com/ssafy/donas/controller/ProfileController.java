@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -164,6 +165,20 @@ public class ProfileController {
 		
 		if(!followService.addFollow(follower, followee))
 			return HttpStatus.CONFLICT;
+		
+		return HttpStatus.OK; 
+	}
+	
+	@DeleteMapping("/follow")
+	@ApiOperation(value = "팔로우 취소")
+	public Object cancleFollow(@RequestParam long followerId, @RequestParam long followeeId) {
+		User follower = userService.getUser(followerId);
+		User followee = userService.getUser(followeeId);
+		
+		if(!followService.isFollowing(follower, followee))
+			return HttpStatus.NOT_FOUND;
+		
+		followService.delete(follower, followee);
 		
 		return HttpStatus.OK; 
 	}
