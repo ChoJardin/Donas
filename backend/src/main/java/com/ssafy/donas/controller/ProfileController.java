@@ -9,12 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Follow;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.request.FollowRequest;
 import com.ssafy.donas.response.FollowResponse;
 import com.ssafy.donas.response.IdResponse;
 import com.ssafy.donas.response.ProfileResponse;
@@ -153,11 +156,16 @@ public class ProfileController {
 		return response;
 	}
 	
+	@PostMapping("/follow")
+	@ApiOperation(value = "팔로우 시작(추가)")
+	public Object startFollow(@RequestBody FollowRequest request) {
+		User follower = userService.getUser(request.getFollowerId());
+		User followee = userService.getUser(request.getFolloweeId());
+		
+		if(!followService.addFollow(follower, followee))
+			return HttpStatus.CONFLICT;
+		
+		return HttpStatus.OK; 
+	}
 	
-	
-	
-	
-	
-	
-
 }
