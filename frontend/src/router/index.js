@@ -6,6 +6,7 @@ import Signup from "@/views/user/Signup";
 import Main from "@/views/Main";
 import Quest from "@/views/quests/Quest";
 import CreateQuest from "@/views/quests/CreateQuest";
+import QuestDetail from "@/views/quests/QuestDetail";
 import Feed from "@/views/articles/Feed";
 import Mileage from "@/views/mileages/Mileage";
 import Profile from "@/views/user/Profile";
@@ -38,7 +39,8 @@ const routes = [
       {path: 'relay', name: 'RelayQuest', component: RelayQuest},
     ]
   },
-  {path: '/quests/create', name: CreateQuest, component: CreateQuest},
+  {path: '/quests/create', name: 'CreateQuest', component: CreateQuest},
+  {path: '/quests/:questID', name: 'QuestDetail', component: QuestDetail},
 
   // 피드
   {path: '/user/feed', name: 'Feed', component: Feed},
