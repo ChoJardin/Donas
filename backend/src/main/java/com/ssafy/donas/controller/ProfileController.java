@@ -70,5 +70,32 @@ public class ProfileController {
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}
+	
+	@GetMapping("/other")
+	@ApiOperation(value = "타 유저 프로필 보기")
+	public Object otherProfile(@RequestParam long myid, @RequestParam long otherid) {
+		User me = userService.getUser(myid);
+		User other = userService.getUser(otherid);
+		
+		if(me == null || other == null)
+			return HttpStatus.NOT_FOUND;
+		
+		final ProfileResponse result = new ProfileResponse();
+		ResponseEntity response = null;
+		
+		// User 정보
+		result.nickname = other.getNickname();
+		result.picture = other.getPicture();
+		result.description = other.getDescription();
+		result.questCnt = other.getQuestCnt();
+		
+		// Follow 정보
+		result.follower = other.getFollowers().size();
+		result.following = other.getFollowees().size();
+		result.isFollowing = followService.isFollowing(me, other);
+		
+		response = new ResponseEntity<>(result, HttpStatus.OK);
+		return response;
+	}
 
 }
