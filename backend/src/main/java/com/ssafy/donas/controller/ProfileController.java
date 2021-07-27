@@ -1,5 +1,8 @@
 package com.ssafy.donas.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.Follow;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.response.FollowResponse;
 import com.ssafy.donas.response.IdResponse;
 import com.ssafy.donas.response.ProfileResponse;
 import com.ssafy.donas.service.FollowService;
@@ -97,5 +102,39 @@ public class ProfileController {
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}
+	
+	@GetMapping("/followings")
+	@ApiOperation(value = "팔로잉 리스트")
+	public Object followingList(@RequestParam long id) {
+		User user = userService.getUser(id);
+		
+		if(user == null)
+			return HttpStatus.NOT_FOUND;
+		
+		final List<FollowResponse> results = new ArrayList<FollowResponse>();
+		ResponseEntity response = null;
+		
+		for(Follow f : user.getFollowees()) {
+			FollowResponse result = new FollowResponse();
+			User follower = f.getFollower();
+			result.id = follower.getId();
+			result.picture = follower.getPicture();
+			result.description = follower.getDescription();
+			
+			results.add(result);
+		}
+		
+		response = new ResponseEntity<>(results, HttpStatus.OK);
+		return response;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
