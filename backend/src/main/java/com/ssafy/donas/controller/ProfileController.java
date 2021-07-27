@@ -128,7 +128,30 @@ public class ProfileController {
 		return response;
 	}
 	
-	
+	@GetMapping("/followers")
+	@ApiOperation(value = "팔로워 리스트")
+	public Object followerList(@RequestParam long id) {
+		User user = userService.getUser(id);
+		
+		if(user == null)
+			return HttpStatus.NOT_FOUND;
+		
+		final List<FollowResponse> results = new ArrayList<FollowResponse>();
+		ResponseEntity response = null;
+		
+		for(Follow f : user.getFollowers()) {
+			FollowResponse result = new FollowResponse();
+			User follower = f.getFollowee();
+			result.id = follower.getId();
+			result.picture = follower.getPicture();
+			result.description = follower.getDescription();
+			
+			results.add(result);
+		}
+		
+		response = new ResponseEntity<>(results, HttpStatus.OK);
+		return response;
+	}
 	
 	
 	
