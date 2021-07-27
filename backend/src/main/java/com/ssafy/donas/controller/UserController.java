@@ -135,7 +135,5 @@ public class UserController {
 		result.questPercent = user.getQuestPercent();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
-	}
-	
-	
+	}	
 }

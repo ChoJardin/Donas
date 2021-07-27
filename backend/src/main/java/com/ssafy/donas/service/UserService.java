@@ -89,4 +89,12 @@ public class UserService {
 		return userRepo.getById(id);
 	}
 
+	public long getIdByNickname(String nickname) {
+		Optional<User> user = userRepo.findUserByNickname(nickname);
+		if(user.isEmpty())
+			return -1;
+		
+		return user.get().getId();
+	}
+
 }
