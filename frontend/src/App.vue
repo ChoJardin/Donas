@@ -30,6 +30,14 @@ export default {
   // lifecycle hook
 }
 
+
+  // components
+  // props
+  // data
+  // methods
+  // computed
+  // watch
+  // lifecycle hook
 </script>
 
 <style>

@@ -1,34 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Login from "@/views/user/Login";
-import Signup from "@/views/user/Signup";
 import Main from "@/views/Main";
+
 import Quest from "@/views/quests/Quest";
 import CreateQuest from "@/views/quests/CreateQuest";
-import Feed from "@/views/articles/Feed";
-import Mileage from "@/views/mileages/Mileage";
-import Profile from "@/views/user/Profile";
-
-import Donation from "@/components/mileages/Donation";
-import CashOut from "@/components/mileages/CashOut";
-
 import SoloQuest from "@/components/quests/SoloQuest"
 import RelayQuest from "@/components/quests/RelayQuest"
 import GroupQuest from "@/components/quests/GroupQuest"
 import AllQuest from "@/components/quests/AllQuest";
 
+import Feed from "@/views/articles/Feed";
+import VerticalFeed from "@/views/articles/VerticalFeed";
+import SingleArticle from "@/components/articles/SingleArticle";
+
+import Mileage from "@/views/mileages/Mileage";
+import Donation from "@/components/mileages/Donation";
+import CashOut from "@/components/mileages/CashOut";
+
+import Profile from "@/views/user/Profile";
+import Login from "@/views/user/Login";
+import Signup from "@/views/user/Signup";
+
+
+
 
 Vue.use(VueRouter)
 
 const routes = [
-  // 로그인
-  {path: '/login', name: 'Login', component: Login},
-  // 회원가입
-  {path: '/signup', name: 'Signup', component: Signup},
-
   // 메인
   {path: '/', name: 'Main', component: Main},
+
   // 전체 퀘스트
   {path: '/quests', component: Quest,
     children: [
@@ -41,7 +43,9 @@ const routes = [
   {path: '/quests/create', name: CreateQuest, component: CreateQuest},
 
   // 피드
-  {path: '/user/feed', name: 'Feed', component: Feed},
+  {path: '/feed', name: 'Feed', component: Feed},
+  {path: '/feed/v', name: 'VerticalFeed', component: VerticalFeed},
+
   // 마일리지
   {
     path: '/user/mileage', component: Mileage,
@@ -50,14 +54,23 @@ const routes = [
       {path: 'cashout', name: 'CashOut', component: CashOut}
     ]
   },
+
   // 프로필
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile},
+  // 로그인
+  {path: '/login', name: 'Login', component: Login},
+  // 회원가입
+  {path: '/signup', name: 'Signup', component: Signup},
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  // 새 페이지 로딩할 때 항상 스크롤 맨 위로
+  // scrollBehavior(to, from) {
+  //   return {x: 0, y:0}
+  // }
 })
 
 export default router
