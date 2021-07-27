@@ -42,9 +42,21 @@ public class UserService {
 		
 		return true;
 	}
+	
+	// 인터셉터로 바꾸면 좋을듯?
+	public boolean checkId(long id) {
+		Optional<User> testUser = userRepo.findById(id);
+		if(testUser.isEmpty())
+			return false;
+		
+		return true;
+	}
 
 	public boolean addNickname(long id, String nickname) {
-		User user = userRepo.findById(id);
+		if(!checkId(id))
+			return false;
+		
+		User user = userRepo.findById(id).get();
 		user.setNickname(nickname);
 		
 		return true;
@@ -58,13 +70,23 @@ public class UserService {
 		return false;
 	}
 
-	public boolean updateUserInfo(long id, String nickname, String picture, String description) {
-		User user = userRepo.getById(id);
+	public boolean updateUserInfo(long id, String nickname, String picture, String description) {	
+		if(!checkId(id))
+			return false;
+
+		User user = userRepo.findById(id).get();
 		user.setNickname(nickname);
 		user.setPicture(picture);
 		user.setDescription(description);
 		
 		return true;
+	}
+
+	public User getUser(long id) {
+		if(!checkId(id))
+			return null;
+		
+		return userRepo.getById(id);
 	}
 
 }

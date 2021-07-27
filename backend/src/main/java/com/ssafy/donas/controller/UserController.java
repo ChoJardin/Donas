@@ -21,6 +21,7 @@ import com.ssafy.donas.request.SigninRequest;
 import com.ssafy.donas.request.SignupRequest;
 import com.ssafy.donas.request.UserInfoRequest;
 import com.ssafy.donas.response.LoginResponse;
+import com.ssafy.donas.response.MypageResponse;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -113,5 +114,28 @@ public class UserController {
 		
 		return HttpStatus.OK;
 	}
+	
+	@GetMapping("/mypage/{id}")
+	@ApiOperation(value = "마이페이지")
+	public Object showMypage(@PathVariable long id) {
+		User user = userService.getUser(id);
+		
+		if(user == null)
+			return HttpStatus.NOT_FOUND;
+		
+		final MypageResponse result = new MypageResponse();
+		ResponseEntity response = null;
+		
+		result.nickname = user.getNickname();
+		result.email = user.getEmail();
+		result.picture = user.getPicture();
+		result.description = user.getDescription();
+		result.mileage = user.getMileage();
+		result.questCnt = user.getQuestCnt();
+		result.questPercent = user.getQuestPercent();
+		response = new ResponseEntity<>(result, HttpStatus.OK);
+		return response;
+	}
+	
 	
 }
