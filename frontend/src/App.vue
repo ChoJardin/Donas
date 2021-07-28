@@ -69,6 +69,7 @@ export default {
 
 #content {
   margin-top: 80px;
+  margin-left: 10px;
   margin-right: 10px;
 }
 
