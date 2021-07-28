@@ -1,7 +1,7 @@
 import axios from "axios";
 // import store from '@/store/modules/user'
 
-const URL = 'http://localhost:8080'
+const URL = 'http://localhost:8081'
 const ROUTES = {
   signup: '/user/signup',
   login: '/user/signin',

@@ -86,12 +86,14 @@ export default {
         UserApi.requestLogin(
             data,
             res => {
+              console.log(res)
               // 유저 닉네임 저장
-              this.$store.dispatch('login', res)
+              this.$store.dispatch('login', res.data)
               // 로그인 누르기 전 있던 곳으로
               this.$router.go(-1)
             },
             error => {
+              console.log(error)
               this.loginError.isFailed = true
               this.email = ""
               this.password = ""

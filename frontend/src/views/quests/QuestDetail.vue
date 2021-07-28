@@ -16,15 +16,16 @@
         </div>
 
       </div>
-      <!--profile end-->
 
       <!--article start-->
       <div id="article-wrap">
         <div class="article-image" v-for="n in 10" :key="n">
-          <!--<ArticleImage class="article-image" v-for="n in 21" :key="n"/>-->
+          <!--article 같이 보내줘야 함...-->
           <ArticleImage class="inner"/>
         </div>
       </div>
+    <!--article end-->
+
     </div>
   </div>
   </div>
@@ -90,8 +91,6 @@ export default {
 .article-image {
   border: 1px solid olivedrab;
   width: 33.3333%;
-  /*--width: width;*/
-  /*height: var(--width);*/
   position: relative;
 }
 
