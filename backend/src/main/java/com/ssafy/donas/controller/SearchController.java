@@ -93,6 +93,35 @@ public class SearchController {
 		return response;
 	}
 	
+	@GetMapping("/result")
+	@ApiOperation(value = "검색 결과 반환")
+	public Object getSearchResponse(@RequestParam String nickname, @RequestParam int offset) {
+		// 검색 결과 반환
+		List<User> list = userService.findByNicknameStartsWith(nickname);
+		if (list.size() == 0)
+			return HttpStatus.NO_CONTENT;
+
+		final List<SearchResponse> results = new ArrayList<>();
+		ResponseEntity response = null;
+		
+		int start = offset*5;
+		// 자동완성 검색어 5개만 가져오기
+		for (int i = start; i < start+5; i++) {
+			if (i >= list.size())
+				break;
+
+			SearchResponse result = new SearchResponse();
+			User user = list.get(i);
+			result.nickname = user.getNickname();
+			result.picture = user.getPicture();
+			result.description = user.getDescription();
+
+			results.add(result);
+		}
+
+		response = new ResponseEntity<>(results, HttpStatus.OK);
+		return response;
+	}
 	
 
 }
