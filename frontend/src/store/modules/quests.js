@@ -3,7 +3,7 @@
 import router from '../../router'
 
 const state ={
-    questID: '',
+    questId: '',
 }
 
 const getters = {

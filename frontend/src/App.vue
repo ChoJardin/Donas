@@ -68,13 +68,14 @@ export default {
 
 #content {
   margin-top: 60px;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
 
 
 }
 
 #footer {
-  background-color: rosybrown;
+  background-color: #6cb9a2;
+  /*background-color: #9d794a;*/
   height: 50px;
   width: 100vw;
   position: fixed;
@@ -119,8 +120,9 @@ export default {
   color: black;
   text-decoration: none;
   font-size: small;
-
 }
+
+
 
 
 
