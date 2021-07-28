@@ -40,11 +40,25 @@ export default {
 #flex-container a {
   flex: auto;
   width: 20%;
-  padding-top: 5px;
+  padding-top: 7px;
   color: aliceblue;
   text-align: center;
   font-size: small;
   text-decoration: none;
+}
+
+/*#flex-container a:hover{*/
+/*  color: #6cb9a2;*/
+/*  background: white;*/
+/*  opacity: 0.6;*/
+/*}*/
+
+#flex-container a.router-link-exact-active {
+  color: #6cb9a2;
+  /*color: #9d794a;*/
+  background: white;
+  /*margin: 0 0px 2px 0px;*/
+  /*border-radius: 0px 0px 10px 10px;*/
 }
 
 </style>
