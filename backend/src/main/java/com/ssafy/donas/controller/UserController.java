@@ -45,13 +45,8 @@ public class UserController {
 		
 		User user = userService.checkPassword(email, password);
 		
-		if(user==null) {
-			result.id = -1;
-			result.nickname = "";
-			result.questCnt = -1;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-			return response;
-		}
+		if(user==null)
+			return HttpStatus.NOT_FOUND;
 
 		result.id = user.getId();
 		result.nickname = user.getNickname();
