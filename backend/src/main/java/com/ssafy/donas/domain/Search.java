@@ -45,8 +45,9 @@ public class Search {
 	public Search() {}
 	
 	@Builder
-	public Search(String nickname) {
-		
+	public Search(User user, String nickname) {
+		this.searchUser = user;
+		this.nickname = nickname;
 	}
 	
 }

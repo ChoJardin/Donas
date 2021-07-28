@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,12 +12,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Search;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.request.SearchWordRequest;
 import com.ssafy.donas.response.FollowResponse;
 import com.ssafy.donas.response.MypageResponse;
 import com.ssafy.donas.response.RecentWordResponse;
@@ -48,9 +53,10 @@ public class SearchController {
 		final List<RecentWordResponse> results = new ArrayList<>();
 		ResponseEntity response = null;
 
-		// 최근 검색어 5개만 가져오기
-		for (int i = 0; i < 5; i++) {
-			if (i >= user.getSearchWords().size())
+		int start = user.getSearchWords().size()-1;
+		// 최근 검색어 5개만 가져오기(최신순으로)
+		for (int i = start; i > start-5; i--) {
+			if (i < 0)
 				break;
 
 			RecentWordResponse result = new RecentWordResponse();
@@ -92,7 +98,7 @@ public class SearchController {
 		response = new ResponseEntity<>(results, HttpStatus.OK);
 		return response;
 	}
-	
+
 	@GetMapping("/result")
 	@ApiOperation(value = "검색 결과 반환")
 	public Object getSearchResponse(@RequestParam String nickname, @RequestParam int offset) {
@@ -103,10 +109,10 @@ public class SearchController {
 
 		final List<SearchResponse> results = new ArrayList<>();
 		ResponseEntity response = null;
-		
-		int start = offset*5;
+
+		int start = offset * 5;
 		// 자동완성 검색어 5개만 가져오기
-		for (int i = start; i < start+5; i++) {
+		for (int i = start; i < start + 5; i++) {
 			if (i >= list.size())
 				break;
 
@@ -122,6 +128,19 @@ public class SearchController {
 		response = new ResponseEntity<>(results, HttpStatus.OK);
 		return response;
 	}
-	
+
+	@PostMapping("/add")
+	@ApiOperation(value = "검색어 저장")
+	public Object addSearchWord(@Valid @RequestBody SearchWordRequest request) {
+		long id = request.getId();
+		String nickname = request.getNickname();
+		
+		User user = userService.getUser(id);
+
+		if (!searchService.addSearchWord(id, nickname))
+			return HttpStatus.NOT_FOUND;
+
+		return HttpStatus.OK;
+	}
 
 }
