@@ -48,7 +48,7 @@ export default {
 <style scoped>
 /* nav-bar */
 #nav {
-  /*background-color: olivedrab;*/
+  background-color: white;
 
   top: 0;
   /*왼쪽은 패딩 안 줘도 될 것 같기도 하고..*/
