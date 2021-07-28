@@ -1,32 +1,19 @@
 <template>
-  <div>
+  <div id="login">
     <h1>로그인</h1>
+    <br><br><br>
 
-    <div>
-      <label for="email">이메일</label>
-      <input
-          id="email"
-          v-model="email"
-          placeholder="이메일을 입력하세요."
-          @keyup.enter="moveFocusToPw"
-          @focus="onFocus"
-          type="text">
-      <div v-if="error.email">{{error.email}}</div>
-    </div>
+    <userInput class="user-input"
+        id="email" label="Email" placeholder="이메일을 입력하세요" type="email"
+        :input.sync="email" :error="error.email"
+        @keyup-enter="moveFocusToPw" @on-focus="onFocus" ref="email"/>
 
-    <div>
-      <label for="password">비밀번호</label>
-      <input
-          id="password"
-          v-model="password"
-          placeholder="비밀번호를 입력하세요"
-          @keyup.enter="onLogin"
-          @focus="onFocus"
-          type="password">
-      <div v-if="error.password">{{error.password}}</div>
-    </div>
+    <userInput class="user-input"
+        id="password" label="비밀번호" placeholder="비밀번호를 입력하세요" type="password"
+        :input.sync="password" :error="error.password"
+        @keyup-enter="onLogin" @on-focus="onFocus" ref="password"/>
 
-    <div v-if="loginError.isFailed">
+    <div v-if="loginError.isFailed" class="error-message">
       {{ loginError.message }}
     </div>
 
@@ -39,10 +26,14 @@
 import * as EmailValidator from "email-validator"
 import PV from "password-validator"
 import UserApi from "@/api/UserApi";
+import userInput from "@/components/accounts/userInput";
 
 export default {
   name: "Login",
   // components
+  components: {
+    userInput
+  },
   // props
   // data
   data() {
@@ -73,10 +64,12 @@ export default {
       // 비밀번호 입력하고, 입력된 이메일 형식에 문제가 없으면 버튼 활성화
       if (this.password && this.email && !this.error.email)
         this.isSubmit = true
+
     },
 
     // 로그인
     onLogin() {
+      console.log('enter')
       if (this.isSubmit) {
         let {email, password} = this
         let data = {
@@ -97,8 +90,8 @@ export default {
             },
             error => {
               this.loginError.isFailed = true
-              this.email = ""
-              this.password = ""
+              this.$refs.email.onReset()
+              this.$refs.password.onReset()
             }
         )
       }
@@ -133,14 +126,36 @@ export default {
 </script>
 
 <style scoped>
-  .button {
-    width: 20vw;
-    height: 10vw;
-    background-color: aquamarine;
-    cursor: pointer;
-  }
-  .button:disabled {
-    background-color: aliceblue;
-    cursor: default;
-  }
+#login {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-input {
+  width: 80%;
+  margin-left: 10%;
+}
+
+
+.button {
+  align-self: center;
+  width: 20vw;
+  height: 10vw;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+.button:disabled {
+  background-color: aliceblue;
+  cursor: default;
+}
+
+.error-message {
+  color: #cd4e3e;
+  margin-bottom: 20px;
+  font-size: 0.8em;
+  font-weight: bold;
+  width: 65%;
+  align-self: center;
+}
+
 </style>
