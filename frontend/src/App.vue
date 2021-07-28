@@ -49,7 +49,8 @@ export default {
 
 /*footer*/
 #footer {
-  background-color: rosybrown;
+  background-color: #6cb9a2;
+  /*background-color: #9d794a;*/
   height: 50px;
   width: 100vw;
   position: fixed;

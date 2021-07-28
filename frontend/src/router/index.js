@@ -41,7 +41,7 @@ const routes = [
     ]
   },
   {path: '/quests/create', name: 'CreateQuest', component: CreateQuest},
-  {path: '/quests/:questID', name: 'QuestDetail', component: QuestDetail},
+  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
