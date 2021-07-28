@@ -42,6 +42,9 @@ export default {
   // computed
   // watch
   // lifecycle hook
+  created() {
+
+  }
 }
 
 

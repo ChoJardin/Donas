@@ -13,7 +13,6 @@ import QuestDetail from "@/views/quests/QuestDetail";
 
 import Feed from "@/views/articles/Feed";
 import VerticalFeed from "@/views/articles/VerticalFeed";
-import SingleArticle from "@/components/articles/SingleArticle";
 
 import Mileage from "@/views/mileages/Mileage";
 import Donation from "@/components/mileages/Donation";
