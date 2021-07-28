@@ -78,7 +78,7 @@ export default {
 
 #alert{
   margin-bottom: 10px;
-  padding:5px 0px 5px 10px;
+  padding:3px 0px 3px 10px;
   border-top: solid #6cb9a2 2px;
   border-bottom: solid #6cb9a2 2px;
   text-align: left;
