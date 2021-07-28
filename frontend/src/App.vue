@@ -1,39 +1,26 @@
 <template>
   <div id="app">
-      <nav id="nav">
-        <div id="logo" style="float:left"><router-link to="/"><img src="@/assets/logo3.png" height="50" alt=""></router-link></div>
-        <div id="options">
-          <button class="button1" style="float:right"><router-link to="/login" >Login</router-link></button>
-          <button class="button1" style="float:right"><router-link to="/signup" >Signup</router-link></button>
-        </div>
-      </nav>
-<!--      <div id="nav">-->
-<!--        <router-link to="/">Main</router-link> |-->
-<!--        <router-link to="/login">Login</router-link> |-->
-<!--        <router-link to="/signup">Signup</router-link>-->
-<!--      </div>-->
+    <navBar/>
 
-<!--    <v-app-bar id="nav" dense color="white">-->
-<!--      <v-spacer></v-spacer>-->
-
-<!--      <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>-->
-<!--      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>-->
-<!--    </v-app-bar>-->
-  <div id="content">
-      <router-view/>
-  </div>
+    <div id="content">
+        <router-view/>
+    </div>
 
     <Footer id="footer"/>
   </div>
 </template>
 
 <script>
+import cookies from "vue-cookies";
+
+import navBar from "@/components/common/navBar";
 import Footer from "@/components/common/Footer";
 
 export default {
   name: 'App',
   // components
   components: {
+    navBar,
     Footer
   },
   // props
@@ -43,10 +30,11 @@ export default {
   // watch
   // lifecycle hook
   created() {
-
+    let user = cookies.get('login-user')
+    if (user)
+      this.$store.dispatch('login', user)
   }
 }
-
 
   // components
   // props
@@ -58,21 +46,8 @@ export default {
 </script>
 
 <style>
-#nav {
-  top: 0;
-  position: fixed;
-  width: 100vw;
-  height: 50px;
 
-}
-
-#content {
-  margin-top: 60px;
-  margin-right: 10px;
-
-
-}
-
+/*footer*/
 #footer {
   background-color: rosybrown;
   height: 50px;
@@ -80,6 +55,8 @@ export default {
   position: fixed;
   bottom: 0;
 }
+/*footer-end*/
+
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -89,39 +66,10 @@ export default {
 }
 
 
-
-#options {
-  text-decoration: none;
-  margin-right: 2px;
+#content {
+  margin-top: 80px;
+  margin-right: 10px;
 }
-
-#logo {
-  /*padding-left: 10px;*/
-}
-
-
-.button1 {
-  color: white;
-  padding: 7px 7px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 1px;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  font-weight: bold;
-  border: rosybrown solid;
-  border-radius: 10px;
-}
-
-.button1 a {
-  color: black;
-  text-decoration: none;
-  font-size: small;
-
-}
-
 
 
 </style>
