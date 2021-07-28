@@ -77,6 +77,9 @@ public class User {
 	@OneToMany(mappedBy = "followee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Follow> followees = new ArrayList<Follow>();
 	
+	@OneToMany(mappedBy = "searchUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Search> searchWords = new ArrayList<Search>();
+	
 	public User() {}
 
 	@Builder

@@ -1,5 +1,6 @@
 package com.ssafy.donas.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,5 @@ public interface UserRepo extends JpaRepository<User, Long>{
 	Optional<User> findUserByNickname(String nickname);
 	Optional<User> findUserByIdAndPassword(long id, String password);
 	
+	List<User> findByNicknameStartsWith(String nickname);
 }

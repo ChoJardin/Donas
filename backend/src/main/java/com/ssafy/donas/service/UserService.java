@@ -1,5 +1,6 @@
 package com.ssafy.donas.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -95,6 +96,10 @@ public class UserService {
 			return -1;
 		
 		return user.get().getId();
+	}
+	
+	public List<User> findByNicknameStartsWith(String nickname){
+		return userRepo.findByNicknameStartsWith(nickname);
 	}
 
 }
