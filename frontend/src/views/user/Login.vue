@@ -26,6 +26,10 @@
       <div v-if="error.password">{{error.password}}</div>
     </div>
 
+    <div v-if="loginError.isFailed">
+      {{ loginError.message }}
+    </div>
+
     <button class="button" :disabled="!isSubmit" @click="onLogin">로그인</button>
 
   </div>
@@ -86,14 +90,12 @@ export default {
         UserApi.requestLogin(
             data,
             res => {
-              console.log(res)
               // 유저 닉네임 저장
               this.$store.dispatch('login', res.data)
               // 로그인 누르기 전 있던 곳으로
               this.$router.go(-1)
             },
             error => {
-              console.log(error)
               this.loginError.isFailed = true
               this.email = ""
               this.password = ""
