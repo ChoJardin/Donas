@@ -6,6 +6,7 @@ import com.ssafy.donas.domain.Comment;
 
 import io.swagger.annotations.ApiModelProperty;
 
+
 public class ArticleResponse {
 	@ApiModelProperty(value = "id", required = true , position = 1)
 	public long id;

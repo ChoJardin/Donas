@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.User;
 
+
 @Repository
 public interface ArticleRepo extends JpaRepository<Article, Long>{
 	List<Article> findArticleByUser(User user);	

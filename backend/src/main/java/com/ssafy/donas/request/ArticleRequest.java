@@ -9,6 +9,7 @@ import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.ToString;
 
+
 @Valid
 @ToString
 public class ArticleRequest {
