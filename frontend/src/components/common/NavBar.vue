@@ -125,7 +125,7 @@ export default {
 .notification {
   display: inline-block;
   position: relative;
-  text-decoration-color: none;
+  text-decoration-color: transparent;
   float: right;
   padding-right: 5px;
   padding-top: 5px;

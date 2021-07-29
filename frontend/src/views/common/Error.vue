@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .error {
     display: block;
     box-sizing: border-box;

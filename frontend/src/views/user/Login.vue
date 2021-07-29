@@ -69,7 +69,6 @@ export default {
 
     // 로그인
     onLogin() {
-      console.log('enter')
       if (this.isSubmit) {
         let {email, password} = this
         let data = {
@@ -83,15 +82,21 @@ export default {
         UserApi.requestLogin(
             data,
             res => {
-              // 유저 닉네임 저장
-              this.$store.dispatch('login', res.data)
-              // 로그인 누르기 전 있던 곳으로
-              this.$router.go(-1)
+              // 로그인 실패
+              if (res.data === 'NOT_FOUND') {
+                this.loginError.isFailed = true
+                this.$refs.email.onReset()
+                this.$refs.password.onReset()
+              } else {
+                // 로그인 성공
+                // 유저 닉네임 저장
+                this.$store.dispatch('login', res.data)
+                // 로그인 누르기 전 있던 곳으로
+                this.$router.go(-1)
+              }
             },
-            error => {
-              this.loginError.isFailed = true
-              this.$refs.email.onReset()
-              this.$refs.password.onReset()
+            err => {
+              this.$router.push('/error')
             }
         )
       }

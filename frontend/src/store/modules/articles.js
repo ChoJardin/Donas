@@ -24,48 +24,6 @@ const state ={
         id: '3',
         image: '',
         content: '789'
-      },      {
-        id: '1',
-        image: '',
-        content: '123'
-      },
-      {
-        id: '2',
-        image: '',
-        content: '456'
-      },
-      {
-        id: '3',
-        image: '',
-        content: '789'
-      },      {
-        id: '1',
-        image: '',
-        content: '123'
-      },
-      {
-        id: '2',
-        image: '',
-        content: '456'
-      },
-      {
-        id: '3',
-        image: '',
-        content: '789'
-      },      {
-        id: '1',
-        image: '',
-        content: '123'
-      },
-      {
-        id: '2',
-        image: '',
-        content: '456'
-      },
-      {
-        id: '3',
-        image: '',
-        content: '789'
       },
     ],
     selectedArticle: {}
