@@ -51,6 +51,7 @@ export default {
   font-weight: bold;
   text-align: center;
   margin-right: 3px;
+  border-radius: 0 10px 10px 25px;
 }
 
 .button2 {
