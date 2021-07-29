@@ -23,8 +23,8 @@ import Login from "@/views/user/Login";
 import Signup from "@/views/user/Signup";
 
 import Alert from "@/views/user/Alert";
-import AlertAll from "@/components/accounts/AlertAll";
-import MessageAll from "@/components/accounts/MessageAll";
+import AlertAll from "@/components/user/AlertAll";
+import MessageAll from "@/components/user/MessageAll";
 
 import Search from "@/views/common/Search";
 
