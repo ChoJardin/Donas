@@ -14,6 +14,7 @@ import com.ssafy.donas.repository.LikeRepo;
 @Service
 @Transactional
 public class LikeService {
+	
 	@Autowired
 	LikeRepo likeRepo;
 	

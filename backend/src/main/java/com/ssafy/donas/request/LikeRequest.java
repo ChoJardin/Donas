@@ -10,6 +10,7 @@ import lombok.ToString;
 @Valid
 @ToString
 public class LikeRequest {
+	
 	@ApiModelProperty(required = true)
     @NotNull
     long userId;

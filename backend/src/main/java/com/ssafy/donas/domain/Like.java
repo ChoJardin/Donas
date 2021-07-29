@@ -30,7 +30,6 @@ public class Like {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-//	@Column(name = "article_id", nullable = false)
 	@ManyToOne(targetEntity=Article.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "article_id", referencedColumnName = "id")
 	private Article article;
