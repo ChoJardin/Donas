@@ -4,7 +4,7 @@
       <div id="profile-wrap">
         <img id="profile-image" src="@/assets/도넛1.png" alt="">
         <div id="profile-info">
-          <h1 id="username">{{this.$route.params.nickname}}</h1>
+          <h1 id="username">{{nickname}}</h1>
           <div id="mileage-total">8,000원</div>
         </div>
       </div>

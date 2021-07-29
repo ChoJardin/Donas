@@ -9,11 +9,21 @@
       </div>
 
       <div v-if="!isLoggedIn" id="options">
+        <div class="search">
+          <router-link to="/search"><i class="fas fa-search fa-2x" style="color: black"></i></router-link>
+        </div>
         <button class="button1" style="float:right"><router-link to="/login">Login</router-link></button>
         <button class="button1" style="float:right"><router-link to="/signup">Signup</router-link></button>
       </div>
 
-      <div v-else>
+      <div v-else class="loggedin" style="float: right">
+        <div class="search">
+          <router-link to="/search"><i class="fas fa-search fa-2x" style="color: black"></i></router-link>
+        </div>
+        <div class="notification">
+          <router-link :to="`/notification/${nickname}`"><span><i class="fas fa-bell fa-2x" style="color: #6cb9a2"></i></span>
+          <span class="badge"><i class="fas fa-circle fa-sm"></i></span></router-link>
+        </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
       </div>
 
@@ -22,7 +32,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "navBar",
@@ -33,11 +43,15 @@ export default {
   methods: {
     onLogout() {
       this.$store.dispatch('logout')
-    }
+      // if(this.$route.path!=='/') this.$router.push({name: 'Main'})
+    },
   },
   // computed
   computed: {
-    ...mapGetters(['isLoggedIn'])
+    ...mapGetters(['isLoggedIn']),
+    ...mapState({
+      nickname: state => state.user.loginUser.nickname,
+    })
   },
   // watch
   // lifecycle hook
@@ -95,6 +109,33 @@ export default {
   color: black;
   text-decoration: none;
   font-size: small;
+}
+
+.loggedin {
+  display: flex;
+  align-content: center;
+}
+
+.search {
+  display: inline-block;
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+.notification {
+  display: inline-block;
+  position: relative;
+  text-decoration-color: none;
+  float: right;
+  padding-right: 5px;
+  padding-top: 5px;
+
+}
+.notification .badge {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  color: red;
 }
 
 /*.button1.b-text {*/
