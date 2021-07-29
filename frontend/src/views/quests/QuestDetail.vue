@@ -19,9 +19,9 @@
 
       <!--article start-->
       <div id="article-wrap">
-        <div class="article-image" v-for="n in 10" :key="n">
+        <div class="article-image" v-for="article in articles" :key="article.id">
           <!--article 같이 보내줘야 함...-->
-          <ArticleImage class="inner"/>
+          <ArticleImage class="inner" :article="article"/>
         </div>
       </div>
     <!--article end-->
@@ -33,7 +33,7 @@
 
 <script>
 import ArticleImage from "@/components/articles/ArticleImage";
-import {mapGetters} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: "QuestSingle",
@@ -45,6 +45,9 @@ export default {
   // methods
   // computed
   computed:{
+    ...mapState({
+      articles: state => state.articles.feeds
+    }),
     ...mapGetters(['questId'])
   },
 }

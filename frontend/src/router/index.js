@@ -22,6 +22,12 @@ import Profile from "@/views/user/Profile";
 import Login from "@/views/user/Login";
 import Signup from "@/views/user/Signup";
 
+import Alert from "@/views/user/Alert";
+import AlertAll from "@/components/accounts/AlertAll";
+import MessageAll from "@/components/accounts/MessageAll";
+
+import Search from "@/views/common/Search";
+
 import Error from "@/views/common/Error";
 import PageNotFound from "@/views/common/PageNotFound";
 
@@ -41,7 +47,9 @@ const routes = [
       {path: 'relay', name: 'RelayQuest', component: RelayQuest},
     ]
   },
+  //퀘스트 생성
   {path: '/quests/create', name: 'CreateQuest', component: CreateQuest},
+  //퀘스트 상세
   {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
 
   // 피드
@@ -63,7 +71,16 @@ const routes = [
   {path: '/login', name: 'Login', component: Login},
   // 회원가입
   {path: '/signup', name: 'Signup', component: Signup},
+  // 알림
+  {path: '/notification/:nickname', component: Alert,
+  children: [
+      {path: '', name: 'Alert', component: AlertAll},
+      {path: 'messages', name: 'Messages', component: MessageAll}
+    ]
+  },
 
+  //검색
+  {path: '/search', name: 'Search', component: Search},
 
   // 에러
   {path: '/error', name: 'Error', component: Error},

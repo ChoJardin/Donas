@@ -13,7 +13,7 @@
 <script>
 import cookies from "vue-cookies";
 
-import navBar from "@/components/common/navBar";
+import navBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
 
 export default {
@@ -49,7 +49,7 @@ export default {
 
 /*footer*/
 #footer {
-  background-color: #6cb9a2;
+  background-color: white;
   /*background-color: #9d794a;*/
   height: 50px;
   width: 100vw;
