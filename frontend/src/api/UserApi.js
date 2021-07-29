@@ -7,7 +7,9 @@ const ROUTES = {
   checkNickname: '/user/nickname',
   checkEmail: '/user/email',
   signup: '/user/signup',
-  profileInfo: '/profile/'
+  profileInfo: '/profile/',
+  follower: '/profile/follower',
+  following: '/profile/following',
 
 }
 
@@ -71,6 +73,30 @@ const requestProfileInfo = (nickname, callback, errorCallback) => {
     })
 }
 
+// 팔로워 리스트
+const requestFollower = (params, callback, errorCallback) => {
+  const followerListPath = URL + ROUTES.follower
+  axios.get(followerListPath, {params: params})
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
+// 팔로잉 리스트
+const requestFollowing = (params, callback, errorCallback) => {
+  const followingListPath = URL + ROUTES.following
+  axios.get(followingListPath, {params: params})
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
 const UserApi = {
   URL,
   ROUTES,
@@ -79,6 +105,8 @@ const UserApi = {
   checkEmail:(data,callback,errorCallback)=>checkEmail(data,callback,errorCallback),
   requestSignup:(data,callback,errorCallback)=>requestSignup(data,callback,errorCallback),
   requestProfileInfo:(data,callback,errorCallback)=>requestProfileInfo(data,callback,errorCallback),
+  requestFollower:(data,callback,errorCallback)=>requestFollower(data,callback,errorCallback),
+  requestFollowing:(data,callback,errorCallback)=>requestFollowing(data,callback,errorCallback),
 }
 
 export default UserApi

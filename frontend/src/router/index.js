@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Main from "@/views/Main";
 
+// 퀘스트
 import Quest from "@/views/quests/Quest";
 import CreateQuest from "@/views/quests/CreateQuest";
 import SoloQuest from "@/components/quests/SoloQuest"
@@ -11,23 +12,35 @@ import GroupQuest from "@/components/quests/GroupQuest"
 import AllQuest from "@/components/quests/AllQuest";
 import QuestDetail from "@/views/quests/QuestDetail";
 
+// 피드
 import Feed from "@/views/articles/Feed";
 import VerticalFeed from "@/views/articles/VerticalFeed";
 
+// 마일리지
 import Mileage from "@/views/mileages/Mileage";
 import Donation from "@/components/mileages/Donation";
 import CashOut from "@/components/mileages/CashOut";
 
+// 프로필
 import Profile from "@/views/user/Profile";
+import ProfileEdit from "@/views/user/ProfileEdit";
 import Login from "@/views/user/Login";
 import Signup from "@/views/user/Signup";
 
+//팔로우
+import Follow from "@/views/user/Follow";
+import Follower from "@/views/user/Follower";
+import Following from "@/views/user/Following";
+
+// 알람
 import Alert from "@/views/user/Alert";
 import AlertAll from "@/components/user/AlertAll";
 import MessageAll from "@/components/user/MessageAll";
 
+// 검색
 import Search from "@/views/common/Search";
 
+// 오류
 import Error from "@/views/common/Error";
 import PageNotFound from "@/views/common/PageNotFound";
 
@@ -66,14 +79,27 @@ const routes = [
   },
 
   // 프로필
+  {path: '/user/profile/undefined', redirect: '/login'},
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile},
+  {path: '/user/profile/:nickname/edit', name: 'ProfileEdit', component: ProfileEdit},
+
+  // 팔로우
+  {
+    path: '/follow/:nickname', component: Follow,
+    children: [
+      {path: 'follower', name:'Follower', component: Follower},
+      {path: 'following', name: 'Following', component: Following}
+    ]
+  },
+
   // 로그인
   {path: '/login', name: 'Login', component: Login},
   // 회원가입
   {path: '/signup', name: 'Signup', component: Signup},
   // 알림
-  {path: '/notification/:nickname', component: Alert,
-  children: [
+  {
+    path: '/notification/:nickname', component: Alert,
+    children: [
       {path: '', name: 'Alert', component: AlertAll},
       {path: 'messages', name: 'Messages', component: MessageAll}
     ]

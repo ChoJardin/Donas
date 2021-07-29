@@ -5,7 +5,7 @@
 
       <!--기본 프로필 start-->
       <div id="profile-wrap">
-        <img id="profile-image" src="@/assets/도넛1.png" alt="">
+        <img id="profile-image" :src="profile.picture" alt="">
         <div id="profile-info">
           <div id="nickname">
             {{this.$route.params.nickname}}
@@ -26,28 +26,38 @@
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="wrap">
         <!--팔로워-->
-        <div id="follower">
-          팔로워 {{ follower }}
-        </div>
+        <router-link :to="`/follow/${profile.nickname}/follower`" id="follow">
+          <span>
+            팔로워
+          </span>
+          <span class="cnt">
+            {{ profile.follower }}
+          </span>
+        </router-link>
 
         <!--팔로잉-->
-        <div id="following">
-          팔로잉 {{ following }}
-        </div>
+        <router-link :to="`/follow/${profile.nickname}/following`" id="follow">
+          <span>
+            팔로잉
+          </span>
+          <span class="cnt">
+            {{ profile.following }}
+          </span>
+        </router-link>
 
         <!--isLoggedIn start-->
         <div v-if="this.isLoggedIn" id="profile-button">
           <!--본인 프로필-->
-          <button v-if="isMine">
+          <router-link :to="`/user/profile/${profile.nickname}/edit`" v-if="isMine" class="button">
             정보수정
-          </button>
+          </router-link>
           <!--다른 유저 프로필-->
-          <button v-else>
-            <span>
-              팔로우
+          <button v-else class="button">
+            <span v-if="profile.isFollowing">
+              팔로우 취소
             </span>
             <span>
-              팔로우 취소
+              팔로우
             </span>
           </button>
         </div>
@@ -88,25 +98,29 @@ export default {
   },
   // props
   // data
-  data() {
-    return {
-    }
-  },
   // methods
   // computed
   computed: {
     ...mapState({
-        nickname: state => state.user.loginUser.nickname,
-        articles: state => state.articles.feeds
+      loginUser: state => state.user.loginUser,
+      articles: state => state.articles.feeds,
+      profile: state => state.user.selectedProfile,
     }),
     ...mapGetters(['isLoggedIn']),
     isMine() {
-      return this.nickname === this.$route.params.nickname
+      return this.loginUser.nickname === this.$route.params.nickname
     }
   },
   // watch
+  watch: {
+    isLoggedIn(v) {
+      this.$mount()
+    }
+  },
   // lifecycle hook
   created() {
+    console.log('------')
+    console.log(this.profile)
     // 페이지 로딩시 초기 정보 요청
     UserApi.requestProfileInfo(
         this.$route.params.nickname,
@@ -142,6 +156,8 @@ export default {
 #profile-image {
   width: 100px;
   height: 100px;
+  border: 1px solid #292929;
+  border-radius: 50%;
 }
 
 #profile-info {
@@ -173,29 +189,38 @@ export default {
   height: 30px;
   display: flex;
   justify-content: space-between;
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-weight: bold;
 }
 
-#follower {
+#follow {
   flex: 1 1 0;
-  background-color: #cd4e3e;
+  /*background-color: #cd4e3e;*/
+  display: flex;
+  justify-content: space-around;
+  /*justify-content: center;*/
+  align-items: center;
+  text-decoration: none;
+  color: #292929;
+  cursor: pointer;
 }
 
-#following {
-  flex: 1 1 0;
-
-  background-color: #f1a64b;
+.cnt {
+  font-size: 1.4em;
 }
 
 #profile-button {
   flex: 1 1 0;
+  align-self: center;
 }
 
-#profile-button button {
+#profile-button .button {
   width: 100%;
-  height: 100%;
   float: right;
+  text-decoration: none;
+  text-align: center;
+  align-self: center;
+  color: #292929;
   background-color: #6cb9a2;
 }
 
