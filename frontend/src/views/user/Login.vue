@@ -26,7 +26,7 @@
 import * as EmailValidator from "email-validator"
 import PV from "password-validator"
 import UserApi from "@/api/UserApi";
-import userInput from "@/components/accounts/userInput";
+import userInput from "@/components/user/userInput";
 
 export default {
   name: "Login",

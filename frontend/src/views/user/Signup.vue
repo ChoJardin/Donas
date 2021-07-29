@@ -43,7 +43,7 @@ import PV from "password-validator";
 import * as EmailValidator from "email-validator"
 
 import UserApi from "@/api/UserApi";
-import UserInput from "@/components/accounts/userInput";
+import UserInput from "@/components/user/userInput";
 
 export default {
   name: "Signup",
@@ -266,6 +266,7 @@ export default {
   color: #cd4e3e;
   text-decoration: underline;
   font-weight: bold;
+  cursor: pointer;
   /*text-shadow: 1px 1px 1px #cd4e3e;*/
 }
 

@@ -24,6 +24,48 @@ const state ={
         id: '3',
         image: '',
         content: '789'
+      },      {
+        id: '1',
+        image: '',
+        content: '123'
+      },
+      {
+        id: '2',
+        image: '',
+        content: '456'
+      },
+      {
+        id: '3',
+        image: '',
+        content: '789'
+      },      {
+        id: '1',
+        image: '',
+        content: '123'
+      },
+      {
+        id: '2',
+        image: '',
+        content: '456'
+      },
+      {
+        id: '3',
+        image: '',
+        content: '789'
+      },      {
+        id: '1',
+        image: '',
+        content: '123'
+      },
+      {
+        id: '2',
+        image: '',
+        content: '456'
+      },
+      {
+        id: '3',
+        image: '',
+        content: '789'
       },
     ],
     selectedArticle: {}
@@ -36,9 +78,17 @@ const getters = {
 }
 
 const mutations = {
+  // 게시글 전체 정보 저장
+  SET_FEEDS(state, articles) {
+    state.feeds = articles
+  }
 }
 
 const actions = {
+  // 게시글 전체 정보 저장
+  setFeeds({commit}, articles) {
+    commit('SET_FEEDS', articles)
+  }
 }
 
 export default {

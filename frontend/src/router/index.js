@@ -22,7 +22,8 @@ import Profile from "@/views/user/Profile";
 import Login from "@/views/user/Login";
 import Signup from "@/views/user/Signup";
 
-
+import Error from "@/views/common/Error";
+import PageNotFound from "@/views/common/PageNotFound";
 
 
 Vue.use(VueRouter)
@@ -62,6 +63,13 @@ const routes = [
   {path: '/login', name: 'Login', component: Login},
   // 회원가입
   {path: '/signup', name: 'Signup', component: Signup},
+
+
+  // 에러
+  {path: '/error', name: 'Error', component: Error},
+  // 404
+  {path: '*', redirect: '/404'},
+  {path: '/404', name: 'PageNotFound', component: PageNotFound}
 ]
 
 const router = new VueRouter({

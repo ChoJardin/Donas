@@ -7,6 +7,7 @@ const ROUTES = {
   checkNickname: '/user/nickname',
   checkEmail: '/user/email',
   signup: '/user/signup',
+  profileInfo: '/profile/'
 
 }
 
@@ -58,6 +59,18 @@ const requestSignup = (data, callback, errorCallback) => {
     })
 }
 
+// 프로필 정보 요청
+const requestProfileInfo = (nickname, callback, errorCallback) => {
+  const profileInfoPath = URL + ROUTES.profileInfo + nickname
+  axios.get(profileInfoPath)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
 const UserApi = {
   URL,
   ROUTES,
@@ -65,6 +78,7 @@ const UserApi = {
   checkNickname:(data,callback,errorCallback)=>checkNickname(data,callback,errorCallback),
   checkEmail:(data,callback,errorCallback)=>checkEmail(data,callback,errorCallback),
   requestSignup:(data,callback,errorCallback)=>requestSignup(data,callback,errorCallback),
+  requestProfileInfo:(data,callback,errorCallback)=>requestProfileInfo(data,callback,errorCallback),
 }
 
 export default UserApi

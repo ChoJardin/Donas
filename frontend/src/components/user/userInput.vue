@@ -24,10 +24,6 @@
             @keyup.enter="onEnter($event)"
             @focus="onFocus($event)"
         >
-      <!--</div>-->
-      <!--<label :class="id">-->
-      <!--  <span v-if="labelRight">{{labelRight}}</span>-->
-      <!--</label>-->
 
       <!--에러메세지-->
       <div v-if="!!error" class="error-message">
