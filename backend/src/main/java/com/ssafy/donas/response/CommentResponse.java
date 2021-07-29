@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import io.swagger.annotations.ApiModelProperty;
 
+
 public class CommentResponse {
 	@ApiModelProperty(value = "id", required = true , position = 1)
 	public long id;
