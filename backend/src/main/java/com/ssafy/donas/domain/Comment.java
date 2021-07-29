@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +38,7 @@ public class Comment {
 	
 	@ManyToOne(targetEntity=Article.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "article_id", referencedColumnName = "id")
-	private long articleId;
+	private Article article;
 	
 	@Column(name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
@@ -44,7 +46,8 @@ public class Comment {
 	@Column(name = "updated_at", nullable = true)
 	private LocalDateTime updatedAt;
 	
-	@Column(name = "reply_to", nullable = true)
+	@Column(name = "reply_to")
+	@ColumnDefault("0")
 	private long replyTo;
 
 	public Comment() {}
@@ -73,12 +76,12 @@ public class Comment {
 		this.userId = userId;
 	}
 
-	public long getArticleId() {
-		return articleId;
+	public Article getArticleId() {
+		return article;
 	}
 
-	public void setArticle_id(long article_id) {
-		this.articleId = article_id;
+	public void setArticle_id(Article article) {
+		this.article = article;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -107,11 +110,11 @@ public class Comment {
 
 
 	@Builder
-	public Comment(String content, long userId, long articleId, LocalDateTime createdAt,
+	public Comment(String content, long userId, Article article, LocalDateTime createdAt,
 			LocalDateTime updatedAt, long replyTo) {
 		this.content = content;
 		this.userId = userId;
-		this.articleId = articleId;
+		this.article = article;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.replyTo = replyTo;

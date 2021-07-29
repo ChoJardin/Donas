@@ -33,7 +33,7 @@ public class Like {
 //	@Column(name = "article_id", nullable = false)
 	@ManyToOne(targetEntity=Article.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "article_id", referencedColumnName = "id")
-	private long articleId;
+	private Article article;
 	
 	@Column(name = "user_id", nullable = false)
 	private long userId;
@@ -42,9 +42,9 @@ public class Like {
 	public Like() {}
 	
 	@Builder
-	public Like(long userId, long articleId) {
+	public Like(long userId, Article article) {
 		this.userId = userId;
-		this.articleId = articleId;
+		this.article = article;
 	}
 
 	public long getId() {
@@ -63,12 +63,12 @@ public class Like {
 		this.userId = userId;
 	}
 
-	public long getArticleId() {
-		return articleId;
+	public Article getArticle() {
+		return article;
 	}
 
-	public void setArticleId(long articleId) {
-		this.articleId = articleId;
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 	
 }

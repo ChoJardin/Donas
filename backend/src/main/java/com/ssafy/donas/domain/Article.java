@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.donas.domain.quest.Quest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,10 +60,10 @@ public class Article{
 	@Column(nullable = false)
 	private String type;
 	
-	@OneToMany(mappedBy = "articleId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Like> lilkes = new ArrayList<Like>();
 	
-	@OneToMany(mappedBy = "articleId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Comment> comments = new ArrayList<Comment>();
 	
 	public Article() {}

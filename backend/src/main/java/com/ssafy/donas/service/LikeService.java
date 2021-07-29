@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.repository.LikeRepo;
 
@@ -23,16 +24,21 @@ public class LikeService {
 		return true;
 	}
 	
-	public boolean addLike(long userId, long articleId) {
-		Like like = new Like(userId, articleId);
+	public boolean checkLikeByUserIdAndArticleId(long userId, long articleID) {
+		//유저 아이디가 그 게시물에 좋아요를 눌렀는지 체크
+		return true;
+	}
+	
+	public boolean addLike(long userId, Article article) {
+		Like like = new Like(userId, article);
 		likeRepo.save(like);
-		//like 목록에 추가하는 함수 추가
+		article.getLilkes().add(like);
 		return true;
 	}
 
 	
-	public void delete(long likeId) {
-		likeRepo.deleteById(likeId);
+	public void delete(long Id) {
+		likeRepo.deleteById(Id);
 	}
 
 	public List<Like> getLikes(long articleId) {

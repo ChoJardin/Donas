@@ -28,16 +28,13 @@ public class CommentService {
 			return false;
 		return true;
 	}
-	public List<Comment> findCommentByArticle(long articleId){
-		if(!articleService.checkArticle(articleId))
-			return null;
-		return commentRepo.findCommentByArticleId(articleId);
-	}
 
-	//replyTo, updatedAt 관련 초기값 수정 필요
-	public boolean addComment(long articleId, long userId, String content) {
-		Comment comment = new Comment(content, userId, articleId, LocalDateTime.now(), LocalDateTime.now(), userId);
+
+
+	public boolean addComment(Article article, long userId, String content) {
+		Comment comment = new Comment(content, userId, article, LocalDateTime.now(), LocalDateTime.now(), 0);
 		commentRepo.save(comment);
+		article.getComments().add(comment);
 		return true;
 	}
 	
@@ -52,5 +49,9 @@ public class CommentService {
 	
 	public void delete(long commentId) {
 		commentRepo.deleteById(commentId);
+	}
+
+	public List<Comment> getComments(Article article) {
+		return commentRepo.findCommentByArticle(article);
 	}
 }

@@ -1,4 +1,4 @@
-package com.ssafy.donas.domain;
+package com.ssafy.donas.domain.quest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,14 +6,18 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.donas.domain.Article;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,10 +30,15 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Entity
-public class Quest {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="DTYPE")
+public abstract class Quest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(name = "user_id", nullable = false)
+	private long userId;
 
 	@Column(nullable = false)
 	private String type;
@@ -49,11 +58,7 @@ public class Quest {
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Article> articles = new ArrayList<Article>();
 	
-//	@OneToMany(mappedBy = "", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private List<User> users = new ArrayList<User>();
-
 	public Quest() {}
-	
 	
 	public long getId() {
 		return id;
@@ -112,7 +117,16 @@ public class Quest {
 	}
 
 
-	public Quest(String type, String title, String description, LocalDateTime startAt, LocalDateTime finishAt) {
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public Quest(long userId, String type, String title, String description, LocalDateTime startAt, LocalDateTime finishAt) {
+		this.userId = userId;
 		this.type = type;
 		this.title = title;
 		this.description = description;

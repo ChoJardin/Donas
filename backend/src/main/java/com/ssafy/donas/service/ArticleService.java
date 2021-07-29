@@ -1,7 +1,6 @@
 package com.ssafy.donas.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -9,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Article;
+import com.ssafy.donas.domain.User;
 import com.ssafy.donas.repository.ArticleRepo;
-import com.ssafy.donas.repository.UserRepo;
-import com.ssafy.donas.response.ArticleResponse;
 
 @Service
 @Transactional
@@ -29,15 +27,14 @@ public class ArticleService {
 		return true;
 	}
 	
-//	public List<Article> getArticlesByUser(long userId){
-//		if(!userService.checkId(userId))
-//			return null;
-//		return articleRepo.findArticleByUserid(userId);
-//	}	
+	public List<Article> getArticlesByUser(User user){
+		return articleRepo.findArticleByUser(user);
+	}
 	
-	
-//	
-//	
+	public Article getArticleById(long id) {
+		return articleRepo.getById(id);
+	}
+
 //	@Transactional
 //    public List<BoardResult> getBoard(){
 //        List<BoardEntity> entityList = boardRepository.findAll();
