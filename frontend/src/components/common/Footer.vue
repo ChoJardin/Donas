@@ -41,7 +41,7 @@ export default {
   flex: auto;
   width: 20%;
   padding-top: 7px;
-  color: aliceblue;
+  color: #6cb9a2;
   text-align: center;
   font-size: small;
   text-decoration: none;
@@ -54,11 +54,11 @@ export default {
 /*}*/
 
 #flex-container a.router-link-exact-active {
-  color: #6cb9a2;
+  color: white ;
   /*color: #9d794a;*/
-  background: white;
+  background: #6cb9a2;
   /*margin: 0 0px 2px 0px;*/
-  /*border-radius: 0px 0px 10px 10px;*/
+  border-radius: 15px ;
 }
 
 </style>
