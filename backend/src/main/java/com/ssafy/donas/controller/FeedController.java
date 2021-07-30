@@ -22,6 +22,7 @@ import com.ssafy.donas.domain.Comment;
 import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
+import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AddArticleRequest;
 import com.ssafy.donas.request.AddCommentRequest;
@@ -62,7 +63,7 @@ public class FeedController {
 
 	@Autowired
 	QuestService questService;
-	
+
 	/*
 	 * Article Functions
 	 */
@@ -80,7 +81,7 @@ public class FeedController {
 				article.getImage(), article.getContent(), article.getType());
 		return HttpStatus.OK;
 	}
-	
+
 	@PutMapping("/article")
 	@ApiOperation(value = "게시물 수정")
 	public Object updateArticle(@RequestBody UpdateArticleRequest article) {
@@ -89,9 +90,9 @@ public class FeedController {
 		articleService.update(article.getArticleId(), article.getContent());
 		return HttpStatus.OK;
 	}
-	
-	//게시물 삭제 기능 추가
-	
+
+	// 게시물 삭제 기능 추가
+
 	@GetMapping("/article/{userId}")
 	@ApiOperation(value = "아이디 당 게시물 목록")
 	public Object getArticleByUserId(@PathVariable long userId) {
@@ -109,40 +110,43 @@ public class FeedController {
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
 			res.type = article.getType();
-			res.like = article.getLilkes().size();
+			res.like = article.getLikes().size();
 			res.comment = article.getComments().size();
 			result.add(res);
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	//ing
+	// ing
 	@GetMapping("/article/recent/{userId}")
 	@ApiOperation(value = "유저별 팔로잉 중인 유저들의 게시물 목록 최신순 5개")
 	public Object getOrderedArticleByUser(@PathVariable long userId) {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
-		
+
 //		return new ResponseEntity<>(result, HttpStatus.OK);
 		return null;
 	}
-	//추가로 5개 불러오는거 
-	
-	
-	
-	
-	
+	// 추가로 5개 불러오는거
+
 	/*
 	 * Quest Functions
 	 */
-	//퀘스트 생성
-	//수정삭제..?
+	// 퀘스트 생성
+	// 수정삭제..?
 	@GetMapping("/quest/{userId}")
 	@ApiOperation(value = "퀘스트목록 가져오기")
 	public Object getQuestByUser(@PathVariable long userId) {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
-		List<Quest> quests = questService.getQuestsByUserId(userId);
+
+		User user = userService.getUser(userId);
+		List<QuestParticipants> questSummaries = user.getMyQuests();
+
+		List<Quest> quests = new ArrayList<>();
+		for (QuestParticipants qs : questSummaries)
+			quests.add(qs.getQuest());
+
 		List<QuestResponse> result = new ArrayList<>();
 		for (Quest quest : quests) {
 			QuestResponse res = new QuestResponse();
@@ -157,16 +161,22 @@ public class FeedController {
 	public Object getRelayByUser(@PathVariable long userId) {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
-		List<Relay> relays = questService.getRealysByUserId(userId);
+
+		User user = userService.getUser(userId);
+		List<QuestParticipants> questSummaries = user.getMyQuests();
+
 		final List<QuestResponse> result = new ArrayList<>();
-		for (Relay relay : relays) {
-			QuestResponse res = new QuestResponse();
-			res.id = relay.getId();
-			result.add(res);
+		for (QuestParticipants qs : questSummaries) {
+			if (qs.getQuest().getType().equals("R")) {
+				QuestResponse res = new QuestResponse();
+				res.id = qs.getQuest().getId();
+				result.add(res);
+			}
 		}
+
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	/*
 	 * Comment Functions
 	 */
@@ -223,7 +233,7 @@ public class FeedController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	/*
 	 * Like Functions
 	 */
@@ -234,10 +244,10 @@ public class FeedController {
 			return HttpStatus.NOT_FOUND;
 		if (!articleService.checkArticle(like.getArticleId()))
 			return HttpStatus.NOT_FOUND;
-		likeService.addLike(like.getUserId(), articleService.getArticleById(like.getArticleId()));
+		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
 		return HttpStatus.OK;
 	}
-	
+
 	@DeleteMapping("/like")
 	@ApiOperation(value = "좋아요 취소")
 	public Object deleteLike(@RequestParam long likeId) {
@@ -258,7 +268,7 @@ public class FeedController {
 
 		for (Like like : likes) {
 			IdResponse id = new IdResponse();
-			id.id = like.getUserId();
+			id.id = like.getUser().getId();
 			userIds.add(id);
 		}
 

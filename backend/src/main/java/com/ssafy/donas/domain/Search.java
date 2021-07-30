@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
@@ -34,8 +36,8 @@ public class Search {
 	@Column(nullable = false)
 	private String nickname;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="search_time", insertable = false, updatable = false)
+	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private Date searchTime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

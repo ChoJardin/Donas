@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.donas.domain.quest.Quest;
 
@@ -49,6 +51,7 @@ public class Article{
 	private String content;
 	
 	@Column(name = "created_at", nullable = false)
+	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime createdAt;
 	
 	@Column(name = "updated_at", nullable = true)
@@ -58,7 +61,7 @@ public class Article{
 	private String type;
 	
 	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Like> lilkes = new ArrayList<Like>();
+	private List<Like> likes = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Comment> comments = new ArrayList<Comment>();

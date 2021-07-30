@@ -25,7 +25,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @DiscriminatorValue("R")
-@Table(name="RelayQuest")
+@Table(name="Relay_quest")
 public class Relay extends Quest{
 	@Column(name = "user_order", nullable = false)
 	private int order;

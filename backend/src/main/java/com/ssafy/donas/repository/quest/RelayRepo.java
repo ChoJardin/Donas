@@ -7,5 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ssafy.donas.domain.quest.Relay;
  
 public interface RelayRepo extends JpaRepository<Relay, Long>{
-	List<Relay> findRelayByUserId(long userId);
 }

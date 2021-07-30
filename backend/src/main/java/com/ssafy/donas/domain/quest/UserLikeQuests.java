@@ -36,6 +36,8 @@ public class UserLikeQuests {
 	@JoinColumn(name = "quest_id")
 	private Quest quest;
 	
+	public UserLikeQuests() {}
+	
 	@Builder
 	public UserLikeQuests(User user, Quest quest) {
 		this.user = user;

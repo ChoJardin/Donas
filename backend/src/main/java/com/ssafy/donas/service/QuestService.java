@@ -43,11 +43,7 @@ public class QuestService {
 		return questRepo.findById(id).get();
 	}
 	
-	public List<Quest> getQuestsByUserId(long UserId){
-		return questRepo.findQuestByUserId(UserId);
-	}
-	
-	public List<Relay> getRealysByUserId(long UserId){
-		return relayRepo.findRelayByUserId(UserId);
-	}
+//	public List<Relay> getRealysByUserId(long UserId){
+//		return relayRepo.findRelayByUserId(UserId);
+//	}
 }

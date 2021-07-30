@@ -42,6 +42,7 @@ public class Comment {
 	private Article article;
 	
 	@Column(name = "created_at", nullable = false)
+	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime createdAt;
 	
 	@Column(name = "updated_at", nullable = true)

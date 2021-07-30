@@ -1,5 +1,7 @@
 package com.ssafy.donas.domain;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.donas.domain.quest.QuestParticipants;
@@ -52,9 +55,9 @@ public class User {
 	@ColumnDefault("0")
 	private long mileage;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(insertable = false, updatable = false)
-	private Date joindate;
+	@ColumnDefault("CURRENT_TIMESTAMP()")
+	private LocalDateTime joindate;
 
 	@Column(nullable = false, name="quest_cnt")
 	@ColumnDefault("0")
@@ -92,6 +95,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Donation> donations = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Like> likeArticles = new ArrayList<>();
 	
 	public User() {}
 

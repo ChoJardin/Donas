@@ -26,7 +26,7 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class Donation {
+public class Cash {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -42,17 +42,11 @@ public class Donation {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "charity_id")
-	private Charity charity;
-	
-	public Donation() {}
+	public Cash() {}
 	
 	@Builder
-	public Donation(long amount, User user, Charity charity) {
+	public Cash(long amount, User user) {
 		this.amount = amount;
 		this.user = user;
-		this.charity = charity;
 	}
-	
 }
