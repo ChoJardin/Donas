@@ -4,7 +4,7 @@
 
     <div class="branch">
       <router-link :to="`/notification/${nickname}`" class="button1">알림</router-link>
-      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>
+<!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
       <router-link :to="`/notification/${nickname}/messages`" class="button2">메세지</router-link>
     </div>
 
@@ -41,9 +41,14 @@ export default {
   justify-content: space-between;
   padding-bottom: 10px;
 }
+
+.branch a.router-link-exact-active {
+  border-bottom: #cd4e3e solid;
+}
+
 .button1 {
   width: 100%;
-  border-bottom: #cd4e3e dotted;
+  border-bottom: lightgray solid 2px;
   /*border-top: #cd4e3e dotted;*/
   text-decoration: none;
   color: black;
@@ -56,7 +61,7 @@ export default {
 
 .button2 {
   width: 100%;
-  border-bottom: #cd4e3e dotted;
+  border-bottom: lightgray solid 2px;
   /*border-top: #cd4e3e dotted;*/
   text-decoration: none;
   color: black;
