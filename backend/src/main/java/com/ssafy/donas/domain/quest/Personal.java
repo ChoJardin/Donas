@@ -20,7 +20,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @DiscriminatorValue("P")
-@Table(name="PersonalQuest")
+@Table(name="Personal_quest")
 public class Personal extends Quest{
 	@Transient
 	String test;

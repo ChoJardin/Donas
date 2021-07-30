@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Like;
+import com.ssafy.donas.domain.User;
 import com.ssafy.donas.repository.LikeRepo;
 
 @Service
@@ -30,10 +31,10 @@ public class LikeService {
 		return true;
 	}
 	
-	public boolean addLike(long userId, Article article) {
-		Like like = new Like(userId, article);
+	public boolean addLike(User user, Article article) {
+		Like like = new Like(user, article);
 		likeRepo.save(like);
-		article.getLilkes().add(like);
+		article.getLikes().add(like);
 		return true;
 	}
 

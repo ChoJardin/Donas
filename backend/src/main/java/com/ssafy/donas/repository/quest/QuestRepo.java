@@ -7,5 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ssafy.donas.domain.quest.Quest;
  
 public interface QuestRepo extends JpaRepository<Quest, Long> {
-	public List<Quest> findQuestByUserId(long userId);
 }

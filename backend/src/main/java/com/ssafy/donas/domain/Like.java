@@ -30,43 +30,19 @@ public class Like {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne(targetEntity=Article.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "article_id", referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "article_id")
 	private Article article;
 	
-	@Column(name = "user_id", nullable = false)
-	private long userId;
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	public Like() {}
 	
 	@Builder
-	public Like(long userId, Article article) {
-		this.userId = userId;
-		this.article = article;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	public Article getArticle() {
-		return article;
-	}
-
-	public void setArticle(Article article) {
+	public Like(User user, Article article) {
+		this.user = user;
 		this.article = article;
 	}
 	

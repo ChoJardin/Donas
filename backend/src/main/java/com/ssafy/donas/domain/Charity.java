@@ -1,18 +1,16 @@
 package com.ssafy.donas.domain;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -27,29 +25,29 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class Search {
-
+public class Charity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(nullable = false, length=20)
+	private String name;
+	
 	@Column(nullable = false)
-	private String nickname;
+	@ColumnDefault("0")
+	private int total;
 	
-	@Column(name="search_time", insertable = false, updatable = false)
-	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private Date searchTime;
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private int quarter;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User searchUser;
+	@OneToMany(mappedBy = "charity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Donation> history = new ArrayList<>();
 	
-	public Search() {}
+	public Charity () {}
 	
 	@Builder
-	public Search(User user, String nickname) {
-		this.searchUser = user;
-		this.nickname = nickname;
+	public Charity (String name) {
+		this.name = name;
 	}
-	
 }

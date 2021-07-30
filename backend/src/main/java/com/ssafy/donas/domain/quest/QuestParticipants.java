@@ -41,6 +41,8 @@ public class QuestParticipants {
 	@ColumnDefault("0")
 	private float rate;
 	
+	public QuestParticipants() {}
+	
 	@Builder
 	public QuestParticipants(User user, Quest quest) {
 		this.user = user;

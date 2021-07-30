@@ -1,7 +1,6 @@
-package com.ssafy.donas.domain;
+package com.ssafy.donas.domain.quest;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -24,32 +22,37 @@ import lombok.Data;
 
 @Entity
 @Data
+//@NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class Search {
-
+@Table(name="Relay_wait")
+public class RelayWait {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	@Column(nullable = false, name="wait_rank")
+	private int waitRank;
 	
-	@Column(nullable = false)
-	private String nickname;
+	@Column(nullable = false, name="user_id")
+	private long userId;
 	
-	@Column(name="search_time", insertable = false, updatable = false)
-	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private Date searchTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date deadline;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User searchUser;
+	@JoinColumn(name = "relay_id")
+	private Relay relay;
 	
-	public Search() {}
+	public RelayWait() {}
 	
 	@Builder
-	public Search(User user, String nickname) {
-		this.searchUser = user;
-		this.nickname = nickname;
+	public RelayWait(Relay relay, int waitRank, long userId, Date deadline) {
+		this.relay = relay;
+		this.waitRank = waitRank;
+		this.userId = userId;
+		this.deadline = deadline;
 	}
-	
+
 }

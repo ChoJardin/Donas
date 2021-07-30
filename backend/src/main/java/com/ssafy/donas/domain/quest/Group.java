@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @DiscriminatorValue("G")
-@Table(name="GroupQuest")
+@Table(name="Group_quest")
 public class Group extends Quest{
 	@Column(nullable = false)
 	@ColumnDefault("0")

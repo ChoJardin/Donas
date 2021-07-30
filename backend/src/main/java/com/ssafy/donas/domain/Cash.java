@@ -1,7 +1,6 @@
 package com.ssafy.donas.domain;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,29 +26,27 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class Search {
-
+public class Cash {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@Column(nullable = false)
-	private String nickname;
+	private long amount;
 	
-	@Column(name="search_time", insertable = false, updatable = false)
+	@Column(insertable = false, updatable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private Date searchTime;
+	private Date time;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User searchUser;
+	private User user;
 	
-	public Search() {}
+	public Cash() {}
 	
 	@Builder
-	public Search(User user, String nickname) {
-		this.searchUser = user;
-		this.nickname = nickname;
+	public Cash(long amount, User user) {
+		this.amount = amount;
+		this.user = user;
 	}
-	
 }
