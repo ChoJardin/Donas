@@ -20,6 +20,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.donas.domain.quest.QuestParticipants;
+import com.ssafy.donas.domain.quest.UserLikeQuests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,6 +81,15 @@ public class User {
 	
 	@OneToMany(mappedBy = "searchUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Search> searchWords = new ArrayList<Search>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<QuestParticipants> myQuests = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<UserLikeQuests> likeQuests = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Article> articles = new ArrayList<Article>();
 	
 	public User() {}
 

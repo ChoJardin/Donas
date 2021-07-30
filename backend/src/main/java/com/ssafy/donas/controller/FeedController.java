@@ -63,10 +63,6 @@ public class FeedController {
 	@Autowired
 	QuestService questService;
 	
-	
-	
-	
-	
 	/*
 	 * Article Functions
 	 */
@@ -130,6 +126,7 @@ public class FeedController {
 //		return new ResponseEntity<>(result, HttpStatus.OK);
 		return null;
 	}
+	//추가로 5개 불러오는거 
 	
 	
 	
@@ -138,7 +135,6 @@ public class FeedController {
 	/*
 	 * Quest Functions
 	 */
-	
 	//퀘스트 생성
 	//수정삭제..?
 	@GetMapping("/quest/{userId}")
@@ -170,10 +166,6 @@ public class FeedController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	
-	
-	
 	
 	/*
 	 * Comment Functions
@@ -231,10 +223,6 @@ public class FeedController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	
-	
-	
 	
 	/*
 	 * Like Functions

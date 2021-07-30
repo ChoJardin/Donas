@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 
 @Getter
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
