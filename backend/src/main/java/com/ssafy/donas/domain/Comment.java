@@ -22,7 +22,11 @@ import lombok.NoArgsConstructor;
 
 
 @Getter
+<<<<<<< HEAD
 //@NoArgsConstructor
+=======
+@NoArgsConstructor
+>>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
