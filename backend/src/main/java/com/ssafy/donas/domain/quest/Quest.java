@@ -50,7 +50,7 @@ public abstract class Quest {
 	@Column(nullable = false)
 	private String description;
 	
-	@Column(name = "starts_at", nullable = false)
+	@Column(name = "start_at", nullable = false)
 	private LocalDateTime startAt;
 	
 	@Column(name = "finish_at", nullable = false)
@@ -58,6 +58,9 @@ public abstract class Quest {
 	
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Article> articles = new ArrayList<Article>();
+	
+	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<QuestParticipants> users = new ArrayList<>();
 	
 	public Quest() {}
 	
