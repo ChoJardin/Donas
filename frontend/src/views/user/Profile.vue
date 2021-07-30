@@ -189,7 +189,7 @@ export default {
   height: 30px;
   display: flex;
   justify-content: space-between;
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: bold;
 }
 
@@ -206,7 +206,7 @@ export default {
 }
 
 .cnt {
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 
 #profile-button {
