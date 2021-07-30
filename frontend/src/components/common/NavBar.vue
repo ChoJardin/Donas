@@ -10,7 +10,7 @@
 
       <div v-if="!isLoggedIn" id="options">
         <div class="search">
-          <router-link to="/search"><i class="fas fa-search fa-2x" style="color: black"></i></router-link>
+          <router-link to="/search"><v-icon large style="color: black" class="search">search</v-icon></router-link>
         </div>
         <button class="button1" style="float:right"><router-link to="/login">Login</router-link></button>
         <button class="button1" style="float:right"><router-link to="/signup">Signup</router-link></button>
@@ -18,7 +18,9 @@
 
       <div v-else class="loggedin" style="float: right">
         <div class="search">
-          <router-link to="/search"><i class="fas fa-search fa-2x" style="color: black"></i></router-link>
+          <router-link to="/search">
+            <v-icon large style="color: black" class="search">search</v-icon>
+          </router-link>
         </div>
         <div class="notification">
           <router-link :to="`/notification/${nickname}`"><span><i class="fas fa-bell fa-2x" style="color: #6cb9a2"></i></span>
@@ -116,10 +118,12 @@ export default {
   align-content: center;
 }
 
-.search {
+.search a{
   display: inline-block;
   padding-right: 5px;
   padding-top: 5px;
+  text-decoration: none !important;
+
 }
 
 .notification {
