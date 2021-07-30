@@ -1,19 +1,12 @@
 <template>
   <div>
     <div id="follow-wrap">
-      <div class="follow">
-        <router-link :to="`/follow/${nickname}/follower`">
+        <router-link :to="`/follow/${nickname}/follower`" class="follow">
           팔로워 {{ followerCnt }}
-        <div class="under-line"></div>
         </router-link>
-      </div>
-
-      <div class="follow">
-        <router-link :to="`/follow/${nickname}/following`">
+        <router-link :to="`/follow/${nickname}/following`" class="follow">
           팔로잉 {{ followingCnt }}
-        <div class="under-line"></div>
         </router-link>
-      </div>
     </div>
 
     <router-view/>
@@ -49,30 +42,27 @@ export default {
 
 <style scoped>
 #follow-wrap {
-  margin: 30px 0px;
+  height: 30px;
+  margin: 30px 0;
   width: 100%;
   display: flex;
-  flex: 1 1 0;
-  justify-content: space-around;
-  font-size: 1.1em;
+  justify-content: space-between;
+  font-size: 1em;
   font-weight: bold;
 }
 
+#follow-wrap a.router-link-exact-active {
+  border-bottom: #cd4e3e solid;
+}
+
 .follow {
-  flex: 1 1 0;
-  width: 100%;
-  /*justify-content: center;*/
-}
-
-.follow a {
-  text-decoration: none;
-  color: #292929;
-}
-
-.follow a.router-link-exact-active .under-line{
-  border: 1px solid #292929;
   width: 90%;
-  margin-left: 5%;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-bottom: lightgray solid 1px;
+  text-decoration: none;
+  color: black;
+  text-align: center;
 }
 
 

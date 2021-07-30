@@ -3,9 +3,9 @@
 <!--    <h1>{{nickname}}'s notification</h1>-->
 
     <div class="branch">
-      <router-link :to="`/notification/${nickname}`" class="button1">알림</router-link>
+      <router-link :to="`/notification/${nickname}`" class="button">알림</router-link>
 <!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
-      <router-link :to="`/notification/${nickname}/messages`" class="button2">메세지</router-link>
+      <router-link :to="`/notification/${nickname}/messages`" class="button">메세지</router-link>
     </div>
 
     <router-view class="router-view"/>
@@ -35,39 +35,27 @@ export default {
 
 <style scoped>
 .branch {
+  height: 30px;
+  margin: 30px 0;
   width: 100%;
-  height: 40px;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 10px;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .branch a.router-link-exact-active {
   border-bottom: #cd4e3e solid;
 }
 
-.button1 {
-  width: 100%;
-  border-bottom: lightgray solid 2px;
-  /*border-top: #cd4e3e dotted;*/
+.button {
+  width: 90%;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-bottom: lightgray solid 1px;
   text-decoration: none;
   color: black;
-  font-size: 1.3em;
-  font-weight: bold;
   text-align: center;
-  margin-right: 3px;
-  /*border-radius: 0 10px 10px 25px;*/
 }
 
-.button2 {
-  width: 100%;
-  border-bottom: lightgray solid 2px;
-  /*border-top: #cd4e3e dotted;*/
-  text-decoration: none;
-  color: black;
-  font-size: 1.3em;
-  font-weight: bold;
-  text-align: center;
-  margin-left: 3px;
-}
 </style>
