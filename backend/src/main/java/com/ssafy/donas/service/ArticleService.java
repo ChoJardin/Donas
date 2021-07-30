@@ -1,6 +1,8 @@
 package com.ssafy.donas.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -9,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.repository.ArticleRepo;
-
 
 @Service
 @Transactional
@@ -22,10 +24,23 @@ public class ArticleService {
 	ArticleRepo articleRepo;
 
 	public boolean checkArticle(long articleId) {
-		Article article = articleRepo.getById(articleId);
-		if(article == null)
+		Optional<Article> article = articleRepo.findById(articleId);
+		if(article.isEmpty()) {
+			System.out.println(articleId);
 			return false;
+		}
 		return true;
+	}
+	
+	public void add(User user, Quest quest, String image, String content, String type) {
+		Article article = new Article(user, quest, image, content, LocalDateTime.now(), null, type);
+		articleRepo.save(article);
+		user.getArticles().add(article);
+	}
+	
+	public void update(long articleId, String content) {
+		Article article = articleRepo.findById(articleId).get();
+		article.setContent(content);
 	}
 	
 	public List<Article> getArticlesByUser(User user){
@@ -33,7 +48,13 @@ public class ArticleService {
 	}
 	
 	public Article getArticleById(long id) {
+		if(!checkArticle(id))
+			return null;
 		return articleRepo.getById(id);
+	}
+	
+	public List<Article> getOrderedFollowingArticleByUser(User user) {
+		return articleRepo.findTop5ByUserOrderByCreatedAt(user);
 	}
 
 //	@Transactional
