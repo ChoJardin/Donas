@@ -1,10 +1,15 @@
 package com.ssafy.donas.domain.quest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -24,8 +29,12 @@ import lombok.Data;
 public class Relay extends Quest{
 	@Column(name = "user_order", nullable = false)
 	private int order;
+	
 	@Column(nullable = false)
 	private String userStatus;
+	
+	@OneToMany(mappedBy = "relay", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<RelayWait> wait = new ArrayList<>();
 	
 	public Relay() {}
 	
