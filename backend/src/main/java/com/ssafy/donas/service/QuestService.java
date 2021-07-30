@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -13,7 +14,7 @@ import com.ssafy.donas.repository.quest.GroupRepo;
 import com.ssafy.donas.repository.quest.PersonalRepo;
 import com.ssafy.donas.repository.quest.QuestRepo;
 import com.ssafy.donas.repository.quest.RelayRepo;
- 
+
 @Service
 @Transactional
 public class QuestService {
@@ -28,6 +29,19 @@ public class QuestService {
 	
 	@Autowired
 	RelayRepo relayRepo;
+	
+	public boolean checkQuest(long id) {
+		Optional<Quest> quest = questRepo.findById(id);
+		if(quest.isEmpty())
+			return false;
+		return true;
+	}
+	
+	public Quest getQuestById(long id) {
+		if(checkQuest(id))
+			return null;
+		return questRepo.findById(id).get();
+	}
 	
 	public List<Quest> getQuestsByUserId(long UserId){
 		return questRepo.findQuestByUserId(UserId);
