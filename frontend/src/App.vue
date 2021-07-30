@@ -73,5 +73,10 @@ export default {
   margin-right: 10px;
 }
 
+/*!* 회원가입 중복확인 버튼 *!*/
+/*.input-with-button.check input {*/
+/*  border-top-right-radius: unset;*/
+/*  border-bottom-right-radius: unset;*/
+/*}*/
 
 </style>

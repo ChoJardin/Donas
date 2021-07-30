@@ -27,6 +27,7 @@ export default {
   },
   created() {
     let params = {id: this.id}
+    // 팔로워 리스트 요청
     UserApi.requestFollower(
         params,
         res => {
