@@ -60,7 +60,10 @@ public abstract class Quest {
 	private List<Article> articles = new ArrayList<Article>();
 	
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<QuestParticipants> users = new ArrayList<>();
+	private List<QuestParticipants> participants = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<UserLikeQuests> likeUsers = new ArrayList<>();
 	
 	public Quest() {}
 	

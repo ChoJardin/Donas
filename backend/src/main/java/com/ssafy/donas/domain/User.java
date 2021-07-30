@@ -21,6 +21,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.donas.domain.quest.QuestParticipants;
+import com.ssafy.donas.domain.quest.UserLikeQuests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -82,7 +83,10 @@ public class User {
 	private List<Search> searchWords = new ArrayList<Search>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<QuestParticipants> quests = new ArrayList<>();
+	private List<QuestParticipants> myQuests = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<UserLikeQuests> likeQuests = new ArrayList<>();
 	
 	public User() {}
 
