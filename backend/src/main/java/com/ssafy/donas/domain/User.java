@@ -88,6 +88,9 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<UserLikeQuests> likeQuests = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Article> articles = new ArrayList<Article>();
+	
 	public User() {}
 
 	@Builder

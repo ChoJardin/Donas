@@ -20,12 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Comment;
 import com.ssafy.donas.domain.Like;
-<<<<<<< HEAD
-import com.ssafy.donas.domain.quest.Quest;
-import com.ssafy.donas.domain.quest.Relay;
-import com.ssafy.donas.request.AddCommentRequest;
-import com.ssafy.donas.request.LikeRequest;
-=======
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.Relay;
@@ -33,7 +27,6 @@ import com.ssafy.donas.request.AddArticleRequest;
 import com.ssafy.donas.request.AddCommentRequest;
 import com.ssafy.donas.request.LikeRequest;
 import com.ssafy.donas.request.UpdateArticleRequest;
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 import com.ssafy.donas.request.UpdateCommentRequest;
 import com.ssafy.donas.response.ArticleResponse;
 import com.ssafy.donas.response.CommentResponse;
@@ -49,10 +42,6 @@ import com.ssafy.donas.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/feed")
@@ -70,19 +59,9 @@ public class FeedController {
 
 	@Autowired
 	ArticleService articleService;
-<<<<<<< HEAD
-	
-	@Autowired
-	QuestService questService;
-	
-=======
 
 	@Autowired
 	QuestService questService;
-	
-	
-	
-	
 	
 	/*
 	 * Article Functions
@@ -113,7 +92,6 @@ public class FeedController {
 	
 	//게시물 삭제 기능 추가
 	
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	@GetMapping("/article/{userId}")
 	@ApiOperation(value = "아이디 당 게시물 목록")
 	public Object getArticleByUserId(@PathVariable long userId) {
@@ -121,10 +99,6 @@ public class FeedController {
 			return HttpStatus.NOT_FOUND;
 		List<Article> articles = articleService.getArticlesByUser(userService.getUser(userId));
 		final List<ArticleResponse> result = new ArrayList<>();
-<<<<<<< HEAD
-		ResponseEntity response = null;
-=======
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 
 		for (Article article : articles) {
 			ArticleResponse res = new ArticleResponse();
@@ -132,62 +106,13 @@ public class FeedController {
 			res.questId = article.getQuest().getId();
 			res.image = article.getImage();
 			res.content = article.getContent();
-<<<<<<< HEAD
-=======
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 			res.type = article.getType();
 			res.like = article.getLilkes().size();
 			res.comment = article.getComments().size();
 			result.add(res);
 		}
-<<<<<<< HEAD
-		response = new ResponseEntity<>(result, HttpStatus.OK);
-		return response;
-	}
-	
-	@GetMapping("/comment/{articleId}")
-	@ApiOperation(value = "게시물 당 댓글목록")
-	public Object getCommnetByArticle(@PathVariable long articleId) {
-		
-		if (!articleService.checkArticle(articleId))
-			return HttpStatus.NOT_FOUND;
-		List<Comment> comments = commentService.getComments(articleService.getArticleById(articleId));
-		final List<CommentResponse> result = new ArrayList<>();
-		
-		for (Comment comment : comments) {
-			CommentResponse res = new CommentResponse();
-			res.id = comment.getId();
-			res.content = comment.getContent();
-			res.createdAt = comment.getCreatedAt();
-			res.updatedAt = comment.getUpdatedAt();
-			result.add(res);
-		}
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-	
-	@GetMapping("/like/{articleId}")
-	@ApiOperation(value = "게시물 당 좋아요 누른 유저 목록")
-	public Object getLikeByUser(@PathVariable long articleId) {
-		if (!articleService.checkArticle(articleId))
-			return HttpStatus.NOT_FOUND;
-		List<Like> likes = likeService.getLikes(articleId);
-		LikeResponse result = new LikeResponse();
-		List<IdResponse> userIds = new ArrayList<>();
-
-		for (Like like : likes) {
-			IdResponse id = new IdResponse();
-			id.id = like.getUserId();
-			userIds.add(id);
-		}
-
-		result.articleId = articleId;
-		result.userIds = userIds;
-
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-=======
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -201,6 +126,7 @@ public class FeedController {
 //		return new ResponseEntity<>(result, HttpStatus.OK);
 		return null;
 	}
+	//추가로 5개 불러오는거 
 	
 	
 	
@@ -209,10 +135,8 @@ public class FeedController {
 	/*
 	 * Quest Functions
 	 */
-	
 	//퀘스트 생성
 	//수정삭제..?
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	@GetMapping("/quest/{userId}")
 	@ApiOperation(value = "퀘스트목록 가져오기")
 	public Object getQuestByUser(@PathVariable long userId) {
@@ -227,22 +151,14 @@ public class FeedController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	@GetMapping("/realy/{userId}")
 	@ApiOperation(value = "유저별 참여중인 릴레이 퀘스트 가져오기")
 	public Object getRelayByUser(@PathVariable long userId) {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
 		List<Relay> relays = questService.getRealysByUserId(userId);
-<<<<<<< HEAD
-		List<QuestResponse> result = new ArrayList<>();
-=======
 		final List<QuestResponse> result = new ArrayList<>();
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 		for (Relay relay : relays) {
 			QuestResponse res = new QuestResponse();
 			res.id = relay.getId();
@@ -250,18 +166,10 @@ public class FeedController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-<<<<<<< HEAD
-
-=======
-	
-	
-	
-	
 	
 	/*
 	 * Comment Functions
 	 */
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	@PostMapping("/comment")
 	@ApiOperation(value = "댓글달기")
 	public Object addComment(@RequestBody AddCommentRequest comment) {
@@ -269,14 +177,6 @@ public class FeedController {
 			return HttpStatus.NOT_FOUND;
 		if (!userService.checkId(comment.getUserId()))
 			return HttpStatus.NOT_FOUND;
-<<<<<<< HEAD
-		commentService.addComment(articleService.getArticleById(comment.getArticleId()), comment.getUserId(), comment.getContent());
-		return HttpStatus.OK;
-	}
-
-	@PostMapping("/like")
-	@ApiOperation(value = "좋아요")
-=======
 		if (comment.getContent() == null)
 			return HttpStatus.NO_CONTENT;
 		commentService.add(articleService.getArticleById(comment.getArticleId()), comment.getUserId(),
@@ -324,16 +224,11 @@ public class FeedController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
 	/*
 	 * Like Functions
 	 */
 	@PostMapping("/like")
 	@ApiOperation(value = "좋아요 누르기")
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	public Object saveLike(@RequestBody LikeRequest like) {
 		if (!userService.checkId(like.getUserId()))
 			return HttpStatus.NOT_FOUND;
@@ -342,25 +237,7 @@ public class FeedController {
 		likeService.addLike(like.getUserId(), articleService.getArticleById(like.getArticleId()));
 		return HttpStatus.OK;
 	}
-<<<<<<< HEAD
-
-	@PutMapping("/comment")
-	@ApiOperation(value = "댓글 수정")
-	public Object updateComment(@RequestBody UpdateCommentRequest comment) {
-		if (!commentService.checkComment(comment.getCommentId()))
-			return HttpStatus.NOT_FOUND;
-		
-		boolean result = commentService.update(comment.getCommentId(), comment.getContent());
-		
-		if (!result)
-			return HttpStatus.NO_CONTENT;
-		else
-			return HttpStatus.OK;
-	}
-
-=======
 	
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	@DeleteMapping("/like")
 	@ApiOperation(value = "좋아요 취소")
 	public Object deleteLike(@RequestParam long likeId) {
@@ -370,15 +247,6 @@ public class FeedController {
 		return HttpStatus.OK;
 	}
 
-<<<<<<< HEAD
-	@DeleteMapping("/comment")
-	@ApiOperation(value = "댓글삭제")
-	public Object deleteComment(@RequestParam long commentId) {
-		if (!commentService.checkComment(commentId))
-			return HttpStatus.NOT_FOUND;
-		commentService.delete(commentId);
-		return HttpStatus.OK;
-=======
 	@GetMapping("/like/{articleId}")
 	@ApiOperation(value = "게시물 당 좋아요 누른 유저 목록")
 	public Object getLikeByUser(@PathVariable long articleId) {
@@ -398,6 +266,5 @@ public class FeedController {
 		result.userIds = userIds;
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
->>>>>>> 9da3d66f4e6bb0c17c8f017d5813d7a0500b0349
 	}
 }
