@@ -3,32 +3,49 @@
     <h1>Signup</h1>
     <br><br>
 
-    <div class="input-with-button-wrap">
-      <div class="input-with-button">
-        <userInput class="user-input set"
+    <!--<div class="input-with-button-wrap">-->
+      <!--<div class="input-with-button">-->
+      <!--  <UserInput class="user-input set"-->
+      <!--      id="nickname" label="닉네임" placeholder="닉네임을 입력하세요" type="text"-->
+      <!--      :input.sync="nickname" :error="error.nickname" :label-right="needCheck.nickname"-->
+      <!--      @keyup-enter="moveFocusToEmail" ref="nickname"/>-->
+      <!--  <a @click.prevent="checkNickname" v-if="needCheck.nickname" :class="{disabled: error.nickname||!nickname.length}">중복확인</a>-->
+      <!--  <a v-else class="success">확인완료</a>-->
+      <!--</div>-->
+        <UserInput class="user-input"
             id="nickname" label="닉네임" placeholder="닉네임을 입력하세요" type="text"
             :input.sync="nickname" :error="error.nickname" :label-right="needCheck.nickname"
             @keyup-enter="moveFocusToEmail" ref="nickname"/>
-        <a @click.prevent="checkNickname" v-if="needCheck.nickname" :class="{disabled: error.nickname||!nickname.length}">중복확인</a>
-        <a v-else class="success">확인완료</a>
-      </div>
+      <transition name="slide-fade">
+        <Button80 v-if="needCheck.nickname && !error.nickname && nickname.length"
+            class="user-input" :class="{disabled: error.nickname||!nickname.length}"
+            value="중  복  확  인"/>
+      </transition>
+      <transition name="slide-fade">
+        <Button80 v-if="needCheck.nickname"
+            class="user-input" text="#6cb9a2" color="white"
+            value="확 인 완 료"/>
+      </transition>
+
+      <!--<a @click.prevent="checkNickname" v-if="needCheck.nickname" :class="{disabled: error.nickname||!nickname.length}">중복확인</a>-->
+      <!--<a v-else class="success">확인완료</a>-->
 
       <div class="input-with-button">
-        <userInput class="user-input set"
+        <UserInput class="user-input set"
             id="email" label="이메일" placeholder="이메일을 입력하세요" type="email"
             :input.sync="email" :error="error.email"
             @keyup-enter="moveFocusToPw" ref="email"/>
         <a @click.prevent="checkEmail" v-if="needCheck.email" :class="{disabled: error.email||!email.length}">중복확인</a>
         <a v-else class="success">확인완료</a>
       </div>
-    </div>
+    <!--</div>-->
 
-    <userInput class="user-input"
+    <UserInput class="user-input"
         id="password" label="비밀번호" placeholder="비밀번호를 입력하세요" type="password"
         :input.sync="password" :error="error.password"
         @keyup-enter="moveFocusToPwConfirm" ref="password"/>
 
-    <userInput class="user-input"
+    <UserInput class="user-input"
         id="password-confirm" label="비밀번호 확인" placeholder="비밀번호를 다시 입력하세요" type="password"
         :input.sync="passwordConfirm" :error="error.passwordConfirm"
         @keyup-enter="onSignup" ref="passwordConfirm"/>
@@ -43,11 +60,14 @@ import PV from "password-validator";
 import * as EmailValidator from "email-validator"
 
 import UserApi from "@/api/UserApi";
-import UserInput from "@/components/user/userInput";
+import UserInput from "@/components/user/UserInput";
+import Button80 from "@/components/common/ButtonBig";
+
+import ('@/assets/style/user/Signup.css')
 
 export default {
   name: "Signup",
-  components: {UserInput},
+  components: {UserInput, Button80},
   // components
   // props
   // data
@@ -228,61 +248,7 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  width: 20vw;
-  height: 10vw;
-  background-color: aquamarine;
-  cursor: pointer;
-}
-.button:disabled {
-  background-color: aliceblue;
-  cursor: default;
-}
-
-.user-input {
-  width: 80%;
-  margin-left: 10%;
-}
-
-.user-input.set {
-  margin-left: 0;
-}
-
-.input-with-button-wrap {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-with-button {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 10%;
-  width: 80%;
-}
-
-.input-with-button a {
-  margin-bottom: 25px;
-  align-self: center;
-  color: #cd4e3e;
-  text-decoration: underline;
-  font-weight: bold;
-  cursor: pointer;
-  /*text-shadow: 1px 1px 1px #cd4e3e;*/
-}
-
-.input-with-button a.disabled {
-  color: lightgray;
-  text-decoration: none;
-  pointer-events: none;
-  cursor: default;
-}
-
-.input-with-button a.success {
-  color: #6cb9a2;
-  text-decoration: none;
-  pointer-events: none;
-  cursor: default;
-}
-
-
+/*.user-input {*/
+/*  color: #6cb9a2;*/
+/*}*/
 </style>

@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "userInput",
+  name: "UserInput",
   props: {
     id: {
       type: String,
@@ -59,14 +59,10 @@ export default {
       type: [Boolean, String],
       default: ''
     },
-    labelRight: {
-      type: [Boolean, String],
-      default: false
-    }
   },
   data() {
     return {
-      input: ''
+      input: '',
     }
   },
   methods: {
@@ -108,7 +104,6 @@ export default {
 
 label {
   position: relative;
-  float: left;
   margin-left: 15px;
   font-size: 0.8em;
   font-weight: bold;
@@ -128,7 +123,7 @@ input{
   width:100%;
   box-sizing:border-box;
   padding:0 0 0 80px;
-  box-shadow: 0px 0px 15px -9px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
 }
 
 input:focus {

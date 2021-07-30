@@ -1,0 +1,89 @@
+.button {
+  width: 20vw;
+  height: 10vw;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+.button:disabled {
+  background-color: aliceblue;
+  cursor: default;
+}
+
+.user-input {
+  width: 80%;
+  margin-left: 10%;
+}
+
+
+
+/*.user-input.set {*/
+/*  margin-left: 0;*/
+/*}*/
+
+.input-with-button-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+/*.input-with-button {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  margin-left: 10%;*/
+/*  width: 80%;*/
+/*}*/
+
+.input-with-button a {
+  margin-bottom: 25px;
+  align-self: center;
+  color: #cd4e3e;
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  /*text-shadow: 1px 1px 1px #cd4e3e;*/
+}
+
+.input-with-button a.disabled {
+  color: lightgray;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.input-with-button a.success {
+  color: #6cb9a2;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+/*.slide-fade-enter {*/
+/*  transition: all .5s ;*/
+/*}*/
+
+.move {
+  transition: margin-top 3s ease-in-out;
+}
+
+
+.slide-fade-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.slide-fade-enter-active {
+  transition: all .5s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all .5s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-10px);
+}

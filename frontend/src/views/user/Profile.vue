@@ -56,7 +56,7 @@
             <span v-if="profile.isFollowing">
               팔로우 취소
             </span>
-            <span>
+            <span v-else>
               팔로우
             </span>
           </button>
@@ -107,12 +107,15 @@ export default {
       profile: state => state.user.selectedProfile,
     }),
     ...mapGetters(['isLoggedIn']),
+    // 내 프로필 페이지인지 확인
     isMine() {
       return this.loginUser.nickname === this.$route.params.nickname
     }
   },
   // watch
   watch: {
+    // 로그인 상태가 바뀌는 경우
+    // 페이지 다시 마운트
     isLoggedIn(v) {
       this.$mount()
     }
@@ -195,10 +198,8 @@ export default {
 
 #follow {
   flex: 1 1 0;
-  /*background-color: #cd4e3e;*/
   display: flex;
   justify-content: space-around;
-  /*justify-content: center;*/
   align-items: center;
   text-decoration: none;
   color: #292929;
@@ -233,6 +234,7 @@ export default {
   margin-bottom: 15px
 }
 
+/* 게시글 */
 #article-wrap {
   width: 100%;
   margin-bottom: 60px;

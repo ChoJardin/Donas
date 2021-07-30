@@ -3,12 +3,12 @@
     <h1>로그인</h1>
     <br><br><br>
 
-    <userInput class="user-input"
+    <UserInput class="user-input"
         id="email" label="Email" placeholder="이메일을 입력하세요" type="email"
         :input.sync="email" :error="error.email"
         @keyup-enter="moveFocusToPw" @on-focus="onFocus" ref="email"/>
 
-    <userInput class="user-input"
+    <UserInput class="user-input"
         id="password" label="비밀번호" placeholder="비밀번호를 입력하세요" type="password"
         :input.sync="password" :error="error.password"
         @keyup-enter="onLogin" @on-focus="onFocus" ref="password"/>
@@ -26,13 +26,13 @@
 import * as EmailValidator from "email-validator"
 import PV from "password-validator"
 import UserApi from "@/api/UserApi";
-import userInput from "@/components/user/userInput";
+import UserInput from "@/components/user/UserInput";
 
 export default {
   name: "Login",
   // components
   components: {
-    userInput
+    UserInput
   },
   // props
   // data
