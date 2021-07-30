@@ -13,41 +13,34 @@ import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Comment;
 import com.ssafy.donas.repository.CommentRepo;
 
-
 @Service
 @Transactional
 public class CommentService {
 	@Autowired
 	ArticleService articleService;
-	
+
 	@Autowired
 	CommentRepo commentRepo;
 
 	public boolean checkComment(long commentId) {
 		Comment comment = commentRepo.getById(commentId);
-		if(comment == null)
+		if (comment == null)
 			return false;
 		return true;
 	}
 
-
-
-	public boolean addComment(Article article, long userId, String content) {
+	public void add(Article article, long userId, String content) {
 		Comment comment = new Comment(content, userId, article, LocalDateTime.now(), LocalDateTime.now(), 0);
 		commentRepo.save(comment);
 		article.getComments().add(comment);
-		return true;
 	}
-	
-	public boolean update(long commentId, String content) {
-		if(content == "")
-			return false;
+
+	public void update(long commentId, String content) {
 		Comment comment = commentRepo.findById(commentId).get();
 		comment.setContent(content);
 		comment.setUpdatedAt(LocalDateTime.now());
-		return true;
 	}
-	
+
 	public void delete(long commentId) {
 		commentRepo.deleteById(commentId);
 	}
