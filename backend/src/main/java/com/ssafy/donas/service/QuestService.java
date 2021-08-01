@@ -1,5 +1,6 @@
 package com.ssafy.donas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +9,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
-import com.ssafy.donas.domain.quest.Relay;
-import com.ssafy.donas.repository.quest.GroupRepo;
-import com.ssafy.donas.repository.quest.PersonalRepo;
+import com.ssafy.donas.domain.quest.QuestInfo;
+import com.ssafy.donas.domain.quest.QuestParticipants;
+import com.ssafy.donas.repository.UserRepo;
 import com.ssafy.donas.repository.quest.QuestRepo;
-import com.ssafy.donas.repository.quest.RelayRepo;
 
 @Service
 @Transactional
@@ -22,13 +23,7 @@ public class QuestService {
 	QuestRepo questRepo;
 	
 	@Autowired
-	GroupRepo groupRepo;
-	
-	@Autowired
-	PersonalRepo personalRepo;
-	
-	@Autowired
-	RelayRepo relayRepo;
+	UserRepo userRepo;
 	
 	public boolean checkQuest(long id) {
 		Optional<Quest> quest = questRepo.findById(id);
@@ -43,7 +38,17 @@ public class QuestService {
 		return questRepo.findById(id).get();
 	}
 	
-//	public List<Relay> getRealysByUserId(long UserId){
-//		return relayRepo.findRelayByUserId(UserId);
-//	}
+	public List<QuestInfo> getQuestsByUserId(long id){
+		User user = userRepo.getById(id);
+		List<QuestParticipants> questSummaries = user.getMyQuests();
+
+		List<QuestInfo> quests = new ArrayList<>();
+		for (QuestParticipants qs : questSummaries) {
+			Quest q = qs.getQuest();
+			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getStartAt(), q.getFinishAt()));
+		}
+
+		return quests;
+	}
+	
 }

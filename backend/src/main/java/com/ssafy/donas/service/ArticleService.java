@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Article;
+import com.ssafy.donas.domain.ArticleInfo;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.repository.ArticleRepo;
@@ -45,6 +47,16 @@ public class ArticleService {
 	
 	public List<Article> getArticlesByUser(User user){
 		return articleRepo.findArticleByUser(user);
+	}
+	
+	public List<ArticleInfo> getArticleInfosByUser(User user){
+		List<Article> articles = getArticlesByUser(user);
+		
+		List<ArticleInfo> infos = new ArrayList<ArticleInfo>();
+		for(Article a : articles)
+			infos.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType()));
+		
+		return infos;
 	}
 	
 	public Article getArticleById(long id) {
