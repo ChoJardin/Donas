@@ -8,7 +8,7 @@
         </router-link>
       </div>
 
-      <div v-if="!isLoggedIn" id="options">
+      <div v-if="!isLoggedIn" class="groupr-right" style="float: right">
         <div class="search">
           <router-link to="/search"><v-icon large style="color: black" class="search">search</v-icon></router-link>
         </div>
@@ -16,7 +16,7 @@
         <button class="button1" style="float:right"><router-link to="/signup">Signup</router-link></button>
       </div>
 
-      <div v-else class="loggedin" style="float: right">
+      <div v-else class="groupr-right" style="float: right">
         <div class="search">
           <router-link to="/search">
             <v-icon large style="color: black" class="search">search</v-icon>
@@ -78,11 +78,6 @@ export default {
   justify-content: space-between;
 }
 
-#options {
-  text-decoration: none;
-  margin-right: 2px;
-}
-
 #logo {
   margin-top: 5px;
 }
@@ -105,6 +100,7 @@ export default {
   font-weight: bold;
   border: rosybrown solid;
   border-radius: 10px;
+  /*display: inline-block;*/
 }
 
 .button1 a {
@@ -113,7 +109,7 @@ export default {
   font-size: small;
 }
 
-.loggedin {
+.groupr-right {
   display: flex;
   align-content: center;
 }

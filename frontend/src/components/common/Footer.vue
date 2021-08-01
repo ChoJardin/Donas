@@ -1,11 +1,11 @@
 <template>
   <footer>
     <div id="flex-container">
-      <router-link to="/"><i class="fas fa-home fa-2x"></i><br><div>메인</div></router-link>
-      <router-link to="/quests"><i class="fas fa-dumbbell fa-2x"></i><br><div>퀘스트</div></router-link>
-      <router-link to="/feed"><i class="fas fa-bars fa-2x"></i><br><div>피드</div></router-link>
-      <router-link to="/user/mileage"><i class="fas fa-coins fa-2x"></i><br><div>마일리지</div></router-link>
-      <router-link :to="`/user/profile/${nickname}`"><i class="fas fa-user-alt fa-2x"></i><br><div>프로필</div></router-link>
+      <router-link to="/"><i class="fas fa-home fa-2x"></i></router-link>
+      <router-link to="/quests"><v-icon large style="color: #6cb9a2">sports_score</v-icon></router-link>
+      <router-link to="/feed"><i class="fas fa-bars fa-2x"></i></router-link>
+      <router-link to="/user/mileage"><i class="fas fa-coins fa-2x"></i></router-link>
+      <router-link :to="`/user/profile/${nickname}`"><i class="fas fa-user-alt fa-2x"></i></router-link>
     </div>
   </footer>
 </template>
@@ -40,7 +40,7 @@ export default {
 #flex-container a {
   flex: auto;
   width: 20%;
-  padding-top: 7px;
+  padding: 7px;
   color: #6cb9a2;
   text-align: center;
   font-size: small;
@@ -60,5 +60,6 @@ export default {
   /*margin: 0 0px 2px 0px;*/
   border-radius: 15px ;
 }
+
 
 </style>
