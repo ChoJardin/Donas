@@ -22,6 +22,7 @@ import com.ssafy.donas.domain.Comment;
 import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
+import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AddArticleRequest;
@@ -140,15 +141,10 @@ public class FeedController {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
 
-		User user = userService.getUser(userId);
-		List<QuestParticipants> questSummaries = user.getMyQuests();
-
-		List<Quest> quests = new ArrayList<>();
-		for (QuestParticipants qs : questSummaries)
-			quests.add(qs.getQuest());
+		List<QuestInfo> quests = questService.getQuestsByUserId(userId);
 
 		List<QuestResponse> result = new ArrayList<>();
-		for (Quest quest : quests) {
+		for (QuestInfo quest : quests) {
 			QuestResponse res = new QuestResponse();
 			res.id = quest.getId();
 			result.add(res);
@@ -162,14 +158,13 @@ public class FeedController {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
 
-		User user = userService.getUser(userId);
-		List<QuestParticipants> questSummaries = user.getMyQuests();
+		List<QuestInfo> quests = questService.getQuestsByUserId(userId);
 
 		final List<QuestResponse> result = new ArrayList<>();
-		for (QuestParticipants qs : questSummaries) {
-			if (qs.getQuest().getType().equals("R")) {
+		for (QuestInfo quest : quests) {
+			if (quest.getType().equals("R")) {
 				QuestResponse res = new QuestResponse();
-				res.id = qs.getQuest().getId();
+				res.id = quest.getId();
 				result.add(res);
 			}
 		}
