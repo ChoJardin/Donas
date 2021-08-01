@@ -137,21 +137,8 @@ export default {
 }
 
 .user-input {
-  width: 80%;
-  margin-left: 10%;
-}
-
-
-.button {
-  align-self: center;
-  width: 20vw;
-  height: 10vw;
-  background-color: aquamarine;
-  cursor: pointer;
-}
-.button:disabled {
-  background-color: aliceblue;
-  cursor: default;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .error-message {
@@ -162,5 +149,24 @@ export default {
   width: 65%;
   align-self: center;
 }
+
+.button {
+  width: 90%;
+  margin-left: 5%;
+  height: 50px;
+  /*background-color: #f1a64b;*/
+  background-color: #6cb9a2;
+  border-radius:25px;
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
+  font-size: 1em;
+  font-weight: bold;
+  color: #292929;
+  cursor: pointer;
+}
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 
 </style>

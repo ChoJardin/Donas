@@ -1,6 +1,9 @@
 <template>
   <div class="component">
-    <input type="button" :value="value" :style="`background-color: ${color}; color: ${text}`">
+    <input
+        type="button" :value="value" :style="`background-color: ${color}; color: ${text}`"
+        @click="$emit('on-click')" :class="`{disabled: ${disabled}}`"
+    >
   </div>
 </template>
 
@@ -19,6 +22,10 @@ export default {
     text: {
       type: String,
       default: '#292929'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 }
@@ -42,6 +49,7 @@ input {
   font-size: 1em;
   font-weight: bold;
   color: #292929;
+  cursor: pointer;
 }
 
 </style>

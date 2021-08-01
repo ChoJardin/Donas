@@ -8,6 +8,7 @@ const ROUTES = {
   checkEmail: '/user/email',
   signup: '/user/signup',
   profileInfo: '/profile/',
+  follow: '/profile/follow',
   follower: '/profile/follower',
   following: '/profile/following',
 
@@ -62,9 +63,9 @@ const requestSignup = (data, callback, errorCallback) => {
 }
 
 // 프로필 정보 요청
-const requestProfileInfo = (nickname, callback, errorCallback) => {
+const requestProfileInfo = (nickname, params, callback, errorCallback) => {
   const profileInfoPath = URL + ROUTES.profileInfo + nickname
-  axios.get(profileInfoPath)
+  axios.get(profileInfoPath, {params: params})
     .then(res => {
       callback(res)
     })
@@ -97,16 +98,43 @@ const requestFollowing = (params, callback, errorCallback) => {
     })
 }
 
+// 팔로우 요청
+const requestFollow = (post, data, callback, errorCallback) => {
+  const followPath = URL + ROUTES.follow
+  if (post) {
+    console.log('팔로우')
+    console.log(post, data)
+    axios.post(followPath, data)
+      .then(res => {
+        callback(res)
+      })
+      .catch(err => {
+        errorCallback(err)
+      })
+  } else {
+    console.log('언팔')
+    axios.delete(followPath, {params: data})
+      .then(res => {
+        callback(res)
+      })
+      .catch(err => {
+        errorCallback(err)
+      })
+  }
+}
+
+
 const UserApi = {
   URL,
   ROUTES,
-  requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
-  checkNickname:(data,callback,errorCallback)=>checkNickname(data,callback,errorCallback),
-  checkEmail:(data,callback,errorCallback)=>checkEmail(data,callback,errorCallback),
-  requestSignup:(data,callback,errorCallback)=>requestSignup(data,callback,errorCallback),
-  requestProfileInfo:(data,callback,errorCallback)=>requestProfileInfo(data,callback,errorCallback),
-  requestFollower:(data,callback,errorCallback)=>requestFollower(data,callback,errorCallback),
-  requestFollowing:(data,callback,errorCallback)=>requestFollowing(data,callback,errorCallback),
+  requestLogin:(data, callback, errorCallback)=>requestLogin(data, callback, errorCallback),
+  checkNickname:(data, callback, errorCallback)=>checkNickname(data, callback, errorCallback),
+  checkEmail:(data, callback, errorCallback)=>checkEmail(data, callback, errorCallback),
+  requestSignup:(data, callback, errorCallback)=>requestSignup(data, callback, errorCallback),
+  requestProfileInfo:(data, params, callback, errorCallback)=>requestProfileInfo(data, params, callback, errorCallback),
+  requestFollower:(data, callback, errorCallback)=>requestFollower(data, callback, errorCallback),
+  requestFollowing:(data, callback, errorCallback)=>requestFollowing(data, callback, errorCallback),
+  requestFollow:(post, data, callback, errorCallback)=>requestFollow(post, data, callback, errorCallback),
 }
 
 export default UserApi
