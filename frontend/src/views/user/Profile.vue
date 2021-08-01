@@ -52,7 +52,7 @@
             정보수정
           </router-link>
           <!--다른 유저 프로필-->
-          <button v-else class="button">
+          <button v-else class="button" @click="onFollow">
             <span v-if="profile.isFollowing">
               팔로우 취소
             </span>
@@ -99,6 +99,29 @@ export default {
   // props
   // data
   // methods
+  methods: {
+    // 팔로우
+    onFollow() {
+      UserApi.requestFollow(
+          !this.profile.isFollowing,
+          // follower = 나 followee = 프로필 주인
+          {followerId: this.loginUser.id, followeeId: this.profile.id},
+          res => {
+            // 요청 성공
+            if (res.data === 'OK') {
+              this.$store.dispatch('followFunction')
+            } else {
+              // 실패하면 에러 페이지로?
+              this.$router.push('/error')
+            }
+          },
+          err => {
+            console.log(err)
+            // this.$router.push('/error')
+          }
+      )
+    }
+  },
   // computed
   computed: {
     ...mapState({
@@ -122,11 +145,18 @@ export default {
   },
   // lifecycle hook
   created() {
-    console.log('------')
-    console.log(this.profile)
+    // console.log('------')
+    // console.log(this.profile)
     // 페이지 로딩시 초기 정보 요청
+    // 비회원의 경우 0으로 요청 --> 백 확인 필요
+    let myid = 0
+    if (this.isLoggedIn) {
+      myid = this.loginUser.id
+    }
+    let params = {myid: myid}
     UserApi.requestProfileInfo(
         this.$route.params.nickname,
+        params,
         res => {
           this.$store.dispatch('setUserProfile', res.data)
           this.$store.dispatch('setFeeds', res.data.articles)

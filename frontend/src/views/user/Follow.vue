@@ -52,7 +52,7 @@ export default {
 }
 
 #follow-wrap a.router-link-exact-active {
-  border-bottom: #cd4e3e solid;
+  border-bottom: #6cb9a2 solid;
 }
 
 .follow {
