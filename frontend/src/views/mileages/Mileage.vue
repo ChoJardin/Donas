@@ -11,7 +11,7 @@
     </div>
 
     <div id="alert">
-      <i class="fas fa-star" style="color: #f1a64b"></i>
+      <i class="fas fa-star" style="color: #fcb131"></i>
       <a id='title' href="">2021 1분기 기부 내역</a>
     </div>
 
@@ -79,14 +79,15 @@ export default {
 #alert{
   margin-bottom: 10px;
   padding:3px 0px 3px 10px;
-  border-top: solid #6cb9a2 2px;
-  border-bottom: solid #6cb9a2 2px;
+  border-top: solid #05a05b 2px;
+  border-bottom: solid #05a05b 2px;
   text-align: left;
 }
 
 #title{
   padding-left: 10px;
   text-decoration: none;
+  color:black;
 }
 
 

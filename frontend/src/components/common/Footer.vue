@@ -1,11 +1,11 @@
 <template>
   <footer>
     <div id="flex-container">
-      <router-link to="/"><i class="fas fa-home fa-2x"></i></router-link>
-      <router-link to="/quests"><v-icon large style="color: #6cb9a2">sports_score</v-icon></router-link>
-      <router-link to="/feed"><i class="fas fa-bars fa-2x"></i></router-link>
-      <router-link to="/user/mileage"><i class="fas fa-coins fa-2x"></i></router-link>
-      <router-link :to="`/user/profile/${nickname}`"><i class="fas fa-user-alt fa-2x"></i></router-link>
+      <router-link to="/"><i class="material-icons" style="font-size: 36px">home</i></router-link>
+      <router-link to="/quests"><i class="material-icons" style="font-size: 36px">sports_score</i></router-link>
+      <router-link to="/feed"><i class="material-icons" style="font-size: 36px">menu</i></router-link>
+      <router-link to="/user/mileage"><i class="material-icons" style="font-size: 36px">savings</i></router-link>
+      <router-link :to="`/user/profile/${nickname}`"><i class="material-icons" style="font-size: 36px">person</i></router-link>
     </div>
   </footer>
 </template>
@@ -35,13 +35,14 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
+
   }
 
 #flex-container a {
   flex: auto;
   width: 20%;
   padding: 7px;
-  color: #6cb9a2;
+  color: #121f8c;
   text-align: center;
   font-size: small;
   text-decoration: none;
@@ -56,9 +57,11 @@ export default {
 #flex-container a.router-link-exact-active {
   color: white ;
   /*color: #9d794a;*/
-  background: #6cb9a2;
+  background: #121f8c;
   /*margin: 0 0px 2px 0px;*/
-  border-radius: 15px ;
+  border-radius: 25%;
+  padding: 1px;
+
 }
 
 
