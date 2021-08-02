@@ -5,7 +5,8 @@
 
       <!--기본 프로필 start-->
       <div id="profile-wrap">
-        <img id="profile-image" :src="profile.picture" alt="">
+        <img v-if="profile.picture" class="profile-image" :src="profile.picture" alt="">
+        <img v-else class="profile-image" src="@/assets/도넛1.png" alt="">
         <div id="profile-info">
           <div id="nickname">
             {{this.$route.params.nickname}}
@@ -186,9 +187,10 @@ export default {
   height: 100px;
 }
 
-#profile-image {
+.profile-image {
   width: 100px;
   height: 100px;
+  object-fit: cover;
   border: 1px solid #292929;
   border-radius: 50%;
 }

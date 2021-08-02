@@ -3,8 +3,8 @@
     <h1>피드</h1>
 
     <!--article start-->
-    <div id="article-wrap">
-      <div class="article-image" v-for="article in articles" :key="article.id">
+    <div id="feed-article-wrap">
+      <div class="feed-article-image" v-for="article in articles" :key="article.id">
         <ArticleImage class="inner" :article="article"/>
       </div>
     </div>
@@ -33,25 +33,25 @@ export default {
 </script>
 
 <style scoped>
-#article-wrap {
+#feed-article-wrap {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
 
-.article-image {
+.feed-article-image {
   border: 1px solid olivedrab;
   width: 33.3333%;
   position: relative;
 }
 
-.article-image:after {
+.feed-article-image:after {
   content: "";
   display: block;
   padding-bottom: 100%;
 }
 
-.article-image .inner {
+.feed-article-image .inner {
   position: absolute; /* Take your picture out of the flow */
   top: 0;
   bottom: 0;

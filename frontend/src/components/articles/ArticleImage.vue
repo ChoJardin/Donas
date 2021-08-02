@@ -1,8 +1,8 @@
 <template>
   <!--<router-link :to="{path: '/feed/v', params: {id: `${article.id}`}}">-->
   <router-link :to="{path: '/feed/v', query: {id: article.id}}">
-    <div id="wrap">
-      <img id="image" src="@/assets/logo3.png" alt="">
+    <div id="article-image-wrap">
+      <img id="article-image-image" src="@/assets/logo3.png" alt="">
     </div>
   </router-link>
 </template>
@@ -25,14 +25,16 @@ export default {
 </script>
 
 <style scoped>
-#wrap {
+#article-image-wrap {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-#image {
+#article-image-image {
+  position: absolute;
   width: 100%;
+  height: auto;
 }
 
 </style>
