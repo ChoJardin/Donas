@@ -49,7 +49,7 @@
         <!--isLoggedIn start-->
         <div v-if="this.isLoggedIn" id="profile-button">
           <!--본인 프로필-->
-          <router-link :to="`/user/profile/${profile.nickname}/edit`" v-if="isMine" class="button">
+          <router-link :to="`/user/profile/${profile.id}/edit`" v-if="isMine" class="button">
             정보수정
           </router-link>
           <!--다른 유저 프로필-->

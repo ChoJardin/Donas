@@ -1,6 +1,6 @@
 <template>
-  <!--<router-link :to="{path: '/feed/v', params: {id: `${article.id}`}}">-->
-  <router-link :to="{path: '/feed/v', query: {id: article.id}}">
+  <!--<router-link :to="{path: `/feed/v/${article.id}`}">-->
+  <router-link :to="{path: '/article', query: {id: article.id}}">
     <div id="article-image-wrap">
       <img id="article-image-image" src="@/assets/logo3.png" alt="">
     </div>
