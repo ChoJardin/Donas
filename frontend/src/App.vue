@@ -2,7 +2,7 @@
   <div id="app">
     <navBar/>
 
-    <div id="content">
+    <div id="app-content">
         <router-view/>
     </div>
 
@@ -67,16 +67,9 @@ export default {
 }
 
 
-#content {
-  margin-top: 80px;
-  margin-left: 10px;
-  margin-right: 10px;
+#app-content {
+  margin: 80px 10px 60px 10px;
 }
 
-/*!* 회원가입 중복확인 버튼 *!*/
-/*.input-with-button.check input {*/
-/*  border-top-right-radius: unset;*/
-/*  border-bottom-right-radius: unset;*/
-/*}*/
 
 </style>
