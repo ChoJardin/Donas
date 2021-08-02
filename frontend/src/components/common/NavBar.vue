@@ -8,22 +8,20 @@
         </router-link>
       </div>
 
-      <div v-if="!isLoggedIn" class="groupr-right" style="float: right">
+      <div v-if="!isLoggedIn" class="group-right" style="float: right">
         <div class="search">
-          <router-link to="/search"><v-icon large style="color: black" class="search">search</v-icon></router-link>
+          <router-link to="/search"><i class="material-icons" style="font-size: 36px">search</i></router-link>
         </div>
         <button class="button1" style="float:right"><router-link to="/login">Login</router-link></button>
         <button class="button1" style="float:right"><router-link to="/signup">Signup</router-link></button>
       </div>
 
-      <div v-else class="groupr-right" style="float: right">
+      <div v-else class="group-right" style="float: right">
         <div class="search">
-          <router-link to="/search">
-            <v-icon large style="color: black" class="search">search</v-icon>
-          </router-link>
+          <router-link to="/search"><i class="material-icons" style="font-size: 36px">search</i></router-link>
         </div>
         <div class="notification">
-          <router-link :to="`/notification/${nickname}`"><span><i class="fas fa-bell fa-2x" style="color: #6cb9a2"></i></span>
+          <router-link :to="`/notification/${nickname}`"><span><i class="material-icons" style="font-size: 36px">notifications_none</i></span>
           <span class="badge"><i class="fas fa-circle fa-sm"></i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
@@ -98,7 +96,7 @@ export default {
   cursor: pointer;
   transition-duration: 0.4s;
   font-weight: bold;
-  border: rosybrown solid;
+  border: #121f8c solid;
   border-radius: 10px;
   /*display: inline-block;*/
 }
@@ -109,11 +107,14 @@ export default {
   font-size: small;
 }
 
-.groupr-right {
+.group-right {
   display: flex;
   align-content: center;
-}
 
+}
+.group-right a{
+  color:black;
+}
 .search a{
   display: inline-block;
   padding-right: 5px;
@@ -133,8 +134,8 @@ export default {
 }
 .notification .badge {
   position: absolute;
-  top: 1px;
-  right: 2px;
+  top: 7px;
+  right: 8px;
   color: red;
 }
 
