@@ -74,6 +74,9 @@
     font-size: 0.9em;
     text-align: start;
     overflow: hidden;
+    text-overflow:ellipsis;
+    /*max-height: 8rem;*/
+    /*max-height: calc(line-height * number of lines you desire);*/
 }
 
 /* 좋아요/ 댓글 */
@@ -90,4 +93,9 @@
 .single-article-details  {
     display: flex;
     align-items: center;
+}
+
+/*페이지 전환*/
+.slide {
+
 }

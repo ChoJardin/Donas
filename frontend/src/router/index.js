@@ -15,6 +15,9 @@ import QuestDetail from "@/views/quests/QuestDetail";
 // 피드
 import Feed from "@/views/articles/Feed";
 import VerticalFeed from "@/views/articles/VerticalFeed";
+// 게시글
+import ArticleDetail from "@/views/articles/ArticleDetail";
+import UpsertArticle from "@/views/articles/UpsertArticle";
 
 // 마일리지
 import Mileage from "@/views/mileages/Mileage";
@@ -67,7 +70,19 @@ const routes = [
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
-  {path: '/feed/v', name: 'VerticalFeed', component: VerticalFeed},
+  {
+    path: '/article', component: VerticalFeed,
+    children: [
+      {
+        path: ':id',
+        name: 'ArticleDetail',
+        component: ArticleDetail,
+        meta: { transitionName: 'slide' }
+      },
+    ]
+  },
+  {path: '/article/:id/edit', component: UpsertArticle},
+  {path: '/article/create', component: UpsertArticle},
 
   // 마일리지
   {
@@ -81,7 +96,7 @@ const routes = [
   // 프로필
   {path: '/user/profile/undefined', redirect: '/login'},
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile},
-  {path: '/user/profile/:nickname/edit', name: 'ProfileEdit', component: ProfileEdit},
+  {path: '/user/profile/:id/edit', name: 'ProfileEdit', component: ProfileEdit},
 
   // 팔로우
   {
@@ -111,8 +126,8 @@ const routes = [
   // 에러
   {path: '/error', name: 'Error', component: Error},
   // 404
-  {path: '*', redirect: '/404'},
-  {path: '/404', name: 'PageNotFound', component: PageNotFound}
+  // {path: '*', redirect: '/404'},
+  // {path: '/404', name: 'PageNotFound', component: PageNotFound}
 ]
 
 const router = new VueRouter({
