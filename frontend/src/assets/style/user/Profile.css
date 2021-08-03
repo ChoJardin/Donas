@@ -20,8 +20,9 @@
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border: 1px solid #292929;
+  border: 1.3px solid #183a1d;
   border-radius: 50%;
+  padding: 3px
 }
 
 #profile-info {
