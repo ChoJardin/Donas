@@ -2,12 +2,18 @@
   display: flex;
   flex-direction: column;
   text-align: start;
-  margin: 15px 0px;
+  margin: 15px 5px;
 }
 
 #profile-wrap {
   display: flex;
   height: 100px;
+}
+
+#profile-image-input {
+  position: relative;
+  width: 100px;
+  margin: auto;
 }
 
 .profile-image {
@@ -26,24 +32,24 @@
   margin-left: 15px;
 }
 
-#nickname {
+#profile-nickname {
   font-size: 1.8em;
   font-weight: bold;
 }
 
-#badges {
-
+#profile-badges {
+  height: 40px;
 }
 
 
 /* 소개글 */
-#description {
+#profile-description {
   margin: 15px;
   font-size: 0.9em;
 }
 
 /* 팔로우 팔로잉 */
-.wrap {
+.profile-follow-wrap {
   height: 30px;
   display: flex;
   justify-content: space-between;
@@ -51,7 +57,7 @@
   font-weight: bold;
 }
 
-#follow {
+#profile-follow {
   flex: 1 1 0;
   display: flex;
   justify-content: space-around;
@@ -61,7 +67,7 @@
   cursor: pointer;
 }
 
-.cnt {
+.profile-follow-cnt {
   font-size: 1.2em;
 }
 
@@ -81,7 +87,7 @@
 }
 
 /* 진행 중인 퀘스트 */
-#on-going-quests {
+#profile-on-going-quests {
   height: 80px;
   display: flex;
   align-items: center;
@@ -90,26 +96,26 @@
 }
 
 /* 게시글 */
-#article-wrap {
+#profile-article-wrap {
   width: 100%;
   margin-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
 }
 
-.article-image {
+.profile-article-image {
   border: 1px solid olivedrab;
   width: 33.3333%;
   position: relative;
 }
 
-.article-image:after {
+.profile-article-image:after {
   content: "";
   display: block;
   padding-bottom: 100%;
 }
 
-.article-image .inner {
+.profile-article-image .inner {
   position: absolute; /* Take your picture out of the flow */
   top: 0;
   bottom: 0;
@@ -119,5 +125,12 @@
   height: 100%; /* This if for the object-fit */
   object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
   object-position: center;
+}
+
+.material-icons-outlined.position {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, .8);
 }
 

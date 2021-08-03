@@ -8,10 +8,10 @@
         <img v-if="profile.picture" class="profile-image" :src="profile.picture" alt="">
         <img v-else class="profile-image" src="@/assets/도넛1.png" alt="">
         <div id="profile-info">
-          <div id="nickname">
+          <div id="profile-nickname">
             {{this.$route.params.nickname}}
           </div>
-          <div id="badges">뱃지</div>
+          <div id="profile-badges">뱃지</div>
         </div>
         <!--메시지 전송 아이콘?-->
         <div v-if="!isMine">
@@ -20,14 +20,14 @@
       </div>
       <!--기본 프로필 end-->
 
-      <div id="description">
+      <div id="profile-description">
         소개글 컴포넌트
       </div>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
-      <div class="wrap">
+      <div class="profile-follow-wrap">
         <!--팔로워-->
-        <router-link :to="`/follow/${profile.nickname}/follower`" id="follow">
+        <router-link :to="`/follow/${profile.nickname}/follower`" id="profile-follow">
           <span>
             팔로워
           </span>
@@ -37,11 +37,11 @@
         </router-link>
 
         <!--팔로잉-->
-        <router-link :to="`/follow/${profile.nickname}/following`" id="follow">
+        <router-link :to="`/follow/${profile.nickname}/following`" id="profile-follow">
           <span>
             팔로잉
           </span>
-          <span class="cnt">
+          <span class="profile-follow-cnt">
             {{ profile.following }}
           </span>
         </router-link>
@@ -71,12 +71,12 @@
     <!--profile end-->
 
     <!--article start-->
-    <div id="on-going-quests">
+    <div id="profile-on-going-quests">
       진행 중 퀘스트 컴포넌트
     </div>
 
-    <div id="article-wrap">
-      <div class="article-image" v-for=" article in articles" :key="article.id">
+    <div id="profile-article-wrap">
+      <div class="profile-article-image" v-for=" article in articles" :key="article.id">
         <ArticleImage class="inner" :article="article"/>
       </div>
     </div>
@@ -90,7 +90,7 @@ import {mapGetters, mapState} from "vuex";
 
 import ArticleImage from "@/components/articles/ArticleImage";
 import UserApi from "@/api/UserApi";
-import('@/assets/style/user/Profile.css')
+// import('@/assets/style/user/Profile.css')
 
 export default {
   name: "Profile",
@@ -174,6 +174,8 @@ export default {
 </script>
 
 <style scoped>
+/*@import "src/assets/style/user/Profile.css";*/
+
 /*#flex-container {*/
 /*  display: flex;*/
 /*  flex-direction: column;*/

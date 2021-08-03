@@ -252,7 +252,7 @@ export default {
   margin-left: 3%;
   align-self: center;
   color: #cd4e3e;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-weight: bold;
   cursor: pointer;
   border: 1px solid #cd4e3e;

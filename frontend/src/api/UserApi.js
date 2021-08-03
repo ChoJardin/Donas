@@ -11,7 +11,7 @@ const ROUTES = {
   follow: '/profile/follow',
   follower: '/profile/follower',
   following: '/profile/following',
-
+  myPage: '/user/mypage/',
 }
 
 // 로그인
@@ -71,6 +71,18 @@ const requestProfileInfo = (nickname, params, callback, errorCallback) => {
     })
     .catch(err => {
       errorCallback(err)
+    })
+}
+
+// 정보수정 페이지 초기 요청
+const requestMyPage = (id, callback, errorcallback) => {
+  const requestMyPagePath = URL + ROUTES.myPage + id
+  axios.get(requestMyPagePath)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorcallback(err)
     })
 }
 
@@ -135,6 +147,7 @@ const UserApi = {
   requestFollower:(data, callback, errorCallback)=>requestFollower(data, callback, errorCallback),
   requestFollowing:(data, callback, errorCallback)=>requestFollowing(data, callback, errorCallback),
   requestFollow:(post, data, callback, errorCallback)=>requestFollow(post, data, callback, errorCallback),
+  requestMyPage:(id, callback, errorCallback)=>requestMyPage(id, callback, errorCallback),
 }
 
 export default UserApi
