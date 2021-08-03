@@ -132,7 +132,7 @@ export default {
 <style scoped>
 
 #profile-edit-nav {
-역삼역 2호선  display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px 0;
