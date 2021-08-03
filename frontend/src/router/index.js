@@ -22,7 +22,7 @@ import CreateRelay from "@/components/quests/CreateRelay";
 import Feed from "@/views/articles/Feed";
 import VerticalFeed from "@/views/articles/VerticalFeed";
 // 게시글
-import ArticleDetail from "@/views/articles/ArticleDetail";
+import ArticleDetail from "@/components/articles/ArticleDetail";
 import UpsertArticle from "@/views/articles/UpsertArticle";
 
 // 마일리지
@@ -107,8 +107,8 @@ const routes = [
 
   // 프로필
   {path: '/user/profile/undefined', redirect: '/login'},
-  {path: '/user/profile/:nickname', name: 'Profile', component: Profile},
-  {path: '/user/profile/:id/edit', name: 'ProfileEdit', component: ProfileEdit},
+  {path: '/user/profile/edit', name: 'ProfileEdit', component: ProfileEdit},
+  {path: '/user/profile/:nickname', name: 'Profile', component: Profile, meta: {transitionName: 'slide'}},
 
   // 팔로우
   {

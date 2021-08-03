@@ -71,7 +71,7 @@ export default {
 
 
 #app-content {
-  margin: 80px 10px 60px 10px;
+  margin: 75px 10px 50px 10px;
 }
 
 

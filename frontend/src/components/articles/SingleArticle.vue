@@ -5,7 +5,7 @@
 
         <!--게시글 작성 정보-->
         <div id="single-article-profile">
-          <router-link :to="`프로필 페이지`" id="single-article-profile-image">프로필 사진</router-link>
+          <router-link :to="{name: 'Profile'}" id="single-article-profile-image">프로필 사진</router-link>
           <div id="single-article-nickname-date">
             <router-link :to="`프로필 페이지`" id="single-article-profile-nickname">닉네임</router-link>
             <div id="single-article-date">작성일시</div>
@@ -34,7 +34,6 @@
           <!--좋아요/ 댓글-->
         <router-link to="/main"></router-link>
 
-      <!--<router-view></router-view>-->
       </div><!--single-article-wrap ends-->
     </div><!--single-article-main ends-->
 
