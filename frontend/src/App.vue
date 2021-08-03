@@ -52,12 +52,12 @@ export default {
 
 /*footer*/
 #footer {
-  background-color: white;
   /*background-color: #9d794a;*/
   height: 50px;
   width: 100vw;
   position: fixed;
   bottom: 0;
+  background: #e1eedd;
 }
 /*footer-end*/
 

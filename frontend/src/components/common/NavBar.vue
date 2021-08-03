@@ -13,15 +13,14 @@
           <router-link to="/search"><i class="material-icons" style="font-size: 36px">search</i></router-link>
         </div>
         <button class="button1" style="float:right"><router-link to="/login">Login</router-link></button>
-        <button class="button1" style="float:right"><router-link to="/signup">Signup</router-link></button>
       </div>
 
       <div v-else class="group-right" style="float: right">
         <div class="search">
-          <router-link to="/search"><i class="material-icons" style="font-size: 36px">search</i></router-link>
+          <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
         </div>
         <div class="notification">
-          <router-link :to="`/notification/${nickname}`"><span><i class="material-icons" style="font-size: 36px">notifications_none</i></span>
+          <router-link :to="`/notification/${nickname}`"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
           <span class="badge"><i class="fas fa-circle fa-xs"></i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
@@ -81,22 +80,23 @@ export default {
 }
 
 #logo img {
-  height: 50px;
+  height: 40px;
 }
 
 .button1 {
   color: black;
   /*color: white;*/
-  padding: 7px 7px;
+  padding: 3px;
+  height: 28px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 1px;
+  font-size: 0.8em;
+  margin: 10px 1px;
   cursor: pointer;
   transition-duration: 0.4s;
   font-weight: bold;
-  border: #121f8c solid;
+  border: #183a1d solid;
   border-radius: 10px;
   /*display: inline-block;*/
 }
@@ -110,16 +110,20 @@ export default {
 .group-right {
   display: flex;
   align-content: center;
+  margin: 5px 1px;
 
 }
 .group-right a{
   color:black;
+  margin: 5px 1px;
+
 }
 .search a{
   display: inline-block;
   padding-right: 5px;
   padding-top: 5px;
   text-decoration: none !important;
+
 
 }
 
@@ -130,12 +134,13 @@ export default {
   float: right;
   padding-right: 5px;
   padding-top: 5px;
+  margin: 4px 1px;
 
 }
 .notification .badge {
   position: absolute;
   top: 7px;
-  right: 9px;
+  right: 8px;
   color: red;
 }
 

@@ -1,12 +1,12 @@
 <template>
   <footer>
-    <hr class="footer-line">
+<!--    <hr class="footer-line">-->
     <div id="flex-container">
-      <router-link to="/"><i class="material-icons" style="font-size: 36px">home</i></router-link>
-      <router-link to="/quests"><i class="material-icons" style="font-size: 36px">sports_score</i></router-link>
-      <router-link to="/feed"><i class="material-icons" style="font-size: 36px">menu</i></router-link>
-      <router-link to="/user/mileage"><i class="material-icons" style="font-size: 36px">savings</i></router-link>
-      <router-link :to="`/user/profile/${nickname}`"><i class="material-icons" style="font-size: 36px">person</i></router-link>
+      <router-link to="/"><i class="material-icons" style="font-size: 30px">home</i></router-link>
+      <router-link to="/quests"><i class="material-icons" style="font-size: 30px">sports_score</i></router-link>
+      <router-link to="/feed"><i class="material-icons" style="font-size: 30px">menu</i></router-link>
+      <router-link to="/user/mileage"><i class="material-icons" style="font-size: 30px">savings</i></router-link>
+      <router-link :to="`/user/profile/${nickname}`"><i class="material-icons" style="font-size: 30px">person</i></router-link>
     </div>
   </footer>
 </template>
@@ -41,6 +41,7 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
+  box-shadow: 0 0 20px -9px rgba(0, 0, 0, 0.55);
 
   }
 
@@ -48,7 +49,7 @@ export default {
   flex: auto;
   width: 20%;
   padding: 7px;
-  color: #da8a11;
+  color: #a0a0a0;
   text-align: center;
   font-size: small;
   text-decoration: none;
@@ -61,9 +62,9 @@ export default {
 /*}*/
 
 #flex-container a.router-link-exact-active {
-  color: white ;
+  color: #183a1d ;
   /*color: #9d794a;*/
-  background: #da8a11;
+  /*background: #da8a11;*/
   /*margin: 0 0px 2px 0px;*/
   border-radius: 25%;
   padding: 1px;
