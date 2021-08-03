@@ -9,7 +9,8 @@
 
     <router-view/>
     <v-btn id="create-button" class="mx-2 text-decoration-none" fab color="indigo">
-      <a href="/quests/create"><i class="fas fa-plus fa-lg"></i></a>
+      <router-link to="/quests/create"><i class="fas fa-plus fa-lg"></i></router-link>
+<!--      <a href="/quests/create"><i class="fas fa-plus fa-lg"></i></a>-->
     </v-btn>
   </div>
 </template>

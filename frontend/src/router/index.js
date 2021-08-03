@@ -4,13 +4,19 @@ import VueRouter from 'vue-router'
 import Main from "@/views/Main";
 
 // 퀘스트
+// 퀘스트 리스트
 import Quest from "@/views/quests/Quest";
-import CreateQuest from "@/views/quests/CreateQuest";
 import SoloQuest from "@/components/quests/SoloQuest"
 import RelayQuest from "@/components/quests/RelayQuest"
 import GroupQuest from "@/components/quests/GroupQuest"
 import AllQuest from "@/components/quests/AllQuest";
 import QuestDetail from "@/views/quests/QuestDetail";
+// 퀘스트 생성
+import CreateQuest from "@/views/quests/CreateQuest";
+import CreateSolo from "@/components/quests/CreateSolo";
+import CreateGroup from "@/components/quests/CreateGroup";
+import CreateRelay from "@/components/quests/CreateRelay";
+
 
 // 피드
 import Feed from "@/views/articles/Feed";
@@ -61,7 +67,13 @@ const routes = [
     ]
   },
   //퀘스트 생성
-  {path: '/quests/create', name: 'CreateQuest', component: CreateQuest},
+  {path: '/quests/create', name:'CreateQuest', component: CreateQuest,
+      children: [
+      {path: 'solo', name: 'CreateSolo', component: CreateSolo},
+      {path: 'group', name: 'CreateGroup', component: CreateGroup},
+      {path: 'relay', name: 'CreateRelay', component: CreateRelay},
+      ]
+  },
   //퀘스트 상세
   {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
 

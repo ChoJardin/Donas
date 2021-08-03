@@ -1,54 +1,17 @@
 <template>
   <div>
-    <h1>CreateQuest</h1>
-    <br>
-    <div>
-      <h4>어떤 퀘스트를 원하시나요?</h4>
-      <input type="radio" id="option1">
-      <label for="option1">개인</label>
-
-      <input type="radio" id="option2">
-      <label for="option2">공동</label>
-
-      <input type="radio" id="option3">
-      <label for="option3">릴레이</label>
+    <h5 style="padding-bottom: 10px"></h5>
+    <div id="router-list">
+      <router-link to="/quests/create/solo" style="margin-left: 5px">개인</router-link>
+      <router-link to="/quests/create/group">공동</router-link>
+      <router-link to="/quests/create/relay">릴레이</router-link>
     </div>
     <br>
-    <div>
-      <h4>어떤 주제의 퀘스트인가요?</h4>
-      <input type="checkbox" id="subject1">
-      <label for="subject1">건강</label>
-
-      <input type="checkbox" id="subject2">
-      <label for="subject2">생활</label>
-
-      <input type="checkbox" id="subject3">
-      <label for="subject3">취미</label>
-
-      <input type="checkbox" id="subject4">
-      <label for="subject4">공부</label>
-      <br>
-
-      <input type="checkbox" id="subject5">
-      <label for="subject5">정서</label>
-
-      <input type="checkbox" id="subject6">
-      <label for="subject6">자산</label>
-
-      <input type="checkbox" id="subject7">
-      <label for="subject7">기타</label>
+    <div v-if="$route.name === 'CreateQuest'" id='open'>
+      <img  id="open-img" src="@/assets/도넛_select.png" alt="">
     </div>
-    <br>
-    <div>
-      <h4>제목을 입력하세요</h4>
-      <input type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
-    </div>
-    <br>
-    <div>
-      <h4>인증 방법을 입력하세요</h4>
-      <textarea type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
-      </textarea>
-    </div>
+    <router-view/>
+
   </div>
 </template>
 
@@ -59,5 +22,31 @@ export default {
 </script>
 
 <style scoped>
+#router-list {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
+#router-list a {
+  flex: 1 1 0;
+  border: #cd4e3e solid;
+  padding: 5px 10px 5px 10px;
+  /*margin-left: 20px;*/
+  border-radius: 99em;
+  text-decoration: none;
+  text-decoration-color: transparent;
+  font-weight: bold;
+  color: black;
+
+}
+
+#open{
+  margin-top: 70px;
+}
+#open-img{
+  width: 350px;
+  margin-top: 10px;
+
+}
 </style>
