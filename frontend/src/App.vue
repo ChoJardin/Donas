@@ -16,6 +16,9 @@ import cookies from "vue-cookies";
 import navBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
 
+// 브라우저 기본 속성 리셋
+import ('./assets/style/reset.css')
+
 export default {
   name: 'App',
   // components
@@ -71,8 +74,7 @@ export default {
 
 
 #app-content {
-  margin: 75px 10px 50px 10px;
+  margin: 70px 10px 50px 10px;
 }
-
 
 </style>
