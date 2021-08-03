@@ -19,6 +19,10 @@ public class SigninRequest {
     @NotNull
 //    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
     String password;
+    
+    @ApiModelProperty(required = true)
+    @NotNull
+    String token;
 
     public String getEmail() {
         return email;
@@ -35,5 +39,13 @@ public class SigninRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 }

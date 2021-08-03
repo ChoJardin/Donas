@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.CheckPasswordRequest;
 import com.ssafy.donas.request.SigninRequest;
+import com.ssafy.donas.request.SignoutRequest;
 import com.ssafy.donas.request.SignupRequest;
 import com.ssafy.donas.request.UserInfoRequest;
 import com.ssafy.donas.response.LoginResponse;
@@ -42,18 +43,30 @@ public class UserController {
 		
 		String email = request.getEmail();
 		String password = request.getPassword();
-		
-		User user = userService.checkPassword(email, password);
+		String token = request.getToken();
+		User user = userService.checkPassword(email, password,token);
 		
 		if(user==null)
 			return HttpStatus.NOT_FOUND;
-
+		
+		// 로그인 아이디별 토큰 저장	
+		
 		result.id = user.getId();
 		result.nickname = user.getNickname();
 		result.questCnt = user.getQuestCnt();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 
 		return response;
+	}
+	
+	@PostMapping("/signout")
+	@ApiOperation(value = "로그아웃")
+	public Object logout(@Valid @RequestBody SignoutRequest request) {
+		long userId = request.getUserId();		
+		String token = request.getToken();
+		if(!userService.logOut(userId, token))
+			return HttpStatus.NOT_FOUND;			
+		return HttpStatus.OK;
 	}
 	
 	@GetMapping("/email")

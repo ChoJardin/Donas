@@ -51,10 +51,10 @@ public abstract class Quest {
 	private String description;
 	
 	@Column(name = "start_at", nullable = false)
-	private Date startAt;
+	private LocalDateTime startAt;
 	
 	@Column(name = "finish_at", nullable = false)
-	private Date finishAt;
+	private LocalDateTime finishAt;
 	
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Article> articles = new ArrayList<Article>();
@@ -67,83 +67,12 @@ public abstract class Quest {
 	
 	public Quest() {}
 	
-	public Quest(String type, String title, String description, Date startAt, Date finishAt) {
+	public Quest(String type, String title, String description, LocalDateTime startAt, LocalDateTime finishAt) {
 		this.type = type;
 		this.title = title;
 		this.description = description;
 		this.startAt = startAt;
 		this.finishAt = finishAt;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getStartAt() {
-		return startAt;
-	}
-
-	public void setStartAt(Date startAt) {
-		this.startAt = startAt;
-	}
-
-	public Date getFinishAt() {
-		return finishAt;
-	}
-
-	public void setFinishAt(Date finishAt) {
-		this.finishAt = finishAt;
-	}
-
-	public List<Article> getArticles() {
-		return articles;
-	}
-
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
-	}
-
-	public List<QuestParticipants> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(List<QuestParticipants> participants) {
-		this.participants = participants;
-	}
-
-	public List<UserLikeQuests> getLikeUsers() {
-		return likeUsers;
-	}
-
-	public void setLikeUsers(List<UserLikeQuests> likeUsers) {
-		this.likeUsers = likeUsers;
-	}
+	
 }

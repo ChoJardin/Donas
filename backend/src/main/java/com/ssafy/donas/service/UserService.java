@@ -8,7 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.donas.domain.Token;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.repository.TokenRepo;
 import com.ssafy.donas.repository.UserRepo;
 
 @Service
@@ -18,8 +20,30 @@ public class UserService {
 	@Autowired
 	UserRepo userRepo;
 	
-	public User checkPassword(String email, String password) {
+	@Autowired
+	TokenRepo tokenRepo;
+	
+	public boolean logOut(long userId, String token) {
+		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token,userId);		
+		if(userToken.isEmpty())
+			return false;
+		userToken.ifPresent(selectToken ->{			
+			tokenRepo.delete(selectToken);
+		});
+		return true;
+	}
+	
+	
+	public User checkPassword(String email, String password, String token) {
 		User user = userRepo.findUserByEmailAndPassword(email, password);
+		if(user==null) {
+			return null;
+		}		
+		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token,user.getId());
+		if(userToken.isEmpty()) {
+			Token tokenId = new Token(token,user);
+			tokenRepo.save(tokenId);
+		}
 		return user;
 	}
 
@@ -40,7 +64,6 @@ public class UserService {
 	public boolean join(String email, String password, String nickname) {
 		User user = new User(email, password, nickname);
 		userRepo.save(user);
-		
 		return true;
 	}
 	
