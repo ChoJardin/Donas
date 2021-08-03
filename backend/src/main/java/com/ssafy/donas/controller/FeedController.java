@@ -27,6 +27,7 @@ import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AddArticleRequest;
 import com.ssafy.donas.request.AddCommentRequest;
+import com.ssafy.donas.request.AddPersonalAndGroupQuestRequest;
 import com.ssafy.donas.request.LikeRequest;
 import com.ssafy.donas.request.UpdateArticleRequest;
 import com.ssafy.donas.request.UpdateCommentRequest;
@@ -133,8 +134,29 @@ public class FeedController {
 	/*
 	 * Quest Functions
 	 */
-	// 퀘스트 생성
-	// 수정삭제..?
+	
+	@PostMapping("/quest/personal")
+	@ApiOperation(value = "개인퀘스트 생성")
+	public Object addPersonalQuest(@RequestBody AddPersonalAndGroupQuestRequest quest) {
+		if (!userService.checkId(quest.getUserId()))
+			return HttpStatus.NOT_FOUND;
+		if (quest.getTitle() == "" || quest.getDescription() == "")
+			return HttpStatus.NO_CONTENT;
+		questService.addPersonalQuest(quest.getUserId(), quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt());
+		return HttpStatus.OK;
+	}
+	
+	@PostMapping("/quest/group")
+	@ApiOperation(value = "그룹퀘스트 생성")
+	public Object addGroupQuest(@RequestBody AddPersonalAndGroupQuestRequest quest) {
+		if (!userService.checkId(quest.getUserId()))
+			return HttpStatus.NOT_FOUND;
+		if (quest.getTitle() == "" || quest.getDescription() == "")
+			return HttpStatus.NO_CONTENT;
+		questService.addPersonalQuest(quest.getUserId(), quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt());
+		return HttpStatus.OK;
+	}
+	// 수정삭제
 	@GetMapping("/quest/{userId}")
 	@ApiOperation(value = "퀘스트목록 가져오기")
 	public Object getQuestByUser(@PathVariable long userId) {
