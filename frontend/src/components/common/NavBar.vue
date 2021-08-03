@@ -4,7 +4,7 @@
 
       <div id="logo">
         <router-link to="/">
-          <img src="@/assets/logo3.png"  alt=""/>
+          <img src="@/assets/logo5-2.png"  alt=""/>
         </router-link>
       </div>
 
@@ -22,7 +22,7 @@
         </div>
         <div class="notification">
           <router-link :to="`/notification/${nickname}`"><span><i class="material-icons" style="font-size: 36px">notifications_none</i></span>
-          <span class="badge"><i class="fas fa-circle fa-sm"></i></span></router-link>
+          <span class="badge"><i class="fas fa-circle fa-xs"></i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
       </div>
@@ -135,7 +135,7 @@ export default {
 .notification .badge {
   position: absolute;
   top: 7px;
-  right: 8px;
+  right: 9px;
   color: red;
 }
 

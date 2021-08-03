@@ -1,5 +1,6 @@
 <template>
   <footer>
+    <hr class="footer-line">
     <div id="flex-container">
       <router-link to="/"><i class="material-icons" style="font-size: 36px">home</i></router-link>
       <router-link to="/quests"><i class="material-icons" style="font-size: 36px">sports_score</i></router-link>
@@ -31,6 +32,11 @@ export default {
 </script>
 
 <style scoped>
+
+.footer-line{
+  opacity: 60%;
+}
+
 #flex-container {
   height: 100%;
   display: flex;
@@ -42,7 +48,7 @@ export default {
   flex: auto;
   width: 20%;
   padding: 7px;
-  color: #121f8c;
+  color: #da8a11;
   text-align: center;
   font-size: small;
   text-decoration: none;
@@ -57,7 +63,7 @@ export default {
 #flex-container a.router-link-exact-active {
   color: white ;
   /*color: #9d794a;*/
-  background: #121f8c;
+  background: #da8a11;
   /*margin: 0 0px 2px 0px;*/
   border-radius: 25%;
   padding: 1px;

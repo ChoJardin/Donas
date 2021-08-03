@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navBar/>
+    <navBar id="navBar"/>
 
     <div id="app-content">
         <router-view/>
@@ -46,6 +46,9 @@ export default {
 </script>
 
 <style>
+#navBar{
+  position: fixed;
+}
 
 /*footer*/
 #footer {
