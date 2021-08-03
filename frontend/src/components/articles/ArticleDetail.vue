@@ -1,6 +1,10 @@
 <template>
   <div class="overlay">
-    <h1>ArticleDetail</h1>
+    <div id="article-detail-arrow">
+      <a href="#" @click.prevent="$router.back()">
+        <i class="material-icons color292929">arrow_back</i>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -28,6 +32,17 @@ export default {
   bottom: 0;
   left: 0;
   overflow: scroll;
-  background: #fff;
+  background: white;
 }
+
+#article-detail-arrow {
+  display: flex;
+  margin: 15px;
+  color: #292929;
+}
+
+.material-icons.color292929 {
+  color: #292929;
+}
+
 </style>

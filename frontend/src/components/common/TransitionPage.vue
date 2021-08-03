@@ -46,7 +46,24 @@ export default {
     this.$router.beforeEach((to, from, next) => {
       let transitionName = to.meta.transitionName || from.meta.transitionName || DEFAULT_TRANSITION;
 
-      // if (transitionName === 'slide') {
+      if (to.meta.transitionName === 'slide') {
+        document.body.style.overflow = 'hidden'
+      }
+
+      if (from.meta.transitionName === 'slide') {
+        document.body.style.overflow = 'null'
+      }
+
+      // 피드에서 게시글 상세정보 -> 오른쪽에서 슬라이드
+      if (to.name === 'ArticleDetail' || from.name === 'ArticleDetail') {
+        transitionName = 'slide-right'
+      }
+
+      // 피드에서 프로필 이동 -> 왼쪽 슬라이드
+      if (to.name === 'Profile' || from.name === 'Profile') {
+        transitionName = 'slide-left'
+      }
+
       //   const toDepth = to.path.split('/').length;
       //   const fromDepth = from.path.split('/').length;
       //   transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
@@ -76,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
-
+/* fade */
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.3s;
@@ -90,21 +107,37 @@ export default {
   opacity: 0
 }
 
-
-.slide-enter-active,
-.slide-leave-active {
+/* 오른쪽 슬라이드 */
+.slide-right-enter-active,
+.slide-right-leave-active {
   transition-duration: 0.5s;
   transition-property: height, opacity, transform;
   transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
   overflow: hidden;
 }
 
-.slide-leave-active,
-.slide-enter {
+.slide-right-leave-active,
+.slide-right-enter {
   opacity: 1;
   transform: translate(100%, 0);
 }
 
+/* 왼쪽 슬라이드 */
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition-duration: 0.5s;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
+}
+
+.slide-left-leave-active,
+.slide-left-enter {
+  opacity: 1;
+  transform: translate(-100%, 0);
+}
+
+/* 줌 */
 .zoom-enter-active,
 .zoom-leave-active {
   animation-duration: 0.5s;

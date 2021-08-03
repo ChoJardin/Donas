@@ -1,6 +1,6 @@
 <template>
   <div id="vertical-feed-wrap">
-    <h1>VerticalFeed</h1>
+    <!--<h1>VerticalFeed</h1>-->
 
       <SingleArticle
           v-for="article in articles" :key="article.id"
