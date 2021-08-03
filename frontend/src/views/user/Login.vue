@@ -19,6 +19,9 @@
 
     <button class="button" :disabled="!isSubmit" @click="onLogin">로그인</button>
 
+    <br><br><br>
+    <button @click="$router.push('/signup')"> 회원가입 </button>
+
   </div>
 </template>
 

@@ -96,7 +96,7 @@ export default {
   cursor: pointer;
   transition-duration: 0.4s;
   font-weight: bold;
-  border: #183a1d solid;
+  border: 2px #183a1d solid;
   border-radius: 10px;
   /*display: inline-block;*/
 }

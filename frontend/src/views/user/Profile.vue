@@ -5,8 +5,9 @@
 
       <!--기본 프로필 start-->
       <div id="profile-wrap">
-        <img v-if="profile.picture" class="profile-image" :src="profile.picture" alt="">
-        <img v-else class="profile-image" src="@/assets/도넛1.png" alt="">
+        <img class="profile-image" src="@/assets/profile_test.jpeg" alt="">
+        <!--<img v-if="profile.picture" class="profile-image" :src="profile.picture" alt="">-->
+        <!--<img v-else class="profile-image" src="@/assets/도넛1.png" alt="">-->
         <div id="profile-info">
           <div id="profile-nickname">
             {{this.$route.params.nickname}}
@@ -21,7 +22,7 @@
       <!--기본 프로필 end-->
 
       <div id="profile-description">
-        소개글 컴포넌트
+        {{ profile.description }}
       </div>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
