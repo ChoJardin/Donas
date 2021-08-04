@@ -4,7 +4,7 @@
     <div>
       <div id="flex-container">
         <div id="quest-wrap">
-          <img id="quest-image" src="@/assets/도넛1.png" alt="">
+          <img id="quest-image" src="../../assets/donut1.png" alt="">
           <div id="quest-info">
             <h1 id="title">{{ questId }}</h1>
             <div id="summary">summary</div>

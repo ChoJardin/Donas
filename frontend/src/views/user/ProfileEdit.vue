@@ -30,7 +30,7 @@
           <div id="profile-image-input">
             <label for="image-input">
               <img v-if="profile.picture" class="profile-image" :src="profile.picture" alt="">
-              <img v-else class="profile-image" src="@/assets/도넛1.png" alt="">
+              <img v-else class="profile-image" src="../../assets/donut1.png" alt="">
             </label>
             <!--사진첩/ 카메라 선택창 호출됨-->
             <input type="file" id="image-input" accept="image/*; capture=camera" style="display: none;">
