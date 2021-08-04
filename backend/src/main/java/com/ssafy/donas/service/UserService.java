@@ -33,7 +33,6 @@ public class UserService {
 		return true;
 	}
 	
-	
 	public User checkPassword(String email, String password, String token) {
 		User user = userRepo.findUserByEmailAndPassword(email, password);
 		if(user==null) {
@@ -64,6 +63,7 @@ public class UserService {
 	public boolean join(String email, String password, String nickname) {
 		User user = new User(email, password, nickname);
 		userRepo.save(user);
+		
 		return true;
 	}
 	

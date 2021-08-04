@@ -81,7 +81,7 @@ public class ProfileController {
 		result.description = user.getDescription();
 		
 		// Quest 정보
-		result.quests = questService.getQuestsByUserId(user.getId());
+		result.quests = questService.getQuestInfoByUserId(user.getId());
 		result.questCnt = user.getQuestCnt();
 		result.questPercent = user.getQuestPercent();
 		
