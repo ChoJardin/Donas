@@ -1,30 +1,19 @@
   <template>
   <div>
-      <v-col cols="12">
-            <v-card light>
-              <div class="d-flex flex-no-wrap justify-contents-left">
-                <div>
-                  <v-avatar class="ma-3" size="100" tile>
-                    <v-img id="quest-image" src="@/assets/도넛1.png"></v-img>
-                  </v-avatar>
-                </div>
-                <div>
-                  <v-card-title><strong>퀘스트 이름</strong></v-card-title>
-                  <v-card-subtitle class="pt-1">어떤내용인가??</v-card-subtitle>
-                </div>
-              </div>
-            </v-card>
-          </v-col>
-<!--      <div id="flex-container">-->
-<!--        <hr>-->
-<!--        <div id="profile-wrap">-->
-<!--          <img id="quest-image" src="@/assets/도넛1.png" alt="">-->
-<!--          <div id="profile-info">-->
-<!--            <div id="">뱃지</div>-->
-<!--          </div>-->
-<!--  -->
-<!--        </div>-->
-<!--      </div>-->
+    <div id="single-quest-main">
+      <div id="single-quest-wrap">
+
+        <!--게시글 작성 정보-->
+        <div id="single-quest-profile">
+          <img id="quest-image" src="@/assets/도넛1.png">
+          <div id="single-quest-text">
+            <h1 id="single-quest-title">아침에 5시에 기상</h1>
+            <div id="single-quest-description">미라클 모닝에 도전</div>
+          </div>
+        </div>
+        <!--게시글 작성 정보-->
+      </div><!--single-article-wrap ends-->
+    </div><!--single-article-main ends-->
   </div>
 </template>
 
@@ -37,24 +26,59 @@ export default {
 </script>
 
 <style scoped>
-/*#flex-container {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  text-align: start;*/
-/*  margin: 15px;*/
-/*}*/
+#single-quest-main {
+    height: 120px;
+    width: 90%;
+    margin: 15px 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-/*#profile-wrap {*/
-/*  display: flex;*/
-/*}*/
+    /*border: 1px solid #292929;*/
+    border-radius: 30px;
+    box-shadow: 0 0 15px -7px #292929;
+}
 
-/*#quest-image {*/
-/*  border: 1px solid #ddd; !* Gray border *!*/
-/*  border-radius: 4px;  !* Rounded border *!*/
-/*  padding: 5px; !* Some padding *!*/
-/*  width: 100px; !* Set a small width *!*/
-/*  !*width: 100px;*!*/
-/*  !*flex: 1 1 0;*!*/
-/*}*/
+#single-quest-wrap {
+  width: 280px;
+}
+
+/*게시글 작성 정보*/
+#single-quest-profile {
+    display: flex;
+    padding-top: 10px;
+    width: 100%;
+}
+
+#quest-image {
+    height: 100px;
+    width: 110px;
+    border: 1px solid #292929;
+    border-radius: 50%;
+    margin-bottom: 2px;
+    /*margin-left: 15px;*/
+    /*margin-top: 15px;*/
+}
+
+#single-quest-text {
+    /*flex-direction: column;*/
+    margin-left: 15px;
+    justify-content: center;
+    margin-top: 13px
+}
+
+#single-quest-title {
+  display: flex;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 1.0em;
+}
+
+#single-quest-description {
+  margin-top: 20px;
+  display: flex;
+  font-size: 0.8em;
+
+}
 
 </style>

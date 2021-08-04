@@ -58,7 +58,7 @@ Vue.use(VueRouter)
 
 const routes = [
   // 메인
-  {path: '/', name: 'Main', component: Main},
+  {path: '/main', name: 'Main', component: Main},
 
   // 전체 퀘스트
   {path: '/quests', component: Quest,

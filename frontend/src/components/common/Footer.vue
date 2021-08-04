@@ -2,7 +2,7 @@
   <footer>
 <!--    <hr class="footer-line">-->
     <div id="flex-container">
-      <router-link to="/"><i class="material-icons" style="font-size: 30px">home</i></router-link>
+      <router-link to="/main"><i class="material-icons" style="font-size: 30px">home</i></router-link>
       <router-link to="/quests"><i class="material-icons" style="font-size: 30px">sports_score</i></router-link>
       <router-link to="/feed"><i class="material-icons" style="font-size: 30px">menu</i></router-link>
       <router-link to="/user/mileage"><i class="material-icons" style="font-size: 30px">savings</i></router-link>
@@ -33,10 +33,6 @@ export default {
 
 <style scoped>
 
-.footer-line{
-  opacity: 60%;
-}
-
 #flex-container {
   height: 100%;
   display: flex;
@@ -61,7 +57,7 @@ export default {
 /*  opacity: 0.6;*/
 /*}*/
 
-#flex-container a.router-link-exact-active {
+#flex-container a.router-link-active {
   color: #183a1d ;
   /*color: #9d794a;*/
   /*background: #da8a11;*/

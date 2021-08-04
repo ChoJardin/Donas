@@ -10,7 +10,7 @@
 
       <div v-if="!isLoggedIn" class="group-right" style="float: right">
         <div class="search">
-          <router-link to="/search"><i class="material-icons" style="font-size: 36px">search</i></router-link>
+          <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
         </div>
         <button class="button1" style="float:right"><router-link to="/login">Login</router-link></button>
       </div>
@@ -69,10 +69,11 @@ export default {
   padding-right: 10px;
   position: fixed;
   width: 100vw;
-  height: 60px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 10px;
 }
 
 #logo {
@@ -85,6 +86,7 @@ export default {
 
 .button1 {
   color: black;
+  font-family: 'GongGothicLight';
   /*color: white;*/
   padding: 3px;
   height: 28px;
@@ -95,8 +97,7 @@ export default {
   margin: 10px 1px;
   cursor: pointer;
   transition-duration: 0.4s;
-  font-weight: bold;
-  border: 2px #183a1d solid;
+  border: 2px #f0a04b solid;
   border-radius: 10px;
   /*display: inline-block;*/
 }
