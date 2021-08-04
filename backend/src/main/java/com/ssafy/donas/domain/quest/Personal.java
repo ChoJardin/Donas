@@ -1,7 +1,6 @@
 package com.ssafy.donas.domain.quest;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -29,7 +28,7 @@ public class Personal extends Quest{
 	public Personal() {}
 	
 	@Builder
-	public Personal(String type, String title, String description, Date startAt, Date finishAt) {
+	public Personal(String type, String title, String description, LocalDateTime startAt, LocalDateTime finishAt) {
 		super(type, title, description, startAt, finishAt);
 	}
 }

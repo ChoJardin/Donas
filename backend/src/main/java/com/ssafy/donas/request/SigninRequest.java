@@ -1,6 +1,8 @@
 package com.ssafy.donas.request;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;

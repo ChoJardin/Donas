@@ -1,5 +1,7 @@
 package com.ssafy.donas.controller;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,10 @@ import com.ssafy.donas.response.AllProfileResponse;
 import com.ssafy.donas.response.FollowResponse;
 import com.ssafy.donas.response.IdResponse;
 import com.ssafy.donas.response.ProfileResponse;
+import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.FollowService;
+import com.ssafy.donas.service.PushService;
 import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.UserService;
 
@@ -46,6 +50,13 @@ public class ProfileController {
 	
 	@Autowired
 	ArticleService articleService;
+	
+	@Autowired
+	AlarmService alarmService;
+	
+	@Autowired
+	PushService pushService;
+	
 
 	@GetMapping("/userid")
 	@ApiOperation(value = "닉네임으로 id 가져오기")
@@ -81,7 +92,7 @@ public class ProfileController {
 		result.description = user.getDescription();
 		
 		// Quest 정보
-		result.quests = questService.getQuestInfoByUserId(user.getId());
+		result.quests = questService.getQuestsByUserId(user.getId());
 		result.questCnt = user.getQuestCnt();
 		result.questPercent = user.getQuestPercent();
 		
@@ -205,9 +216,12 @@ public class ProfileController {
 	public Object startFollow(@RequestBody FollowRequest request) {
 		User follower = userService.getUser(request.getFollowerId());
 		User followee = userService.getUser(request.getFolloweeId());
-
+		
 		if (!followService.addFollow(follower, followee))
 			return HttpStatus.CONFLICT;
+		if(!alarmService.addAlarm(follower, followee.getNickname()+"님이 회원님을 팔로워하기 시작했습니다.", LocalDateTime.now()))
+			return HttpStatus.CONFLICT;
+
 
 		return HttpStatus.OK;
 	}

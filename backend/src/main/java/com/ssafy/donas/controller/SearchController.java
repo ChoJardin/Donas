@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.donas.domain.Follow;
 import com.ssafy.donas.domain.Search;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.SearchWordRequest;
@@ -27,7 +26,6 @@ import com.ssafy.donas.response.FollowResponse;
 import com.ssafy.donas.response.MypageResponse;
 import com.ssafy.donas.response.RecentWordResponse;
 import com.ssafy.donas.response.SearchResponse;
-import com.ssafy.donas.service.FollowService;
 import com.ssafy.donas.service.SearchService;
 import com.ssafy.donas.service.UserService;
 
@@ -43,9 +41,6 @@ public class SearchController {
 
 	@Autowired
 	SearchService searchService;
-	
-	@Autowired
-	FollowService followService;
 
 	@GetMapping("/recent/{id}")
 	@ApiOperation(value = "최근 검색어")
@@ -66,7 +61,6 @@ public class SearchController {
 
 			RecentWordResponse result = new RecentWordResponse();
 			Search s = user.getSearchWords().get(i);
-			result.id = userService.getIdByNickname(s.getNickname());
 			result.nickname = s.getNickname();
 			result.searchTime = s.getSearchTime();
 
@@ -94,7 +88,6 @@ public class SearchController {
 
 			SearchResponse result = new SearchResponse();
 			User user = list.get(i);
-			result.id = user.getId();
 			result.nickname = user.getNickname();
 			result.picture = user.getPicture();
 			result.description = user.getDescription();
@@ -125,7 +118,6 @@ public class SearchController {
 
 			SearchResponse result = new SearchResponse();
 			User user = list.get(i);
-			result.id = user.getId();
 			result.nickname = user.getNickname();
 			result.picture = user.getPicture();
 			result.description = user.getDescription();
@@ -149,37 +141,6 @@ public class SearchController {
 			return HttpStatus.NOT_FOUND;
 
 		return HttpStatus.OK;
-	}
-	
-	@GetMapping("/friends/{id}")
-	@ApiOperation(value = "맞팔 리스트 불러오기")
-	public Object getFriendsList(@PathVariable long id) {
-		if(!userService.checkId(id))
-			return HttpStatus.NOT_FOUND;
-
-		User user = userService.getUser(id);
-			
-		List<User> followers = followService.getFollowerList(user);
-		System.out.println(followers);
-		List<User> followees = followService.getFolloweeList(user);
-		System.out.println(followees);
-		
-		final List<SearchResponse> results = new ArrayList<>();
-		ResponseEntity response = null;
-		
-		for(User u : followers) {
-			if(followees.contains(u)) {
-				SearchResponse res = new SearchResponse();
-				res.id = u.getId();
-				res.nickname = u.getNickname();
-				res.picture = u.getPicture();
-				res.description = u.getDescription();
-				results.add(res);
-			}
-		}
-		
-		response = new ResponseEntity<>(results, HttpStatus.OK);
-		return response;
 	}
 
 }

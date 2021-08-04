@@ -99,9 +99,6 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Like> likeArticles = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Comment> comments = new ArrayList<>();
-	
 	public User() {}
 
 	@Builder

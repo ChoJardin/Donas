@@ -5,10 +5,8 @@ import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 
 public class RecentWordResponse {
-	@ApiModelProperty(value = "id", position = 1)
-    public long id;
-    @ApiModelProperty(value = "nickname", position = 2)
+    @ApiModelProperty(value = "nickname", position = 1)
     public String nickname;
-    @ApiModelProperty(value = "search_time", position = 3)
+    @ApiModelProperty(value = "search_time", position = 2)
     public Date searchTime;
 }
