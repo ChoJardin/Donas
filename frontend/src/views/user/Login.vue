@@ -29,7 +29,7 @@
 import * as EmailValidator from "email-validator"
 import PV from "password-validator"
 import UserApi from "@/api/UserApi";
-import UserInput from "@/components/user/UserInput";
+import UserInput from "@/components/common/UserInput";
 
 export default {
   name: "Login",
