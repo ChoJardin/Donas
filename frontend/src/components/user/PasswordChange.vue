@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <div id="article-detail-arrow">
+    <div id="profile-edit-nav">
       <a href="#" @click.prevent="$emit('on-click')">
         <i class="material-icons color292929">arrow_back</i>
       </a>
@@ -35,6 +35,18 @@ export default {
   left: 0;
   overflow: scroll;
   background: white;
+}
+
+#profile-edit-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 5px 10px 15px;
+  color: #183a1d;
+}
+
+.material-icons.color292929 {
+  color: #183a1d;
 }
 
 #article-detail-arrow {
