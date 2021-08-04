@@ -5,7 +5,7 @@
 
       <!--기본 프로필 start-->
       <div id="profile-wrap">
-        <img class="profile-image" src="@/assets/profile_test.jpeg" alt="">
+        <img class="profile-image" src="../../assets/profile_test.jpeg" alt="">
         <!--<img v-if="profile.picture" class="profile-image" :src="profile.picture" alt="">-->
         <!--<img v-else class="profile-image" src="@/assets/도넛1.png" alt="">-->
         <div id="profile-info">

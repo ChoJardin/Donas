@@ -5,7 +5,7 @@
 
         <!--게시글 작성 정보-->
         <div id="single-quest-profile">
-          <img id="quest-image" src="@/assets/도넛1.png">
+          <img id="quest-image" src="../../assets/donut1.png">
           <div id="single-quest-text">
             <h1 id="single-quest-title">아침에 5시에 기상</h1>
             <div id="single-quest-description">미라클 모닝에 도전</div>
