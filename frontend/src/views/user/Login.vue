@@ -76,7 +76,8 @@ export default {
         let {email, password} = this
         let data = {
           email,
-          password
+          password,
+          token: '12341234'
         }
 
         // 버튼 비활성화

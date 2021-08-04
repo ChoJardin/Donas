@@ -7,7 +7,7 @@
       <div>
         비밀번호 변경
       </div>
-      <button>
+      <button @click="onSubmit">
         저장
       </button>
     </div>
@@ -20,12 +20,12 @@
 
       <UserInput class="user-input"
           id="new-password" label="새로운<br/>비밀번호" placeholder="새로운 비밀번호를 입력하세요" type="password"
-          :input.sync="newPassword" :error="error.passwordConfirm"
+          :input.sync="newPassword" :error="error.newPassword"
           @keyup-enter="moveFocusToNewPwConfirm" ref="newPassword"/>
 
       <UserInput class="user-input"
           id="new-password-confirm" label="비밀번호<br/>확인" placeholder="새로운 비밀번호를 다시 입력하세요" type="password"
-          :input.sync="newPasswordConfirm" :error="error.passwordConfirm"
+          :input.sync="newPasswordConfirm" :error="error.newPasswordConfirm"
           @keyup-enter="onSubmit" ref="newPasswordConfirm"/>
     </div>
 
@@ -33,7 +33,10 @@
 </template>
 
 <script>
+import PV from 'password-validator'
+
 import UserInput from "../common/UserInput";
+import UserApi from "../../api/UserApi";
 
 export default {
   name: "PasswordChange",
@@ -42,27 +45,70 @@ export default {
     UserInput
   },
   // props
+  props: {
+    id: Number
+  },
   // data
   data() {
     return {
       password: '',
       newPassword: '',
       newPasswordConfirm: '',
+      passwordSchema: new PV(),
       error: {
         password: false,
         newPassword: false,
         newPasswordConfirm: false
-      }
-
+      },
+      isSubmit: false
     }
   },
   // methods
   methods: {
     onSubmit() {
       console.log('clicked')
+      let {id, password, newPassword} = this
+      let data = {id, password, newPassword}
+      UserApi.updatePassword(
+          data,
+          // 변경 성공 -> 회원정보 페이지로 보내면서 변경 성공 메세지 버튼 아래 노출
+          // NOT_FOUND -> 기존의 비밀번호와 일치하지 않습니다. password error로 출력
+          // error -> 에러 페이지로
+          res => {
+            if (res.data === 'NOT_FOUND') {
+              this.error.password = "기존의 비밀번호와 일치하지 않습니다"
+              this.$refs.password.onReset()
+              this.$refs.newPassword.onReset()
+              this.$refs.newPasswordConfirm.onReset()
+            } else {
+              this.$emit('on-click')
+              this.$emit('password-changed')
+            }
+          },
+          err => {
+            this.$router.push('/error')
+          }
+      )
     },
 
+    checkForm() {
+      // 기존 비밀번호
+      if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+        this.error.password = "영문,숫자 포함 8~16자리를 입력해주세요.";
+      else this.error.password = false;
 
+      // 새 비밀번호
+      if (this.newPassword.length > 0 && !this.passwordSchema.validate(this.newPassword))
+        this.error.newPassword = "영문,숫자 포함 8~16자리를 입력해주세요.";
+      else if (this.password === this.newPassword)
+        this.error.newPassword = "기존의 비밀번호와 동일합니다."
+      else this.error.newPassword = false;
+
+      // 비밀번호 확인
+      if (this.newPasswordConfirm.length > 0 && this.newPassword !== this.newPasswordConfirm)
+        this.error.newPasswordConfirm = "비밀번호가 일치하지 않습니다."
+      else this.error.newPasswordConfirm = false
+    },
 
     // enter 입력시 다음 칸으로 포커스 이동
     moveFocusToNewPw() {
@@ -73,10 +119,29 @@ export default {
       document.getElementById('new-password').blur()
       document.getElementById('new-password-confirm').focus()
     },
-  }
+  },
   // computed
   // watch
+  watch: {
+    password: function(v) {
+      this.checkForm()
+    },
+    newPassword: function(v) {
+      this.checkForm()
+    },
+    newPasswordConfirm: function(v) {
+      this.checkForm()
+    }
+  },
   // lifecycle hook
+  created() {
+    this.passwordSchema
+      // 영문, 숫자 포함 8~16자리
+      .is().min(8)
+      .is().max(16)
+      .has().digits()
+      .has().letters()
+  }
 }
 </script>
 

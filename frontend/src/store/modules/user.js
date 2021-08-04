@@ -5,15 +5,17 @@ import cookies from 'vue-cookies'
 const state ={
   loginUser: '',
   // selectedProfile: {
-  //   id: '',
-  //   nickname:'',
-  //   picture: '', // 이미지 경로
-  //   description: '',
+  //   id: '',  // 유저 아이디
+  //   nickname:'',  // 닉네임
+  //   picture: '',  // 이미지 경로
+  //   description: '',  // 인사말
   //   quests: [
   //     {
-  //        // 진행중인 퀘스트
+  //        // 진행 중 퀘스트
   //     }
   //   ],
+  //   questCnt: '',  // 퀘스트 개수
+  //   questPercent: '',  // 퀘스트 진행률
   //   follower: '',  // 팔로워 수
   //   following: '',  // 팔로잉 수
   //   isFollowing: false,  // 팔로워인지 여부
@@ -34,8 +36,19 @@ const state ={
     following: 4,  // 팔로잉 수
     isFollowing: false,  // 팔로워인지 여부
   },
-  followers: [{}, {}, {}],
-  followings: ''
+  // 팔로우 페이지 정보
+  follow: {
+    followerList: [{}, {}, {}],
+    followingList: '',
+  },
+
+  // 개인정보 수정
+  myProfile: {
+    nickname: '',
+    picture: '',
+    description: '',
+  }
+
 }
 
 
@@ -77,6 +90,10 @@ const mutations = {
   DELETE_FOLLOWER(state) {
     state.selectedProfile.follower -= 1
     state.selectedProfile.isFollowing = false
+  },
+  // 프로필 정보 수정
+  SET_MY_PROFILE(state, profile) {
+    state.myProfile = profile
   }
 
 }
@@ -114,6 +131,10 @@ const actions = {
     } else {
       commit('ADD_FOLLOWER')
     }
+  },
+  // 프로필 정보 수정
+  setMyProfile({commit}, profile) {
+    commit('SET_MY_PROFILE', profile)
   }
 
 }
