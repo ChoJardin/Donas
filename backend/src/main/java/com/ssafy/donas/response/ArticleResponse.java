@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModelProperty;
 
 public class ArticleResponse {
-	@ApiModelProperty(value = "id", required = true , position = 1)
-	public long id;
-	@ApiModelProperty(value = "quest_id", required = true , position = 2)
+	@ApiModelProperty(value = "articleId", required = true , position = 1)
+	public long articleId;
+	@ApiModelProperty(value = "questId", required = true , position = 2)
 	public long questId;
 	@ApiModelProperty(value = "image", position = 3)
 	public String image;
@@ -19,8 +19,8 @@ public class ArticleResponse {
 	public LocalDateTime updatedAt;
 	@ApiModelProperty(value = "type", position = 7)
 	public String type;
-	@ApiModelProperty(value = "comment", position = 8)
-	public int comment;
-	@ApiModelProperty(value = "like", position = 9)
-	public int like;
+	@ApiModelProperty(value = "commentCnt", position = 8)
+	public int commentCnt;
+	@ApiModelProperty(value = "likeCnt", position = 9)
+	public int likeCnt;
 }

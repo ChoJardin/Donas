@@ -46,8 +46,10 @@ public class ArticleService {
 		article.setContent(content);
 	}
 	
+	// 버그 : entity 못찾음
 	public void delete(long articleId) {
 		articleRepo.deleteById(articleId);
+		articleRepo.flush();
 	}
 	
 	public List<Article> getArticlesByUser(User user){
