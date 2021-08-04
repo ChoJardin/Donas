@@ -44,13 +44,13 @@ public class UserController {
 		String email = request.getEmail();
 		String password = request.getPassword();
 		String token = request.getToken();
-		User user = userService.checkPassword(email, password,token);
+		User user = userService.checkPassword(email, password, token);
 		
 		if(user==null)
 			return HttpStatus.NOT_FOUND;
 		
 		// 로그인 아이디별 토큰 저장	
-		
+
 		result.id = user.getId();
 		result.nickname = user.getNickname();
 		result.questCnt = user.getQuestCnt();
@@ -81,7 +81,8 @@ public class UserController {
 	@GetMapping("/nickname")
 	@ApiOperation(value = "닉네임 중복 확인")
 	public Object checkNickname(@RequestParam String nickname) {
-		if(userService.checkNickname(nickname))
+		// 수정함
+		if(userService.checkNickname(nickname) || "edit".equals(nickname.toLowerCase()) || "undefined".equals(nickname.toLowerCase()))
 			return HttpStatus.CONFLICT;
 		
 		return HttpStatus.OK;

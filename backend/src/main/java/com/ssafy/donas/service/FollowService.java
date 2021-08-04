@@ -1,5 +1,7 @@
 package com.ssafy.donas.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -52,6 +54,28 @@ public class FollowService {
 			followRepo.delete(selectFollow);
 		});
 		
+	}
+	
+	public List<User> getFollowerList(User user){
+//		List<Follow> followers = user.getFollowers();
+		List<User> followers = followRepo.findFollowerByFollowee(user);
+//		List<Long> results = new ArrayList<Long>();
+//		
+//		for(User f : followers)
+//			results.add(f.getId());
+		
+		return followers;
+	}
+	
+	public List<User> getFolloweeList(User user){
+//		List<Follow> followees = user.getFollowees();
+		List<User> followees = followRepo.findFolloweeByFollower(user);
+//		List<Long> results = new ArrayList<Long>();
+//		
+//		for(User f : followees)
+//			results.add(f.getId());
+//		
+		return followees;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.ssafy.donas.domain.quest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,7 +40,7 @@ public class Relay extends Quest{
 	public Relay() {}
 	
 	@Builder
-	public Relay(String type, String title, String description, LocalDateTime startAt, LocalDateTime finishAt, int order, String userStatus) {
+	public Relay(String type, String title, String description, Date startAt, Date finishAt, int order, String userStatus) {
 		super(type, title, description, startAt, finishAt);
 		this.order = order;
 		this.userStatus = userStatus;
