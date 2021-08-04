@@ -45,7 +45,7 @@ export default {
 }
 
 .branch a.router-link-exact-active {
-  border-bottom: #34a1f5 solid;
+  border-bottom: #f0a04b solid;
 }
 
 .button {

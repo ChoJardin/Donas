@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <h1>All Quests</h1>
-    <v-app>
-        <QuestSingle class="quest-single" v-for="n in 10" :key="n" @click.native=setQuestId(n) />
-    </v-app>
+  <div id="quest-list">
+      <QuestSingle class="quest-single" v-for="n in 10" :key="n" @click.native=setQuestId(n) />
   </div>
 </template>
 

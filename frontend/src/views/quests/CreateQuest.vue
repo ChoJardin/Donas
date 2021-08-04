@@ -32,7 +32,7 @@ export default {
 
 #router-list a {
   flex: 1 1 0;
-  border: #cd4e3e solid;
+  border: #f1a64b solid;
   padding: 5px 10px 5px 10px;
   /*margin-left: 20px;*/
   border-radius: 99em;
@@ -43,12 +43,16 @@ export default {
 
 }
 
+#router-list a.router-link-exact-active {
+  background: rgba(241, 166, 75, 0.6);
+
+}
+
 #open{
   margin-top: 70px;
 }
 #open-img{
   width: 350px;
   margin-top: 10px;
-
 }
 </style>
