@@ -47,8 +47,6 @@ input {
   box-sizing:border-box;
   box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
   font-size: 1em;
-  font-weight: bold;
-  color: #292929;
   cursor: pointer;
 }
 

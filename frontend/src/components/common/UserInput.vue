@@ -12,8 +12,7 @@
     eventListner를 추가하고 싶은 경우 아래의 method 추가해서 그걸 들으면 되요
     -->
     <div class="wrap">
-      <!--<div class="input-label">-->
-        <label :for="id">{{ label }}</label>
+        <label v-html="label" :for="id"></label>
         <input
             v-model="input"
             :id="id"
@@ -106,9 +105,10 @@ label {
   position: relative;
   margin-left: 15px;
   font-size: 0.8em;
-  font-weight: bold;
-  word-break: break-all;
   width: 60px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
   z-index: 1;
 }
 
@@ -124,6 +124,8 @@ input{
   box-sizing:border-box;
   padding:0 0 0 80px;
   box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
+  font-family: GongGothicLight;
+  font-size: 0.9em;
 }
 
 input:focus {
@@ -141,7 +143,6 @@ input.error {
   margin-top: 74px;
   margin-left: 20px;
   font-size: 0.8em;
-  font-weight: bold;
 }
 
 </style>

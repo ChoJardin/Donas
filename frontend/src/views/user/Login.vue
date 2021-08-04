@@ -157,13 +157,11 @@ export default {
   width: 90%;
   margin-left: 5%;
   height: 50px;
-  /*background-color: #f1a64b;*/
-  background-color: #6cb9a2;
+  background-color: #183a1d;
+  color: #e1eedd;
   border-radius:25px;
   box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
   font-size: 1em;
-  font-weight: bold;
-  color: #292929;
   cursor: pointer;
 }
 .button:disabled {

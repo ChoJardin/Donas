@@ -28,21 +28,21 @@
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="profile-follow-wrap">
         <!--팔로워-->
-        <router-link :to="`/follow/${profile.nickname}/follower`" id="profile-follow">
+        <router-link :to="`/follow/${profile.nickname}/follower`" class="profile-follow">
           <span>
             팔로워
           </span>
-          <span class="cnt">
+          <span>
             {{ profile.follower }}
           </span>
         </router-link>
 
         <!--팔로잉-->
-        <router-link :to="`/follow/${profile.nickname}/following`" id="profile-follow">
+        <router-link :to="`/follow/${profile.nickname}/following`" class="profile-follow">
           <span>
             팔로잉
           </span>
-          <span class="profile-follow-cnt">
+          <span>
             {{ profile.following }}
           </span>
         </router-link>

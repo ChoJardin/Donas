@@ -27,7 +27,7 @@
         @keyup-enter="moveFocusToPwConfirm" ref="password"/>
 
     <UserInput class="user-input"
-        id="password-confirm" label="비밀번호 확인" placeholder="비밀번호를 다시 입력하세요" type="password"
+        id="password-confirm" label="비밀번호<br/>확인" placeholder="비밀번호를 다시 입력하세요" type="password"
         :input.sync="passwordConfirm" :error="error.passwordConfirm"
         @keyup-enter="onSignup" ref="passwordConfirm"/>
 
@@ -253,7 +253,7 @@ export default {
   align-self: center;
   color: #cd4e3e;
   font-size: 0.8em;
-  font-weight: bold;
+  /*font-weight: bold;*/
   cursor: pointer;
   border: 1px solid #cd4e3e;
   padding: 5px 3px;
@@ -284,13 +284,12 @@ export default {
 .button {
   width: 90%;
   height: 50px;
-  /*background-color: #f1a64b;*/
-  background-color: #6cb9a2;
   border-radius:25px;
   box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
   font-size: 1em;
-  font-weight: bold;
-  color: #292929;
+  /*font-weight: bold;*/
+  background-color: #183a1d;
+  color: #e1eedd;
   cursor: pointer;
 }
 .button:disabled {
