@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div id="article-detail-arrow">
-      <a href="#" @click.prevent="$router.back()">
+      <a href="#" @click.prevent="$emit('on-click')">
         <i class="material-icons color292929">arrow_back</i>
       </a>
     </div>
@@ -10,13 +10,15 @@
 
 <script>
 export default {
-  name: "ArticleDetail",
+  name: "PasswordChange",
   // components
   // props
-  props: {
-    article: Object
-  },
   // data
+  data() {
+    return {
+      isOn: false
+    }
+  },
   // methods
   // computed
   // watch

@@ -17,11 +17,11 @@ export default {
     },
     color: {
       type: String,
-      default: '#f1a64b'
+      default: '#183a1d'
     },
     text: {
       type: String,
-      default: '#292929'
+      default: '#e1eedd'
     },
     disabled: {
       type: Boolean,

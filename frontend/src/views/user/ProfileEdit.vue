@@ -71,6 +71,16 @@
       </div>
       <!--description-->
 
+      <transition>
+        <PasswordChange v-if="isPasswordChange" @on-click="onClick"/>
+        <button-big
+            v-else class="profile-password-change" value="비밀번호 변경"
+            @on-click="onClick"/>
+      </transition>
+
+
+
+
     </div> <!--profile-flex-container ends-->
 
   </div>
@@ -79,12 +89,18 @@
 <script>
 import {mapGetters, mapState} from "vuex";
 import UserApi from "../../api/UserApi";
+import ButtonBig from "../../components/common/ButtonBig";
+import PasswordChange from "../../components/user/PasswordChange";
 
 import('@/assets/style/user/Profile.css')
 
 export default {
   name: "ProfileEdit",
   // components
+  components: {
+    ButtonBig,
+    PasswordChange
+  },
   // props
   // data
   data() {
@@ -93,10 +109,16 @@ export default {
         nickname: '',
         picture: '',
         description: ''
-      }
+      },
+      isPasswordChange: false
     }
   },
   // methods
+  methods: {
+    onClick() {
+      this.isPasswordChange = !this.isPasswordChange
+    }
+  },
   // computed
   computed: {
     ...mapState({
@@ -136,21 +158,35 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin: 10px 0;
+  color: #183a1d;
 }
 
 .material-icons.color292929 {
-  color: #292929;
+  color: #183a1d;
 }
 
 #profile-edit-nav a,
 #profile-edit-nav button {
-  width: 20%;
+  flex: 1 1 0;
 }
 
 #profile-edit-nav div {
   font-size: 1.1em;
   font-weight: bold;
+  text-align: center;
+  flex: 3.5 3.5 0
 }
+
+#profile-edit-nav button {
+  color: #183a1d;
+  font-size: 0.9em;
+  font-weight: bold;
+  border: 1px solid #183a1d;
+  padding: 2px 0;
+  border-radius: 7px;
+  box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
+}
+
 
 .label-content-wrap {
   display: flex;
@@ -187,6 +223,11 @@ export default {
   border-radius: 5px;
   box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
   text-decoration: none;
+}
+
+/* 비밀번호 변경 */
+.profile-password-change {
+  margin-top: 20px
 }
 
 </style>
