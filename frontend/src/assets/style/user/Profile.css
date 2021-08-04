@@ -34,8 +34,9 @@
 }
 
 #profile-nickname {
+  font-family: 'GongGothicBold';
   font-size: 1.8em;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 #profile-badges {
@@ -45,8 +46,10 @@
 
 /* 소개글 */
 #profile-description {
+  font-family: 'GongGothicLight';
   margin: 15px;
   font-size: 0.9em;
+
 }
 
 /* 팔로우 팔로잉 */
@@ -54,11 +57,12 @@
   height: 30px;
   display: flex;
   justify-content: space-between;
+  font-family: GongGothicBold;
+  /*font-weight: bold;*/
   font-size: 1em;
-  font-weight: bold;
 }
 
-#profile-follow {
+.profile-follow {
   flex: 1 1 0;
   display: flex;
   justify-content: space-around;
@@ -68,9 +72,9 @@
   cursor: pointer;
 }
 
-.profile-follow-cnt {
-  font-size: 1.2em;
-}
+/*.profile-follow-cnt {*/
+/*  font-size: 1.2em;*/
+/*}*/
 
 #profile-button {
   flex: 1 1 0;
@@ -83,6 +87,7 @@
   text-decoration: none;
   text-align: center;
   align-self: center;
+  font-family: GongGothicMedium;
   color: #292929;
   background-color: #6cb9a2;
 }

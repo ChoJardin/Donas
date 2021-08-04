@@ -53,6 +53,20 @@ export default {
   position: fixed;
 }
 
+#app {
+  /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  font-family: 'GongGothicMedium';
+  /* 행간 조정 */
+  line-height: 1.2em;
+}
+
+#app-content {
+  margin: 70px 10px 50px 10px;
+}
+
 /*footer*/
 #footer {
   /*background-color: #9d794a;*/
@@ -63,21 +77,5 @@ export default {
   background: #e1eedd;
 }
 /*footer-end*/
-
-
-#app {
-  /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  font-family: 'GongGothicMedium';
-  /*font-family: 'GongGothicLight';*/
-  /*font-family: 'GongGothicBold';*/
-}
-
-
-#app-content {
-  margin: 70px 10px 50px 10px;
-}
 
 </style>
