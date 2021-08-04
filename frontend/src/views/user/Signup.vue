@@ -258,7 +258,7 @@ export default {
   border: 1px solid #cd4e3e;
   padding: 5px 3px;
   border-radius: 5px;
-  box-shadow: 0 0 18px -9px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
   text-decoration: none;
 
   /*text-shadow: 1px 1px 1px #cd4e3e;*/

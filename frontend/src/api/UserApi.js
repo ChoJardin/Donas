@@ -12,6 +12,8 @@ const ROUTES = {
   follower: '/profile/follower',
   following: '/profile/following',
   myPage: '/user/mypage/',
+  updateProfile: '/user/profile/',
+  updatePassword: '/user/password'
 }
 
 // 로그인
@@ -86,6 +88,33 @@ const requestMyPage = (id, callback, errorcallback) => {
     })
 }
 
+// 프로필 정보 수정
+const updateProfile = (id, data, callback, errorcallback) => {
+  const updateProfilePath = URL + ROUTES.updateProfile + id
+  axios.patch(updateProfilePath, data)
+    .then(res => {
+      console.log(res)
+      callback(res)
+    })
+    .catch(err => {
+      console.log('------')
+      console.log(err)
+      errorcallback(err)
+    })
+}
+
+// 비밀번호 변경
+const updatePassword = (data, callback, errorcallback) => {
+  const updatePasswordPath = URL + ROUTES.updatePassword
+  axios.patch(updatePasswordPath, data)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorcallback(err)
+    })
+}
+
 // 팔로워 리스트
 const requestFollower = (params, callback, errorCallback) => {
   const followerListPath = URL + ROUTES.follower
@@ -148,6 +177,8 @@ const UserApi = {
   requestFollowing:(data, callback, errorCallback)=>requestFollowing(data, callback, errorCallback),
   requestFollow:(post, data, callback, errorCallback)=>requestFollow(post, data, callback, errorCallback),
   requestMyPage:(id, callback, errorCallback)=>requestMyPage(id, callback, errorCallback),
+  updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
+  updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 }
 
 export default UserApi

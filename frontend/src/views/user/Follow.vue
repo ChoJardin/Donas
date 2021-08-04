@@ -48,11 +48,11 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 1em;
-  font-weight: bold;
+  font-family: GongGothicBold;
 }
 
 #follow-wrap a.router-link-exact-active {
-  border-bottom: #6cb9a2 solid;
+  border-bottom: #f0a04b solid;
 }
 
 .follow {
@@ -61,7 +61,7 @@ export default {
   margin-right: 1%;
   border-bottom: lightgray solid 1px;
   text-decoration: none;
-  color: black;
+  color: #183a1d;
   text-align: center;
 }
 
