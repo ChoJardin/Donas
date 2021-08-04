@@ -37,8 +37,8 @@ export default {
 
 #article-detail-arrow {
   display: flex;
-  margin: 15px;
-  color: #292929;
+  margin: 10px 5px 10px 15px;
+  color: #183a1d;
 }
 
 .material-icons.color292929 {
