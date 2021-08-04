@@ -328,25 +328,25 @@ public class FeedController {
 		return HttpStatus.OK;
 	}
 
-	@GetMapping("/comment/{articleId}")
-	@ApiOperation(value = "게시물 당 댓글목록")
-	public Object getCommnetByArticle(@PathVariable long articleId) {
-
-		if (!articleService.checkArticle(articleId))
-			return HttpStatus.NOT_FOUND;
-		List<Comment> comments = commentService.getComments(articleService.getArticleById(articleId));
-		final List<CommentResponse> result = new ArrayList<>();
-
-		for (Comment comment : comments) {
-			CommentResponse res = new CommentResponse();
-			res.id = comment.getId();
-			res.content = comment.getContent();
-			res.createdAt = comment.getCreatedAt();
-			res.updatedAt = comment.getUpdatedAt();
-			result.add(res);
-		}
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+//	@GetMapping("/comment/{articleId}")
+//	@ApiOperation(value = "게시물 당 댓글목록")
+//	public Object getCommnetByArticle(@PathVariable long articleId) {
+//
+//		if (!articleService.checkArticle(articleId))
+//			return HttpStatus.NOT_FOUND;
+//		List<Comment> comments = commentService.getComments(articleService.getArticleById(articleId));
+//		final List<CommentResponse> result = new ArrayList<>();
+//
+//		for (Comment comment : comments) {
+//			CommentResponse res = new CommentResponse();
+//			res.id = comment.getId();
+//			res.content = comment.getContent();
+//			res.createdAt = comment.getCreatedAt();
+//			res.updatedAt = comment.getUpdatedAt();
+//			result.add(res);
+//		}
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
 
 	/*
 	 * Like Functions
