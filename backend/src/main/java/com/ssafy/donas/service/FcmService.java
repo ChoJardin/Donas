@@ -6,11 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +22,10 @@ import org.springframework.http.MediaType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
-//import com.google.common.net.HttpHeaders;
 import com.ssafy.donas.domain.FcmMessage;
 
+@Service
+@Transactional
 public class FcmService {
 	
 	private final String API_URL=
@@ -40,7 +44,7 @@ public class FcmService {
 		HttpEntity<String> enti = new HttpEntity<String>(message,headers);
 
 		RestTemplate rest = new RestTemplate();
-		ResponseEntity<String> response = rest.exchange("https://fcm.googleapis.com/fcm/send", HttpMethod.POST, enti, String.class); 
+		ResponseEntity<String> response = rest.exchange(API_URL, HttpMethod.POST, enti, String.class); 
 		System.out.println(response.getStatusCode());
 		System.out.println(response.getBody());
 			}
