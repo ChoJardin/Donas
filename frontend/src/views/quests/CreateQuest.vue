@@ -10,7 +10,7 @@
     </div>
     <br>
     <div v-if="$route.name === 'CreateQuest'" id='open'>
-      <img  id="open-img" src="@/assets/도넛_select.png" alt="">
+      <img id="open-img" src="@/assets/도넛_select.png">
     </div>
     <router-view/>
 
