@@ -13,7 +13,9 @@ const ROUTES = {
   followers: '/profile/followers',
   followings: '/profile/followings',
   updateProfile: '/user/profile/',
-  updatePassword: '/user/password'
+  updatePassword: '/user/password',
+
+  alerts: '/alarm/',
 }
 
 // 로그인
@@ -166,6 +168,19 @@ const requestFollow = (post, data, callback, errorCallback) => {
   }
 }
 
+//알림 리스트 불러오기
+const requestAlertList = (id, params, callback, errorCallback) => {
+  const AlertListPath = URL + ROUTES.alerts + id
+  axios.get(AlertListPath, {params: params})
+    .then(res => {
+      console.log(res)
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
 
 const UserApi = {
   URL,
@@ -181,6 +196,8 @@ const UserApi = {
   requestLoginUser:(id, callback, errorCallback)=>requestLoginUser(id, callback, errorCallback),
   updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
+
+  requestAlertList:(data, callback, errorCallback) => requestAlertList(data,callback, errorCallback),
 }
 
 export default UserApi

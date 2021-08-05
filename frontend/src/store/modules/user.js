@@ -47,6 +47,30 @@ const state ={
     followerList: [{}, {}, {}],
     followingList: '',
   },
+
+  //알람 리스트
+  // alarms: {
+  //   id : '',
+  //   content: '',
+  //   sendTime: '',
+  //   confirm: ''
+  //
+  // }
+  alarms: [{
+    id: '1',
+    receiver_id: '3',
+    content: "ssafy님이 팔로우 했습니다.",
+    sendTime: "2021-08-04T03:06:43",
+    confirm: '1'
+  },
+    {
+      id: '2',
+      receiver_id: '3',
+      content: "admin님이 팔로우 했습니다.",
+      sendTime: "2021-08-09T03:06:43",
+      confirm: '0'
+    }
+  ]
 }
 
 
@@ -89,6 +113,10 @@ const mutations = {
   DELETE_FOLLOWER(state) {
     state.selectedProfile.follower -= 1
     state.selectedProfile.isFollowing = false
+  },
+
+  SET_ALARMS(state, alarms) {
+    state.alarms = alarms
   },
 }
 
@@ -148,7 +176,12 @@ const actions = {
   // 프로필 정보 수정
   // setLoginUser({commit}, profile) {
   //   commit('SET_LOGIN_USER', profile)
-  // }
+  // },
+
+  // 알림 리스트
+  setAlarms({commit}, alarms) {
+    commit('SET_ALARMS', alarms)
+  },
 
 }
 
