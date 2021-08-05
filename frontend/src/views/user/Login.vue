@@ -30,6 +30,7 @@ import * as EmailValidator from "email-validator"
 import PV from "password-validator"
 import UserApi from "@/api/UserApi";
 import UserInput from "@/components/common/UserInput";
+import { token } from '@/services/messaging/messaging.ts';
 
 export default {
   name: "Login",
@@ -77,8 +78,9 @@ export default {
         let data = {
           email,
           password,
-          token: '12341234'
+          token: token
         }
+        console.log(token)
 
         // 버튼 비활성화
         this.isSubmit = false
