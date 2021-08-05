@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h1>Signup</h1>
-    <br><br>
+  <div id="signup">
+    <ComponentNav @on-arrow="$router.back()"/>
+    <div id="title">
+      회원가입
+    </div>
 
     <div class="input-with-button">
       <UserInput class="user-input set"
@@ -31,7 +33,7 @@
         :input.sync="passwordConfirm" :error="error.passwordConfirm"
         @keyup-enter="onSignup" ref="passwordConfirm"/>
 
-    <button class="button" :disabled="isDisabled" @click="onSignup">회원가입</button>
+    <button class="button" :disabled="isDisabled" @click="onSignup">회 원 가 입</button>
 
   </div>
 </template>
@@ -41,11 +43,15 @@ import PV from "password-validator";
 import * as EmailValidator from "email-validator"
 
 import UserApi from "@/api/UserApi";
+import ComponentNav from "@/components/common/ComponentNav";
 import UserInput from "@/components/common/UserInput";
 
 export default {
   name: "Signup",
-  components: {UserInput},
+  components: {
+    ComponentNav,
+    UserInput,
+  },
   // components
   // props
   // data
@@ -228,6 +234,14 @@ export default {
 </script>
 
 <style scoped>
+
+#signup #title {
+  color: #183a1d;
+  margin-bottom: 30px;
+  padding: 10px 0;
+  font-family: GongGothicBold;
+  font-size: 1.2em;
+}
 
 .user-input {
   width: 90%;

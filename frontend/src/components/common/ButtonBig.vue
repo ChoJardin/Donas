@@ -45,9 +45,14 @@ input {
   border-radius:25px;
   width:100%;
   box-sizing:border-box;
-  box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 16px -9px rgba(0, 0, 0, 0.55);
   font-size: 1em;
   cursor: pointer;
+}
+
+input.disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 </style>
