@@ -6,12 +6,17 @@
         <router-view/>
     </div>
 
+<!--    <div class="home">-->
+<!--        토큰: {{ token }}-->
+<!--    </div>-->
+
     <Footer id="footer"/>
   </div>
 </template>
 
 <script>
 import cookies from "vue-cookies";
+import { token } from '@/services/messaging/messaging.ts';
 
 import navBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
@@ -26,6 +31,11 @@ export default {
     navBar,
     Footer
   },
+  // setup() {
+  //       return {
+  //           token,
+  //       };
+  //   },
   // props
   // data
   // methods
