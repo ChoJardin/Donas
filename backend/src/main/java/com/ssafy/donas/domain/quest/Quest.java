@@ -50,11 +50,14 @@ public abstract class Quest {
 	@Column(nullable = false)
 	private String description;
 	
+	@Column(nullable = true)
+	private String picture;
+	
 	@Column(name = "start_at", nullable = false)
-	private LocalDateTime startAt;
+	private Date startAt;
 	
 	@Column(name = "finish_at", nullable = false)
-	private LocalDateTime finishAt;
+	private Date finishAt;
 	
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Article> articles = new ArrayList<Article>();
@@ -67,10 +70,19 @@ public abstract class Quest {
 	
 	public Quest() {}
 	
-	public Quest(String type, String title, String description, LocalDateTime startAt, LocalDateTime finishAt) {
+	public Quest(String type, String title, String description, Date startAt, Date finishAt) {
 		this.type = type;
 		this.title = title;
 		this.description = description;
+		this.startAt = startAt;
+		this.finishAt = finishAt;
+	}
+	
+	public Quest(String type, String title, String description, String picture, Date startAt, Date finishAt) {
+		this.type = type;
+		this.title = title;
+		this.description = description;
+		this.picture = picture;
 		this.startAt = startAt;
 		this.finishAt = finishAt;
 	}

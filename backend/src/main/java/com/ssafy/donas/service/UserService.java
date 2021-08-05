@@ -31,7 +31,7 @@ public class UserService {
 			tokenRepo.delete(selectToken);
 		});
 		return true;
-	}	
+	}
 	
 	public User checkPassword(String email, String password, String token) {
 		User user = userRepo.findUserByEmailAndPassword(email, password);
@@ -63,6 +63,7 @@ public class UserService {
 	public boolean join(String email, String password, String nickname) {
 		User user = new User(email, password, nickname);
 		userRepo.save(user);
+		
 		return true;
 	}
 	
@@ -107,7 +108,8 @@ public class UserService {
 
 	public User getUser(long id) {
 		if(!checkId(id))
-			return null;		
+			return null;
+		
 		return userRepo.getById(id);
 	}
 
@@ -121,12 +123,6 @@ public class UserService {
 	
 	public List<User> findByNicknameStartsWith(String nickname){
 		return userRepo.findByNicknameStartsWith(nickname);
-	}
-	public String getNicknameById(long id) {
-		Optional<User> user = userRepo.findUserById(id);
-		if(user.isEmpty())
-			return null;		
-		return user.get().getNickname();		
 	}
 
 }
