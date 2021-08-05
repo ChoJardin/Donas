@@ -41,6 +41,10 @@ public class Alarm {
 	@Column(name="send_time", nullable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime sendTime;
+	
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private int confirm;
 
 
 
@@ -48,10 +52,11 @@ public class Alarm {
 
 
 	@Builder
-	public Alarm(User user, String contents, LocalDateTime sendTime) {
+	public Alarm(User user, String contents, LocalDateTime sendTime, int confirm) {
 		this.user = user;
 		this.contents = contents;
 		this.sendTime = sendTime;
+		this.confirm = confirm;
 	}
 	
 	

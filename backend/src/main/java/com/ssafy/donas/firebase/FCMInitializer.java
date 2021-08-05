@@ -17,7 +17,7 @@ import com.google.firebase.FirebaseOptions;
 public class FCMInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(FCMInitializer.class);
-    private static final String FIREBASE_CONFIG_PATH = "donas-alarm-service_key.json";
+    private static final String FIREBASE_CONFIG_PATH = "dnoas-service-key.json";
 
     @PostConstruct
     public void initialize() {
