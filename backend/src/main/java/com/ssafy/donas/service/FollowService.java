@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -8,12 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.donas.domain.Alarm;
 import com.ssafy.donas.domain.Follow;
 import com.ssafy.donas.domain.User;
-import com.ssafy.donas.repository.AlarmRepo;
 import com.ssafy.donas.repository.FollowRepo;
-import com.ssafy.donas.repository.TokenRepo;
 import com.ssafy.donas.repository.UserRepo;
 
 @Service
@@ -25,12 +23,6 @@ public class FollowService {
 	
 	@Autowired
 	UserRepo userRepo;
-	
-	@Autowired
-	AlarmRepo alarmRepo;
-	
-	@Autowired
-	TokenRepo tokenRepo;
 
 	public boolean isFollowing(User me, User other) {
 		if(followRepo.findFollowByFollowerAndFollowee(me, other).isEmpty())
@@ -47,7 +39,7 @@ public class FollowService {
 		followRepo.save(follow);
 		
 		follower.getFollowees().add(follow);
-		followee.getFollowers().add(follow);	
+		followee.getFollowers().add(follow);
 		
 		return true;
 	}
@@ -60,6 +52,30 @@ public class FollowService {
 		
 		follow.ifPresent(selectFollow ->{
 			followRepo.delete(selectFollow);
-		});		
+		});
+		
 	}
+	
+	public List<User> getFollowerList(User user){
+//		List<Follow> followers = user.getFollowers();
+		List<User> followers = followRepo.findFollowerByFollowee(user);
+//		List<Long> results = new ArrayList<Long>();
+//		
+//		for(User f : followers)
+//			results.add(f.getId());
+		
+		return followers;
+	}
+	
+	public List<User> getFolloweeList(User user){
+//		List<Follow> followees = user.getFollowees();
+		List<User> followees = followRepo.findFolloweeByFollower(user);
+//		List<Long> results = new ArrayList<Long>();
+//		
+//		for(User f : followees)
+//			results.add(f.getId());
+//		
+		return followees;
+	}
+
 }
