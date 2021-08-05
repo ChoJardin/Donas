@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -30,17 +31,23 @@ public class AlarmService {
 		Optional<User> user = userRepo.findById(receivedUser.getId());
 		if(user==null)
 			return false;
+		Alarm alarm = new Alarm(receivedUser,content,sendTIme,1);
+		alarmRepo.save(alarm);
 		user.ifPresent(selectUser->{
-			System.out.println(selectUser.getId());
-			Alarm alarm = new Alarm(selectUser,content,sendTIme);
-			System.out.println(alarm.getContents());
-			System.out.println(alarm.getUser().getId());
-			alarmRepo.save(alarm);
-			
 			pushService.searchReceivedUser(selectUser,content,sendTIme);
-			
 		});
 		return true;		
 	}
-
+	
+	public List<Alarm> getAlarms(User user){
+		return alarmRepo.findAlarmByUser(user);
+	}
+	
+	public void update(User receiveUser) {
+		List<Alarm> alarms = alarmRepo.findAlarmByUser(receiveUser);
+		for(Alarm alarm : alarms) {
+			alarm.setConfirm(0);
+		}
+	}
+	
 }

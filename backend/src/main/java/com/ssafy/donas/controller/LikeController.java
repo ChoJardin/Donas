@@ -78,7 +78,6 @@ public class LikeController {
 			response.description = like.getUser().getDescription();
 			result.add(response);
 		}
-
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
