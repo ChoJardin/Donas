@@ -4,7 +4,7 @@
       <div id="profile-wrap">
         <img id="profile-image" src="../../assets/donut1.png" alt="">
         <div id="profile-info">
-          <h1 id="username">{{nickname}}</h1>
+          <h1 id="username">{{nickname}}님의 마일리지</h1>
           <div id="mileage-total">8,000원</div>
         </div>
       </div>
@@ -14,11 +14,12 @@
       <i class="fas fa-star" style="color: #fcb131"></i>
       <a id='title' href="">2021 1분기 기부 내역</a>
     </div>
-
-    <div>
-      <router-link to="/user/mileage">기부</router-link> |
-      <router-link to="/user/mileage/cashout">인출</router-link>
+    <div class="branch">
+      <router-link to="/user/mileage" class="button">기부</router-link>
+<!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
+      <router-link to="/user/mileage/cashout" class="button">출금</router-link>
     </div>
+
 
     <router-view class="router-view"/>
   </div>
@@ -88,8 +89,31 @@ export default {
   padding-left: 10px;
   text-decoration: none;
   color:black;
+  font-size: 0.8em;
+}
+.branch {
+  height: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  font-weight: bold;
 }
 
+.branch a.router-link-exact-active {
+  border-bottom: #f0a04b solid;
+}
+
+.button {
+  width: 90%;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-bottom: lightgray solid 1px;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  font-size: 1.0em;
+}
 
 
 </style>
