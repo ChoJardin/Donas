@@ -94,8 +94,8 @@ export default {
                 this.$refs.password.onReset()
               } else {
                 // 로그인 성공
-                // 유저 닉네임 저장
-                this.$store.dispatch('login', res.data)
+                // 유저 정보 다시 불러옵니다.
+                this.$store.dispatch('requestLoginUserProfile', res.data)
                 // 로그인 누르기 전 있던 곳으로
                 this.$router.go(-1)
               }

@@ -45,7 +45,7 @@ export default {
   created() {
     let user = cookies.get('login-user')
     if (user)
-      this.$store.dispatch('login', user)
+      this.$store.dispatch('setLoginUser', user)
   }
 }
 
@@ -56,6 +56,7 @@ export default {
   // computed
   // watch
   // lifecycle hook
+  // navigation guard
 </script>
 
 <style>

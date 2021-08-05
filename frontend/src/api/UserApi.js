@@ -4,6 +4,7 @@ import axios from "axios";
 const URL = 'http://localhost:8081'
 const ROUTES = {
   login: '/user/signin',
+  loginUser: '/user/mypage/',
   checkNickname: '/user/nickname',
   checkEmail: '/user/email',
   signup: '/user/signup',
@@ -11,7 +12,6 @@ const ROUTES = {
   follow: '/profile/follow',
   followers: '/profile/followers',
   followings: '/profile/followings',
-  myPage: '/user/mypage/',
   updateProfile: '/user/profile/',
   updatePassword: '/user/password'
 }
@@ -25,6 +25,19 @@ const requestLogin = (data,callback,errorCallback) => {
     })
     .catch(error => {
       errorCallback(error)
+    })
+}
+
+// 로그인 사용자 정보 업데이트
+const requestLoginUser = (id, callback, errorcallback) => {
+  const requestLoginUserPath = URL + ROUTES.loginUser + id
+  console.log(requestLoginUserPath)
+  axios.get(requestLoginUserPath)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorcallback(err)
     })
 }
 
@@ -76,17 +89,6 @@ const requestProfileInfo = (nickname, params, callback, errorCallback) => {
     })
 }
 
-// 정보수정 페이지 초기 요청
-const requestMyPage = (id, callback, errorcallback) => {
-  const requestMyPagePath = URL + ROUTES.myPage + id
-  axios.get(requestMyPagePath)
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorcallback(err)
-    })
-}
 
 // 프로필 정보 수정
 const updateProfile = (id, data, callback, errorcallback) => {
@@ -106,7 +108,7 @@ const updateProfile = (id, data, callback, errorcallback) => {
 // 비밀번호 변경
 const updatePassword = (data, callback, errorcallback) => {
   const updatePasswordPath = URL + ROUTES.updatePassword
-  axios.patch(updatePasswordPath, data)
+  axios.post(updatePasswordPath, data)
     .then(res => {
       callback(res)
     })
@@ -176,7 +178,7 @@ const UserApi = {
   requestFollowers:(data, callback, errorCallback)=>requestFollowers(data, callback, errorCallback),
   requestFollowings:(data, callback, errorCallback)=>requestFollowings(data, callback, errorCallback),
   requestFollow:(post, data, callback, errorCallback)=>requestFollow(post, data, callback, errorCallback),
-  requestMyPage:(id, callback, errorCallback)=>requestMyPage(id, callback, errorCallback),
+  requestLoginUser:(id, callback, errorCallback)=>requestLoginUser(id, callback, errorCallback),
   updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 }

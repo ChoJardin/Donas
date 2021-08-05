@@ -80,8 +80,8 @@
         비밀번호가 성공적으로 변경되었습니다.
       </div>
       <transition name="pop-up">
-        <PasswordChange v-if="isPasswordChange" :id="user.id"
-                        @on-click="onClick" @password-change="passwordChanged = true" />
+        <PasswordChange v-if="isPasswordChange" :id="loginUser.id"
+                        @on-click="onClick" @password-changed="onPwChanged" />
       </transition>
       <!--비밀번호 변경-->
 
@@ -160,32 +160,27 @@ export default {
       // let push = {path: ''}
       let path
       UserApi.updateProfile(
-          this.user.id,
+          this.loginUser.id,
           data,
           res => {
-            console.log(res)
-            console.log('??')
-            console.log(this)
-            // 저장 성공하는 경우 내 프로필 페이지로 아니면 에러페이지로
-            path = res.data === 'OK' ? `/user/profile/${this.user.nickname}` : '/error'
+            // 성공응답이 오는 경우 내 프로필 페이지로 아니면 에러페이지로
+            // 닉네임이 변경되었을 수 있기 때문에 로그인 유저 정보도 리셋이 필요합니다.
+            path = res.data === 'OK' ? `/user/profile/${this.nickname}` : '/error'
+            this.$router.push(path)
           },
           err => {
-            console.log(this)
-            console.log('here')
-            path = '/error'
-            console.log(path)
+            console.log(err)
+            // this.$router.push('/error')
           })
-      console.log('out')
-      console.log(path)
-
-      // this.$router.push(path)
+    },
+    onPwChanged() {
+      this.passwordChanged = true
     }
   },
   // computed
   computed: {
     ...mapState({
-      user: state => state.user.loginUser,
-      myProfile: state => state.user.myProfile
+      loginUser: state => state.user.loginUser,
     }),
     ...mapGetters(['isLoggedIn']),
 
@@ -200,7 +195,7 @@ export default {
   // watch
   watch: {
     picture: function (v) {
-      this.isChanged.picture = !!this.picture !== !!this.myProfile.picture
+      this.isChanged.picture = !!this.picture !== !!this.loginUser.picture
     },
     nickname: function(v) {
       // 중복확인 종료된 이후 데이터 값의 변화 -> 중복확인 버튼 활성화
@@ -208,8 +203,8 @@ export default {
         this.needCheck = true
 
       // 기존 닉네임과 달라진 경우 중복확인 버튼 활성화
-      this.needCheck = this.nickname !== this.myProfile.nickname;
-      this.isChanged.nickname = this.nickname !== this.myProfile.nickname;
+      this.needCheck = this.nickname !== this.loginUser.nickname;
+      this.isChanged.nickname = this.nickname !== this.loginUser.nickname;
 
       // 글자수 확인
       if (this.nickname.length > 8 || !this.nickname.length) {
@@ -219,7 +214,7 @@ export default {
       else this.nicknameError = false
     },
     description: function (v) {
-      this.isChanged.description = !!this.description !== !!this.myProfile.description
+      this.isChanged.description = !!this.description !== !!this.loginUser.description
     }
   },
   // lifecycle hook
@@ -230,44 +225,24 @@ export default {
       this.$router.push('/login')
     }
 
-    UserApi.requestMyPage(
-        this.user.id,
-        res => {
-          // 일치하는 유저 아이디 없음
-          if (res.data === 'NOT_FOUND') {
-            this.$router.push('/error')
-          } else {
-            // 정상적으로 유저 정보 가져온 경우
-            let { picture, nickname, description } = res.data
-            this.picture = picture
-            this.nickname = nickname
-            this.description = description
-            this.$store.dispatch('setMyProfile', res.data)
-          }
-        },
-        err => {
-          console.log(err)
-          // this.$router.push('/error')
-        }
-    )
+    let { picture, nickname, description } = this.loginUser
+    this.picture = picture
+    this.nickname = nickname
+    this.description = description
+
+  },
+  // navigation guard
+  // 프로필 페이지로 돌아갈 때 변경사항 반영이 필요함
+  beforeRouteLeave(to, from, next) {
+    if (to.name === 'Profile') {
+      this.$store.dispatch('requestLoginUserProfile', this.loginUser)
+    }
+    next()
   }
 }
 </script>
 
 <style scoped>
-
-.profile-edit-nav {
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  color: #183a1d;
-}
-
-.material-icons.color292929 {
-  color: #183a1d;
-}
 
 .profile-edit-nav a,
 .profile-edit-nav button {
@@ -278,9 +253,7 @@ export default {
 .profile-edit-nav div {
   font-size: 1em;
   font-family: GongGothicBold;
-  /*font-weight: bold;*/
   text-align: center;
-  /*flex: 3.5 3.5 0*/
 }
 
 /* 수정완료 버튼 */
@@ -318,7 +291,6 @@ export default {
 
 .profile-edit-content {
   flex: 2.5 2.5 0;
-  /*font-family: GongGothicLight;*/
 }
 
 /* 닉네임 */
@@ -343,9 +315,7 @@ export default {
 .profile-edit-check-button {
   width: 25%;
   color: #cd4e3e;
-  /*color: #ff3b3f;*/
   font-size: 0.8em;
-  /*font-weight: bold;*/
   cursor: pointer;
   border: 1px solid #cd4e3e;
   padding: 3px 1px;
@@ -362,7 +332,6 @@ export default {
 
 .profile-edit-check-button.success {
   color: #183a1d;
-  /*font-family: GongGothicLight;*/
   border: none;
   box-shadow: none;
   cursor: default;
@@ -374,8 +343,6 @@ export default {
   font-size: 0.8em;
   color: #cd4e3e;
   padding-top: 3px;
-  /*bottom: 2px;*/
-  /*top: ;*/
 }
 
 

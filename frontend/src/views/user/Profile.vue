@@ -153,6 +153,7 @@ export default {
     // console.log(this.profile)
     // 페이지 로딩시 초기 정보 요청
     // 비회원의 경우 0으로 요청 --> 백 확인 필요
+    console.log('created again')
     let myid = 0
     if (this.isLoggedIn) {
       myid = this.loginUser.id
@@ -171,7 +172,8 @@ export default {
           // this.$router.push('/error')
         }
     )
-  }
+  },
+  // navigatio guard
 }
 </script>
 
