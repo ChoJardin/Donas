@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1>Follower</h1>
-
-    <FollowUserProfile
+    <FollowUserProfile class="follow-profile"
         v-for="(follower, idx) in followers" :key="idx"
         :follow="follower"/>
   </div>
@@ -22,7 +20,7 @@ export default {
   computed: {
     ...mapState({
       id: state => state.user.selectedProfile.id,
-      followers: state => state.user.followers
+      followers: state => state.user.follow.followerList
     }),
   },
   created() {
@@ -42,10 +40,22 @@ export default {
           // this.$router.push('/error')
         }
     )
+  },
+  mounted() {
+    console.log(this.$refs.profile)
+    const profile = document.querySelectorAll('.follow-profile')
+    for ( let i = 0; i < profile.length; i ++) {
+      if (i%2 === 0) {
+        profile[i].className += 'background'
+      }
+    }
+    console.log(profile)
   }
 }
 </script>
 
 <style scoped>
-
+.background {
+  /*background-color: #e1eedd;*/
+}
 </style>

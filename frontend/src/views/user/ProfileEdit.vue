@@ -64,7 +64,7 @@
         </div>
         <div class="profile-edit-content">
           <textarea
-              name="description" id="" cols="27" rows="3"
+              name="description" id="" cols="25" rows="3"
               autocapitalize="sentences" wrap="hard"
               placeholder="인사말을 작성해보세요!"
               v-model="description"></textarea>

@@ -12,7 +12,7 @@
         <div class="search">
           <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
         </div>
-        <button class="button1" style="float:right"><router-link to="/login">Login</router-link></button>
+        <button class="button1" style="float:right"><router-link :to="{name: 'Login', params: {history: $route.fullPath}}">Login</router-link></button>
       </div>
 
       <div v-else class="group-right" style="float: right">
@@ -42,7 +42,7 @@ export default {
   methods: {
     onLogout() {
       this.$store.dispatch('logout')
-      // if(this.$route.path!=='/') this.$router.push({name: 'Main'})
+      this.$router.push('/main')
     },
   },
   // computed

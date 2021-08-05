@@ -21,9 +21,7 @@
       </div>
       <!--기본 프로필 end-->
 
-      <div id="profile-description">
-        {{ profile.description }}
-      </div>
+      <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="3" readonly></textarea>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="profile-follow-wrap">

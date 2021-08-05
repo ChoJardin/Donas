@@ -20,7 +20,7 @@
     <button class="button" :disabled="!isSubmit" @click="onLogin">로그인</button>
 
     <br><br><br>
-    <button @click="$router.push('/signup')"> 회원가입 </button>
+    <button @click="$router.push({name: 'Signup', params: $route.params})"> 회원가입 </button>
 
   </div>
 </template>
@@ -97,7 +97,7 @@ export default {
                 // 유저 정보 다시 불러옵니다.
                 this.$store.dispatch('requestLoginUserProfile', res.data)
                 // 로그인 누르기 전 있던 곳으로
-                this.$router.go(-1)
+                this.$router.push(this.$route.params.history)
               }
             },
             err => {
