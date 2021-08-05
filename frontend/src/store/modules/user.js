@@ -44,7 +44,7 @@ const state ={
   },
   // 팔로우 페이지 정보
   follow: {
-    followerList: [{}, {}, {}],
+    followerList: [{nickname: 1, picture: null}, {nickname: 2, picture: null}, {nickname: 3, picture: null}],
     followingList: '',
   },
 }
@@ -73,11 +73,11 @@ const mutations = {
   },
   // 팔로워 리스트
   SET_FOLLOWERS(state, followers) {
-    state.followers = followers
+    state.follow.followerList = followers
   },
   // 팔로잉 리스트
   SET_FOLLOWINGS(state, followings) {
-    state.followings = followings
+    state.follow.followingList = followings
   },
   // 팔로우
   // 프로필 페이지에 보이는 정보이기 때문에 cnt/ 상태만 업뎃하면 됩니다

@@ -157,7 +157,7 @@ export default {
           res => {
             this.isSubmit = true;
             //로그인이랑 동일한 정보 받아서 저장하기
-            this.$router.push('/login')
+            this.$router.push({name: 'Login', params: this.$route.params})
 
           },
           error => {
