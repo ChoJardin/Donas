@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h5 style="padding-bottom: 10px"></h5>
     <div id="router-list">
       <router-link to="/quests/create/solo" style="margin-left: 5px">개인</router-link>
       <p style="padding: 2px"></p>

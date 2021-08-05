@@ -45,7 +45,7 @@
 
       <div class="create-quest-questions">
         <div class="create-question-title" >퀘스트 대표 사진을 올려주세요</div>
-        <input class="create-quest-img" type="file" accept="image/*; capture=camera">
+        <input class="create-quest-img" type="file" accept="image/*; capture=camera" >
       </div>
 
     </div>
@@ -60,7 +60,7 @@ export default {
 
 <style scoped>
 .create-quest-questions {
-  margin: 0px 20px 20px 20px;
+  margin: 0px 15px 15px 15px;
   text-align: left;
 }
 
@@ -100,7 +100,7 @@ export default {
   padding-bottom: 5px;
 }
 .create-quest-img {
-
+  /*height: 10px;*/
 }
 label {
   font-size: 0.8em;
