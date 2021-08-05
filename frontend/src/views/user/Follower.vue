@@ -28,7 +28,7 @@ export default {
   created() {
     let params = {id: this.id}
     // 팔로워 리스트 요청
-    UserApi.requestFollower(
+    UserApi.requestFollowers(
         params,
         res => {
           // 팔로워가 있는 경우에만 저장

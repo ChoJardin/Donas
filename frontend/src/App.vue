@@ -64,7 +64,7 @@ export default {
 }
 
 #app-content {
-  margin: 70px 10px 50px 10px;
+  margin: 70px 15px 50px 15px;
 }
 
 /*footer*/

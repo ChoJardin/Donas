@@ -91,7 +91,8 @@ import {mapGetters, mapState} from "vuex";
 
 import ArticleImage from "@/components/articles/ArticleImage";
 import UserApi from "@/api/UserApi";
-// import('@/assets/style/user/Profile.css')
+
+import('@/assets/style/user/Profile.css')
 
 export default {
   name: "Profile",

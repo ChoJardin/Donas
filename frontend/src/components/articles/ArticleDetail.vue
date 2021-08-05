@@ -1,17 +1,18 @@
 <template>
   <div class="overlay">
-    <div id="article-detail-arrow">
-      <a href="#" @click.prevent="$router.back()">
-        <i class="material-icons color292929">arrow_back</i>
-      </a>
-    </div>
+    <component-nav @on-arrow="$router.back()"/>
   </div>
 </template>
 
 <script>
+import ComponentNav from "../common/ComponentNav";
+
 export default {
   name: "ArticleDetail",
   // components
+  components: {
+    ComponentNav
+  },
   // props
   props: {
     article: Object
@@ -27,22 +28,13 @@ export default {
 <style scoped>
 .overlay {
   position: fixed;
-  top: 60px;
-  right: 0;
+  top: 70px;
+  right: 15px;
   bottom: 0;
-  left: 0;
+  left: 15px;
   overflow: scroll;
   background: white;
 }
 
-#article-detail-arrow {
-  display: flex;
-  margin: 10px 5px 10px 15px;
-  color: #183a1d;
-}
-
-.material-icons.color292929 {
-  color: #183a1d;
-}
 
 </style>

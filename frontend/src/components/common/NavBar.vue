@@ -65,7 +65,7 @@ export default {
 
   top: 0;
   /*왼쪽은 패딩 안 줘도 될 것 같기도 하고..*/
-  padding-left: 5px;
+  padding-left: 10px;
   padding-right: 10px;
   position: fixed;
   width: 100vw;

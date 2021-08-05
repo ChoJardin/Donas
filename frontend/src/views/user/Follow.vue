@@ -1,5 +1,7 @@
 <template>
   <div>
+    <componentNav title="팔로우" @on-arrow="$router.push(`/user/profile/${nickname}`)" />
+
     <div id="follow-wrap">
         <router-link :to="`/follow/${nickname}/follower`" class="follow">
           팔로워 {{ followerCnt }}
@@ -15,10 +17,14 @@
 
 <script>
 import {mapState} from "vuex";
+import ComponentNav from "../../components/common/ComponentNav";
 
 export default {
   name: "Follow",
   // components
+  components: {
+    ComponentNav
+  },
   // props
   // data
   data() {

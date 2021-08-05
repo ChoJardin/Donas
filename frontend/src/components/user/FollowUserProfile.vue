@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>FollowUserProfile</h1>
+    {{follow}}
+
   </div>
 </template>
 
