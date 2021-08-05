@@ -78,9 +78,8 @@ export default {
         let data = {
           email,
           password,
-          token: token
+          token: token.value
         }
-        console.log(token)
 
         // 버튼 비활성화
         this.isSubmit = false
