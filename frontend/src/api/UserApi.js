@@ -9,8 +9,8 @@ const ROUTES = {
   signup: '/user/signup',
   profileInfo: '/profile/',
   follow: '/profile/follow',
-  follower: '/profile/follower',
-  following: '/profile/following',
+  followers: '/profile/followers',
+  followings: '/profile/followings',
   myPage: '/user/mypage/',
   updateProfile: '/user/profile/',
   updatePassword: '/user/password'
@@ -116,8 +116,8 @@ const updatePassword = (data, callback, errorcallback) => {
 }
 
 // 팔로워 리스트
-const requestFollower = (params, callback, errorCallback) => {
-  const followerListPath = URL + ROUTES.follower
+const requestFollowers = (params, callback, errorCallback) => {
+  const followerListPath = URL + ROUTES.followers
   axios.get(followerListPath, {params: params})
     .then(res => {
       callback(res)
@@ -128,8 +128,8 @@ const requestFollower = (params, callback, errorCallback) => {
 }
 
 // 팔로잉 리스트
-const requestFollowing = (params, callback, errorCallback) => {
-  const followingListPath = URL + ROUTES.following
+const requestFollowings = (params, callback, errorCallback) => {
+  const followingListPath = URL + ROUTES.followings
   axios.get(followingListPath, {params: params})
     .then(res => {
       callback(res)
@@ -173,8 +173,8 @@ const UserApi = {
   checkEmail:(data, callback, errorCallback)=>checkEmail(data, callback, errorCallback),
   requestSignup:(data, callback, errorCallback)=>requestSignup(data, callback, errorCallback),
   requestProfileInfo:(data, params, callback, errorCallback)=>requestProfileInfo(data, params, callback, errorCallback),
-  requestFollower:(data, callback, errorCallback)=>requestFollower(data, callback, errorCallback),
-  requestFollowing:(data, callback, errorCallback)=>requestFollowing(data, callback, errorCallback),
+  requestFollowers:(data, callback, errorCallback)=>requestFollowers(data, callback, errorCallback),
+  requestFollowings:(data, callback, errorCallback)=>requestFollowings(data, callback, errorCallback),
   requestFollow:(post, data, callback, errorCallback)=>requestFollow(post, data, callback, errorCallback),
   requestMyPage:(id, callback, errorCallback)=>requestMyPage(id, callback, errorCallback),
   updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),

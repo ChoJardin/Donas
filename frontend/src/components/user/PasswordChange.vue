@@ -1,16 +1,10 @@
 <template>
   <div class="overlay">
-    <div class="profile-edit-nav">
-      <a href="#" @click.prevent="$emit('on-click')">
-        <i class="material-icons color292929">arrow_back</i>
-      </a>
-      <div>
-        비밀번호 변경
-      </div>
-      <button @click="onSubmit">
-        저장
-      </button>
-    </div>
+
+    <componentNav
+        @on-arrow="$emit('on-click')"
+        title="비밀번호 변경"
+        button="저장" @on-button="onSubmit"/>
 
     <div id="profile-edit-password">
       <UserInput class="user-input"
@@ -35,14 +29,16 @@
 <script>
 import PV from 'password-validator'
 
-import UserInput from "../common/UserInput";
 import UserApi from "../../api/UserApi";
+import ComponentNav from "../common/ComponentNav";
+import UserInput from "../common/UserInput";
 
 export default {
   name: "PasswordChange",
   // components
   components: {
-    UserInput
+    ComponentNav,
+    UserInput,
   },
   // props
   props: {
@@ -148,24 +144,12 @@ export default {
 <style scoped>
 .overlay {
   position: fixed;
-  top: 60px;
-  right: 0;
+  top: 70px;
+  right: 15px;
   bottom: 0;
-  left: 0;
+  left: 15px;
   overflow: scroll;
   background: white;
-}
-
-.profile-edit-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 15px 10px 15px;
-  color: #183a1d;
-}
-
-.material-icons.color292929 {
-  color: #183a1d;
 }
 
 #profile-edit-password {

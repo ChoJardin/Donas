@@ -2,18 +2,11 @@
   <div>
     <!--ProfileEdit-->
     <div id="profile-flex-container">
-      <div class="profile-edit-nav">
-        <a href="#" @click.prevent="$router.back()">
-          <i class="material-icons color292929">arrow_back</i>
-        </a>
-        <div>
-          프로필 정보 수정
-        </div>
-        <button @click="onComplete" :disabled="disableComplete">
 
-          수정완료
-        </button>
-      </div>
+      <ComponentNav
+          @on-arrow="$router.back()"
+          title="프로필 정보 수정"
+          button="수정완료" @on-button="onComplete" :disabled="disableComplete"/>
 
       <!--프로필 사진-->
       <div class="label-content-wrap">
@@ -100,6 +93,7 @@
 <script>
 import {mapGetters, mapState} from "vuex";
 import UserApi from "../../api/UserApi";
+import ComponentNav from "../../components/common/ComponentNav";
 import ButtonBig from "../../components/common/ButtonBig";
 import PasswordChange from "../../components/user/PasswordChange";
 
@@ -109,6 +103,7 @@ export default {
   name: "ProfileEdit",
   // components
   components: {
+    ComponentNav,
     ButtonBig,
     PasswordChange
   },

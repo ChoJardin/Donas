@@ -236,7 +236,7 @@ export default {
 
 .user-input.set {
   margin-left: 0;
-  width: 77%;
+  width: 76%;
 }
 
 .input-with-button {
@@ -247,21 +247,18 @@ export default {
 }
 
 .input-with-button a {
-  width: 20%;
+  width: 21%;
   margin-bottom: 25px;
   margin-left: 3%;
   align-self: center;
   color: #cd4e3e;
   font-size: 0.8em;
-  /*font-weight: bold;*/
   cursor: pointer;
   border: 1px solid #cd4e3e;
   padding: 5px 3px;
   border-radius: 5px;
   box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
   text-decoration: none;
-
-  /*text-shadow: 1px 1px 1px #cd4e3e;*/
 }
 
 .input-with-button a.disabled {
