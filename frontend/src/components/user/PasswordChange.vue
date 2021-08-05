@@ -71,6 +71,8 @@ export default {
           // NOT_FOUND -> 기존의 비밀번호와 일치하지 않습니다. password error로 출력
           // error -> 에러 페이지로
           res => {
+            console.log('get sth')
+            console.log(res.data)
             if (res.data === 'NOT_FOUND') {
               this.error.password = "기존의 비밀번호와 일치하지 않습니다"
               this.$refs.password.onReset()

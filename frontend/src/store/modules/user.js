@@ -1,9 +1,15 @@
 import cookies from 'vue-cookies'
+import UserApi from "@/api/UserApi";
 // import axios from 'axios'
 // import router from '@/router'
 
 const state ={
-  loginUser: '',
+  loginUser: {
+    id: '',
+    nickname: '',
+    picture: '',
+    description: '',
+  },
   // selectedProfile: {
   //   id: '',  // 유저 아이디
   //   nickname:'',  // 닉네임
@@ -41,35 +47,28 @@ const state ={
     followerList: [{}, {}, {}],
     followingList: '',
   },
-
-  // 개인정보 수정
-  myProfile: {
-    nickname: '',
-    picture: '',
-    description: '',
-  }
-
 }
 
 
 const getters = {
   isLoggedIn(state) {
-    return !!state.loginUser
+    return !!state.loginUser.nickname
   }
 }
 
 const mutations = {
   // 로그인 유저 정보 저장
-  SET_USER(state, loginUser) {
+  SET_LOGIN_USER(state, loginUser) {
     state.loginUser = loginUser
   },
   // 로그아웃
   LOGOUT(state) {
     state.loginUser = ''
+    state.userId = ''
     cookies.remove('login-user')
   },
   // 선택된 유저의 프로필 정보 저장
-  SET_USER_PROFILE(state, profile) {
+  SET_SELECTED_USER_PROFILE(state, profile) {
     state.selectedProfile = profile
   },
   // 팔로워 리스트
@@ -91,20 +90,34 @@ const mutations = {
     state.selectedProfile.follower -= 1
     state.selectedProfile.isFollowing = false
   },
-  // 프로필 정보 수정
-  SET_MY_PROFILE(state, profile) {
-    state.myProfile = profile
-  }
-
 }
 
 
 const actions = {
   // 로그인된 유저 정보 저장
-  login({commit, dispatch}, {id, nickname, questCnt}) {
-    let user = {id: id, nickname: nickname, questCnt: questCnt}
-    commit('SET_USER', user)
-    cookies.set('login-user', user, '2d')
+  requestLoginUserProfile({dispatch}, {id}) {
+    UserApi.requestLoginUser(
+      id,
+      res => {
+        // 일치하는 유저 아이디 없음
+        if (res.data === 'NOT_FOUND') {
+          this.$router.push('/error')
+        } else {
+          // 정상적으로 유저 정보 가져온 경우
+          res.data.id = id
+          dispatch('setLoginUser', res.data)
+        }
+      },
+      err => {
+        console.log(err)
+        // this.$router.push('/error')
+      }
+    )
+  },
+  // 로그인된 유저 정보 저장
+  setLoginUser({commit}, profile) {
+    commit('SET_LOGIN_USER', profile)
+    cookies.set('login-user', profile, '2d')
   },
   // 로그아웃
   logout({commit}) {
@@ -113,7 +126,7 @@ const actions = {
   // 선택된 유저의 프로필 정보 저장
   setUserProfile({commit}, profile) {
     delete profile.articles
-    commit('SET_USER_PROFILE', profile)
+    commit('SET_SELECTED_USER_PROFILE', profile)
   },
   // 팔로워 리스트
   setFollowers({commit}, followers) {
@@ -133,9 +146,9 @@ const actions = {
     }
   },
   // 프로필 정보 수정
-  setMyProfile({commit}, profile) {
-    commit('SET_MY_PROFILE', profile)
-  }
+  // setLoginUser({commit}, profile) {
+  //   commit('SET_LOGIN_USER', profile)
+  // }
 
 }
 
