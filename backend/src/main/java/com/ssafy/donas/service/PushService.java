@@ -35,8 +35,6 @@ public class PushService {
 					e.printStackTrace();
 				}
 			}
-		}
-		
+		}	
 	}
-
 }
