@@ -95,8 +95,8 @@ public class ProfileController {
 		result.questPercent = user.getQuestPercent();
 		
 		// Follow 정보
-		result.follower = user.getFollowers().size();
-		result.following = user.getFollowees().size();
+		result.follower = user.getFollower().size();
+		result.following = user.getFollowing().size();
 		result.isFollowing = followService.isFollowing(userService.getUser(myid), user);
 
 		//Article 정보
@@ -124,8 +124,8 @@ public class ProfileController {
 		result.questCnt = user.getQuestCnt();
 
 		// Follow 정보
-		result.follower = user.getFollowers().size();
-		result.following = user.getFollowees().size();
+		result.follower = user.getFollower().size();
+		result.following = user.getFollowing().size();
 		result.isFollowing = false;
 
 		response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -151,8 +151,8 @@ public class ProfileController {
 		result.questCnt = other.getQuestCnt();
 
 		// Follow 정보
-		result.follower = other.getFollowers().size();
-		result.following = other.getFollowees().size();
+		result.follower = other.getFollower().size();
+		result.following = other.getFollowing().size();
 		result.isFollowing = followService.isFollowing(me, other);
 
 		response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -160,7 +160,7 @@ public class ProfileController {
 	}
 
 	@GetMapping("/followings")
-	@ApiOperation(value = "팔로잉 리스트")
+	@ApiOperation(value = "팔로잉(내가 팔로우한) 리스트")
 	public Object followingList(@RequestParam long id) {
 		User user = userService.getUser(id);
 
@@ -170,12 +170,12 @@ public class ProfileController {
 		final List<FollowResponse> results = new ArrayList<FollowResponse>();
 		ResponseEntity response = null;
 
-		for (Follow f : user.getFollowees()) {
+		for (Follow f : user.getFollowing()) {
 			FollowResponse result = new FollowResponse();
-			User follower = f.getFollower();
-			result.id = follower.getId();
-			result.picture = follower.getPicture();
-			result.description = follower.getDescription();
+			User following = f.getFollowTo();
+			result.id = following.getId();
+			result.picture = following.getPicture();
+			result.nickname = following.getNickname();
 
 			results.add(result);
 		}
@@ -185,7 +185,7 @@ public class ProfileController {
 	}
 
 	@GetMapping("/followers")
-	@ApiOperation(value = "팔로워 리스트")
+	@ApiOperation(value = "팔로워(나를 팔로우한) 리스트")
 	public Object followerList(@RequestParam long id) {
 		User user = userService.getUser(id);
 
@@ -195,12 +195,12 @@ public class ProfileController {
 		final List<FollowResponse> results = new ArrayList<FollowResponse>();
 		ResponseEntity response = null;
 
-		for (Follow f : user.getFollowers()) {
+		for (Follow f : user.getFollower()) {
 			FollowResponse result = new FollowResponse();
-			User follower = f.getFollowee();
+			User follower = f.getFollowFrom();
 			result.id = follower.getId();
 			result.picture = follower.getPicture();
-			result.description = follower.getDescription();
+			result.nickname = follower.getNickname();
 
 			results.add(result);
 		}

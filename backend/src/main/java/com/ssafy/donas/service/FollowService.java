@@ -25,7 +25,7 @@ public class FollowService {
 	UserRepo userRepo;
 
 	public boolean isFollowing(User me, User other) {
-		if(followRepo.findFollowByFollowerAndFollowee(me, other).isEmpty())
+		if(followRepo.findFollowByFollowFromAndFollowTo(me, other).isEmpty())
 			return false;
 		
 		return true;
@@ -38,17 +38,14 @@ public class FollowService {
 		Follow follow = new Follow(follower, followee);
 		followRepo.save(follow);
 		
-		follower.getFollowers().add(follow);
-		followee.getFollowees().add(follow);
-		
 		return true;
 	}
 
 	public void delete(User follower, User followee) {
-		Optional<Follow> follow = followRepo.findFollowByFollowerAndFollowee(follower, followee);		
+		Optional<Follow> follow = followRepo.findFollowByFollowFromAndFollowTo(follower, followee);		
 		
-		follower.getFollowers().remove(follow.get());
-		followee.getFollowees().remove(follow.get());
+		follower.getFollowing().remove(follow.get());
+		followee.getFollower().remove(follow.get());
 		
 		follow.ifPresent(selectFollow ->{
 			followRepo.delete(selectFollow);
@@ -57,7 +54,7 @@ public class FollowService {
 	}
 	
 	public List<User> getFollowerList(User user){
-		List<Long> follower_ids = followRepo.findByFollower(user);
+		List<Long> follower_ids = followRepo.getFollowers(user);
 		
 		List<User> followers = new ArrayList<>();
 		for(long user_id : follower_ids)
@@ -66,8 +63,8 @@ public class FollowService {
 		return followers;
 	}
 	
-	public List<User> getFolloweeList(User user){
-		List<Long> followee_ids = followRepo.findByFollowee(user);
+	public List<User> getFollowingList(User user){
+		List<Long> followee_ids = followRepo.getFollowings(user);
 		System.out.println(followee_ids);
 		
 		List<User> followees = new ArrayList<User>();

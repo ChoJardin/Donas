@@ -73,13 +73,13 @@ public class User {
 	
 	private String description;
 
-	@OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "followTo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Follow> followers = new ArrayList<Follow>();
+	private List<Follow> follower = new ArrayList<Follow>();
 	
-	@OneToMany(mappedBy = "followee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "followFrom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Follow> followees = new ArrayList<Follow>();
+	private List<Follow> following = new ArrayList<Follow>();
 	
 	@OneToMany(mappedBy = "searchUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore

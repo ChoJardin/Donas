@@ -28,18 +28,18 @@ public class Follow {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "follower_id")
-	private User follower;
+	private User followFrom;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "followee_id")
-	private User followee;
+	private User followTo;
 	
 	public Follow() {}
 	
 	@Builder
 	public Follow(User follower, User followee) {
-		this.follower = follower;
-		this.followee = followee;
+		this.followFrom = follower;
+		this.followTo = followee;
 	}
 
 }

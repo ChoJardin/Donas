@@ -129,7 +129,7 @@ public class ArticleController {
 			return HttpStatus.NOT_FOUND;
 		
 		User user = userService.getUser(userId);
-		List<Follow> followings = user.getFollowers();
+		List<Follow> followings = user.getFollower();
 		System.out.println("show + " + followings.toString());
 		List<Article> result = new ArrayList<>();
 		System.out.println("before");
