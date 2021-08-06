@@ -43,10 +43,7 @@ public class AlarmController {
 		final List<AlarmResponse> result = new ArrayList<AlarmResponse>();
 		for(Alarm alarm : alarms) {
 			AlarmResponse res = new AlarmResponse();
-			res.id = alarm.getId();
 			res.receiveId = alarm.getUser().getId();
-			res.sendName = alarm.getSendName();
-			res.articleId = alarm.getArticleId();
 			res.content = alarm.getContents();
 			res.sendTime = alarm.getSendTime();
 			res.confirm = alarm.getConfirm();
