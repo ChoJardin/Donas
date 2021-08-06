@@ -4,10 +4,10 @@
 
     <div id="follow-wrap">
         <router-link :to="`/follow/${nickname}/follower`" class="follow">
-          팔로워 {{ followerCnt }}
+          팔로워&nbsp;&nbsp;{{ followerCnt }}
         </router-link>
         <router-link :to="`/follow/${nickname}/following`" class="follow">
-          팔로잉 {{ followingCnt }}
+          팔로잉&nbsp;&nbsp;{{ followingCnt }}
         </router-link>
     </div>
 

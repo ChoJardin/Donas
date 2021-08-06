@@ -28,9 +28,9 @@
         <!--팔로워-->
         <router-link :to="`/follow/${profile.nickname}/follower`" class="profile-follow">
           <span>
-            팔로워
-          </span>
-          <span>
+            팔로워&nbsp;&nbsp;
+          <!--</span>-->
+          <!--<span>-->
             {{ profile.follower }}
           </span>
         </router-link>
@@ -38,9 +38,9 @@
         <!--팔로잉-->
         <router-link :to="`/follow/${profile.nickname}/following`" class="profile-follow">
           <span>
-            팔로잉
-          </span>
-          <span>
+            팔로잉&nbsp;&nbsp;
+          <!--</span>-->
+          <!--<span>-->
             {{ profile.following }}
           </span>
         </router-link>
@@ -176,6 +176,10 @@ export default {
 </script>
 
 <style scoped>
+
+/*#profile {*/
+/*  position: static;*/
+/*}*/
 /*@import "src/assets/style/user/Profile.css";*/
 
 /*#flex-container {*/

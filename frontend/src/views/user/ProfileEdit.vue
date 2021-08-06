@@ -27,7 +27,11 @@
               <img v-else class="profile-image" src="../../assets/donut1.png" alt="">
             </label>
             <!--사진첩/ 카메라 선택창 호출됨-->
-            <input type="file" id="image-input" accept="image/*; capture=camera" style="display: none;">
+            <input
+                type="file" id="image-input" ref="imgInput"
+                accept="image/jpeg, image/png, image/gif" capture="camera"
+                @change="fileUploaded"
+                style="display: none;">
             <span class="material-icons-outlined position">add_photo_alternate</span>
           </div>
         </div>
@@ -122,7 +126,9 @@ export default {
         picture: false,
         nickname: false,
         description: false
-      }
+      },
+      // image uploaded
+      selectedFile: ''
     }
   },
   // methods
@@ -175,6 +181,13 @@ export default {
     },
     onPwChanged() {
       this.passwordChanged = true
+    },
+    // 이미지 업로드
+    fileUploaded() {
+    //   // 업로드된 파일이 있다면
+    //   if (0 < this.$refs.imgInput.files.length) {
+    //     this.selectFile =
+    //   }
     }
   },
   // computed
