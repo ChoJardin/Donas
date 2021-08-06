@@ -2,8 +2,6 @@ package com.ssafy.donas.request;
 
 import javax.validation.Valid;
 
-import com.sun.istack.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.ToString;
 
@@ -11,15 +9,12 @@ import lombok.ToString;
 @ToString
 public class UserInfoRequest {
 	@ApiModelProperty(required = true)
-	@NotNull
 	String nickname;
 
 	@ApiModelProperty(required = true)
-	@NotNull
 	String picture;
 	
 	@ApiModelProperty(required = true)
-	@NotNull
 	String description;
 
 	public String getNickname() {

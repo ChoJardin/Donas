@@ -16,31 +16,31 @@ import com.ssafy.donas.repository.UserRepo;
 @Service
 @Transactional
 public class UserService {
-	
+
 	@Autowired
 	UserRepo userRepo;
-	
+
 	@Autowired
 	TokenRepo tokenRepo;
-	
+
 	public boolean logOut(long userId, String token) {
-		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token,userId);		
-		if(userToken.isEmpty())
+		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token, userId);
+		if (userToken.isEmpty())
 			return false;
-		userToken.ifPresent(selectToken ->{			
+		userToken.ifPresent(selectToken -> {
 			tokenRepo.delete(selectToken);
 		});
 		return true;
 	}
-	
+
 	public User checkPassword(String email, String password, String token) {
 		User user = userRepo.findUserByEmailAndPassword(email, password);
-		if(user==null) {
+		if (user == null) {
 			return null;
-		}		
-		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token,user.getId());
-		if(userToken.isEmpty()) {
-			Token tokenId = new Token(token,user);
+		}
+		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token, user.getId());
+		if (userToken.isEmpty()) {
+			Token tokenId = new Token(token, user);
 			tokenRepo.save(tokenId);
 		}
 		return user;
@@ -48,14 +48,14 @@ public class UserService {
 
 	public boolean checkEmail(String email) {
 		Optional<User> user = userRepo.findUserByEmail(email);
-		if(user.isEmpty())
+		if (user.isEmpty())
 			return false;
 		return true;
 	}
-	
+
 	public boolean checkNickname(String nickname) {
 		Optional<User> user = userRepo.findUserByNickname(nickname);
-		if(user.isEmpty())
+		if (user.isEmpty())
 			return false;
 		return true;
 	}
@@ -63,65 +63,68 @@ public class UserService {
 	public boolean join(String email, String password, String nickname) {
 		User user = new User(email, password, nickname);
 		userRepo.save(user);
-		
+
 		return true;
 	}
-	
+
 	// 인터셉터로 바꾸면 좋을듯?
 	public boolean checkId(long id) {
 		Optional<User> testUser = userRepo.findById(id);
-		if(testUser.isEmpty())
+		if (testUser.isEmpty())
 			return false;
-		
+
 		return true;
 	}
 
 	public boolean addNickname(long id, String nickname) {
-		if(!checkId(id))
+		if (!checkId(id))
 			return false;
-		
+
 		User user = userRepo.findById(id).get();
 		user.setNickname(nickname);
-		
+
 		return true;
 	}
 
 	public boolean checkPassword(long id, String password) {
 		Optional<User> user = userRepo.findUserByIdAndPassword(id, password);
-		if(user.isPresent())
+		if (user.isPresent())
 			return true;
-		
+
 		return false;
 	}
 
-	public boolean updateUserInfo(long id, String nickname, String picture, String description) {	
-		if(!checkId(id))
+	public boolean updateUserInfo(long id, String nickname, String picture, String description) {
+		if (!checkId(id))
 			return false;
 
 		User user = userRepo.findById(id).get();
-		user.setNickname(nickname);
+		
+		if (nickname != null)
+			user.setNickname(nickname);
+		
 		user.setPicture(picture);
 		user.setDescription(description);
-		
+
 		return true;
 	}
 
 	public User getUser(long id) {
-		if(!checkId(id))
+		if (!checkId(id))
 			return null;
-		
+
 		return userRepo.getById(id);
 	}
 
 	public long getIdByNickname(String nickname) {
 		Optional<User> user = userRepo.findUserByNickname(nickname);
-		if(user.isEmpty())
+		if (user.isEmpty())
 			return -1;
-		
+
 		return user.get().getId();
 	}
-	
-	public List<User> findByNicknameStartsWith(String nickname){
+
+	public List<User> findByNicknameStartsWith(String nickname) {
 		return userRepo.findByNicknameStartsWith(nickname);
 	}
 
