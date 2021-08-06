@@ -38,6 +38,7 @@ public class UserService {
 		if (user == null) {
 			return null;
 		}
+		
 		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token, user.getId());
 		if (userToken.isEmpty()) {
 			Token tokenId = new Token(token, user);

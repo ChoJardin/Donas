@@ -50,11 +50,12 @@ public class LikeController {
 		return HttpStatus.OK;
 	}
 
-	// 유저가 likeId를 어떻게 알고 주지?? -> 유저id와 게시글id를 받는게 낫지 않나?
 	@DeleteMapping
 	@ApiOperation(value = "좋아요 취소")
-	public Object deleteLike(@RequestParam long likeId) {
-		if (!likeService.checkLike(likeId))
+	public Object deleteLike(@RequestParam long articleId, @RequestParam long userId) {
+		long likeId = likeService.checkLike(articleId, userId);
+		
+		if (likeId == -1)
 			return HttpStatus.NOT_FOUND;
 		
 		likeService.delete(likeId);
