@@ -20,7 +20,7 @@ export default {
   computed: {
     ...mapState({
       id: state => state.user.selectedProfile.id,
-      followers: state => state.user.follow.followingList
+      followings: state => state.user.follow.followingList
     }),
   },
   created() {

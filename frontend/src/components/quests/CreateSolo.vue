@@ -99,7 +99,7 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.create-quest-img {
+.create-solo-questions .create-quest-img {
   /*height: 10px;*/
 }
 label {
