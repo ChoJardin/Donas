@@ -75,7 +75,16 @@ export default {
 }
 
 #app-content {
-  margin: 70px 15px 50px 15px;
+  position: absolute;
+  top: 70px;
+  bottom: 50px;
+  width: 100%;
+  padding: 0 15px;
+  /*left: 15px;*/
+  /*right: 15px;*/
+  /*width: calc(100vw - 30px);*/
+  overflow: auto;
+  /*margin: 70px 15px 50px 15px;*/
 }
 
 /*footer*/
