@@ -108,10 +108,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/password")
-	@ApiOperation(value = "비밀번호 확인")
+	@ApiOperation(value = "비밀번호 설정")
 	public Object checkPassword(@RequestBody CheckPasswordRequest request) {
+		// 비밀번호 확인
 		if(!userService.checkPassword(request.getId(), request.getPassword()))
 			return HttpStatus.NOT_FOUND;
+		
+		// 비밀번호 설정
+		userService.updatePassword(request.getId(), request.getNewPassword());
 		
 		return HttpStatus.OK;
 	}

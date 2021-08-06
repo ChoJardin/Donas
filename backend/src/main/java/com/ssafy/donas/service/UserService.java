@@ -125,4 +125,9 @@ public class UserService {
 		return userRepo.findByNicknameStartsWith(nickname);
 	}
 
+	public void updatePassword(long id, String newPassword) {
+		User user = userRepo.getById(id);
+		user.setPassword(newPassword);
+	}
+
 }
