@@ -19,8 +19,8 @@ public class LikeService {
 	@Autowired
 	LikeRepo likeRepo;
 	
-	public boolean checkLike(long likeId) {
-		Like like = likeRepo.getById(likeId);
+	public boolean checkLike(long articleId, long userId) {
+		Like like = likeRepo.findLikeByArticleIdAndUserId(articleId, userId);
 		if(like == null)
 			return false;
 		return true;
@@ -39,8 +39,13 @@ public class LikeService {
 	}
 
 	
-	public void delete(long Id) {
-		likeRepo.deleteById(Id);
+	public boolean deleteLike(long articleId, long userId) {
+		Like like = likeRepo.findLikeByArticleIdAndUserId(articleId, userId);
+		if(like==null)
+			return false;
+		likeRepo.deleteById(like.getId());
+		
+		return true;
 	}
 
 	public List<Like> getLikes(long articleId) {

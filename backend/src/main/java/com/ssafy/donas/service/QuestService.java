@@ -104,7 +104,9 @@ public class QuestService {
 	public void addPersonalQuest(long userId, String title, String description, Date startAt,
 			Date finishAt) {
 		Personal quest = new Personal("P", title, description, startAt, finishAt);
+		System.out.println("뭐여");
 		personalRepo.save(quest);
+		System.out.println("뭐ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ여");
 		
 		// 유저의 참여중인 퀘스트 리스트 업데이트
 		User user = userRepo.getById(userId);

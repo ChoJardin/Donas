@@ -8,4 +8,5 @@ import com.ssafy.donas.domain.Like;
 
 public interface LikeRepo extends JpaRepository<Like, Long>{
 	List<Like> findLikeByArticleId(long articleId);
+	Like findLikeByArticleIdAndUserId(long articleId, long userId);
 }

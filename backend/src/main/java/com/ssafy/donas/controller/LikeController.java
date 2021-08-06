@@ -1,5 +1,6 @@
 package com.ssafy.donas.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.request.LikeRequest;
 import com.ssafy.donas.response.SearchResponse;
+import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.LikeService;
 import com.ssafy.donas.service.UserService;
@@ -40,11 +42,21 @@ public class LikeController {
 	@Autowired
 	ArticleService articleService;
 	
+	@Autowired
+	AlarmService alarmService;
+	
+	
 	@PostMapping
 	@ApiOperation(value = "좋아요 누르기")
 	public Object saveLike(@RequestBody LikeRequest like) {
 		if (!userService.checkId(like.getUserId()) || !articleService.checkArticle(like.getArticleId()))
 			return HttpStatus.NOT_FOUND;
+		
+		if(likeService.checkLike(like.getArticleId(),like.getUserId()))
+			return HttpStatus.CONFLICT;
+		
+		if(!alarmService.addAlarm(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()).getUser().getNickname(),like.getArticleId(),articleService.getArticleById(like.getArticleId()).getUser().getNickname()+"님이 회원님의 게시물을 좋아합니다.", LocalDateTime.now()))
+			return HttpStatus.CONFLICT;
 		
 		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
 		return HttpStatus.OK;
@@ -53,14 +65,12 @@ public class LikeController {
 	// 유저가 likeId를 어떻게 알고 주지?? -> 유저id와 게시글id를 받는게 낫지 않나?
 	@DeleteMapping
 	@ApiOperation(value = "좋아요 취소")
-	public Object deleteLike(@RequestParam long likeId) {
-		if (!likeService.checkLike(likeId))
-			return HttpStatus.NOT_FOUND;
-		
-		likeService.delete(likeId);
+	public Object deleteLike(@RequestParam long articleId, @RequestParam long userId) {
+		if (!likeService.deleteLike(articleId, userId))
+			return HttpStatus.NOT_FOUND;	
 		return HttpStatus.OK;
 	}
-
+	
 	@GetMapping("/{articleId}")
 	@ApiOperation(value = "게시물 당 좋아요 누른 유저 목록")
 	public Object getLikeByUser(@PathVariable long articleId) {
