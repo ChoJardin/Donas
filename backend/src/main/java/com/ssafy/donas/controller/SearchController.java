@@ -160,9 +160,7 @@ public class SearchController {
 		User user = userService.getUser(id);
 			
 		List<User> followers = followService.getFollowerList(user);
-		System.out.println(followers);
 		List<User> followees = followService.getFolloweeList(user);
-		System.out.println(followees);
 		
 		final List<SearchResponse> results = new ArrayList<>();
 		ResponseEntity response = null;
