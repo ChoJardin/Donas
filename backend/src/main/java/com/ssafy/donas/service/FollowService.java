@@ -38,8 +38,8 @@ public class FollowService {
 		Follow follow = new Follow(follower, followee);
 		followRepo.save(follow);
 		
-		follower.getFollowees().add(follow);
-		followee.getFollowers().add(follow);
+		follower.getFollowers().add(follow);
+		followee.getFollowees().add(follow);
 		
 		return true;
 	}
@@ -47,8 +47,8 @@ public class FollowService {
 	public void delete(User follower, User followee) {
 		Optional<Follow> follow = followRepo.findFollowByFollowerAndFollowee(follower, followee);		
 		
-		follower.getFollowees().remove(follow.get());
-		followee.getFollowers().remove(follow.get());
+		follower.getFollowers().remove(follow.get());
+		followee.getFollowees().remove(follow.get());
 		
 		follow.ifPresent(selectFollow ->{
 			followRepo.delete(selectFollow);
