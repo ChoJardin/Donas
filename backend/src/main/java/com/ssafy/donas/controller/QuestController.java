@@ -25,10 +25,12 @@ import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.request.AddGroupQuestRequest;
 import com.ssafy.donas.request.AddPersonalQuestRequest;
+import com.ssafy.donas.request.AddRelayQuestRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
 import com.ssafy.donas.response.QuestResponse;
 import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.QuestService;
+import com.ssafy.donas.service.RelayWaitService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -48,6 +50,9 @@ public class QuestController {
 	
 	@Autowired
 	QuestParticipantsService questParticipantsService;
+	
+	@Autowired
+	RelayWaitService relayWaitService;
 
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
@@ -75,9 +80,9 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
 		
-		List<Long> participant_users = quest.getParticipants();
+		List<Long> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
-		for (long p : participant_users) {
+		for (long p : participantUsers) {
 			if (!userService.checkId(p))
 				return HttpStatus.NOT_FOUND;
 			
@@ -90,9 +95,20 @@ public class QuestController {
 		return HttpStatus.OK;
 	}
 	
-//	@PostMapping("/relay")
-//	@ApiOperation(value = "릴레이퀘스트 생성")
-	
+	@PostMapping("/relay")
+	@ApiOperation(value = "릴레이퀘스트 생성")
+	public Object addRelayQuest(@RequestBody AddRelayQuestRequest quest) {
+		if (!userService.checkId(quest.getUserId()))
+			return HttpStatus.NOT_FOUND;
+		
+		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
+			return HttpStatus.NO_CONTENT;
+		
+		// 릴레이 퀘스트 생성
+		Quest relayQuest = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		
+		return HttpStatus.OK;
+	}
 	
 	
 	/*
@@ -231,5 +247,9 @@ public class QuestController {
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	/*
+	 * Relay 승낙에 따른 로직 -> Alarm 컨트롤러에 저장하면 될듯??
+	 * */
 	
 }

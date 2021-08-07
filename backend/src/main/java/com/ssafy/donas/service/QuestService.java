@@ -16,6 +16,7 @@ import com.ssafy.donas.domain.quest.Personal;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
+import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.repository.QuestParticipantsRepo;
 import com.ssafy.donas.repository.UserRepo;
 import com.ssafy.donas.repository.quest.GroupRepo;
@@ -118,6 +119,13 @@ public class QuestService {
 		return quest;
 	}
 	
+	public Quest addRelayQuest(String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage) {
+		Relay relay = new Relay("R", title, description, startAt, finishAt, picture, certification, mileage, 1);
+		relayRepo.save(relay);
+		
+		return relay;
+	}
+	
 	public void updateQuest(long questId, String title, String description) {
 		Quest quest = getQuestById(questId);
 		quest.setTitle(title);
@@ -149,5 +157,6 @@ public class QuestService {
 			return false;
 		}
 	}
+
 	
 }

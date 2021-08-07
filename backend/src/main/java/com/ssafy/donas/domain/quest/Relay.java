@@ -31,8 +31,8 @@ public class Relay extends Quest{
 	@Column(name = "user_order", nullable = false)
 	private int order;
 	
-	@Column(nullable = false)
-	private String userStatus;
+//	@Column(name = "user_status", nullable = false)
+//	private String userStatus;
 	
 	@OneToMany(mappedBy = "relay", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<RelayWait> wait = new ArrayList<>();
@@ -40,10 +40,10 @@ public class Relay extends Quest{
 	public Relay() {}
 	
 	@Builder
-	public Relay(String type, String title, String description, Date startAt, Date finishAt, int order, String userStatus, String picture, String certification, long mileage) {
+	public Relay(String type, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage, int order) {
 		super(type, title, description, startAt, finishAt, picture, certification, mileage);
 		this.order = order;
-		this.userStatus = userStatus;
+//		this.userStatus = userStatus;
 	}
 
 }
