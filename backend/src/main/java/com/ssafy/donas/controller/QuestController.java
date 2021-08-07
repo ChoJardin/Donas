@@ -61,7 +61,7 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
 		
-		questService.addPersonalQuest(quest.getUserId(), quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt());
+		questService.addPersonalQuest(quest.getUserId(), quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
 		
 		return HttpStatus.OK;
 	}
@@ -84,7 +84,7 @@ public class QuestController {
 			participants.add(userService.getUser(p));
 		}
 		
-		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt());
+		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
 		questParticipantsService.addParticipants(userService.getUser(quest.getUserId()), participants, groupQuest);
 		
 		return HttpStatus.OK;
@@ -170,6 +170,7 @@ public class QuestController {
 				qr.picture = quest.getPicture();
 				qr.startAt = quest.getStartAt();
 				qr.finishAt = quest.getFinishAt();
+				qr.type = "P";
 				result.add(qr);
 			}
 		}

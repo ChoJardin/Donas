@@ -101,9 +101,8 @@ public class QuestService {
 //		return personalRepo.findPersonalByUserId(userId);
 //	}
 	
-	public void addPersonalQuest(long userId, String title, String description, Date startAt,
-			Date finishAt) {
-		Personal quest = new Personal("P", title, description, startAt, finishAt);
+	public void addPersonalQuest(long userId, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage) {
+		Personal quest = new Personal("P", title, description, startAt, finishAt, picture, certification, mileage);
 		personalRepo.save(quest);
 		
 		// 유저의 참여중인 퀘스트 리스트 업데이트
@@ -112,9 +111,8 @@ public class QuestService {
 		user.getMyQuests().add(qp);
 	}
 	
-	public Quest addGroupQuest(String title, String description, Date startAt,
-			Date finishAt) {
-		Group quest = new Group("G", title, description, startAt, finishAt, 0);
+	public Quest addGroupQuest(String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage) {
+		Group quest = new Group("G", title, description, startAt, finishAt, 0, picture, certification, mileage);
 		groupRepo.save(quest);
 		
 		return quest;
