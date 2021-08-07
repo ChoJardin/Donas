@@ -26,6 +26,7 @@ import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.request.AddGroupQuestRequest;
 import com.ssafy.donas.request.AddPersonalQuestRequest;
 import com.ssafy.donas.request.AddRelayQuestRequest;
+import com.ssafy.donas.request.RelayNextListRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
 import com.ssafy.donas.response.QuestResponse;
 import com.ssafy.donas.service.QuestParticipantsService;
@@ -250,7 +251,18 @@ public class QuestController {
 	}
 	
 	/*
-	 * Relay 퀘스트
+	 * Relay 퀘스트 : 다음 주자 선정
 	 * */
+	@PostMapping("/relay/next")
+	@ApiOperation(value = "릴레이 퀘스트 다음 주자 선정")
+	public Object setNextList(@RequestBody RelayNextListRequest request) {
+		if (!questService.checkRelay(request.getQuestId()))
+			return HttpStatus.NOT_FOUND;
+		
+		relayWaitService.addWaitList(questService.getQuestById(request.getQuestId()), request.getNextList());
+		
+		return HttpStatus.OK;
+	}
+	
 	
 }
