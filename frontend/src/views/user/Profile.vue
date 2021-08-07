@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--profile start-->
-    <div id="profile-flex-container">
+    <div class="profile-flex-container" id="profile">
 
       <!--기본 프로필 start-->
       <div id="profile-wrap">
@@ -21,7 +21,7 @@
       </div>
       <!--기본 프로필 end-->
 
-      <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="3" readonly></textarea>
+      <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="2" readonly></textarea>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="profile-follow-wrap">
@@ -151,7 +151,7 @@ export default {
     // console.log(this.profile)
     // 페이지 로딩시 초기 정보 요청
     // 비회원의 경우 0으로 요청 --> 백 확인 필요
-    console.log('created again')
+    // console.log('created again')
     let myid = 0
     if (this.isLoggedIn) {
       myid = this.loginUser.id

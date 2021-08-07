@@ -1,6 +1,6 @@
 package com.ssafy.donas.domain.quest;
 
-import java.util.Date;
+import java.time.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,8 +41,7 @@ public class RelayWait {
 	@Column(nullable = false, name="user_id")
 	private long user_id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date deadline;
+	private LocalDateTime deadline;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "relay_id")

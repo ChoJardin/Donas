@@ -11,6 +11,7 @@ import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.domain.quest.RelayWait;
 import com.ssafy.donas.repository.quest.RelayWaitRepo;
+import java.time.*;
 
 @Service
 @Transactional
@@ -25,6 +26,11 @@ public class RelayWaitService {
 			RelayWait rw = new RelayWait((Relay)relay, idx++, user);
 			relayWaitRepo.save(rw);
 		}
+	}
+	
+	public void updateDeadline(Quest relay, int waitRank, LocalDateTime time) {
+		RelayWait rw = relayWaitRepo.findByRelay(relay);
+		rw.setDeadline(time.plusDays(1));
 	}
 	
 	
