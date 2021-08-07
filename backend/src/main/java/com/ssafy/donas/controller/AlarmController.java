@@ -16,6 +16,7 @@ import com.ssafy.donas.domain.Alarm;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.response.AlarmResponse;
 import com.ssafy.donas.service.AlarmService;
+import com.ssafy.donas.service.FcmService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +33,9 @@ public class AlarmController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	FcmService fcmService;
 	
 	@GetMapping("/{userId}")
 	@ApiOperation(value="알림 리스트")
