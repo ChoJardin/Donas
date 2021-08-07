@@ -66,7 +66,8 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
 		
-		questService.addPersonalQuest(quest.getUserId(), quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		questParticipantsService.addParticipant(quest.getUserId(), questId);
 		
 		return HttpStatus.OK;
 	}
@@ -104,8 +105,8 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
 		
-		// 릴레이 퀘스트 생성
-		Quest relayQuest = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		questParticipantsService.addParticipant(quest.getUserId(), questId);
 		
 		return HttpStatus.OK;
 	}
@@ -249,7 +250,7 @@ public class QuestController {
 	}
 	
 	/*
-	 * Relay 승낙에 따른 로직 -> Alarm 컨트롤러에 저장하면 될듯??
+	 * Relay 퀘스트
 	 * */
 	
 }
