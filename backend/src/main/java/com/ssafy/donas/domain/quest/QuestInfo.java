@@ -16,11 +16,12 @@ public class QuestInfo {
 	private String picture;
 	private Date startAt;
 	private Date finishAt;
+	private long mileage;
 	
 	public QuestInfo() {}
 	
 	@Builder
-	public QuestInfo(long id, String type, String title, String description, String picture, Date startAt, Date finishAt) {
+	public QuestInfo(long id, String type, String title, String description, String picture, Date startAt, Date finishAt, long mileage) {
 		this.id = id;
 		this.type = type;
 		this.title = title;
@@ -28,6 +29,7 @@ public class QuestInfo {
 		this.picture = picture;
 		this.startAt = startAt;
 		this.finishAt = finishAt;
+		this.mileage = mileage;
 	}
 	
 }

@@ -122,7 +122,7 @@ public class QuestController {
 	}
 	
 	/*
-	 * 유저의 Quest 목록 : all, 개인, 릴레이 (공동 없음)
+	 * 유저의 Quest 목록 : all, 개인, 릴레이
 	 * */
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "유저 별 참여중인 모든 퀘스트 가져오기")
@@ -147,6 +147,7 @@ public class QuestController {
 			res.startAt = quest.getStartAt();
 			res.finishAt = quest.getFinishAt();
 			res.picture = quest.getPicture();
+			res.mileage = quest.getMileage();
 			result.add(res);
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
@@ -171,6 +172,7 @@ public class QuestController {
 				qr.startAt = quest.getStartAt();
 				qr.finishAt = quest.getFinishAt();
 				qr.type = "P";
+				qr.mileage = quest.getMileage();
 				result.add(qr);
 			}
 		}
@@ -196,13 +198,13 @@ public class QuestController {
 				qr.startAt = quest.getStartAt();
 				qr.finishAt = quest.getFinishAt();
 				qr.type = "G";
+				qr.mileage = quest.getMileage();
 				result.add(qr);
 			}
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	// id밖에 전송 안하는 형태임 고쳐야 함!
 	@GetMapping("/relay/{userId}")
 	@ApiOperation(value = "유저별 참여중인 릴레이 퀘스트 가져오기")
 	public Object getRelayByUser(@PathVariable long userId) {
@@ -214,17 +216,20 @@ public class QuestController {
 		final List<QuestResponse> result = new ArrayList<>();
 		for (QuestInfo quest : quests) {
 			if ("R".equals(quest.getType())) {
-				QuestResponse res = new QuestResponse();
-				res.id = quest.getId();
-				result.add(res);
+				QuestResponse qr = new QuestResponse();
+				qr.id = quest.getId();
+				qr.title = quest.getTitle();
+				qr.description = quest.getDescription();
+				qr.picture = quest.getPicture();
+				qr.startAt = quest.getStartAt();
+				qr.finishAt = quest.getFinishAt();
+				qr.type = "R";
+				qr.mileage = quest.getMileage();
+				result.add(qr);
 			}
 		}
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	/*
-	 * Quest의 유저 목록 : 만들어야 할지?
-	 * */
 	
 }
