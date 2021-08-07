@@ -1,7 +1,10 @@
-#profile-flex-container {
+.profile-flex-container {
   display: flex;
   flex-direction: column;
   text-align: start;
+}
+
+#profile.profile-flex-container {
   margin: 15px 0;
 }
 
@@ -47,7 +50,7 @@
 /* 소개글 */
 #profile-description {
   font-family: 'GongGothicLight';
-  margin: 15px 0 15px 15px;
+  margin: 15px 0 0 15px;
   font-size: 0.9em;
 
 }
