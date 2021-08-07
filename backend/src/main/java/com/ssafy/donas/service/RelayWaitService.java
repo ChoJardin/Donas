@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.domain.quest.RelayWait;
-import com.ssafy.donas.repository.RelayWaitRepo;
+import com.ssafy.donas.repository.quest.RelayWaitRepo;
 
 @Service
 @Transactional

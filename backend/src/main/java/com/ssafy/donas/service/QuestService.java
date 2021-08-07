@@ -65,6 +65,13 @@ public class QuestService {
 			return false;
 		return true;
 	}
+	
+	public boolean checkRelay(long id) {
+		Optional<Relay> relay = relayRepo.findById(id);
+		if (relay.isEmpty())
+			return false;
+		return true;
+	}
 
 	public Quest getQuestById(long id) {
 		if (!checkQuest(id))
@@ -146,11 +153,15 @@ public class QuestService {
 				return false;
 
 			groupRepo.deleteById(questId);
-			personalRepo.flush();
+			groupRepo.flush();
 			return true;
 		} else {
-			// 릴레이 퀘스트 삭제 부분 만들어야 함
-			return false;
+			if (!checkRelay(questId))
+				return false;
+			
+			relayRepo.deleteById(questId);
+			relayRepo.flush();
+			return true;
 		}
 	}
 

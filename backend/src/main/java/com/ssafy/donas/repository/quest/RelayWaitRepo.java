@@ -1,4 +1,4 @@
-package com.ssafy.donas.repository;
+package com.ssafy.donas.repository.quest;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
