@@ -176,6 +176,31 @@ public class QuestController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("/group/{userId}")
+	@ApiOperation(value = "유저별 참여중인 공동 퀘스트 가져오기")
+	public Object getGroupByUser(@PathVariable long userId) {
+		if (!userService.checkId(userId))
+			return HttpStatus.NOT_FOUND;
+		
+		List<QuestInfo> quests = questService.getQuestInfoByUserId(userId);
+
+		final List<QuestResponse> result = new ArrayList<>();
+		for (QuestInfo quest : quests) {
+			if ("G".equals(quest.getType())) {
+				QuestResponse qr = new QuestResponse();
+				qr.id = quest.getId();
+				qr.title = quest.getTitle();
+				qr.description = quest.getDescription();
+				qr.picture = quest.getPicture();
+				qr.startAt = quest.getStartAt();
+				qr.finishAt = quest.getFinishAt();
+				qr.type = "G";
+				result.add(qr);
+			}
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	// id밖에 전송 안하는 형태임 고쳐야 함!
 	@GetMapping("/relay/{userId}")
