@@ -33,7 +33,6 @@
         <div class="create-question-title" >퀘스트 대표 사진을 올려주세요</div>
         <input class="create-quest-img" type="file" accept="image/*; capture=camera" :input.sync="picture" >
       </div>
-
     </div>
   </div>
 </template>
@@ -45,11 +44,13 @@ export default {
   name: "CreateSingle",
   data: () => {
     return {
+      type:'Personal',
       title: '',
       description: '',
       startAt:'',
       finishAt: '',
-      picture:'',
+      created_by:'',
+      picture:'../../assets/donut_flag.png',
       certification: '',
       mileage:2000,
     }

@@ -16,6 +16,8 @@ const ROUTES = {
   updatePassword: '/user/password',
 
   alerts: '/alarm/',
+
+  createPersonalQuest: '/quest/personal'
 }
 
 // 로그인
@@ -180,6 +182,17 @@ const requestAlertList = (id, callback, errorCallback) => {
       errorCallback(err)
     })
 }
+// 개인 퀘스트 생성
+const createPersonalQuest = (data, callback, errorCallback) => {
+  const createPersonalPath = URL + ROUTES.createPersonalQuest
+  axios.post(createPersonalPath, data)
+    .then(res => {
+      callback(res.data)
+    })
+    .catch(error => {
+      errorCallback(error.response.data)
+    })
+}
 
 
 const UserApi = {
@@ -198,6 +211,10 @@ const UserApi = {
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 
   requestAlertList:(data, callback, errorCallback) => requestAlertList(data,callback, errorCallback),
+
+  createPersonalQuest:(data, callback, errorCallback) => createPersonalQuest(data,callback, errorCallback),
+
+
 }
 
 export default UserApi
