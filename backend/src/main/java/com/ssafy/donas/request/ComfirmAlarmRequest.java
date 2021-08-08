@@ -12,19 +12,20 @@ import lombok.ToString;
 public class ComfirmAlarmRequest {
 	@ApiModelProperty(required = true)
 	@NotNull
-	long alarmId;
+	long id;
 	
 	@ApiModelProperty(required = true)
 	@NotNull
 	int confirm;
 
-	public long getAlarmId() {
-		return alarmId;
+	public long getId() {
+		return id;
 	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}	
 
-	public void setAlarmId(long alarmId) {
-		this.alarmId = alarmId;
-	}
 
 	public int getConfirm() {
 		return confirm;
@@ -32,7 +33,8 @@ public class ComfirmAlarmRequest {
 
 	public void setConfirm(int confirm) {
 		this.confirm = confirm;
-	}	
+	}
+
 	
 	
 

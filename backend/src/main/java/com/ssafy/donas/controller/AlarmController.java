@@ -67,9 +67,9 @@ public class AlarmController {
 	@PatchMapping
 	@ApiOperation(value="알림확인")
 	public Object confirmAlarm(@RequestBody ComfirmAlarmRequest alarm) {
-		if(alarmService.checkAlarm(alarm.getAlarmId()))
+		if(!alarmService.checkAlarm(alarm.getId()))
 			return HttpStatus.NOT_FOUND;		
-		alarmService.update(alarm.getAlarmId(),alarm.getConfirm());
+		alarmService.update(alarm.getId(),alarm.getConfirm());
 		
 		return HttpStatus.OK;
 	}

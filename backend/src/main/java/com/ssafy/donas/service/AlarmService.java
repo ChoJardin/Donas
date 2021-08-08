@@ -27,8 +27,8 @@ public class AlarmService {
 	@Autowired
 	PushService pushService;
 	
-	public boolean checkAlarm(long alarmId) {
-		Optional<Alarm> alarm = alarmRepo.findAlarmById(alarmId);
+	public boolean checkAlarm(long id) {
+		Optional<Alarm> alarm = alarmRepo.findAlarmById(id);
 		if(alarm.isEmpty())
 			return false;
 		return true;
@@ -50,8 +50,8 @@ public class AlarmService {
 		return alarmRepo.findAlarmByUser(user);
 	}
 	
-	public void update(long alarmId,int confirm) {
-		Alarm alarm = alarmRepo.findAlarmById(alarmId).get();
+	public void update(long id,int confirm) {
+		Alarm alarm = alarmRepo.findAlarmById(id).get();
 		if(alarm.getConfirm()==1)
 			alarm.setConfirm(confirm);
 	}

@@ -13,5 +13,5 @@ public interface AlarmRepo extends JpaRepository<Alarm, Long>{
 	
 	List<Alarm> findAlarmByUser(User user);
 	
-	Optional<Alarm> findAlarmById(long alarmId);
+	Optional<Alarm> findAlarmById(long id);
 }
