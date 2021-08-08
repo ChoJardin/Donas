@@ -62,18 +62,17 @@ export default {
 /* nav-bar */
 #nav {
   background-color: white;
-
   top: 0;
-  /*왼쪽은 패딩 안 줘도 될 것 같기도 하고..*/
   padding-left: 10px;
   padding-right: 10px;
   position: fixed;
   width: 100vw;
-  height: 70px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e4e6e9;
 }
 
 #logo {
