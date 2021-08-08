@@ -80,22 +80,15 @@ export default {
   bottom: 50px;
   width: 100%;
   padding: 0 15px;
-  /*left: 15px;*/
-  /*right: 15px;*/
-  /*width: calc(100vw - 30px);*/
   overflow: auto;
-  /*margin: 70px 15px 50px 15px;*/
 }
 
-/*footer*/
 #footer {
-  /*background-color: #9d794a;*/
   height: 50px;
   width: 100vw;
   position: fixed;
   bottom: 0;
   background: #e1eedd;
 }
-/*footer-end*/
 
 </style>
