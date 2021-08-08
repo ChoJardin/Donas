@@ -32,7 +32,7 @@ export default {
 
 #alarm-wrap {
   /*border-top: rgba(24, 58, 29, 0.50) solid;*/
-  border-bottom: rgba(24, 58, 29, 0.3) solid;
+  border-bottom: rgba(24, 58, 29, 0.3) solid 1px;
   /*box-shadow: 0 0 15px -7px #183a1d;*/
   padding: 5px 0px;
   display: flex;

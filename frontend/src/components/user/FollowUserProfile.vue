@@ -2,7 +2,7 @@
   <div id="follow-user-profile" :class="{background: isColored}">
     <router-link :to="`/user/profile/${follow.nickname}`" id="follow-profile-wrap">
       <img class="profile-image card" src="@/assets/profile_test.jpeg" alt="">
-      <div id="follow-profile-nickname">nickname{{follow.nickname}}</div>
+      <div id="follow-profile-nickname">{{follow.nickname}}</div>
     </router-link>
   </div>
 </template>
