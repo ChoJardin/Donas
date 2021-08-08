@@ -19,7 +19,7 @@ export default {
   name: "Error",
   methods: {
     goHome() {
-      this.$router.push('/');
+      this.$router.push('/main');
     }
   }
 }
