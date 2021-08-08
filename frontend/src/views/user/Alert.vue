@@ -15,6 +15,7 @@
 
 <script>
 import {mapState} from "vuex";
+import UserApi from "../../api/UserApi";
 
 export default {
   name: "Notification",
@@ -30,6 +31,19 @@ export default {
   },
   // watch
   // lifecycle hook
+  created() {
+    // console.log('alerts fetched')
+    UserApi.requestAlertList(
+        this.$route.params.id,
+        res => {
+          // console.log(res)
+          this.$store.dispatch('setAlarms', res.data)
+        },
+        err => {
+          console.log(err)
+        }
+    )
+  }
 }
 </script>
 

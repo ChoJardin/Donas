@@ -26,26 +26,26 @@ export default {
   //computed
   computed: {
     ...mapState({
-      loginUser: state => state.user.loginUser,
+      // loginUser: state => state.user.loginUser,
       alarms: state => state.user.alarms,
     })
   },
   //lifecycle hook
-  create() {
-    console.log('alerts fetched')
-    let myid=0
-    myid = this.loginUser.id
-    let params = {myid:myid}
-    UserApi.requestAlertList(
-        myid,
-        res => {
-          this.$store.dispatch('setAlarms', res.data)
-        },
-        err => {
-          console.log(err)
-        }
-    )
-  }
+  // create() {
+  //   console.log('alerts fetched')
+  //   let myid=0
+  //   myid = this.loginUser.id
+  //   let params = {myid:myid}
+  //   UserApi.requestAlertList(
+  //       myid,
+  //       res => {
+  //         this.$store.dispatch('setAlarms', res.data)
+  //       },
+  //       err => {
+  //         console.log(err)
+  //       }
+  //   )
+  // }
 }
 </script>
 
