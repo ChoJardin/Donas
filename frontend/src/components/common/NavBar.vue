@@ -124,8 +124,6 @@ export default {
   padding-right: 5px;
   padding-top: 5px;
   text-decoration: none !important;
-
-
 }
 
 .notification {
