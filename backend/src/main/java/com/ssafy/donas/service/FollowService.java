@@ -25,7 +25,7 @@ public class FollowService {
 	UserRepo userRepo;
 
 	public boolean isFollowing(User me, User other) {
-		if(followRepo.findFollowByFollowerAndFollowee(me, other).isEmpty())
+		if(followRepo.findFollowByFollowFromAndFollowTo(me, other).isEmpty())
 			return false;
 		
 		return true;
@@ -38,17 +38,14 @@ public class FollowService {
 		Follow follow = new Follow(follower, followee);
 		followRepo.save(follow);
 		
-		follower.getFollowees().add(follow);
-		followee.getFollowers().add(follow);
-		
 		return true;
 	}
 
 	public void delete(User follower, User followee) {
-		Optional<Follow> follow = followRepo.findFollowByFollowerAndFollowee(follower, followee);		
+		Optional<Follow> follow = followRepo.findFollowByFollowFromAndFollowTo(follower, followee);		
 		
-		follower.getFollowees().remove(follow.get());
-		followee.getFollowers().remove(follow.get());
+		follower.getFollowing().remove(follow.get());
+		followee.getFollower().remove(follow.get());
 		
 		follow.ifPresent(selectFollow ->{
 			followRepo.delete(selectFollow);
@@ -57,24 +54,23 @@ public class FollowService {
 	}
 	
 	public List<User> getFollowerList(User user){
-//		List<Follow> followers = user.getFollowers();
-		List<User> followers = followRepo.findFollowerByFollowee(user);
-//		List<Long> results = new ArrayList<Long>();
-//		
-//		for(User f : followers)
-//			results.add(f.getId());
+		List<Long> follower_ids = followRepo.getFollowers(user);
+		
+		List<User> followers = new ArrayList<>();
+		for(long user_id : follower_ids)
+			followers.add(userRepo.getById(user_id));
 		
 		return followers;
 	}
 	
-	public List<User> getFolloweeList(User user){
-//		List<Follow> followees = user.getFollowees();
-		List<User> followees = followRepo.findFolloweeByFollower(user);
-//		List<Long> results = new ArrayList<Long>();
-//		
-//		for(User f : followees)
-//			results.add(f.getId());
-//		
+	public List<User> getFollowingList(User user){
+		List<Long> followee_ids = followRepo.getFollowings(user);
+		System.out.println(followee_ids);
+		
+		List<User> followees = new ArrayList<User>();
+		for(long user_id : followee_ids)
+			followees.add(userRepo.getById(user_id));
+		
 		return followees;
 	}
 

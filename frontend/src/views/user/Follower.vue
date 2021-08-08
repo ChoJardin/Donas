@@ -42,14 +42,14 @@ export default {
     )
   },
   mounted() {
-    console.log(this.$refs.profile)
+    // console.log(this.$refs.profile)
     const profile = document.querySelectorAll('.follow-profile')
     for ( let i = 0; i < profile.length; i ++) {
       if (i%2 === 0) {
         profile[i].className += 'background'
       }
     }
-    console.log(profile)
+    // console.log(profile)
   }
 }
 </script>

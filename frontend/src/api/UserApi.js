@@ -33,7 +33,7 @@ const requestLogin = (data,callback,errorCallback) => {
 // 로그인 사용자 정보 업데이트
 const requestLoginUser = (id, callback, errorcallback) => {
   const requestLoginUserPath = URL + ROUTES.loginUser + id
-  console.log(requestLoginUserPath)
+  // console.log(requestLoginUserPath)
   axios.get(requestLoginUserPath)
     .then(res => {
       callback(res)
@@ -97,12 +97,12 @@ const updateProfile = (id, data, callback, errorcallback) => {
   const updateProfilePath = URL + ROUTES.updateProfile + id
   axios.patch(updateProfilePath, data)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       callback(res)
     })
     .catch(err => {
-      console.log('------')
-      console.log(err)
+      // console.log('------')
+      // console.log(err)
       errorcallback(err)
     })
 }
@@ -147,8 +147,8 @@ const requestFollowings = (params, callback, errorCallback) => {
 const requestFollow = (post, data, callback, errorCallback) => {
   const followPath = URL + ROUTES.follow
   if (post) {
-    console.log('팔로우')
-    console.log(post, data)
+    // console.log('팔로우')
+    // console.log(post, data)
     axios.post(followPath, data)
       .then(res => {
         callback(res)
@@ -157,7 +157,7 @@ const requestFollow = (post, data, callback, errorCallback) => {
         errorCallback(err)
       })
   } else {
-    console.log('언팔')
+    // console.log('언팔')
     axios.delete(followPath, {params: data})
       .then(res => {
         callback(res)

@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -19,11 +20,20 @@ public class LikeService {
 	@Autowired
 	LikeRepo likeRepo;
 	
-	public boolean checkLike(long articleId, long userId) {
-		Like like = likeRepo.findLikeByArticleIdAndUserId(articleId, userId);
+	public boolean checkLike(long likeId) {
+		Like like = likeRepo.getById(likeId);
 		if(like == null)
 			return false;
 		return true;
+	}
+	
+	public long checkLike(long articleId, long userId) {
+		Optional<Like> like = likeRepo.findByArticleIdAndUserId(articleId, userId);
+		
+		if(like.isPresent())
+			return like.get().getId();
+		else
+			return -1;
 	}
 	
 	public boolean checkLikeByUserIdAndArticleId(long userId, long articleID) {
@@ -39,16 +49,12 @@ public class LikeService {
 	}
 
 	
-	public boolean deleteLike(long articleId, long userId) {
-		Like like = likeRepo.findLikeByArticleIdAndUserId(articleId, userId);
-		if(like==null)
-			return false;
-		likeRepo.deleteById(like.getId());
-		
-		return true;
+	public void delete(long Id) {
+		likeRepo.deleteById(Id);
 	}
 
 	public List<Like> getLikes(long articleId) {
 		return likeRepo.findLikeByArticleId(articleId);
 	}
+
 }
