@@ -4,7 +4,7 @@
       <div class="create-quest-questions">
         <div class="create-question-title">퀘스트 이름을 입력해 주세요
         <span class="create-question-subtext">(10자 이내)</span></div>
-        <input class="create-quest-input" type="text" maxlength="10" placeholder="예) 미라클 모닝">
+        <input autofocus class="create-quest-input" type="text" maxlength="10" placeholder="예) 미라클 모닝">
       </div>
 
       <div class="create-quest-questions">
@@ -45,7 +45,7 @@
 
       <div class="create-quest-questions">
         <div class="create-question-title" >퀘스트 대표 사진을 올려주세요</div>
-        <input class="create-quest-img" type="file" accept="image/*; capture=camera" >
+        <input class="create-quest-img" type="file" accept="image/*; capture=camera">
       </div>
 
     </div>
@@ -106,4 +106,9 @@ label {
   font-size: 0.8em;
   margin-right: 5px;
 }
+
+.create-quest-img {
+  width: 100%;
+}
+
 </style>

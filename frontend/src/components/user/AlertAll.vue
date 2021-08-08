@@ -53,7 +53,7 @@ export default {
 .alert-all{
     height: 75vh;
     width: 90%;
-    margin: 15px 5%;
+    margin: 0px 0px 0px 15px;
 
     /*border: 1px solid #292929;*/
     /*border-radius: 30px;*/
