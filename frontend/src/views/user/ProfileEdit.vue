@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--ProfileEdit-->
-    <div id="profile-flex-container">
+    <div class="profile-flex-container">
 
       <ComponentNav
           @on-arrow="$router.back()"
@@ -68,7 +68,7 @@
         </div>
         <div class="profile-edit-content">
           <textarea
-              name="description" id="" cols="25" rows="3"
+              name="description" id="" cols="25" rows="2"
               autocapitalize="sentences" wrap="hard"
               placeholder="인사말을 작성해보세요!"
               v-model="description"></textarea>
@@ -227,7 +227,7 @@ export default {
       else this.nicknameError = false
     },
     description: function (v) {
-      this.isChanged.description = !!this.description !== !!this.loginUser.description
+      this.isChanged.description = this.description !== this.loginUser.description
     }
   },
   // lifecycle hook
@@ -360,15 +360,11 @@ export default {
 
 
 /* 인사말 */
-.label-content-wrap.description {
-  height: 83px;
-}
-
-
 /* 인사말 입력 */
 .profile-edit-content textarea {
   font-size: 0.9em;
   padding: 4px 0;
+  font-family: GongGothicLight;
 }
 
 .profile-edit-content textarea:focus {

@@ -1,6 +1,5 @@
 package com.ssafy.donas.request;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -14,7 +13,6 @@ import lombok.ToString;
 @Valid
 @ToString
 public class AddPersonalQuestRequest {
-
 	@ApiModelProperty(required = true)
     @NotNull
     long userId; 

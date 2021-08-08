@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Article;
+import com.ssafy.donas.domain.ArticleInfo;
 import com.ssafy.donas.domain.Follow;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
@@ -129,7 +130,7 @@ public class ArticleController {
 			return HttpStatus.NOT_FOUND;
 		
 		User user = userService.getUser(userId);
-		List<Follow> followings = user.getFollowers();
+		List<Follow> followings = user.getFollower();
 		System.out.println("show + " + followings.toString());
 		List<Article> result = new ArrayList<>();
 		System.out.println("before");
@@ -142,4 +143,31 @@ public class ArticleController {
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("/following")
+	@ApiOperation(value = "팔로잉 중인 유저들의 개인 퀘스트 피드")
+	public Object getPersonalQuestFeed(@RequestParam long user_id, @RequestParam String type ) {
+		if(!userService.checkId(user_id))
+			return HttpStatus.NOT_FOUND;
+		
+		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
+		List<Article> articles = articleService.getArticleInfoByUserAndType(user_id,type);
+		for(Article article : articles) {
+			ArticleResponse res = new ArticleResponse();
+			res.articleId = article.getId();
+			res.questId = article.getQuest().getId();
+			res.image = article.getImage();
+			res.content = article.getContent();
+			res.createdAt = article.getCreatedAt();
+			res.updatedAt = article.getUpdatedAt();
+			res.type = article.getType();
+			res.likeCnt = article.getLikes().size();
+			res.commentCnt = article.getComments().size();
+			result.add(res);
+		}
+		
+		System.out.println("열ㄴㅇ며랴먼야럼ㅇ냐ㅓ");
+		return new ResponseEntity<>(result,HttpStatus.OK);
+	}
+	
 }
