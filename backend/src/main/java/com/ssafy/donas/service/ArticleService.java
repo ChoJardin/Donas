@@ -94,11 +94,14 @@ public class ArticleService {
 
 	public List<Article> getArticleInfoByUserAndType(long userId, String type) {
 		User presentUser = userService.getUser(userId);
-		List<Long> followee_ids = followRepo.getFollowings(presentUser);
+		List<Long> followee_ids = followRepo.getFollowers(presentUser);
 		List<Article> articles = new ArrayList<Article>();
 		for(long fd : followee_ids) {
 			User followee = userService.getUser(fd);
-			List<Article> followee_articles =getArticlesByUser(followee);
+			System.out.println("adisjfiasjdfijasidjfidasjiji");
+			System.out.println(type);
+			List<Article> followee_articles =articleRepo.findArticleByUserAndType(followee, type);
+			System.out.println(followee_articles.size());
 			for(Article a : followee_articles) {
 				articles.add(a);
 			}
