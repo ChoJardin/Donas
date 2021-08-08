@@ -16,6 +16,7 @@ import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.repository.ArticleRepo;
+import com.ssafy.donas.repository.FollowRepo;
 
 @Service
 @Transactional
@@ -24,7 +25,12 @@ public class ArticleService {
 	UserService userService;
 
 	@Autowired
+	FollowRepo followRepo; 
+	
+	@Autowired
 	ArticleRepo articleRepo;
+	
+	
 
 	public boolean checkArticle(long articleId) {
 		Optional<Article> article = articleRepo.findById(articleId);
@@ -84,6 +90,23 @@ public class ArticleService {
 	
 	public List<Article> getOrderedFollowingArticleByUser(User user) {
 		return articleRepo.findTop5ByUserOrderByCreatedAt(user);
+	}
+
+	public List<Article> getArticleInfoByUserAndType(long userId, String type) {
+		User presentUser = userService.getUser(userId);
+		List<Long> followee_ids = followRepo.getFollowers(presentUser);
+		List<Article> articles = new ArrayList<Article>();
+		for(long fd : followee_ids) {
+			User followee = userService.getUser(fd);
+			System.out.println("adisjfiasjdfijasidjfidasjiji");
+			System.out.println(type);
+			List<Article> followee_articles =articleRepo.findArticleByUserAndType(followee, type);
+			System.out.println(followee_articles.size());
+			for(Article a : followee_articles) {
+				articles.add(a);
+			}
+		}
+		return articles;
 	}
 
 }
