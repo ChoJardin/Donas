@@ -1,13 +1,11 @@
 <template>
   <div>
-    <h1>공동</h1>
-    <br>
     <div>
       <div>
         <div class="create-quest-questions">
           <div class="create-question-title">퀘스트 이름을 입력해 주세요
           <span class="create-question-subtext">(10자 이내)</span></div>
-          <input class="create-quest-input" type="text" maxlength="10" placeholder="예) 미라클 모닝">
+          <input autofocus class="create-quest-input" type="text" maxlength="10" placeholder="예) 미라클 모닝">
         </div>
 
         <div class="create-quest-questions">
@@ -64,7 +62,7 @@ export default {
 
 <style scoped>
 .create-quest-questions {
-  margin: 0px 20px 20px 20px;
+  margin: 0px 15px 15px 15px;
   text-align: left;
 }
 
@@ -104,7 +102,9 @@ export default {
   padding-bottom: 5px;
 }
 .create-quest-img {
-
+  width: 100%;
+  /*font-size: 0px;*/
+  display: inline-block;
 }
 label {
   font-size: 0.8em;

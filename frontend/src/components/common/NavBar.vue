@@ -20,7 +20,7 @@
           <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
         </div>
         <div class="notification">
-          <router-link :to="`/notification/${nickname}`"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
+          <router-link :to="{name:'Alert', params:{nickname:nickname, id:id}}"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
           <span class="badge"><i class="fas fa-circle fa-xs"></i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
@@ -50,6 +50,7 @@ export default {
     ...mapGetters(['isLoggedIn']),
     ...mapState({
       nickname: state => state.user.loginUser.nickname,
+      id: state => state.user.loginUser.id
     })
   },
   // watch
@@ -124,8 +125,6 @@ export default {
   padding-right: 5px;
   padding-top: 5px;
   text-decoration: none !important;
-
-
 }
 
 .notification {

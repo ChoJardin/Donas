@@ -36,7 +36,7 @@
         </router-link>
 
         <!--팔로잉-->
-        <router-link :to="`/follow/${profile.nickname}/following`" class="profile-follow">
+        <router-link :to="{path: `/follow/${profile.nickname}/following`, params: {nickname: profile.nickname, id: profile.id}}" class="profile-follow">
           <span>
             팔로잉&nbsp;&nbsp;
           <!--</span>-->
