@@ -51,10 +51,12 @@ const state ={
   //알람 리스트
   alarms:[{
     id : '',
-    content: '',
+    receive_id: '',
+    contents: '',
     sendTime: '',
-    confirm: ''
-
+    confirm: '',
+    article_id: '',
+    send_name: '',
   }]
   // alarms: [{
   //   id: '1',
