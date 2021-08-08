@@ -19,17 +19,19 @@
       <div class="cashout-input-label" style="text-align: left">출금 정보</div>
       <div class="cashout-amount">
         <div class="cashout-input-label">이름</div>
-        <input type="text" class="cashout-input">
+        <input type="text" v-model="name" class="cashout-input">
       </div>
       <div class="cashout-amount">
         <div class="cashout-input-label">은행</div>
-        <input type="text" class="cashout-input">
+        <input type="text" v-model="bank" class="cashout-input">
       </div>
       <div class="cashout-amount">
         <div class="cashout-input-label">계좌번호</div>
-        <input type="text" class="cashout-input">
+        <input type="text" v-model="account" class="cashout-input">
       </div>
     </div>
+
+    <button class="button" @click="confirmPage">확인</button>
 
   </div>
 </template>
@@ -40,14 +42,33 @@ export default {
   data:  () => {
     return {
       amount: '',
+      name:'',
+      bank: '',
+      account:'',
     }
   },
+  //methods
+  methods: {
+    confirmPage () {
+      let data = {
+        name: this.name,
+        bank: this.bank,
+        account: this.account,
+        refundAmount:this.refundAmount
+      }
+      this.$router.push({name: 'CashOutResult', params: data})
+    }
+  },
+  //computed
   computed: {
     donationAmount: function (){
 
       return Math.round(this.amount * 0.1)
+    },
+    refundAmount: function (){
+      return Math.round(this.amount - this.donationAmount)
     }
-  }
+  },
 
 }
 </script>
@@ -97,4 +118,18 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.button {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 25px;
+  height: 50px;
+  background-color: #183a1d;
+  color: #e1eedd;
+  border-radius: 25px;
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
+  font-size: 1em;
+  cursor: pointer;
+}
+
 </style>

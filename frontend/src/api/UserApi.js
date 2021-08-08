@@ -16,6 +16,7 @@ const ROUTES = {
   updatePassword: '/user/password',
 
   alerts: '/alarm/',
+  alertStatus:'/alarm',
 
   createPersonalQuest: '/quest/personal'
 }
@@ -181,7 +182,22 @@ const requestAlertList = (id, callback, errorCallback) => {
     .catch(err => {
       errorCallback(err)
     })
+
 }
+
+
+const updateAlertStatus = (data, callback, errorcallback) => {
+  const updateAlertPath = URL + ROUTES.alertStatus
+  axios.patch(updateAlertPath, data)
+    .then(res => {
+      // console.log(res)
+      callback(res)
+    })
+    .catch(err => {
+      errorcallback(err)
+    })
+}
+
 // 개인 퀘스트 생성
 const createPersonalQuest = (data, callback, errorCallback) => {
   const createPersonalPath = URL + ROUTES.createPersonalQuest
@@ -211,10 +227,13 @@ const UserApi = {
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 
   requestAlertList:(data, callback, errorCallback) => requestAlertList(data,callback, errorCallback),
+  updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
 
   createPersonalQuest:(data, callback, errorCallback) => createPersonalQuest(data,callback, errorCallback),
 
 
 }
+
+
 
 export default UserApi
