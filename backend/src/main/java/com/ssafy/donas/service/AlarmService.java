@@ -27,6 +27,13 @@ public class AlarmService {
 	@Autowired
 	PushService pushService;
 	
+	public boolean checkAlarm(long id) {
+		Optional<Alarm> alarm = alarmRepo.findAlarmById(id);
+		if(alarm.isEmpty())
+			return false;
+		return true;
+	}
+	
 	public boolean addAlarm(User receivedUser, String sendName,long articleId,String content, LocalDateTime sendTIme) {
 		Optional<User> user = userRepo.findById(receivedUser.getId());
 		if(user==null)
@@ -43,11 +50,10 @@ public class AlarmService {
 		return alarmRepo.findAlarmByUser(user);
 	}
 	
-	public void update(User receiveUser) {
-		List<Alarm> alarms = alarmRepo.findAlarmByUser(receiveUser);
-		for(Alarm alarm : alarms) {
-			alarm.setConfirm(0);
-		}
+	public void update(long id,int confirm) {
+		Alarm alarm = alarmRepo.findAlarmById(id).get();
+		if(alarm.getConfirm()==1)
+			alarm.setConfirm(confirm);
 	}
 	
 }
