@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.User;
-import com.ssafy.donas.domain.quest.Personal;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
@@ -29,7 +27,7 @@ import com.ssafy.donas.request.AddRelayQuestRequest;
 import com.ssafy.donas.request.RelayNextListRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
 import com.ssafy.donas.response.QuestResponse;
-import com.ssafy.donas.service.AlarmService;
+import com.ssafy.donas.service.QuestAlarmService;
 import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.RelayWaitService;
@@ -58,8 +56,8 @@ public class QuestController {
 	RelayWaitService relayWaitService;
 	
 	@Autowired
-	AlarmService alarmService;
-
+	QuestAlarmService questAlarmService;
+	
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
 	 * */
@@ -88,6 +86,8 @@ public class QuestController {
 		
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
+
+		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
 		
 		List<Long> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
@@ -96,9 +96,11 @@ public class QuestController {
 				return HttpStatus.NOT_FOUND;
 			
 			participants.add(userService.getUser(p));
+			
+			// 참가자에게 참여 요청
+			questAlarmService.addQuestAlarm(p, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] 퀘스트명 : "+groupQuest.getTitle(), LocalDateTime.now());
 		}
 		
-		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
 		questParticipantsService.addParticipants(userService.getUser(quest.getUserId()), participants, groupQuest);
 		
 		return HttpStatus.OK;
@@ -274,13 +276,15 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 		
 		Quest relay = questService.getQuestById(request.getQuestId());
-		relayWaitService.addWaitList(relay, request.getNextList());
+		relayWaitService.addWaitList(relay, request.getNextList(), 2);
 		
-		// 첫 번째 주자에게 알람
-//		alarmService.addAlarm(userService.getUser(request.getNextList().get(0)), "릴레이 퀘스트 요청이 들어왔습니다. 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
+		User sender = userService.getUser(request.getUserId());
 		
-		// 첫 번째 주자 알림 deadline 설정
-		relayWaitService.updateDeadline(relay, 1, LocalDateTime.now());
+		// 두번째 주자에게 알람
+		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "[릴레이 퀘스트 요청] 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
+		
+		// 두번째 주자 알림 deadline 설정
+		relayWaitService.updateDeadline(relay, 2, request.getNextList().get(0), LocalDateTime.now());
 		
 		return HttpStatus.OK;
 	}

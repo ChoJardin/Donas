@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Alarm;
+import com.ssafy.donas.domain.QuestAlarm;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.ComfirmAlarmRequest;
 import com.ssafy.donas.response.AlarmResponse;
+import com.ssafy.donas.response.QuestAlarmResponse;
 import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.FcmService;
+import com.ssafy.donas.service.QuestAlarmService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +42,9 @@ public class AlarmController {
 	
 	@Autowired
 	FcmService fcmService;
+	
+	@Autowired
+	QuestAlarmService questAlarmService;
 	
 	@GetMapping("/{userId}")
 	@ApiOperation(value="알림 리스트")
@@ -72,5 +78,29 @@ public class AlarmController {
 		alarmService.update(alarm.getId(),alarm.getConfirm());
 		
 		return HttpStatus.OK;
+	}
+	
+	@GetMapping("/quest/{userId}")
+	@ApiOperation(value="퀘스트 알림 리스트")
+	public Object getQuestAlarmList(@PathVariable long userId) {
+		User user = userService.getUser(userId);
+		if(user==null)
+			return HttpStatus.NO_CONTENT;
+		
+		List<QuestAlarm> questAlarms = questAlarmService.getAlarms(user);
+		final List<QuestAlarmResponse> result = new ArrayList<QuestAlarmResponse>();
+		
+		for(QuestAlarm alarm : questAlarms) {
+			QuestAlarmResponse res = new QuestAlarmResponse();
+			res.id = alarm.getId();
+			res.receiveId = alarm.getUser().getId();
+			res.sendName = alarm.getSendName();
+			res.content = alarm.getContents();
+			res.sendTime = alarm.getSendTime();
+			res.questId = alarm.getQuest().getId();
+			result.add(res);
+		}
+		
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 }

@@ -75,7 +75,7 @@
     </div>
 
     <div id="profile-article-wrap">
-      <div class="profile-article-image" v-for=" article in articles" :key="article.id">
+      <div class="profile-article-image" v-for=" article in articles" :key="article.articleId">
         <ArticleImage class="inner" :article="article"/>
       </div>
     </div>
@@ -89,6 +89,7 @@ import {mapGetters, mapState} from "vuex";
 
 import ArticleImage from "@/components/articles/ArticleImage";
 import UserApi from "@/api/UserApi";
+import axios from "axios";
 
 import('@/assets/style/user/Profile.css')
 
@@ -161,11 +162,15 @@ export default {
         this.$route.params.nickname,
         params,
         res => {
-          console.log(res)
-          console.log(res.data)
-          console.lopg(res.data.articles)
           this.$store.dispatch('setUserProfile', res.data)
-          this.$store.dispatch('setFeeds', res.data.articles)
+          params = {user_id: res.data.id, type: 'A'}
+          axios.get('http://localhost:8081/article/mine', {params: params})
+            .then( res => {
+              this.$store.dispatch('setFeeds', res.data)
+              // console.log(res.data)
+              // console.log('here')
+              // console.log(res)
+            })
         },
         // 요청 실패하는 경우 -> 에러 페이지로 연결
         err => {
