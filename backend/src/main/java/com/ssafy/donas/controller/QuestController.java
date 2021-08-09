@@ -30,6 +30,7 @@ import com.ssafy.donas.request.RelayNextListRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
 import com.ssafy.donas.response.QuestResponse;
 import com.ssafy.donas.service.AlarmService;
+import com.ssafy.donas.service.QuestAlarmService;
 import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.RelayWaitService;
@@ -58,8 +59,8 @@ public class QuestController {
 	RelayWaitService relayWaitService;
 	
 	@Autowired
-	AlarmService alarmService;
-
+	QuestAlarmService questAlarmService;
+	
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
 	 * */
@@ -265,13 +266,15 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 		
 		Quest relay = questService.getQuestById(request.getQuestId());
-		relayWaitService.addWaitList(relay, request.getNextList());
+		relayWaitService.addWaitList(relay, request.getNextList(), 2);
 		
-		// 첫 번째 주자에게 알람
-//		alarmService.addAlarm(userService.getUser(request.getNextList().get(0)), "릴레이 퀘스트 요청이 들어왔습니다. 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
+		User sender = userService.getUser(request.getUserId());
 		
-		// 첫 번째 주자 알림 deadline 설정
-		relayWaitService.updateDeadline(relay, 1, LocalDateTime.now());
+		// 두번째 주자에게 알람
+		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "릴레이 퀘스트 요청이 들어왔습니다. 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
+		
+		// 두번째 주자 알림 deadline 설정
+		relayWaitService.updateDeadline(relay, 2, request.getNextList().get(0), LocalDateTime.now());
 		
 		return HttpStatus.OK;
 	}
