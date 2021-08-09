@@ -1,21 +1,31 @@
 <template>
   <div>
-    <div id="quest-card">
+    <button @click="onClick" id="quest-card">
       <img src="@/assets/IMG_7263.jpeg" alt="">
+      <!--<img :src="quest.picture" alt="">-->
       <span>
-        퀘스트 이름이 들어갑니다
+        <!--퀘스트 이름이 들어갑니다-->
+        {{quest.title}}
       </span>
-    </div>
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "QuestCard"
+  name: "QuestCard",
   // components
   // props
+  props: {
+    quest: Object
+  },
   // data
   // methods
+  methods: {
+    onClick() {
+      this.$router.push(`/quest/${this.quest.id}`)
+    }
+  },
   // computed
   // watch
   // lifecycle hook
@@ -42,8 +52,12 @@ img {
 }
 
 span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 25%;
   font-size: 0.8em;
   text-align: left;
+
 }
 </style>
