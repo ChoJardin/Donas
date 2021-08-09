@@ -16,6 +16,9 @@ const ROUTES = {
   updatePassword: '/user/password',
 
   alerts: '/alarm/',
+  alertStatus:'/alarm',
+
+  createPersonalQuest: '/quest/personal'
 }
 
 // 로그인
@@ -33,7 +36,7 @@ const requestLogin = (data,callback,errorCallback) => {
 // 로그인 사용자 정보 업데이트
 const requestLoginUser = (id, callback, errorcallback) => {
   const requestLoginUserPath = URL + ROUTES.loginUser + id
-  console.log(requestLoginUserPath)
+  // console.log(requestLoginUserPath)
   axios.get(requestLoginUserPath)
     .then(res => {
       callback(res)
@@ -97,12 +100,12 @@ const updateProfile = (id, data, callback, errorcallback) => {
   const updateProfilePath = URL + ROUTES.updateProfile + id
   axios.patch(updateProfilePath, data)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       callback(res)
     })
     .catch(err => {
-      console.log('------')
-      console.log(err)
+      // console.log('------')
+      // console.log(err)
       errorcallback(err)
     })
 }
@@ -147,8 +150,8 @@ const requestFollowings = (params, callback, errorCallback) => {
 const requestFollow = (post, data, callback, errorCallback) => {
   const followPath = URL + ROUTES.follow
   if (post) {
-    console.log('팔로우')
-    console.log(post, data)
+    // console.log('팔로우')
+    // console.log(post, data)
     axios.post(followPath, data)
       .then(res => {
         callback(res)
@@ -157,7 +160,7 @@ const requestFollow = (post, data, callback, errorCallback) => {
         errorCallback(err)
       })
   } else {
-    console.log('언팔')
+    // console.log('언팔')
     axios.delete(followPath, {params: data})
       .then(res => {
         callback(res)
@@ -169,15 +172,41 @@ const requestFollow = (post, data, callback, errorCallback) => {
 }
 
 //알림 리스트 불러오기
-const requestAlertList = (id, params, callback, errorCallback) => {
+const requestAlertList = (id, callback, errorCallback) => {
   const AlertListPath = URL + ROUTES.alerts + id
-  axios.get(AlertListPath, {params: params})
+  axios.get(AlertListPath)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       callback(res)
     })
     .catch(err => {
       errorCallback(err)
+    })
+
+}
+
+
+const updateAlertStatus = (data, callback, errorcallback) => {
+  const updateAlertPath = URL + ROUTES.alertStatus
+  axios.patch(updateAlertPath, data)
+    .then(res => {
+      // console.log(res)
+      callback(res)
+    })
+    .catch(err => {
+      errorcallback(err)
+    })
+}
+
+// 개인 퀘스트 생성
+const createPersonalQuest = (data, callback, errorCallback) => {
+  const createPersonalPath = URL + ROUTES.createPersonalQuest
+  axios.post(createPersonalPath, data)
+    .then(res => {
+      callback(res.data)
+    })
+    .catch(error => {
+      errorCallback(error.response.data)
     })
 }
 
@@ -198,6 +227,13 @@ const UserApi = {
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 
   requestAlertList:(data, callback, errorCallback) => requestAlertList(data,callback, errorCallback),
+  updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
+
+  createPersonalQuest:(data, callback, errorCallback) => createPersonalQuest(data,callback, errorCallback),
+
+
 }
+
+
 
 export default UserApi

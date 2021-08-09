@@ -20,4 +20,6 @@ public class QuestResponse {
 	public Date startAt;
 	@ApiModelProperty(value = "finish_at", position = 7)
 	public Date finishAt;
+	@ApiModelProperty(value = "mileage", position = 8)
+	public long mileage;
 }

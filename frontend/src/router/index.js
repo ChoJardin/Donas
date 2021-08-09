@@ -29,6 +29,7 @@ import UpsertArticle from "@/views/articles/UpsertArticle";
 import Mileage from "@/views/mileages/Mileage";
 import Donation from "@/components/mileages/Donation";
 import CashOut from "@/components/mileages/CashOut";
+import CashOutResult from "@/components/mileages/CashOutResult"
 
 // 프로필
 import Profile from "@/views/user/Profile";
@@ -58,6 +59,7 @@ Vue.use(VueRouter)
 
 const routes = [
   // 메인
+  {path: '', redirect: '/main'},
   {path: '/main', name: 'Main', component: Main},
 
   // 전체 퀘스트
@@ -101,7 +103,8 @@ const routes = [
     path: '/user/mileage', component: Mileage,
     children: [
       {path: '', name: 'Donation', component: Donation},
-      {path: 'cashout', name: 'CashOut', component: CashOut}
+      {path: 'cashout', name: 'CashOut', component: CashOut},
+      {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }}
     ]
   },
 
@@ -138,18 +141,14 @@ const routes = [
   // 에러
   {path: '/error', name: 'Error', component: Error},
   // 404
-  // {path: '*', redirect: '/404'},
-  // {path: '/404', name: 'PageNotFound', component: PageNotFound}
+  {path: '/*', redirect: '/404'},
+  {path: '/404', name: 'PageNotFound', component: PageNotFound}
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  // 새 페이지 로딩할 때 항상 스크롤 맨 위로
-  // scrollBehavior(to, from) {
-  //   return {x: 0, y:0}
-  // }
 })
 
 export default router

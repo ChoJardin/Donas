@@ -34,18 +34,10 @@ export default {
       articles: state => state.articles.feeds
     })
   },
-  // watch: {
-    // '$route.query.id'(v) {
-    //   console.log(v)
-    // }
-  // },
   mounted() {
     this.$nextTick(function () {
       // 누른 위치로 스크롤
-      let nav = document.querySelector('#nav').offsetHeight
-      let location = document.querySelector(`#a${this.$route.query.id}`).offsetTop
-      // let location = document.querySelector(`#a${this.$route.params.id}`).offsetTop
-      window.scrollTo({top:location - nav})
+      document.getElementById(`a${this.$route.query.id}`).scrollIntoView();
     })
   }
 
@@ -56,6 +48,7 @@ export default {
 #vertical-feed-wrap {
   display: flex;
   flex-direction: column;
+  /*height: 100%;*/
   /*align-items: center;*/
 }
 </style>

@@ -30,35 +30,38 @@ public class Alarm {
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "receive_id",referencedColumnName ="id")
+	@JoinColumn(name = "receive_id", referencedColumnName ="id")
 	private User user;
+	
+	@Column(name="send_name", nullable = false)
+	private String sendName;
+	
+	@Column(name="article_id")
+	private long articleId;
 	
 	@Column(nullable = false, length=200)
 	private String contents;
-	
-
 
 	@Column(name="send_time", nullable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime sendTime;
 	
 	@Column(nullable = false)
-	@ColumnDefault("0")
+	@ColumnDefault("1")
 	private int confirm;
-
-
 
 	public Alarm() {}
 
-
 	@Builder
-	public Alarm(User user, String contents, LocalDateTime sendTime, int confirm) {
+	public Alarm(User user, String sendName,long articleId,String contents, LocalDateTime sendTime, int confirm) {
 		this.user = user;
+		this.sendName = sendName;
+		this.articleId = articleId;
 		this.contents = contents;
 		this.sendTime = sendTime;
 		this.confirm = confirm;
 	}
-	
+
 	
 	
 	
