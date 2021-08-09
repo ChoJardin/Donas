@@ -21,6 +21,7 @@ import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
+import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AddGroupQuestRequest;
 import com.ssafy.donas.request.AddPersonalQuestRequest;
 import com.ssafy.donas.request.AddRelayQuestRequest;
@@ -30,6 +31,7 @@ import com.ssafy.donas.response.QuestResponse;
 import com.ssafy.donas.service.QuestAlarmService;
 import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.QuestService;
+import com.ssafy.donas.service.RelayService;
 import com.ssafy.donas.service.RelayWaitService;
 import com.ssafy.donas.service.UserService;
 
@@ -57,6 +59,9 @@ public class QuestController {
 	
 	@Autowired
 	QuestAlarmService questAlarmService;
+	
+	@Autowired
+	RelayService relayService;
 	
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
@@ -99,7 +104,10 @@ public class QuestController {
 			questAlarmService.addQuestAlarm(p, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] 퀘스트명 : "+groupQuest.getTitle(), LocalDateTime.now());
 		}
 		
-		questParticipantsService.addParticipants(userService.getUser(quest.getUserId()), participants, groupQuest);
+		// 퀘스트 생성자만 DB에 넣어두기 (나머지는 승락하면 넣기!)
+		questParticipantsService.addParticipant(quest.getUserId(), groupQuest.getId());
+		
+//		questParticipantsService.addParticipants(userService.getUser(quest.getUserId()), participants, groupQuest);
 		
 		return HttpStatus.OK;
 	}
@@ -267,7 +275,9 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 		
 		Quest relay = questService.getQuestById(request.getQuestId());
-		relayWaitService.addWaitList(relay, request.getNextList(), 2);
+		int order = relayService.getById(request.getQuestId()).getOrder()+1;
+		
+		relayWaitService.addWaitList(relay, request.getNextList(), order);
 		
 		User sender = userService.getUser(request.getUserId());
 		
@@ -275,7 +285,7 @@ public class QuestController {
 		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "[릴레이 퀘스트 요청] 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
 		
 		// 두번째 주자 알림 deadline 설정
-		relayWaitService.updateDeadline(relay, 2, request.getNextList().get(0), LocalDateTime.now());
+		relayWaitService.updateDeadline(relay, order, request.getNextList().get(0), LocalDateTime.now());
 		
 		return HttpStatus.OK;
 	}

@@ -8,4 +8,5 @@ import com.ssafy.donas.domain.quest.RelayWait;
 
 public interface RelayWaitRepo extends JpaRepository<RelayWait, Long>{
 	RelayWait findByRelayAndUserAndRelayOrder(Quest relay, User user, int order);
+	void deleteByRelayAndRelayOrder(Quest relay, int order);
 }

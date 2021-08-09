@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.donas.domain.Alarm;
 import com.ssafy.donas.domain.QuestAlarm;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.request.AcceptRelayRequest;
 import com.ssafy.donas.request.ComfirmAlarmRequest;
 import com.ssafy.donas.response.AlarmResponse;
 import com.ssafy.donas.response.QuestAlarmResponse;
 import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.FcmService;
 import com.ssafy.donas.service.QuestAlarmService;
+import com.ssafy.donas.service.QuestParticipantsService;
+import com.ssafy.donas.service.QuestService;
+import com.ssafy.donas.service.RelayService;
+import com.ssafy.donas.service.RelayWaitService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +51,18 @@ public class AlarmController {
 	
 	@Autowired
 	QuestAlarmService questAlarmService;
+	
+	@Autowired
+	QuestParticipantsService questParticipantsService;
+	
+	@Autowired
+	RelayWaitService relayWaitService;
+	
+	@Autowired
+	QuestService questService;
+	
+	@Autowired
+	RelayService relayService;
 	
 	@GetMapping("/{userId}")
 	@ApiOperation(value="알림 리스트")
@@ -80,6 +98,9 @@ public class AlarmController {
 		return HttpStatus.OK;
 	}
 	
+	/*
+	 * Quest 알람 : 퀘스트 알람 리스트, 릴레이 수락/거절, 공동 수락/거절
+	 * */
 	@GetMapping("/quest/{userId}")
 	@ApiOperation(value="퀘스트 알림 리스트")
 	public Object getQuestAlarmList(@PathVariable long userId) {
@@ -103,4 +124,28 @@ public class AlarmController {
 		
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
+	
+	@PostMapping("/relay")
+	@ApiOperation(value="릴레이 수락")
+	public Object acceptRelay(@RequestBody AcceptRelayRequest request) {
+		long questId = request.getQuestId();
+		long userId = request.getUserId();
+		int relayOrder = request.getRelayOrder();
+		
+		if(!questService.checkQuest(questId) || !userService.checkId(userId))
+			return HttpStatus.NOT_FOUND;
+		
+		// 참여중인 퀘스트에 추가
+		questParticipantsService.addParticipant(userId, questId);
+		
+		// 대기 주자 테이블에서 해당 순서 주자들 제거
+		relayWaitService.deleteByRelayAndRelayOrder(questService.getQuestById(questId), relayOrder);
+		
+		// 릴레이 현재 주자 번호 업데이트
+		relayService.updateUserOrder(questId, relayOrder);
+		
+		return HttpStatus.OK;
+	}
+	
+	
 }
