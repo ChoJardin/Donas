@@ -109,6 +109,7 @@ const routes = [
   },
 
   // 프로필
+  // {path: '/user/profile/', redirect: '/login'},
   {path: '/user/profile/undefined', redirect: '/login'},
   {path: '/user/profile/edit', name: 'ProfileEdit', component: ProfileEdit},
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile, meta: {transitionName: 'slide'}},
@@ -141,8 +142,8 @@ const routes = [
   // 에러
   {path: '/error', name: 'Error', component: Error},
   // 404
-  {path: '/*', redirect: '/404'},
-  {path: '/404', name: 'PageNotFound', component: PageNotFound}
+  // {path: '/*', redirect: '/404'},
+  // {path: '/404', name: 'PageNotFound', component: PageNotFound}
 ]
 
 const router = new VueRouter({

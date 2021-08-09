@@ -6,7 +6,7 @@ import UserApi from "@/api/UserApi";
 const state ={
   loginUser: {
     id: '',
-    nickname: '',
+    nickname: undefined,
     picture: '',
     description: '',
   },

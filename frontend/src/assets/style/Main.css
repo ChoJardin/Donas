@@ -7,7 +7,7 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     justify-content: space-evenly;
     background-color: #f6c453;
 }
@@ -25,6 +25,17 @@
 .main-greeting .comment {
     font-size: 1.2em;
 }
+
+.main-greeting .not-logged-in span {
+    font-size: 1.3em;
+    font-family: GongGothicBold;
+}
+
+.main-greeting .not-logged-in a{
+    text-decoration: none;
+    color: #292929;
+}
+
 
 .main-contents {
     background-color: #ffffff;
@@ -68,17 +79,20 @@
     border: 1px solid #183a1d;
     border-radius: 15px;
     margin: 5px 0;
+    z-index: 1;
+
 }
 
-.mileage .progress-bar .percent {
+.mileage .percent {
     position: absolute;
-    height: 18px;
+    width: 100%;
+    height: 16px;
 }
 
 .mileage .progress-bar .percent .change {
     background-color: #183a1d;
     border-radius: 15px;
-    height: 18px;
+    height: 100%;
     width: 100%;
     animation: progress 2s ease-in-out;
 }

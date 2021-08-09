@@ -141,7 +141,7 @@ export default {
   watch: {
     // 로그인 상태가 바뀌는 경우
     // 페이지 다시 마운트
-    isLoggedIn(v) {
+    'isLoggedIn'(v) {
       this.$mount()
     }
   },
@@ -161,6 +161,8 @@ export default {
         this.$route.params.nickname,
         params,
         res => {
+          console.log(res)
+          console.log(res.data)
           this.$store.dispatch('setUserProfile', res.data)
           this.$store.dispatch('setFeeds', res.data.articles)
         },

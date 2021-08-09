@@ -18,7 +18,9 @@ const ROUTES = {
   alerts: '/alarm/',
   alertStatus:'/alarm',
 
-  createPersonalQuest: '/quest/personal'
+  createPersonalQuest: '/quest/personal',
+  createRelayQuest: '/quest/rellay',
+  createGroupQuest: '/quest/group',
 }
 
 // 로그인
@@ -203,6 +205,31 @@ const createPersonalQuest = (data, callback, errorCallback) => {
   const createPersonalPath = URL + ROUTES.createPersonalQuest
   axios.post(createPersonalPath, data)
     .then(res => {
+      console.log(res)
+      callback(res.data)
+    })
+    .catch(error => {
+      errorCallback(error.response.data)
+    })
+}
+
+const createRelayQuest = (data, callback, errorCallback) => {
+  const createRelayPath = URL + ROUTES.createRelayQuest
+  axios.post(createRelayPath, data)
+    .then(res => {
+      console.log(res)
+      callback(res.data)
+    })
+    .catch(error => {
+      errorCallback(error.response.data)
+    })
+}
+
+const createGroupQuest = (data, callback, errorCallback) => {
+  const createGroupPath = URL + ROUTES.createGroupQuest
+  axios.post(createGroupPath, data)
+    .then(res => {
+      console.log(res)
       callback(res.data)
     })
     .catch(error => {
@@ -230,6 +257,8 @@ const UserApi = {
   updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
 
   createPersonalQuest:(data, callback, errorCallback) => createPersonalQuest(data,callback, errorCallback),
+  createRelayQuest:(data, callback, errorCallback) => createRelayQuest(data,callback, errorCallback),
+  createGroupQuest:(data, callback, errorCallback) => createGroupQuest(data,callback, errorCallback),
 
 
 }
