@@ -1,0 +1,15 @@
+.article-detail-overlay {
+  position: fixed;
+  top: 60px;
+  right: 15px;
+  bottom: 0;
+  left: 15px;
+  overflow: scroll;
+  background: white;
+}
+
+.article-detail-overlay .material-icons-round.more {
+  position: absolute;
+  top: 10px;
+  right: 0;
+}

@@ -66,6 +66,8 @@ public class QuestController {
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
 	 * */
+	
+	
 	@PostMapping("/personal")
 	@ApiOperation(value = "개인퀘스트 생성")
 	public Object addPersonalQuest(@RequestBody AddPersonalQuestRequest quest) {
@@ -152,6 +154,13 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 		
 		return HttpStatus.OK;
+	}
+	
+	@GetMapping("/count")
+	@ApiOperation(value = "현재 생성되어 있는 전체 퀘스트 개수")
+	public Object getAllQuestCnt() {		
+		Long questCnt = questService.getAllQuestCnt();
+		return new ResponseEntity<>(questCnt, HttpStatus.OK);
 	}
 	
 	/*
