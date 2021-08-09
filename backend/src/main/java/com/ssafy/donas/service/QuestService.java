@@ -15,6 +15,7 @@ import com.ssafy.donas.domain.quest.Group;
 import com.ssafy.donas.domain.quest.Personal;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestInfo;
+import com.ssafy.donas.domain.quest.QuestMainInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.repository.QuestParticipantsRepo;
@@ -44,7 +45,7 @@ public class QuestService {
 
 	@Autowired
 	QuestParticipantsRepo qpRepo;
-	
+		
 	public long getAllQuestCnt() {
 		return questRepo.count();			
 	}
@@ -167,6 +168,17 @@ public class QuestService {
 			relayRepo.flush();
 			return true;
 		}
+	}
+	
+	
+	public List<QuestMainInfo> getQuestList(String type){
+		List<Quest> quests = questRepo.findTop5ByTypeOrderByIdDesc(type);
+		List<QuestMainInfo> questInfo = new ArrayList<QuestMainInfo>();
+		for(Quest q : quests) {
+			questInfo.add(new QuestMainInfo(q.getId(),q.getTitle(),q.getDescription(),q.getPicture()));
+		}
+		return questInfo;
+		
 	}
 
 }

@@ -2,13 +2,15 @@ package com.ssafy.donas.domain;
 
 import java.time.LocalDateTime;
 
-import com.ssafy.donas.domain.quest.Quest;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArticleInfo {
 	private long id;
 	private long questId;
@@ -24,7 +26,6 @@ public class ArticleInfo {
 	private String makerName;
 	private String makerImage;
 
-	public ArticleInfo() {}
 
 	@Builder
 	public ArticleInfo(long id, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt, String type, boolean isLike, int heartCnt, int commentCnt) {
@@ -43,7 +44,6 @@ public class ArticleInfo {
 	public ArticleInfo(long id, long questId, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt,
 			String type,int heartCnt, int commentCnt, String questTitle, String makerName,
 			String makerImage) {
-		super();
 		this.id = id;
 		this.questId = questId;
 		this.image = image;
