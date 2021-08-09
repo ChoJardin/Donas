@@ -5,6 +5,9 @@ import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 
 public class AcceptRelayRequest {
+	@ApiModelProperty(required = true)
+    @NotNull
+    long alarmId;
 	
 	@ApiModelProperty(required = true)
     @NotNull
@@ -29,5 +32,9 @@ public class AcceptRelayRequest {
 	public int getRelayOrder() {
 		return relayOrder;
 	}
-	
+
+	public long getAlarmId() {
+		return alarmId;
+	}
+
 }

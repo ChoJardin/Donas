@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.donas.domain.QuestAlarm;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
+import com.ssafy.donas.domain.quest.QuestAlarm;
 import com.ssafy.donas.repository.QuestAlarmRepo;
 import com.ssafy.donas.repository.UserRepo;
 import com.ssafy.donas.repository.quest.QuestRepo;
@@ -26,13 +26,13 @@ public class QuestAlarmService {
 	QuestRepo questRepo;
 	
 	@Autowired
-	QuestAlarmRepo qaRepo;
+	QuestAlarmRepo questAlarmRepo;
 	
 	@Autowired
 	PushService pushService;
 	
 	public boolean checkQuestAlarm(long id) {
-		Optional<QuestAlarm> alarm = qaRepo.findQuestAlarmById(id);
+		Optional<QuestAlarm> alarm = questAlarmRepo.findQuestAlarmById(id);
 		if(alarm.isEmpty())
 			return false;
 		return true;
@@ -44,7 +44,7 @@ public class QuestAlarmService {
 			return false;
 		
 		QuestAlarm questAlarm = new QuestAlarm(receiver.get(), quest, sendName, contents, sendTime);
-		qaRepo.save(questAlarm);
+		questAlarmRepo.save(questAlarm);
 		
 		receiver.ifPresent(selectUser->{
 			pushService.searchReceivedUser(selectUser, contents, sendTime);
@@ -54,7 +54,12 @@ public class QuestAlarmService {
 	}
 	
 	public List<QuestAlarm> getAlarms(User user){
-		return qaRepo.findQuestAlarmByUser(user);
+		return questAlarmRepo.findQuestAlarmByUser(user);
+	}
+
+	public void updateConfirm(long alarmId, int confirm) {
+		QuestAlarm questAlarm = questAlarmRepo.getById(alarmId);
+		questAlarm.setConfirm(confirm);
 	}
 	
 }

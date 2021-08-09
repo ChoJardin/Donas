@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Alarm;
-import com.ssafy.donas.domain.QuestAlarm;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.domain.quest.QuestAlarm;
 import com.ssafy.donas.request.AcceptRelayRequest;
 import com.ssafy.donas.request.ComfirmAlarmRequest;
 import com.ssafy.donas.response.AlarmResponse;
@@ -128,11 +128,12 @@ public class AlarmController {
 	@PostMapping("/relay")
 	@ApiOperation(value="릴레이 수락")
 	public Object acceptRelay(@RequestBody AcceptRelayRequest request) {
+		long alarmId = request.getAlarmId();
 		long questId = request.getQuestId();
 		long userId = request.getUserId();
 		int relayOrder = request.getRelayOrder();
 		
-		if(!questService.checkQuest(questId) || !userService.checkId(userId))
+		if(!questService.checkQuest(questId) || !userService.checkId(userId) || !questAlarmService.checkQuestAlarm(alarmId))
 			return HttpStatus.NOT_FOUND;
 		
 		// 참여중인 퀘스트에 추가
@@ -143,6 +144,9 @@ public class AlarmController {
 		
 		// 릴레이 현재 주자 번호 업데이트
 		relayService.updateUserOrder(questId, relayOrder);
+		
+		// 알람 응답 칼럼 수락으로 업데이트
+		questAlarmService.updateConfirm(alarmId, 2);
 		
 		return HttpStatus.OK;
 	}
