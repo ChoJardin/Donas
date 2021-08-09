@@ -71,6 +71,7 @@ public class User {
 	@ColumnDefault("TRUE")
 	private boolean status;
 	
+	@Column(nullable = true, length=100)
 	private String description;
 
 	@OneToMany(mappedBy = "followTo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
