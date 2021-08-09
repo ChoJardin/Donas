@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 .quest-branch {
-  height: 30px;
+  height: 35px;
   /*margin: 30px 0;*/
   width: calc( 100% - 20px );
   display: flex;
@@ -34,7 +34,7 @@ export default {
   background: white;
   padding-top: 5px;
   /*padding-left: 10px;*/
-  top: 70px;
+  top: 55px;
   padding-bottom: 5px;
 
 }
@@ -67,6 +67,6 @@ export default {
 }
 
 #quest-router-view {
-  padding-top: 10%;
+  padding-top: 15%;
 }
 </style>
