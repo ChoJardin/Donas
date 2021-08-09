@@ -161,6 +161,8 @@ export default {
         this.$route.params.nickname,
         params,
         res => {
+          console.log(res)
+          console.log(res.data)
           this.$store.dispatch('setUserProfile', res.data)
           this.$store.dispatch('setFeeds', res.data.articles)
         },
