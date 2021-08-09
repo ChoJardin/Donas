@@ -19,7 +19,7 @@ const ROUTES = {
   alertStatus:'/alarm',
 
   createPersonalQuest: '/quest/personal',
-  createRelayQuest: '/quest/rellay',
+  createRelayQuest: '/quest/relay',
   createGroupQuest: '/quest/group',
 }
 
