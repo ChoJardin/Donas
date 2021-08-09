@@ -19,7 +19,7 @@ const ROUTES = {
   alertStatus:'/alarm',
 
   createPersonalQuest: '/quest/personal',
-  createRelayQuest: '/quest/rellay',
+  createRelayQuest: '/quest/relay',
   createGroupQuest: '/quest/group',
 }
 
@@ -87,8 +87,11 @@ const requestSignup = (data, callback, errorCallback) => {
 // 프로필 정보 요청
 const requestProfileInfo = (nickname, params, callback, errorCallback) => {
   const profileInfoPath = URL + ROUTES.profileInfo + nickname
+  console.log(profileInfoPath)
+  console.log(params)
   axios.get(profileInfoPath, {params: params})
     .then(res => {
+      console.log(res)
       callback(res)
     })
     .catch(err => {

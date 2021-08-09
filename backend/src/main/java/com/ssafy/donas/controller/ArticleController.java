@@ -115,18 +115,21 @@ public class ArticleController {
 		if(!userService.checkId(user_id))
 			return HttpStatus.NOT_FOUND;
 		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
-		List<Article> articles = articleService.getArticleInfoByUserAndType(user_id,type,"mine");
-		for(Article article : articles) {
+		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(user_id,type,"mine");
+		for(ArticleInfo article : articles) {
 			ArticleResponse res = new ArticleResponse();
 			res.articleId = article.getId();
-			res.questId = article.getQuest().getId();
+			res.questId = article.getQuestId();
 			res.image = article.getImage();
 			res.content = article.getContent();
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
 			res.type = article.getType();
-			res.likeCnt = article.getLikes().size();
-			res.commentCnt = article.getComments().size();
+			res.likeCnt = article.getHeartCnt();
+			res.commentCnt = article.getCommentCnt();
+			res.questTitle = article.getQuestTitle();
+			res.makerName = article.getMakerName();
+			res.makerImage = article.getMakerImage();
 			result.add(res);
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);
@@ -174,18 +177,21 @@ public class ArticleController {
 			return HttpStatus.NOT_FOUND;
 		
 		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
-		List<Article> articles = articleService.getArticleInfoByUserAndType(user_id,type,"other");
-		for(Article article : articles) {
+		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(user_id,type,"other");
+		for(ArticleInfo article : articles) {
 			ArticleResponse res = new ArticleResponse();
 			res.articleId = article.getId();
-			res.questId = article.getQuest().getId();
+			res.questId = article.getQuestId();
 			res.image = article.getImage();
 			res.content = article.getContent();
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
 			res.type = article.getType();
-			res.likeCnt = article.getLikes().size();
-			res.commentCnt = article.getComments().size();
+			res.likeCnt = article.getHeartCnt();
+			res.commentCnt = article.getCommentCnt();
+			res.questTitle = article.getQuestTitle();
+			res.makerName = article.getMakerName();
+			res.makerImage = article.getMakerImage();
 			result.add(res);
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);

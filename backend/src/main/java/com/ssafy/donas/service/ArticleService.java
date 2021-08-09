@@ -96,9 +96,9 @@ public class ArticleService {
 		return articleRepo.findTop5ByUserOrderByCreatedAt(user);
 	}
 
-	public List<Article> getArticleInfoByUserAndType(long userId, String type, String own ) {
+	public List<ArticleInfo> getArticleInfoByUserAndType(long userId, String type, String own ) {
 		User presentUser = userService.getUser(userId);		
-		List<Article> articles = new ArrayList<Article>();
+		List<ArticleInfo> articles = new ArrayList<ArticleInfo>();
 		List<Article> own_articles = null;
 		if(own.equals("mine")) {
 			if(type.equals("A")) {
@@ -109,7 +109,8 @@ public class ArticleService {
 
 			}
 			for(Article a : own_articles) {
-				articles.add(a);
+				User user = a.getUser();				
+				articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
 			}
 		}else if(own.equals("other")){
 			List<Long> followee_ids = followRepo.getFollowers(presentUser);
@@ -118,21 +119,23 @@ public class ArticleService {
 				if(type.equals("A")) {
 					own_articles = articleRepo.findArticleByUser(followee);
 					for(Article a : own_articles) {
-						articles.add(a);
+						User user = a.getUser();
+						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
 					}
 				}else {
 					own_articles =articleRepo.findArticleByUserAndType(followee, type);
-					System.out.println("한개는 나와야하는디?");
 					for(Article a : own_articles) {
-						articles.add(a);
+						User user = a.getUser();
+						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+
 					}
 				}
 
 			}
 		}
-		Collections.sort(articles, new Comparator<Article>() {
+		Collections.sort(articles, new Comparator<ArticleInfo>() {
 			@Override
-			public int compare(Article o1, Article o2) {
+			public int compare(ArticleInfo o1, ArticleInfo o2) {
 				return o2.getCreatedAt().compareTo(o1.getCreatedAt());
 			}
 		});	

@@ -162,8 +162,6 @@ export default {
         this.$route.params.nickname,
         params,
         res => {
-          // console.log(res)
-          // console.log(res.data)
           this.$store.dispatch('setUserProfile', res.data)
           params = {user_id: res.data.id, type: 'A'}
           axios.get('http://localhost:8081/article/mine', {params: params})
