@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main-greeting">
+    <div v-if="this.isLoggedIn" class="main-greeting">
       <div class="nickname">
         <span>{{loginUser.nickname}}</span>
         <p>&nbsp;님,</p>
@@ -10,11 +10,33 @@
       </div>
     </div>
 
+    <div v-else class="main-greeting">
+        <div class="not-logged-in">
+          <span>도</span>전과
+          <span>나</span>눔을
+          위해서는
+        </div>
+        <div class="not-logged-in">
+          <router-link to="/login">
+            <span>로그인</span>
+          </router-link>
+          이 필요합니다
+        </div>
+    </div>
+
+
+
     <div class="main-contents">
-      <div class="on-going-quests">
-        진행 중인 퀘스트&nbsp;&nbsp;{{loginUser.questCnt}}
+      <div v-if="this.isLoggedIn" class="on-going-quests">
+        진행 중인 퀘스트:&nbsp;&nbsp;{{loginUser.questCnt}}&nbsp;개
         <span class="material-icons-outlined">chevron_right</span>
       </div>
+
+      <div v-else class="on-going-quests">
+        전체 퀘스트:&nbsp;&nbsp;[전체 퀘스트 수] &nbsp;개
+        <span class="material-icons-outlined">chevron_right</span>
+      </div>
+
 
       <div class="mileage">
         저금통
@@ -41,7 +63,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapGetters, mapState} from "vuex";
 import QuestType from "@/components/quests/QuestType";
 
 import ('@/assets/style/Main.css')
@@ -59,7 +81,8 @@ export default {
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser
-    })
+    }),
+    ...mapGetters(['isLoggedIn'])
   },
   // watch
   // lifecycle hook

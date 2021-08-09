@@ -26,6 +26,17 @@
     font-size: 1.2em;
 }
 
+.main-greeting .not-logged-in span {
+    font-size: 1.3em;
+    font-family: GongGothicBold;
+}
+
+.main-greeting .not-logged-in a{
+    text-decoration: none;
+    color: #292929;
+}
+
+
 .main-contents {
     background-color: #ffffff;
     position: absolute;
@@ -68,10 +79,13 @@
     border: 1px solid #183a1d;
     border-radius: 15px;
     margin: 5px 0;
+    z-index: 1;
+
 }
 
 .mileage .progress-bar .percent {
     position: absolute;
+    top: 0;
     height: 18px;
 }
 

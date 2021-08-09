@@ -109,6 +109,7 @@ const routes = [
   },
 
   // 프로필
+  // {path: '/user/profile/', redirect: '/login'},
   {path: '/user/profile/undefined', redirect: '/login'},
   {path: '/user/profile/edit', name: 'ProfileEdit', component: ProfileEdit},
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile, meta: {transitionName: 'slide'}},
