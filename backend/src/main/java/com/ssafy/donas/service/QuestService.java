@@ -172,7 +172,7 @@ public class QuestService {
 	
 	
 	public List<QuestMainInfo> getQuestList(String type){
-		List<Quest> quests = questRepo.findTop5ByTypeOrderByIdDesc(type);
+		List<Quest> quests = questRepo.findTop10ByTypeOrderByIdDesc(type);
 		if(quests.size()==0)
 			return null;
 		List<QuestMainInfo> questInfo = new ArrayList<QuestMainInfo>();
