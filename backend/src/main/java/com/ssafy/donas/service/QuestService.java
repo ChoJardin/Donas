@@ -173,6 +173,8 @@ public class QuestService {
 	
 	public List<QuestMainInfo> getQuestList(String type){
 		List<Quest> quests = questRepo.findTop5ByTypeOrderByIdDesc(type);
+		if(quests.size()==0)
+			return null;
 		List<QuestMainInfo> questInfo = new ArrayList<QuestMainInfo>();
 		for(Quest q : quests) {
 			questInfo.add(new QuestMainInfo(q.getId(),q.getTitle(),q.getDescription(),q.getPicture()));
