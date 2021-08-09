@@ -50,5 +50,6 @@ export default {
   flex-direction: column;
   /*height: 100%;*/
   /*align-items: center;*/
+  /*background-color: #fefbe9;*/
 }
 </style>
