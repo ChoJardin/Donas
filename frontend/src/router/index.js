@@ -59,6 +59,7 @@ Vue.use(VueRouter)
 
 const routes = [
   // 메인
+  {path: '', redirect: '/main'},
   {path: '/main', name: 'Main', component: Main},
 
   // 전체 퀘스트
