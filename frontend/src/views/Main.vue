@@ -35,7 +35,7 @@
       </div>
 
       <div v-else class="on-going-quests">
-        전체 퀘스트:&nbsp;&nbsp;[전체 퀘스트 수] &nbsp;개
+        전체 퀘스트:&nbsp;&nbsp;{{questInfo.questCnt}}&nbsp;개
         <span class="material-icons-outlined">chevron_right</span>
       </div>
 
@@ -51,9 +51,9 @@
         <div class="charity-history"></div>
       </div>
 
-      <QuestType title="공동"></QuestType>
-      <QuestType title="개인"></QuestType>
-      <QuestType title="릴레이"></QuestType>
+      <QuestType title="공동" :quests="questInfo.questG"/>
+      <QuestType title="개인" :quests="questInfo.questP"/>
+      <QuestType title="릴레이" :quests="questInfo.questR"/>
 
     </div>
   </div>
@@ -78,7 +78,8 @@ export default {
   // computed
   computed: {
     ...mapState({
-      loginUser: state => state.user.loginUser
+      loginUser: state => state.user.loginUser,
+      questInfo: state => state.quests.mainQuestInfo
     }),
     ...mapGetters(['isLoggedIn'])
   },
@@ -86,7 +87,12 @@ export default {
   created() {
     CommonApi.requestMainInfo(
         res => {
-          console.log(res)
+          let questInfo = (({questCnt, questP, questG, questR}) =>
+              ({questCnt, questP, questG, questR}))(res)
+          let donationInfo = (({donation, quarter}) =>
+              ({donation, quarter}))(res)
+          this.$store.dispatch('setMainQuestInfo', questInfo)
+          this.$store.dispatch('setMainDonationInfo', donationInfo)
         },
         err => {
           console.log(err)

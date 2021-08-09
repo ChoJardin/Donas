@@ -17,7 +17,6 @@
         </div>
         <!--게시글 작성 정보-->
 
-
         <router-link :to="`/article/${article.articleId}`">
           <div id="single-article-picture">
             <!--인증 사진-->

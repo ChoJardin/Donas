@@ -175,11 +175,6 @@ const actions = {
       commit('ADD_FOLLOWER')
     }
   },
-  // 프로필 정보 수정
-  // setLoginUser({commit}, profile) {
-  //   commit('SET_LOGIN_USER', profile)
-  // },
-
   // 알림 리스트
   setAlarms({commit}, alarms) {
     commit('SET_ALARMS', alarms)

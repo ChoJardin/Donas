@@ -91,6 +91,7 @@ const routes = [
         path: ':id',
         name: 'ArticleDetail',
         component: ArticleDetail,
+        props: true,
         meta: { transitionName: 'slide' }
       },
     ]
