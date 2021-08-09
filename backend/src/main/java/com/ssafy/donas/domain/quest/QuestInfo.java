@@ -32,4 +32,15 @@ public class QuestInfo {
 		this.mileage = mileage;
 	}
 	
+	@Builder
+	public QuestInfo(long id, String title, String description, String picture) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.picture = picture;
+	}
+	
+	
+	
 }
+

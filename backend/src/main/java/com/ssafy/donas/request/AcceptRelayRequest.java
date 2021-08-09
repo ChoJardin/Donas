@@ -1,16 +1,14 @@
 package com.ssafy.donas.request;
 
-import javax.validation.Valid;
-
 import com.sun.istack.NotNull;
-import java.util.*;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.ToString;
 
-@Valid
-@ToString
-public class RelayNextListRequest {
+public class AcceptRelayRequest {
+	@ApiModelProperty(required = true)
+    @NotNull
+    long alarmId;
+	
 	@ApiModelProperty(required = true)
     @NotNull
     long questId;
@@ -21,18 +19,22 @@ public class RelayNextListRequest {
 	
 	@ApiModelProperty(required = true)
     @NotNull
-    List<Long> nextList;
+    int relayOrder;
 
 	public long getQuestId() {
 		return questId;
 	}
-	
-	public List<Long> getNextList() {
-		return nextList;
-	}
 
 	public long getUserId() {
 		return userId;
+	}
+
+	public int getRelayOrder() {
+		return relayOrder;
+	}
+
+	public long getAlarmId() {
+		return alarmId;
 	}
 
 }

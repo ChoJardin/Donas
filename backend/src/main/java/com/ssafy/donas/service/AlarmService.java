@@ -47,6 +47,7 @@ public class AlarmService {
 	}
 	
 	public List<Alarm> getAlarms(User user){
+		
 		return alarmRepo.findAlarmByUser(user);
 	}
 	

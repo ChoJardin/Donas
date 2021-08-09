@@ -133,5 +133,10 @@ public class UserService {
 		User user = userRepo.getById(id);
 		user.setPassword(newPassword);
 	}
+	
+	// 총 마일리지
+	public long sumMileage() {
+		return userRepo.count();
+	}
 
 }
