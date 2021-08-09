@@ -2,6 +2,8 @@ package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,7 +99,7 @@ public class ArticleService {
 	public List<Article> getArticleInfoByUserAndType(long userId, String type, String own ) {
 		User presentUser = userService.getUser(userId);		
 		List<Article> articles = new ArrayList<Article>();
-		List<Article> own_articles;
+		List<Article> own_articles = null;
 		if(own.equals("mine")) {
 			if(type.equals("A")) {
 				own_articles = articleRepo.findArticleByUser(presentUser);
@@ -113,10 +115,14 @@ public class ArticleService {
 			List<Long> followee_ids = followRepo.getFollowers(presentUser);
 			for(long fd : followee_ids) {
 				User followee = userService.getUser(fd);
-				if(own.equals("A")) {
+				if(type.equals("A")) {
 					own_articles = articleRepo.findArticleByUser(followee);
+					for(Article a : own_articles) {
+						articles.add(a);
+					}
 				}else {
 					own_articles =articleRepo.findArticleByUserAndType(followee, type);
+					System.out.println("한개는 나와야하는디?");
 					for(Article a : own_articles) {
 						articles.add(a);
 					}
@@ -124,7 +130,12 @@ public class ArticleService {
 
 			}
 		}
-
+		Collections.sort(articles, new Comparator<Article>() {
+			@Override
+			public int compare(Article o1, Article o2) {
+				return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+			}
+		});	
 		return articles;
 	}
 

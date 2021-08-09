@@ -268,7 +268,7 @@ public class QuestController {
 		relayWaitService.addWaitList(relay, request.getNextList());
 		
 		// 첫 번째 주자에게 알람
-		alarmService.addAlarm(userService.getUser(request.getNextList().get(0)), "릴레이 퀘스트 요청이 들어왔습니다. 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
+//		alarmService.addAlarm(userService.getUser(request.getNextList().get(0)), "릴레이 퀘스트 요청이 들어왔습니다. 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
 		
 		// 첫 번째 주자 알림 deadline 설정
 		relayWaitService.updateDeadline(relay, 1, LocalDateTime.now());

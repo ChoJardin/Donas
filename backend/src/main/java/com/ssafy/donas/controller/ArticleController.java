@@ -110,7 +110,7 @@ public class ArticleController {
 //	}
 	
 	@GetMapping("/mine")
-	@ApiOperation(value = "종류별 나의 게시물 목록")
+	@ApiOperation(value = "퀘스트 종류별 나의 게시물 목록")
 	public Object getArticleByType(@RequestParam long user_id, @RequestParam String type) {
 		if(!userService.checkId(user_id))
 			return HttpStatus.NOT_FOUND;
