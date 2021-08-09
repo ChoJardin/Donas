@@ -28,7 +28,7 @@ export default {
   /*border: 1px solid #183a1d;*/
   height: 150px;
   width: 120px;
-  margin: 10px;
+  margin: 15px 10px 10px;
   border-radius: 17px;
   box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
 }
