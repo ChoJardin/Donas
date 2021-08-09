@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Alarm;
@@ -147,6 +148,18 @@ public class AlarmController {
 		
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
+		
+		return HttpStatus.OK;
+	}
+	
+	@PatchMapping("/relay/{alarmId}")
+	@ApiOperation(value="릴레이 거절")
+	public Object acceptRelay(@PathVariable long alarmId) {
+		if(!questAlarmService.checkQuestAlarm(alarmId))
+			return HttpStatus.NOT_FOUND;
+		
+		// 알람 응답 칼럼 수락으로 업데이트
+		questAlarmService.updateConfirm(alarmId, 3);
 		
 		return HttpStatus.OK;
 	}
