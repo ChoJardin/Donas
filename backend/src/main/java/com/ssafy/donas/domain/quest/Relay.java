@@ -31,6 +31,9 @@ public class Relay extends Quest{
 	@Column(name = "user_order", nullable = false)
 	private int order;
 	
+	@Column(name = "target_cnt")
+	private int targetCnt;
+	
 //	@Column(name = "user_status", nullable = false)
 //	private String userStatus;
 	
@@ -40,9 +43,10 @@ public class Relay extends Quest{
 	public Relay() {}
 	
 	@Builder
-	public Relay(String type, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage, int order) {
-		super(type, title, description, startAt, finishAt, picture, certification, mileage);
+	public Relay(String type, String title, String description, Date startAt, String picture, String certification, long mileage, int order, int targetCnt) {
+		super(type, title, description, startAt, null, picture, certification, mileage);
 		this.order = order;
+		this.targetCnt = targetCnt;
 //		this.userStatus = userStatus;
 	}
 

@@ -1,4 +1,4 @@
-package com.ssafy.donas.domain;
+package com.ssafy.donas.domain.quest;
 
 import java.time.LocalDateTime;
 
@@ -10,11 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ssafy.donas.domain.quest.Quest;
+import com.ssafy.donas.domain.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
+@Table(name="Quest_alarm")
 public class QuestAlarm {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +50,11 @@ public class QuestAlarm {
 	@Column(name="send_time", nullable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime sendTime;
+
+	// 0 : 읽음 | 1 : 안읽음	| 2 : 수락 |	3 : 거절
+	@Column(nullable = false)
+	@ColumnDefault("1")
+	private int confirm;
 	
 	public QuestAlarm() {}
 
