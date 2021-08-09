@@ -62,6 +62,8 @@ public class ArticleService {
 		return articleRepo.findArticleByUser(user);
 	}
 	
+	
+	
 	public List<ArticleInfo> getArticleInfosByUser(User user){
 		List<Article> articles = getArticlesByUser(user);
 		
@@ -92,20 +94,37 @@ public class ArticleService {
 		return articleRepo.findTop5ByUserOrderByCreatedAt(user);
 	}
 
-	public List<Article> getArticleInfoByUserAndType(long userId, String type) {
-		User presentUser = userService.getUser(userId);
-		List<Long> followee_ids = followRepo.getFollowers(presentUser);
+	public List<Article> getArticleInfoByUserAndType(long userId, String type, String own ) {
+		User presentUser = userService.getUser(userId);		
 		List<Article> articles = new ArrayList<Article>();
-		for(long fd : followee_ids) {
-			User followee = userService.getUser(fd);
-			System.out.println("adisjfiasjdfijasidjfidasjiji");
-			System.out.println(type);
-			List<Article> followee_articles =articleRepo.findArticleByUserAndType(followee, type);
-			System.out.println(followee_articles.size());
-			for(Article a : followee_articles) {
+		List<Article> own_articles;
+		if(own.equals("mine")) {
+			if(type.equals("A")) {
+				own_articles = articleRepo.findArticleByUser(presentUser);
+
+			}else {
+				own_articles = articleRepo.findArticleByUserAndType(presentUser, type);
+
+			}
+			for(Article a : own_articles) {
 				articles.add(a);
 			}
+		}else if(own.equals("other")){
+			List<Long> followee_ids = followRepo.getFollowers(presentUser);
+			for(long fd : followee_ids) {
+				User followee = userService.getUser(fd);
+				if(own.equals("A")) {
+					own_articles = articleRepo.findArticleByUser(followee);
+				}else {
+					own_articles =articleRepo.findArticleByUserAndType(followee, type);
+					for(Article a : own_articles) {
+						articles.add(a);
+					}
+				}
+
+			}
 		}
+
 		return articles;
 	}
 
