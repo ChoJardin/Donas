@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div class="error">
-      <p class="main">ERROR</p>
-      <p>
-        요청하신 페이지에
-        <br>
-        문제가 발생하였습니다.
-      </p>
-    </div>
-
+    <img src="@/assets/donut_error.png" alt="">
     <button @click="goHome" class="btn-bottom go-home">홈으로 이동</button>
   </div>
 </template>
@@ -19,7 +11,7 @@ export default {
   name: "Error",
   methods: {
     goHome() {
-      this.$router.push('/');
+      this.$router.push('/main');
     }
   }
 }
@@ -41,4 +33,10 @@ export default {
   .error-404 .main {
     font-size: 3.5rem;
   }
+
+img {
+  width: 100%;
+  margin-top: 100px;
+}
+
 </style>

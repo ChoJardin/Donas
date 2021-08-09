@@ -1,4 +1,4 @@
-import  {ref}  from '@/composition/index.ts';
+import  {ref}  from '../../composition/index.ts';
 import firebase from 'firebase/app';
 import '@firebase/messaging';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional

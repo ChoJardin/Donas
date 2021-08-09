@@ -33,6 +33,12 @@ public class Alarm {
 	@JoinColumn(name = "receive_id", referencedColumnName ="id")
 	private User user;
 	
+	@Column(name="send_name", nullable = false)
+	private String sendName;
+	
+	@Column(name="article_id")
+	private long articleId;
+	
 	@Column(nullable = false, length=200)
 	private String contents;
 
@@ -47,11 +53,17 @@ public class Alarm {
 	public Alarm() {}
 
 	@Builder
-	public Alarm(User user, String contents, LocalDateTime sendTime, int confirm) {
+	public Alarm(User user, String sendName,long articleId,String contents, LocalDateTime sendTime, int confirm) {
 		this.user = user;
+		this.sendName = sendName;
+		this.articleId = articleId;
 		this.contents = contents;
 		this.sendTime = sendTime;
 		this.confirm = confirm;
 	}
+
+	
+	
+	
 
 }

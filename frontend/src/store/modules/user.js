@@ -49,28 +49,30 @@ const state ={
   },
 
   //알람 리스트
-  // alarms: {
-  //   id : '',
-  //   content: '',
-  //   sendTime: '',
-  //   confirm: ''
-  //
-  // }
-  alarms: [{
-    id: '1',
-    receiver_id: '3',
-    content: "ssafy님이 팔로우 했습니다.",
-    sendTime: "2021-08-04T03:06:43",
-    confirm: '1'
-  },
-    {
-      id: '2',
-      receiver_id: '3',
-      content: "admin님이 팔로우 했습니다.",
-      sendTime: "2021-08-09T03:06:43",
-      confirm: '0'
-    }
-  ]
+  alarms:[{
+    id : '',
+    receiveId: '',
+    contents: '',
+    sendTime: '',
+    confirm: '',
+    articleId: '',
+    sendName: '',
+  }]
+  // alarms: [{
+  //   id: '1',
+  //   receiver_id: '3',
+  //   content: "ssafy님이 팔로우 했습니다.",
+  //   sendTime: "2021-08-04T03:06:43",
+  //   confirm: '1'
+  // },
+  //   {
+  //     id: '2',
+  //     receiver_id: '3',
+  //     content: "admin님이 팔로우 했습니다.",
+  //     sendTime: "2021-08-09T03:06:43",
+  //     confirm: '0'
+  //   }
+  // ]
 }
 
 

@@ -51,7 +51,7 @@ export default {
   margin-top: 70px;
 }
 #open-img{
-  width: 350px;
+  width: 100%;
   margin-top: 10px;
 }
 </style>

@@ -13,5 +13,5 @@ import com.ssafy.donas.domain.User;
 public interface ArticleRepo extends JpaRepository<Article, Long>{
 	List<Article> findArticleByUser(User user);
 	List<Article> findTop5ByUserOrderByCreatedAt(User user);
-	
+	List<Article> findArticleByUserAndType(User user, String type);
 }

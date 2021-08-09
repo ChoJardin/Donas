@@ -131,6 +131,9 @@ public class ProfileController {
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}
+	
+//	@GetMapping("/mine/")
+	
 
 	@GetMapping("/other")
 	@ApiOperation(value = "타 유저 프로필 보기")
@@ -218,7 +221,7 @@ public class ProfileController {
 		if (!followService.addFollow(follower, followee))
 			return HttpStatus.CONFLICT;
 		
-		if(!alarmService.addAlarm(follower, followee.getNickname()+"님이 회원님을 팔로워하기 시작했습니다.", LocalDateTime.now()))
+		if(!alarmService.addAlarm(followee,follower.getNickname(),-1, follower.getNickname()+"님이 회원님을 팔로워하기 시작했습니다.", LocalDateTime.now()))
 			return HttpStatus.CONFLICT;
 
 		return HttpStatus.OK;
