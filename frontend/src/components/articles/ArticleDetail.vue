@@ -2,8 +2,6 @@
   <div class="article-detail-overlay">
     <component-nav @on-arrow="$router.back()" title="인증 게시글"/>
 
-
-    <!--<span v-if="article.makerName===this.loginUser.nickname" class="material-icons-round more">more_horiz</span>-->
     <button @click="onClick" class="material-icons-round more">more_horiz</button>
     <div v-if="openButton">
       <button>
