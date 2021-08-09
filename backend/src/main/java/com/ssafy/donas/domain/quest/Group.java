@@ -38,8 +38,8 @@ public class Group extends Quest{
 	public Group() {}
 	
 	@Builder
-	public Group(String type, String title, String description, Date startAt, Date finishAt, int percent) {
-		super(type, title, description, startAt, finishAt);
+	public Group(String type, String title, String description, Date startAt, Date finishAt, int percent, String picture, String certification, long mileage) {
+		super(type, title, description, startAt, finishAt, picture, certification, mileage);
 		this.percent = percent;
 	}
 }

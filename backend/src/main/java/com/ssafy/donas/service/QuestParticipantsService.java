@@ -11,6 +11,8 @@ import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.repository.QuestParticipantsRepo;
+import com.ssafy.donas.repository.UserRepo;
+import com.ssafy.donas.repository.quest.QuestRepo;
 
 @Service
 @Transactional
@@ -18,6 +20,12 @@ public class QuestParticipantsService {
 	
 	@Autowired
 	QuestParticipantsRepo questParticipantsRepo;
+
+	@Autowired
+	UserRepo userRepo;
+	
+	@Autowired
+	QuestRepo questRepo;
 	
 	public void addParticipants(User adminUser, List<User> participants, Quest groupQuest) {
 		QuestParticipants admin = new QuestParticipants(adminUser, groupQuest);
@@ -27,4 +35,10 @@ public class QuestParticipantsService {
 			questParticipantsRepo.save(qp);
 		}
 	}	
+	
+	public void addParticipant(long userId, long questId) {
+		QuestParticipants qp = new QuestParticipants(userRepo.getById(userId), questRepo.getById(questId));
+		questParticipantsRepo.save(qp);
+	}
+	
 }

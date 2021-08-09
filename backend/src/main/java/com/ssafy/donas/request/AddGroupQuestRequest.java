@@ -41,6 +41,18 @@ public class AddGroupQuestRequest {
 	@ApiModelProperty(required = true)
     @NotNull
     List<Long> participants;
+	
+	@ApiModelProperty(required = true)
+    @NotNull
+	String picture;
+	
+	@ApiModelProperty(required = true)
+    @NotNull
+	String certification;
+	
+	@ApiModelProperty(required = true)
+    @NotNull
+	long mileage;
 
 	public long getUserId() {
 		return userId;
@@ -89,4 +101,29 @@ public class AddGroupQuestRequest {
 	public void setParticipants(List<Long> participants) {
 		this.participants = participants;
 	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public String getCertification() {
+		return certification;
+	}
+
+	public void setCertification(String certification) {
+		this.certification = certification;
+	}
+
+	public long getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(long mileage) {
+		this.mileage = mileage;
+	}
+	
 }

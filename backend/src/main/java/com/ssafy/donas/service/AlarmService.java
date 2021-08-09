@@ -55,5 +55,5 @@ public class AlarmService {
 		if(alarm.getConfirm()==1)
 			alarm.setConfirm(confirm);
 	}
-	
+
 }

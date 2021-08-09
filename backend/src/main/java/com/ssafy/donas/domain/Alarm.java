@@ -30,7 +30,7 @@ public class Alarm {
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "receive_id",referencedColumnName ="id")
+	@JoinColumn(name = "receive_id", referencedColumnName ="id")
 	private User user;
 	
 	@Column(name="send_name", nullable = false)
@@ -47,13 +47,10 @@ public class Alarm {
 	private LocalDateTime sendTime;
 	
 	@Column(nullable = false)
-	@ColumnDefault("0")
+	@ColumnDefault("1")
 	private int confirm;
 
-
-
 	public Alarm() {}
-
 
 	@Builder
 	public Alarm(User user, String sendName,long articleId,String contents, LocalDateTime sendTime, int confirm) {
