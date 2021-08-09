@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--환영인사-->
     <div v-if="this.isLoggedIn" class="main-greeting">
       <div class="nickname">
         <span>{{loginUser.nickname}}</span>
@@ -23,6 +24,7 @@
           이 필요합니다
         </div>
     </div>
+    <!--환영인사-->
 
 
 
@@ -53,18 +55,14 @@
       <QuestType title="개인"></QuestType>
       <QuestType title="릴레이"></QuestType>
 
-
-
     </div>
-
-
-
   </div>
 </template>
 
 <script>
 import {mapGetters, mapState} from "vuex";
 import QuestType from "@/components/quests/QuestType";
+import CommonApi from "@/api/CommonApi";
 
 import ('@/assets/style/Main.css')
 
@@ -85,6 +83,16 @@ export default {
     ...mapGetters(['isLoggedIn'])
   },
   // watch
+  created() {
+    CommonApi.requestMainInfo(
+        res => {
+          console.log(res)
+        },
+        err => {
+          console.log(err)
+        }
+    )
+  }
   // lifecycle hook
   // navigation guard
 }
