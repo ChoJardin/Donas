@@ -15,11 +15,17 @@ public class DonationService {
 	DonationRepo donationRepo;
 	
 	public long getSumDonation() {
-		return donationRepo.sumDonation();		
+		if(donationRepo.count()!=0)
+			return donationRepo.sumDonation();
+		else
+			return 0;	
 	}
 	
 	public long getSumQuaDonation() {
-		return donationRepo.sumQuarDonation();
+		if(donationRepo.count()!=0)
+			return donationRepo.sumQuarDonation();
+		else
+			return 0;
 	}
 
 }
