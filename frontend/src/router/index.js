@@ -140,7 +140,7 @@ const routes = [
   // 에러
   {path: '/error', name: 'Error', component: Error},
   // 404
-  {path: '*', redirect: '/404'},
+  {path: '/*', redirect: '/404'},
   {path: '/404', name: 'PageNotFound', component: PageNotFound}
 ]
 
@@ -148,10 +148,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  // 새 페이지 로딩할 때 항상 스크롤 맨 위로
-  // scrollBehavior(to, from) {
-  //   return {x: 0, y:0}
-  // }
 })
 
 export default router
