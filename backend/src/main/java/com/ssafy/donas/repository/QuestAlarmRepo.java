@@ -11,4 +11,6 @@ import com.ssafy.donas.domain.quest.QuestAlarm;
 public interface QuestAlarmRepo extends JpaRepository<QuestAlarm, Long> {
 	Optional<QuestAlarm> findQuestAlarmById(long id);
 	List<QuestAlarm> findQuestAlarmByUser(User user);
+	
+	List<QuestAlarm> findAllByConfirm(int confirm);
 }

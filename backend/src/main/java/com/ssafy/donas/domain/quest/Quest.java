@@ -17,6 +17,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Follow;
@@ -53,7 +56,7 @@ public abstract class Quest {
 	@Column(name = "start_at", nullable = false)
 	private Date startAt;
 	
-	@Column(name = "finish_at", nullable = false)
+	@Column(name = "finish_at", nullable = true)
 	private Date finishAt;
 
 	@Column(nullable = true)
@@ -64,6 +67,10 @@ public abstract class Quest {
 	
 	@Column(nullable = false)
 	private long mileage;
+	
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private int success;
 	
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Article> articles = new ArrayList<Article>();

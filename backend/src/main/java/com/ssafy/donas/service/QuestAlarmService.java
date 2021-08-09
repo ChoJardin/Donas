@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.User;
@@ -62,4 +63,29 @@ public class QuestAlarmService {
 		questAlarm.setConfirm(confirm);
 	}
 	
+	public QuestAlarm getAlarm(long alarmId) {
+		return questAlarmRepo.getById(alarmId);
+	}
+	
+	/*
+	 * Relay 퀘스트 : 이틀 동안 요청 미응답 시 다음 주자에게 알림 
+	 * */
+	@Scheduled(cron = "0 0 0 * * *")
+	public void removeNotReply() {
+		// 미응답인 퀘스트알림 받아오기
+		List<QuestAlarm> questAlarms = questAlarmRepo.findAllByConfirm(0);
+		
+		for(QuestAlarm qa : questAlarms) {
+			String questType = qa.getQuest().getType();
+			// 그룹 퀘스트
+			if("G".equals(questType)) {
+				
+			}
+			// 릴레이 퀘스트
+			else if("R".equals(questType)) {
+				
+			}
+		}
+	}
+
 }

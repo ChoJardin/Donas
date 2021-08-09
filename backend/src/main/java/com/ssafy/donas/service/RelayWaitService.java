@@ -34,14 +34,29 @@ public class RelayWaitService {
 		}
 	}
 	
-	public void updateDeadline(Quest relay, int order, long nextUserId, LocalDateTime time) {
+	public void updateDeadline(Quest relay, long nextUserId, LocalDateTime time) {
 		User user = userRepo.getById(nextUserId);
-		RelayWait rw = relayWaitRepo.findByRelayAndUserAndRelayOrder(relay, user, order);
+		RelayWait rw = relayWaitRepo.findByRelayAndUser(relay, user);
 		rw.setDeadline(time.plusDays(2));
 	}
 
 	public void deleteByRelayAndRelayOrder(Quest questById, int order) {
 		relayWaitRepo.deleteByRelayAndRelayOrder(questById, order);
+	}
+	
+	public int countByRelay(Relay relay) {
+		return relayWaitRepo.countByRelay(relay);
+	}
+	
+	public RelayWait findByRelayAndUser(Relay relay, User user) {
+		return relayWaitRepo.findByRelayAndUser(relay, user);
+	}
+	
+	public boolean checkLastWait(Relay relay, User user) {
+		if(countByRelay(relay) == findByRelayAndUser(relay, user).getWaitRank())
+			return true;
+		
+		return false;
 	}
 	
 	

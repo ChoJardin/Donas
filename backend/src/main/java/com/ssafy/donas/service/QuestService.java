@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.User;
@@ -115,16 +116,16 @@ public class QuestService {
 	}
 
 	public Quest addGroupQuest(String title, String description, Date startAt, Date finishAt, String picture,
-			String certification, long mileage) {
-		Group quest = new Group("G", title, description, startAt, finishAt, 0, picture, certification, mileage);
+			String certification, long mileage, int userCnt) {
+		Group quest = new Group("G", title, description, startAt, finishAt, 0, picture, certification, mileage, userCnt);
 		groupRepo.save(quest);
 
 		return quest;
 	}
 
-	public long addRelayQuest(String title, String description, Date startAt, Date finishAt, String picture,
-			String certification, long mileage) {
-		Relay relay = new Relay("R", title, description, startAt, finishAt, picture, certification, mileage, 1);
+	public long addRelayQuest(String title, String description, Date startAt, String picture,
+			String certification, long mileage, int targetCnt) {
+		Relay relay = new Relay("R", title, description, startAt, picture, certification, mileage, 1, targetCnt);
 		relayRepo.save(relay);
 
 		return relay.getId();
@@ -163,6 +164,11 @@ public class QuestService {
 			relayRepo.flush();
 			return true;
 		}
+	}
+	
+	public void quitQuest(long questId, int success) {
+		Quest quest = questRepo.getById(questId);
+		quest.setSuccess(success);
 	}
 
 }

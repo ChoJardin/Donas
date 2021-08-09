@@ -23,5 +23,5 @@ public class RelayService {
 	public Relay getById(long id) {
 		return relayRepo.getById(id);
 	}
-	
+
 }

@@ -90,7 +90,7 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
 
-		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getParticipants().size()+1);
 		
 		List<Long> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
@@ -121,7 +121,7 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
 			return HttpStatus.NO_CONTENT;
 		
-		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getTargetCnt());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
 		
 		return HttpStatus.OK;
@@ -285,9 +285,10 @@ public class QuestController {
 		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "[릴레이 퀘스트 요청] 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
 		
 		// 두번째 주자 알림 deadline 설정
-		relayWaitService.updateDeadline(relay, order, request.getNextList().get(0), LocalDateTime.now());
+		relayWaitService.updateDeadline(relay, request.getNextList().get(0), LocalDateTime.now());
 		
 		return HttpStatus.OK;
 	}
+	
 	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.donas.domain.Alarm;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.QuestAlarm;
+import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AcceptRelayRequest;
 import com.ssafy.donas.request.ComfirmAlarmRequest;
 import com.ssafy.donas.response.AlarmResponse;
@@ -152,17 +154,24 @@ public class AlarmController {
 		return HttpStatus.OK;
 	}
 	
-	@PatchMapping("/relay/{alarmId}")
+	@PatchMapping("/relay")
 	@ApiOperation(value="릴레이 거절")
-	public Object acceptRelay(@PathVariable long alarmId) {
+	public Object acceptRelay(@RequestParam long alarmId, @RequestParam long userId) {
 		if(!questAlarmService.checkQuestAlarm(alarmId))
 			return HttpStatus.NOT_FOUND;
 		
-		// 알람 응답 칼럼 수락으로 업데이트
+		// 알람 응답 칼럼 거절으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 3);
 		
+		// 마지막 대기 주자였다면 퀘스트 종료
+		Relay relay = relayService.getById(questAlarmService.getAlarm(alarmId).getQuest().getId());
+		if(relayWaitService.checkLastWait(relay, userService.getUser(userId))) {
+			questService.quitQuest(relay.getId(), -1);
+			
+			// ***퀘스트 종료 알림 : 퀘스트에 참여한 모든 사람에게 종료(실패) 알림***
+		}
+		
 		return HttpStatus.OK;
-	}
-	
+	}	
 	
 }
