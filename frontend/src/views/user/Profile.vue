@@ -141,7 +141,7 @@ export default {
   watch: {
     // 로그인 상태가 바뀌는 경우
     // 페이지 다시 마운트
-    isLoggedIn(v) {
+    'isLoggedIn'(v) {
       this.$mount()
     }
   },
