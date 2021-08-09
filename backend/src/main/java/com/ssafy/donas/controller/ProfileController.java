@@ -101,8 +101,10 @@ public class ProfileController {
 
 		//Article 정보
 		result.articles = articleService.getArticleInfosByUser(user);
+
 		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
+		System.out.println(result.articles);
 		return response;
 	}
 
@@ -119,7 +121,7 @@ public class ProfileController {
 
 		// User 정보
 		result.nickname = user.getNickname();
-		result.picture = user.getPicture();
+		result.picture = user.getPicture();	
 		result.description = user.getDescription();
 		result.questCnt = user.getQuestCnt();
 

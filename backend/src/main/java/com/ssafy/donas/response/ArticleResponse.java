@@ -23,4 +23,10 @@ public class ArticleResponse {
 	public int commentCnt;
 	@ApiModelProperty(value = "likeCnt", position = 9)
 	public int likeCnt;
+	@ApiModelProperty(value = "questTitle", position = 10)
+	public String questTitle;
+	@ApiModelProperty(value = "makerName", position = 11)
+	public String makerName;
+	@ApiModelProperty(value = "makerImage",position = 12)
+	public String makerImage;
 }

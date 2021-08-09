@@ -163,6 +163,7 @@ export default {
         res => {
           console.log(res)
           console.log(res.data)
+          console.lopg(res.data.articles)
           this.$store.dispatch('setUserProfile', res.data)
           this.$store.dispatch('setFeeds', res.data.articles)
         },
