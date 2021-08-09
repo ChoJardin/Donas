@@ -141,8 +141,8 @@ const routes = [
   // 에러
   {path: '/error', name: 'Error', component: Error},
   // 404
-  {path: '/*', redirect: '/404'},
-  {path: '/404', name: 'PageNotFound', component: PageNotFound}
+  // {path: '/*', redirect: '/404'},
+  // {path: '/404', name: 'PageNotFound', component: PageNotFound}
 ]
 
 const router = new VueRouter({

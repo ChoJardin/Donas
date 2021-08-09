@@ -16,7 +16,7 @@
 
 <script>
 import cookies from "vue-cookies";
-import { token } from '@/services/messaging/messaging.ts';
+// import { token } from '@/services/messaging/messaging.ts';
 
 import navBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
