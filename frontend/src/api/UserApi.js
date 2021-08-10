@@ -16,7 +16,8 @@ const ROUTES = {
   updateProfile: '/user/profile/',
   updatePassword: '/user/password',
 
-  alerts: '/alarm/',
+  commonAlerts: '/alarm/',
+  questAlerts: '/alarm/quest/',
   alertStatus:'/alarm',
 
 
@@ -167,9 +168,22 @@ const requestFollow = (post, data, callback, errorCallback) => {
 }
 
 //알림 리스트 불러오기
-const requestAlertList = (id, callback, errorCallback) => {
-  const AlertListPath = URL + ROUTES.alerts + id
-  axios.get(AlertListPath)
+const requestCommonAlert = (id, callback, errorCallback) => {
+  const CommonAlertPath = URL + ROUTES.commonAlerts + id
+  axios.get(CommonAlertPath)
+    .then(res => {
+      // console.log(res)
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+
+}
+
+const requestQuestAlert = (id, callback, errorCallback) => {
+  const QuestAlertPath = URL + ROUTES.questAlerts + id
+  axios.get(QuestAlertPath)
     .then(res => {
       // console.log(res)
       callback(res)
@@ -210,7 +224,8 @@ const UserApi = {
   updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 
-  requestAlertList:(data, callback, errorCallback) => requestAlertList(data,callback, errorCallback),
+  requestCommonAlert:(data, callback, errorCallback) => requestCommonAlert(data,callback, errorCallback),
+  requestQuestAlert:(data, callback, errorCallback) => requestQuestAlert(data,callback, errorCallback),
   updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
 
 

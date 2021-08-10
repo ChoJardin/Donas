@@ -23,7 +23,7 @@ const createPersonalQuest = (data, callback, errorCallback) => {
       errorCallback(error.response.data)
     })
 }
-
+// 릴레이 퀘스트 생성
 const createRelayQuest = (data, callback, errorCallback) => {
   const createRelayPath = URL + ROUTES.createRelayQuest
   axios.post(createRelayPath, data)

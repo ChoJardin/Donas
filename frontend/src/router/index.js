@@ -44,7 +44,8 @@ import Following from "@/views/user/Following";
 
 // 알람
 import Alert from "@/views/user/Alert";
-import AlertAll from "@/components/user/AlertAll";
+import CommonAlert from "@/components/user/CommonAlert";
+import QuestAlert from "@/components/user/QuestAlert";
 import MessageAll from "@/components/user/MessageAll";
 
 // 검색
@@ -132,10 +133,12 @@ const routes = [
   {
     path: '/notification/:nickname', component: Alert,
     children: [
-      {path: '', name: 'Alert', component: AlertAll},
-      {path: 'messages', name: 'Messages', component: MessageAll}
+      {path: '/', name: 'QuestAlert', component: QuestAlert},
+      {path: 'common', name: 'CommonAlert', component: CommonAlert},
     ]
   },
+  // 메세지
+  {path: '/messages/:nickname', name: 'Messages', component: MessageAll},
 
   //검색
   {path: '/search', name: 'Search', component: Search},

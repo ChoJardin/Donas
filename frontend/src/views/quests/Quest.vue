@@ -8,7 +8,7 @@
     </div>
 
     <router-view id="quest-router-view"/>
-    <v-btn id="create-button" class="mx-2 text-decoration-none" fab color="indigo">
+    <v-btn v-if="isLoggedIn" id="create-button" class="mx-2 text-decoration-none" fab color="indigo">
       <router-link to="/quests/create"><i class="fas fa-plus fa-lg" style="color: #f19b36"></i></router-link>
 
     </v-btn>
@@ -16,8 +16,13 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  name: 'QuestAll'
+  name: 'QuestAll',
+  computed: {
+        ...mapGetters(['isLoggedIn']),
+  }
 }
 </script>
 
