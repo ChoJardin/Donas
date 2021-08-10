@@ -49,15 +49,25 @@ const state ={
   },
 
   //알람 리스트
-  alarms:[{
+  commonAlarms:[{
     id : '',
     receiveId: '',
     contents: '',
     sendTime: '',
     confirm: '',
+    sendName: '',
+  }],
+
+  questAlarms:[{
+    id : '',
+    receiveId: '',
+    contents: '',
+    sendTime: '',
     articleId: '',
     sendName: '',
+    confirm: '',
   }]
+
   // alarms: [{
   //   id: '1',
   //   receiver_id: '3',
@@ -117,8 +127,11 @@ const mutations = {
     state.selectedProfile.isFollowing = false
   },
 
-  SET_ALARMS(state, alarms) {
-    state.alarms = alarms
+  SET_COMMON_ALARMS(state, common) {
+    state.commonAlarms = common
+  },
+  SET_QUEST_ALARMS(state, quest) {
+    state.questAlarms = quest
   },
 }
 
@@ -176,8 +189,12 @@ const actions = {
     }
   },
   // 알림 리스트
-  setAlarms({commit}, alarms) {
-    commit('SET_ALARMS', alarms)
+  setCommonAlarms({commit}, common) {
+    commit('SET_COMMON_ALARMS', common)
+  },
+
+  setQuestAlarms({commit}, quest) {
+    commit('SET_QUEST_ALARMS', quest)
   },
 
 }
