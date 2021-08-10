@@ -14,13 +14,13 @@
       </div>
 
       <div class="create-quest-questions">
-        <div class="create-question-title">시작일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <div class="create-question-title">목표인원을 설정해 주세요</div>
+        <input class="create-quest-input" v-model="targetCnt" type="number" maxlength="2">
       </div>
 
       <div class="create-quest-questions">
-        <div class="create-question-title">종료일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="finishAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <div class="create-question-title">시작일을 지정해 주세요</div>
+        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
       </div>
 
       <div class="create-quest-questions">
@@ -42,7 +42,7 @@
 
 <script>
 import {mapGetters, mapState} from "vuex";
-import UserApi from "../../api/UserApi";
+import QuestApi from "../../api/QuestApi";
 
 export default {
   name: "CreateRelay",
@@ -52,10 +52,10 @@ export default {
       title: '',
       description: '',
       startAt:'',
-      finishAt: '',
       picture:'../../assets/donut_flag.png',
       certification: '',
       mileage:2000,
+      targetCnt: '',
     }
   },
   //computed
@@ -75,14 +75,21 @@ export default {
         finishAt: this.finishAt,
         picture: this.picture,
         certification: this.certification,
-        mileage: this.mileage
+        mileage: this.mileage,
+        targetCnt: this.targetCnt
         }
       console.log(data)
       let path
-      UserApi.createRelayQuest(
+      QuestApi.createRelayQuest(
           data,
           res => {
             console.log(res)
+            if(res === "NO_CONTENT") {
+              alert('입력확인')
+            }
+            else{
+              this.$router.push('/quests')
+            }
           },
           err => {
             console.log(err)

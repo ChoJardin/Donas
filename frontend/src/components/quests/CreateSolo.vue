@@ -35,14 +35,14 @@
       </div>
     </div>
 
-    <button class="button" @click="onCreate">회 원 가 입</button>
+    <button class="button" @click="onCreate">생 성 하 기</button>
 
   </div>
 </template>
 
 <script>
 import {mapGetters, mapState} from "vuex";
-import UserApi from "../../api/UserApi";
+import QuestApi from "../../api/QuestApi";
 
 export default {
   name: "CreateSingle",
@@ -77,12 +77,17 @@ export default {
         certification: this.certification,
         mileage: this.mileage
         }
-      console.log(data)
+      // console.log(data)
       let path
-      UserApi.createPersonalQuest(
+      QuestApi.createPersonalQuest(
           data,
           res => {
-            console.log(res)
+            if(res === "NO_CONTENT") {
+              alert('입력확인')
+            }
+            else{
+              this.$router.push('/quests')
+            }
           },
           err => {
             console.log(err)

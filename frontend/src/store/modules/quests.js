@@ -36,6 +36,12 @@ const state ={
           }
         ]
     },
+  mutuals:[{
+    id : '',
+    nickname: '',
+    picture: '',
+    description: '',
+  }]
 }
 
 const getters = {
@@ -49,6 +55,10 @@ const mutations = {
     // 메인 페이지 퀘스트관련 초기 정보
     SET_QUEST_INFO(state, questInfo) {
         state.mainQuestInfo = questInfo
+    },
+    // 상호 팔로워 정보
+    SET_MUTUALS(state, mutuals) {
+      state.mutuals = mutuals
     }
 }
 
@@ -61,7 +71,13 @@ const actions = {
     // 메인 페이지 퀘스트관련 초기 정보
     setMainQuestInfo({commit}, questInfo) {
         commit('SET_QUEST_INFO', questInfo)
-    }
+    },
+
+  // 상호 팔로워 정보
+  setMutuals({commit}, mutuals){
+      commit('SET_MUTUALS',mutuals)
+  }
+
 }
 
 export default {

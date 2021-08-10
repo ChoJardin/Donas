@@ -15,7 +15,7 @@
 
       <div class="create-quest-questions">
         <div class="create-question-title">함께 할 동료를 선택해 주세요</div>
-        <input class="create-quest-input"  v-model="participants" type="text" maxlength="100" placeholder="닉네임을 검색해 주세요" >
+        <CreateGroupFriend @participants="onSelect"></CreateGroupFriend>
       </div>
 
       <div class="create-quest-questions">
@@ -47,10 +47,16 @@
 
 <script>
 import {mapGetters, mapState} from "vuex";
-import UserApi from "../../api/UserApi";
+import QuestApi from "../../api/QuestApi";
+import UserApi from "../../api/QuestApi";
+import CreateGroupFriend from "./CreateGroupFriend";
+
 
 export default {
   name: "CreateGroup",
+  components: {
+    CreateGroupFriend
+  },
   data: () => {
     return {
       userId: '',
@@ -86,17 +92,39 @@ export default {
         }
       console.log(data)
       let path
-      UserApi.createGroupQuest(
+      QuestApi.createGroupQuest(
           data,
           res => {
             console.log(res)
+            if(res === "NO_CONTENT") {
+              alert('입력확인')
+            }
+            else{
+              this.$router.push('/quests')
+            }
           },
           err => {
             console.log(err)
           })
-      }
+      },
+    onSelect(friends) {
+      this.participants = friends
     }
+  },
+  created() {
+    console.log('friends fetched')
+    UserApi.requestGroupFriends(
+        this.loginUser.id,
+        res => {
+          console.log(res)
+          this.$store.dispatch('setMutuals', res.data)
+        },
+        err => {
+          console.log(err)
+        }
+    )
   }
+}
 </script>
 
 <style scoped>
