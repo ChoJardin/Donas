@@ -13,7 +13,7 @@ deploy-to-server:
     - sudo service nginx restart
 
   after_script:
-    -echo 'deployment done'
+    - echo 'deployment done'
 
   tags:
     - deploy
