@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const URL = 'http://localhost:8081'
-const URL = 'https://i5a603.p.ssafy.io:8081/api'
+const URL = 'https://i5a603.p.ssafy.io/api'
 const ROUTES = {
   main: '/main',
 }
