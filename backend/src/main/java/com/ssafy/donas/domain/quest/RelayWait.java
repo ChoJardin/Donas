@@ -38,8 +38,9 @@ public class RelayWait {
 	@Column(nullable = false, name="wait_rank")
 	private int waitRank;
 	
-	@Column(nullable = false, name="user_id")
-	private long user_id;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	private LocalDateTime deadline;
 	
@@ -47,13 +48,17 @@ public class RelayWait {
 	@JoinColumn(name = "relay_id")
 	private Relay relay;
 	
+	@Column(nullable = false, name="relay_order")
+	private int relayOrder;
+	
 	public RelayWait() {}
 	
 	@Builder
-	public RelayWait(Relay relay, int waitRank, long user_id) {
+	public RelayWait(Relay relay, int waitRank, User user, int order) {
 		this.relay = relay;
 		this.waitRank = waitRank;
-		this.user_id = user_id;
+		this.user = user;
+		this.relayOrder = order;
 	}
 
 }

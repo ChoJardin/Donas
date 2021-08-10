@@ -6,16 +6,7 @@
     </div>
 
     <div class="quest-card-wrap">
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-      <QuestCard></QuestCard>
-
+      <QuestCard v-for="quest in quests" :key="quest.id" :quest="quest"></QuestCard>
     </div>
 
 
@@ -37,6 +28,7 @@ export default {
   // props
   props: {
     title: String,
+    quests: Array
   },
   // data
   // methods

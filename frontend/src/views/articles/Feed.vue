@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>피드</h1>
 
     <!--article start-->
     <div id="feed-article-wrap">
@@ -17,7 +16,7 @@
 <script>
 
 import ArticleImage from "@/components/articles/ArticleImage";
-import {mapState} from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: 'Feed',
@@ -27,7 +26,13 @@ export default {
   computed: {
     ...mapState({
       articles: store => store.articles.feeds
-    })
+    }),
+    ...mapGetters(['isLoggedIn'])
+  },
+  created() {
+    if (!this.isLoggedIn) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

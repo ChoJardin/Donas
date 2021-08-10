@@ -10,12 +10,12 @@
       <div class="create-quest-questions">
         <div class="create-question-title">간단한 설명을 입력해 주세요
         <span class="create-question-subtext">(14자 이내)</span></div>
-        <input class="create-quest-input" type="search" maxlength="20" placeholder="닉네임을 검색해 주세요">
+        <input class="create-quest-input" v-model="description" type="search" maxlength="20" placeholder="예) 매일 30분 독서하기">
       </div>
 
       <div class="create-quest-questions">
         <div class="create-question-title">함께 할 동료를 선택해 주세요</div>
-        <input class="create-quest-input" v-model="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <input class="create-quest-input"  v-model="participants" type="text" maxlength="100" placeholder="닉네임을 검색해 주세요" >
       </div>
 
       <div class="create-quest-questions">
@@ -61,6 +61,7 @@ export default {
       picture:'../../assets/donut_flag.png',
       certification: '',
       mileage:2000,
+      participants: [],
     }
   },
   //computed
@@ -80,7 +81,8 @@ export default {
         finishAt: this.finishAt,
         picture: this.picture,
         certification: this.certification,
-        mileage: this.mileage
+        mileage: this.mileage,
+        participants: this.participants
         }
       console.log(data)
       let path

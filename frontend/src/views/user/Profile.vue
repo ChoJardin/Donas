@@ -89,6 +89,7 @@ import {mapGetters, mapState} from "vuex";
 
 import ArticleImage from "@/components/articles/ArticleImage";
 import UserApi from "@/api/UserApi";
+import axios from "axios";
 
 import('@/assets/style/user/Profile.css')
 
@@ -147,11 +148,8 @@ export default {
   },
   // lifecycle hook
   created() {
-    // console.log('------')
-    // console.log(this.profile)
     // 페이지 로딩시 초기 정보 요청
     // 비회원의 경우 0으로 요청 --> 백 확인 필요
-    // console.log('created again')
     let myid = 0
     if (this.isLoggedIn) {
       myid = this.loginUser.id
@@ -161,11 +159,11 @@ export default {
         this.$route.params.nickname,
         params,
         res => {
-          console.log(res)
-          console.log(res.data)
-          console.lopg(res.data.articles)
+          // const util = require('util')
+          // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
+          const articles = res.data.articles
           this.$store.dispatch('setUserProfile', res.data)
-          this.$store.dispatch('setFeeds', res.data.articles)
+          this.$store.dispatch('setFeeds', articles)
         },
         // 요청 실패하는 경우 -> 에러 페이지로 연결
         err => {

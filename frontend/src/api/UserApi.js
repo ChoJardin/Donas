@@ -1,7 +1,8 @@
 import axios from "axios";
 // import store from '@/store/modules/user'
 
-const URL = 'http://localhost:8081'
+// const URL = 'http://localhost:8081'
+const URL = 'https://i5a603.p.ssafy.io:8081'
 const ROUTES = {
   login: '/user/signin',
   loginUser: '/user/mypage/',
@@ -87,11 +88,8 @@ const requestSignup = (data, callback, errorCallback) => {
 // 프로필 정보 요청
 const requestProfileInfo = (nickname, params, callback, errorCallback) => {
   const profileInfoPath = URL + ROUTES.profileInfo + nickname
-  console.log(profileInfoPath)
-  console.log(params)
   axios.get(profileInfoPath, {params: params})
     .then(res => {
-      console.log(res)
       callback(res)
     })
     .catch(err => {
@@ -105,12 +103,9 @@ const updateProfile = (id, data, callback, errorcallback) => {
   const updateProfilePath = URL + ROUTES.updateProfile + id
   axios.patch(updateProfilePath, data)
     .then(res => {
-      // console.log(res)
       callback(res)
     })
     .catch(err => {
-      // console.log('------')
-      // console.log(err)
       errorcallback(err)
     })
 }
@@ -155,8 +150,6 @@ const requestFollowings = (params, callback, errorCallback) => {
 const requestFollow = (post, data, callback, errorCallback) => {
   const followPath = URL + ROUTES.follow
   if (post) {
-    // console.log('팔로우')
-    // console.log(post, data)
     axios.post(followPath, data)
       .then(res => {
         callback(res)
@@ -165,7 +158,6 @@ const requestFollow = (post, data, callback, errorCallback) => {
         errorCallback(err)
       })
   } else {
-    // console.log('언팔')
     axios.delete(followPath, {params: data})
       .then(res => {
         callback(res)
@@ -189,7 +181,6 @@ const requestAlertList = (id, callback, errorCallback) => {
     })
 
 }
-
 
 const updateAlertStatus = (data, callback, errorcallback) => {
   const updateAlertPath = URL + ROUTES.alertStatus
