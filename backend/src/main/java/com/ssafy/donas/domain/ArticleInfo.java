@@ -41,13 +41,12 @@ public class ArticleInfo {
 	}
 	
 	@Builder
-	public ArticleInfo(long id, long questId, String image,boolean isLike, String content, LocalDateTime createdAt, LocalDateTime updatedAt,
+	public ArticleInfo(long id, long questId, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt,
 			String type,int heartCnt, int commentCnt, String questTitle, String makerName,
 			String makerImage) {
 		this.id = id;
 		this.questId = questId;
 		this.image = image;
-		this.isLike = isLike;
 		this.content = content;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
