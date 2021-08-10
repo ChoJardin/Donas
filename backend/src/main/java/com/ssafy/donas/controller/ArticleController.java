@@ -192,7 +192,6 @@ public class ArticleController {
 			res.questTitle = article.getQuestTitle();
 			res.makerName = article.getMakerName();
 			res.makerImage = article.getMakerImage();
-
 			result.add(res);
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);
