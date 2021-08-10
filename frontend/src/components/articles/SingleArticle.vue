@@ -17,7 +17,7 @@
         </div>
         <!--게시글 작성 정보-->
 
-        <router-link :to="`/article/${article.articleId}`">
+        <router-link :to="`/article/${article.id}`">
           <div id="single-article-picture">
             <!--인증 사진-->
             <!--<img :src="article.image" alt="">-->
@@ -33,9 +33,9 @@
           <div id="single-article-article-detail">
             <div class="single-article-details">
               <i class="material-icons">favorite_border</i>
-              &nbsp;{{article.likeCnt}}
+              &nbsp;{{article.heartCnt}}
             </div>
-            <router-link :to="`/article/${article.articleId}`" :key="`ca${article.articleId}`" class="single-article-details">
+            <router-link :to="`/article/${article.id}`" :key="`ca${article.id}`" class="single-article-details">
             <i class="material-icons-outlined">comment</i>
               &nbsp;<span>{{article.commentCnt}}</span>
             </router-link>
