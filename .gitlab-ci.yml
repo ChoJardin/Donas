@@ -5,6 +5,7 @@ deploy-to-server:
     - master
   before_script:
     - echo 'start deployment'
+    - whoami
   script:
     - cd /home/ubuntu/S05P13A603/
     - git pull origin master
