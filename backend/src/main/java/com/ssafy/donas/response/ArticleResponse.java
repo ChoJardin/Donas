@@ -29,4 +29,6 @@ public class ArticleResponse {
 	public String makerName;
 	@ApiModelProperty(value = "makerImage",position = 12)
 	public String makerImage;
+	@ApiModelProperty(value = "isLike",position = 13)
+	public boolean isLike;
 }
