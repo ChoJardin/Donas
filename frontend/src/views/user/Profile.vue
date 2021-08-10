@@ -161,9 +161,19 @@ export default {
         res => {
           // const util = require('util')
           // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
-          const articles = res.data.articles
+          // const articles = res.data.articles
           this.$store.dispatch('setUserProfile', res.data)
-          this.$store.dispatch('setFeeds', articles)
+          // this.$store.dispatch('setFeeds', articles)
+          // this.$store.dispatch('set', res.data.articles)
+          params = {user_id: res.data.id, type: 'A'}
+          axios.get('http://localhost:8081/article/mine', {params: params})
+            .then( res => {
+              console.log(res.data)
+              this.$store.dispatch('setFeeds', res.data)
+              // console.log(res.data)
+              // console.log('here')
+              // console.log(res)
+            })
         },
         // 요청 실패하는 경우 -> 에러 페이지로 연결
         err => {

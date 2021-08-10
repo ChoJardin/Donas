@@ -1,8 +1,8 @@
 import axios from "axios";
 // import store from '@/store/modules/user'
 
-// const URL = 'http://localhost:8081'
-const URL = 'https://i5a603.p.ssafy.io:8081'
+const URL = 'http://localhost:8081/api'
+// const URL = 'https://i5a603.p.ssafy.io:8081/'
 const ROUTES = {
   login: '/user/signin',
   loginUser: '/user/mypage/',
