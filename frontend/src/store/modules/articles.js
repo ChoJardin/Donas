@@ -5,36 +5,67 @@
 const state ={
   // feeds: [
   //   {
-  //     articleId: 0,
-  //     commentCnt: 0,
-  //     content: "",
+  //     id: 0,
   //     createdAt: "",
+  //     updatedAt: null,
   //     image: "",
-  //     likeCnt: 0,
+  //     content: "",
+  //     type: "",
+  //     isLike: false,
+  //     heartCnt: 0,
+  //     commentCnt: 0,
   //     makerImage: null,
   //     makerName: "",
   //     questId: 0,
   //     questTitle: "",
-  //     type: "",
-  //     updatedAt: null
   //   }
   // ],
   // 테스트용
   feeds: [
     {
-      articleId: '1',
-      image: '',
-      content: '123'
+      id: 1,
+      createdAt: '2021-08-09T13:25:45',
+      updatedAt: null,
+      image: "image-route",
+      content: "내용1입니다",
+      type: "G",
+      isLike: false,
+      heartCnt: 2,
+      commentCnt: 3,
+      makerImage: null,
+      makerName: "cho",
+      questId: 1,
+      questTitle: "1일1알고",
     },
     {
-      articleId: '2',
-      image: '',
-      content: '456'
+      id: 2,
+      createdAt: '2021-08-09T17:21:45',
+      updatedAt: null,
+      image: "image-route",
+      content: "내용2입니다",
+      type: "P",
+      isLike: false,
+      heartCnt: 1,
+      commentCnt: 5,
+      makerImage: null,
+      makerName: "cho",
+      questId: 1,
+      questTitle: "1일1알고",
     },
     {
-      articleId: '3',
-      image: '',
-      content: '789'
+      id: 3,
+      createdAt: '2021-04-09T13:25:45',
+      updatedAt: null,
+      image: "image-route",
+      content: "내용3입니다",
+      type: "R",
+      isLike: true,
+      heartCnt: 2,
+      commentCnt: 3,
+      makerImage: null,
+      makerName: "cho",
+      questId: 1,
+      questTitle: "1일1알고",
     },
   ],
   selectedId: 0,
@@ -42,7 +73,7 @@ const state ={
 
 const getters = {
   selectedArticle: state => {
-    return state.feeds.find(article => article.articleId === Number(state.selectedId))
+    return state.feeds.find(article => article.id === Number(state.selectedId))
   }
 }
 

@@ -3,8 +3,8 @@
     <!--<h1>VerticalFeed</h1>-->
 
       <SingleArticle
-          v-for="article in articles" :key="article.articleId"
-          :id="`a${article.articleId}`"
+          v-for="article in articles" :key="article.id"
+          :id="`a${article.id}`"
           :article="article"/>
 
     <transition-page>

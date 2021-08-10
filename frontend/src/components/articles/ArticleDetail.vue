@@ -62,7 +62,7 @@ export default {
   // methods
   methods: {
     onClick() {
-      console.log(this.article)
+      // console.log(this.article)
       this.openButton = !this.openButton
     },
     dateFormatted(date) {
@@ -75,9 +75,7 @@ export default {
       loginUser: state => state.user.loginUser
     }),
     ...mapGetters(['selectedArticle']),
-    // dateFormatted(date) {
-    //   return moment(String(date)).format('YYYY/MM/DD hh:mm')
-    // }
+
   },
   // watch
   created() {
