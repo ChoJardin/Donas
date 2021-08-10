@@ -13,7 +13,7 @@
 
     <div v-else class="main-greeting">
         <div class="not-logged-in">
-          <span>도</span>전과
+          <span>도CICDDDD</span>전과 CICDDDDDDD
           <span>나</span>눔을
           위해서는
         </div>
