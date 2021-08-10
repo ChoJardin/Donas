@@ -1,0 +1,59 @@
+#article-detail {
+  position: fixed;
+  top: 60px;
+  right: 15px;
+  bottom: 0;
+  left: 15px;
+  overflow: scroll;
+  background: white;
+
+  .material-icons-round.more {
+    position: absolute;
+    top: 10px;
+    right: 0;
+  }
+
+  .article-detail-profile-image {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #292929;
+      padding: 2px;
+  }
+  a {
+    text-decoration: none;
+    color: #292929;
+  }
+
+  div.profile-wrap {
+    display: flex;
+    padding-bottom: 10px;
+    margin: 15px 15px 5px 15px;
+    border-bottom: 1px solid #f1a64b;
+  }
+
+  .info-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 10px;
+  }
+
+#article-detail .nickname {
+    font-family: GongGothicBold;
+    font-size: 0.9em;
+}
+
+#article-detail .article-date {
+    font-family: GongGothicLight;
+    font-size: 0.8em;
+}
+
+#article-detail .article-date span {
+    background-color: #fefbe9;
+    border-radius: 5px;
+    padding: 2px;
+}
+}
