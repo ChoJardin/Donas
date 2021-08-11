@@ -359,6 +359,7 @@ public class QuestController {
 			
 			articleList.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle()));
 		}		
+		response.setArticles(articleList);
 		
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
 		if("R".equals(quest.getType())) {
