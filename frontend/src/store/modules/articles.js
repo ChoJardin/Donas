@@ -69,11 +69,21 @@ const state ={
     },
   ],
   selectedId: 0,
+  // 상세 페이지에서,
+  // 게시글 좋아요 누른 이용자 목록
+  likeList: [],
+  // 댓글목록
+  commentList: [],
+
 }
 
 const getters = {
   selectedArticle: state => {
     return state.feeds.find(article => article.id === Number(state.selectedId))
+  },
+  likeUser(state) {
+    if (state.likeList.length)
+      return state.likeList[0].nickname
   }
 }
 
@@ -85,6 +95,24 @@ const mutations = {
   // 게시물 상세보기 선택
   SET_SELECTED_ID(state, articleId) {
     state.selectedId = articleId
+  },
+  // 게시물 상세 좋아요 목록
+  SET_LIKE_LIST(state, likeList) {
+    state.likeList = likeList
+  },
+  // 게시물 상세 댓글 목록
+  SET_COMMENT_LIST(state, commentList) {
+    state.commentList = commentList
+  },
+  // 좋아요
+  ADD_LIKE(state, idx) {
+    state.feeds[idx].like = true
+    state.feeds[idx].heartCnt += 1
+  },
+  // 좋아요 취소
+  DELETE_LIKE(state, idx) {
+    state.feeds[idx].like = false
+    state.feeds[idx].heartCnt -= 1
   }
 }
 
@@ -96,7 +124,22 @@ const actions = {
   // 게시물 상세보기 선택
   setSelectedId({commit}, articleId) {
     commit('SET_SELECTED_ID', articleId)
+  },
+  // 상세 페이지 들어갔을 때,
+  setArticleDetail({commit}, {likeList, commentList}) {
+    commit('SET_LIKE_LIST', likeList)
+    commit('SET_COMMENT_LIST', commentList)
+  },
+  // 좋아요
+  setLike({commit, state}, {isLike, articleId}) {
+    const idx = state.feeds.findIndex(article => article.id === articleId)
+    // 좋아요 취소
+    if (isLike)
+      commit('DELETE_LIKE', idx)
+    // 좋아요
+    else commit('ADD_LIKE', idx)
   }
+
 }
 
 export default {

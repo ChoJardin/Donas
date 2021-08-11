@@ -1,13 +1,13 @@
-#article-detail {
-  position: fixed;
-  top: 60px;
-  right: 15px;
-  bottom: 50px;
-  left: 15px;
-  overflow: scroll;
-  background: white;
-    padding-bottom: 20px;
-}
+/*#article-detail {*/
+/*  position: fixed;*/
+/*  top: 60px;*/
+/*  right: 15px;*/
+/*  bottom: 50px;*/
+/*  left: 15px;*/
+/*  overflow: scroll;*/
+/*  background: white;*/
+/*    padding-bottom: 20px;*/
+/*}*/
 
 .material-icons-round.more {
   position: absolute;
@@ -116,7 +116,7 @@
     background-color: #FDF3E9;
     padding: 8px 10px;
     width: 90%;
-    font-size: 0.8em;
+    font-size: 0.9em;
     font-family: GongGothicLight;
     text-align: start;
     overflow: scroll;
@@ -128,12 +128,19 @@
 #article-detail .heart-comment {
     width: 90%;
     margin: auto;
+    padding-top: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    font-family: GongGothicLight;
+    font-size: 0.8em;
 }
 
 #article-detail .heart-comment .material-icons.red {
     color: #cd4e3e;
 }
 
+#article-detail .heart-cnt {
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,29 @@
+.overlay {
+  position: fixed;
+  top: 60px;
+  right: 15px;
+  bottom: 50px;
+  left: 15px;
+  overflow: scroll;
+  background: white;
+  padding-bottom: 15px;
+}
+
+.pop-up-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.pop-up-enter-active {
+  transition: all .5s ease;
+}
+
+.pop-up-leave-active {
+  transition: all .5s ease;
+}
+
+.pop-up-enter-from,
+.pop-up-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
