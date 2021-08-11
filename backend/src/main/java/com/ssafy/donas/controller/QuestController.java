@@ -314,12 +314,11 @@ public class QuestController {
 	 * */
 	@GetMapping("/detail/{questId}")
 	@ApiOperation(value = "퀘스트 상세 정보")
-	public Object getPersonalDetail(@PathVariable long questId, @RequestParam long userId) {
-		if(!questService.checkQuest(questId) || !userService.checkId(userId))
+	public Object getPersonalDetail(@PathVariable long questId) {
+		if(!questService.checkQuest(questId))
 			return HttpStatus.NOT_FOUND;
 		
 		Quest quest = questService.getQuestById(questId);
-		User u = userService.getUser(userId);
 		
 		final QuestDetailResponse response = new QuestDetailResponse();
 		response.setId(quest.getId());
@@ -348,17 +347,8 @@ public class QuestController {
 		List<ArticleInfo> articleList = new ArrayList<>();
 		List<Article> articles = quest.getArticles();
 		for(Article a : articles) {
-			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
-			boolean isLike = false;
-			for(Like like: a.getLikes()) {
-				if(like.getUser() == u) {
-					isLike = true;
-					break;
-				}
-			}
-			
-			articleList.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle()));
-		}		
+			articleList.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getUser().getNickname(), a.getUser().getPicture()));
+		}	
 		response.setArticles(articleList);
 		
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
@@ -369,6 +359,15 @@ public class QuestController {
 		}
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/*
+	 * 전체 퀘스트
+	 * */
+	@GetMapping
+	@ApiOperation(value = "모든 퀘스트 정보")
+	public Object getAllQuests() {
+		return new ResponseEntity<>(questService.findAll(), HttpStatus.OK);
 	}
 	
 }

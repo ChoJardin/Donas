@@ -187,4 +187,8 @@ public class QuestService {
 		return questInfo;
 	}
 
+	public List<Quest> findAll() {
+		return questRepo.findAll();
+	}
+
 }
