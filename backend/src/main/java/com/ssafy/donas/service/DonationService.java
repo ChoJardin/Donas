@@ -45,8 +45,12 @@ public class DonationService {
 			return 0;
 	}
 	
-	public boolean setDonation(long amount,long userId,long charityId) {		
-		if(donationRepo.save(new Donation(amount,userRepo.getById(userId),charityRepo.getById(charityId))) == null) {
+	public boolean setDonation(long amount,long userId,long charityId) {
+		User user = userRepo.getById(userId);
+		if(user.getMileage()<amount)
+			return false;
+		
+		if(donationRepo.save(new Donation(amount,user,charityRepo.getById(charityId))) == null) {
 			return false;
 		}
 		return true;

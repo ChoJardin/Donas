@@ -16,8 +16,13 @@ public class MileageService {
 	@Autowired
 	UserRepo userRepo;
 	
-	public void minusMileage(long userId, long amount) {
+	public boolean minusMileage(long userId, long amount) {
+		
 		User user = userRepo.getById(userId);
+		
+		if(user.getMileage()<amount)
+			return false;
 		user.setMileage(amount);
+		return true;
 	}
 }

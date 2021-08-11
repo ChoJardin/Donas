@@ -48,8 +48,8 @@ public class MileageController {
 		
 		if(!donationService.getCharity(charityId))
 			return new ResponseEntity<>("기부 단체 없음", HttpStatus.NOT_FOUND);
-		
-		donationService.setDonation(amount, userId, charityId);
+		if(!donationService.setDonation(amount, userId, charityId))
+			return new ResponseEntity<>("마일리지 초과",HttpStatus.BAD_REQUEST);
 		
 		return HttpStatus.OK;
 	}
