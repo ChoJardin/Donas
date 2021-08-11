@@ -187,4 +187,13 @@ public class QuestService {
 		return questInfo;
 	}
 
+	public List<QuestInfo> findAll() {
+		List<QuestInfo> quests = new ArrayList<>();
+		for(Quest q : questRepo.findAll()) {
+			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(), q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
+		}
+		
+		return quests;
+	}
+
 }

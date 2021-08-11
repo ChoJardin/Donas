@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ssafy.donas.domain.ArticleInfo;
+import com.ssafy.donas.domain.ArticleShortInfo;
 import com.ssafy.donas.domain.UserInfo;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -38,7 +39,7 @@ public class QuestDetailResponse {
 	
 	// all
 	@ApiModelProperty(value = "articles", position = 13)
-	private List<ArticleInfo> articles;
+	private List<ArticleShortInfo> articles;
 	
 	// 릴레이
 	@ApiModelProperty(value = "targetCnt", position=14)
@@ -142,11 +143,11 @@ public class QuestDetailResponse {
 		this.users = users;
 	}
 
-	public List<ArticleInfo> getArticles() {
+	public List<ArticleShortInfo> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(List<ArticleInfo> articles) {
+	public void setArticles(List<ArticleShortInfo> articles) {
 		this.articles = articles;
 	}
 
