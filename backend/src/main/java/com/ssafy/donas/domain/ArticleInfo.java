@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class ArticleInfo {
 	private long id;
 	private long questId;
@@ -42,7 +41,7 @@ public class ArticleInfo {
 	
 	@Builder
 	public ArticleInfo(long id, long questId, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt,
-			String type,int heartCnt, int commentCnt, String questTitle, String makerName,
+			String type, boolean isLike, int heartCnt, int commentCnt, String questTitle, String makerName,
 			String makerImage) {
 		this.id = id;
 		this.questId = questId;
@@ -51,6 +50,7 @@ public class ArticleInfo {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.type = type;
+		this.isLike = isLike;
 		this.heartCnt = heartCnt;
 		this.commentCnt = commentCnt;
 		this.questTitle = questTitle;
