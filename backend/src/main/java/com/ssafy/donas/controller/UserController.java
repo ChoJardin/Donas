@@ -24,6 +24,7 @@ import com.ssafy.donas.request.SignupRequest;
 import com.ssafy.donas.request.UserInfoRequest;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.response.MypageResponse;
+import com.ssafy.donas.service.MileageService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MileageService mileageService;
 
 	@PostMapping("/signin")
 	@ApiOperation(value = "로그인")
@@ -128,18 +132,14 @@ public class UserController {
 		
 		return HttpStatus.OK;
 	}
-	
 	@GetMapping("/mypage/{id}")
 	@ApiOperation(value = "마이페이지")
 	public Object showMypage(@PathVariable long id) {
-		User user = userService.getUser(id);
-		
+		User user = userService.getUser(id);		
 		if(user == null)
-			return HttpStatus.NOT_FOUND;
-		
+			return HttpStatus.NOT_FOUND;		
 		final MypageResponse result = new MypageResponse();
-		ResponseEntity response = null;
-		
+		ResponseEntity response = null;	
 		result.nickname = user.getNickname();
 		result.email = user.getEmail();
 		result.picture = user.getPicture();
@@ -151,5 +151,15 @@ public class UserController {
 		return response;
 	}	
 	
-//	@GetMapping
+	@PatchMapping("/mileage/{userId}")
+	@ApiOperation(value = "마일리지 차감")
+	public Object minusMileage(@PathVariable long userId, @RequestParam long amount) {
+		if(!userService.checkId(userId))
+			return new ResponseEntity<>("유저 없음",HttpStatus.NOT_FOUND);
+				
+		mileageService.minusMileage(userId, amount);
+		
+		return HttpStatus.OK;
+	}
+	
 }
