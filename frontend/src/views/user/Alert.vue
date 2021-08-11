@@ -47,7 +47,7 @@ export default {
     UserApi.requestCommonAlert(
         this.loginUser.id,
         res => {
-          // console.log(res)
+          console.log(res)
           this.$store.dispatch('setCommonAlarms', res.data)
         },
         err => {

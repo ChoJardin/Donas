@@ -1,12 +1,15 @@
 <template>
-  <div id="quest-list">
-      <QuestSingle class="quest-single" v-for="n in 10" :key="n" @click.native=setQuestId(n) />
+  <div>
+    <div  id="quest-list" v-for="quest in quests" :key="quest.id">
+      <QuestSingle class="quest-single" :quest="quest" @click.native=setQuestId(quest.id) />
+    </div>
   </div>
 </template>
 
 <script>
 import QuestSingle from "@/components/quests/QuestSingle";
-import {mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
+import QuestApi from "../../api/QuestApi";
 
 export default {
   name: "QuestAll",
@@ -18,9 +21,26 @@ export default {
   // data
   // methods
   methods:{
-    ...mapActions(["setQuestId"])
-  }
+    ...mapActions(['setQuestId'])
+  },
   // computed
+  computed: {
+    ...mapState({
+      quests: state => state.quests.questsList
+    }),
+  },
+
+  created() {
+    // console.log('quests fetched')
+    QuestApi.requestAllQuest(
+        res => {
+          // console.log(res)
+          this.$store.dispatch('setQuest', res.data)
+        },
+        err => {
+          console.log(err)
+        }
+    )}
 }
 </script>
 
