@@ -223,11 +223,14 @@ public class ProfileController {
 		if (!followService.addFollow(follower, followee))
 			return HttpStatus.CONFLICT;
 		
-		if(!alarmService.addAlarm(followee,follower.getNickname(),-1, follower.getNickname()+"님이 회원님을 팔로워하기 시작했습니다.", LocalDateTime.now()))
+		if(!alarmService.addAlarm(followee,follower.getNickname(),-1, follower.getNickname()+"님이 회원님을 팔로우하기 시작했습니다.", LocalDateTime.now()))
 			return HttpStatus.CONFLICT;
 
 		return HttpStatus.OK;
 	}
+	
+	
+	
 
 	@DeleteMapping("/follow")
 	@ApiOperation(value = "팔로우 취소")

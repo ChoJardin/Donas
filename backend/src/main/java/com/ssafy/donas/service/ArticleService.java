@@ -109,8 +109,16 @@ public class ArticleService {
 
 			}
 			for(Article a : own_articles) {
-				User user = a.getUser();				
-				articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+				User user = a.getUser();
+				// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+				boolean isLike = false;
+				for(Like like: a.getLikes()) {
+					if(like.getUser() == user) {
+						isLike = true;
+						break;
+					}
+				}
+				articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
 			}
 		}else if(own.equals("other")){
 			List<Long> followee_ids = followRepo.getFollowers(presentUser);
@@ -120,13 +128,29 @@ public class ArticleService {
 					own_articles = articleRepo.findArticleByUser(followee);
 					for(Article a : own_articles) {
 						User user = a.getUser();
-						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+						boolean isLike = false;
+						for(Like like: a.getLikes()) {
+							if(like.getUser() == user) {
+								isLike = true;
+								break;
+							}
+						}
+						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
 					}
 				}else {
 					own_articles =articleRepo.findArticleByUserAndType(followee, type);
 					for(Article a : own_articles) {
 						User user = a.getUser();
-						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+						boolean isLike = false;
+						for(Like like: a.getLikes()) {
+							if(like.getUser() == user) {
+								isLike = true;
+								break;
+							}
+						}
+						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
 
 					}
 				}
