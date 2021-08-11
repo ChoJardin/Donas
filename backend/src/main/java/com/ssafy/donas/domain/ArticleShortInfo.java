@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArticleShortInfo {
 	private long id;
-	private long questId;
 	private String image;
 	private String content;
 	private LocalDateTime createdAt;
