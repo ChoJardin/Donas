@@ -16,6 +16,10 @@ public class DonationRequest {
 	
 	@ApiModelProperty(required = true)
 	@NotNull
+	String userName;
+	
+	@ApiModelProperty(required = true)
+	@NotNull
 	long amount;
 	
 	@ApiModelProperty(required = true)
@@ -44,6 +48,14 @@ public class DonationRequest {
 
 	public void setCharityId(long charityId) {
 		this.charityId = charityId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

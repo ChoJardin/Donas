@@ -1,5 +1,6 @@
 package com.ssafy.donas.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,12 +58,12 @@ public class DonationService {
 			return 0;
 	}
 	
-	public boolean setDonation(long amount,long userId,long charityId) {
+	public boolean setDonation(long amount,String name, LocalDateTime time, long userId,long charityId) {
 		User user = userRepo.getById(userId);
 		if(user.getMileage()<amount)
 			return false;
 		
-		if(donationRepo.save(new Donation(amount,user,charityRepo.getById(charityId))) == null) {
+		if(donationRepo.save(new Donation(amount,time,name,user,charityRepo.getById(charityId))) == null) {
 			return false;
 		}
 		return true;
@@ -71,10 +72,12 @@ public class DonationService {
 	// 기부내역 확인
 	public List<DonationInfo> showDonationList(long userId){
 		List<Donation> donationList = donationRepo.findDonationByUser(userRepo.getById(userId));
+		if(donationList.size()==0)
+			return null;
 		List<DonationInfo> donationInfo = new ArrayList<DonationInfo>();
 		
 		for(Donation d : donationList) {
-			donationInfo.add(new DonationInfo(d.getId(),d.getCharity().getName(),d.getAmount()));
+			donationInfo.add(new DonationInfo(d.getId(),d.getName(),d.getCharity().getName(),d.getAmount()));
 		}
 		
 		return donationInfo;

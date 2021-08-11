@@ -185,13 +185,17 @@ public class UserController {
 		
 		if(type.equals("D")) {
 			DonationListResponse result = new DonationListResponse();
-			result.donationList = donationService.showDonationList(userId);		
+			result.donationList = donationService.showDonationList(userId);
+			if(result.donationList==null)
+				return new ResponseEntity<>("기부 내역 없는 유저", HttpStatus.NOT_FOUND);
 			result.total = donationService.getSumDonationById(userId);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 
 		}else if(type.equals("C")) {
 			CashListResponse result = new CashListResponse();
 			result.cashList = cashService.showDonationList(userId);	
+			if(result.cashList==null)
+				return new ResponseEntity<>("기부 내역 없는 유저", HttpStatus.NOT_FOUND);
 			result.total = cashService.getSumCashById(userId);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}else {

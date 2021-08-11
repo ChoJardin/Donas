@@ -40,6 +40,9 @@ public class Cash {
 	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime time;
 	
+	@Column(nullable = false)
+	private String name;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -59,10 +62,11 @@ public class Cash {
 	}
 	
 	@Builder
-	public Cash(long amount, LocalDateTime time, User user, String accountNum, String bank) {
+	public Cash(long amount, LocalDateTime time, String name, User user, String accountNum, String bank) {
 		super();
 		this.amount = amount;
 		this.time = time;
+		this.name = name;
 		this.user = user;
 		this.accountNum = accountNum;
 		this.bank = bank;

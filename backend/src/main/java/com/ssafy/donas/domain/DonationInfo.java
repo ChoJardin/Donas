@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DonationInfo {
 	private long id;
+	private String name;
 	private String charityName;
 	private long amount;
 	
 	
-	public DonationInfo(long id, String charityName, long amount) {
+	public DonationInfo(long id, String name,String charityName, long amount) {
 		this.id = id;
+		this.name = name;
 		this.charityName = charityName;
 		this.amount = amount;
 	}
