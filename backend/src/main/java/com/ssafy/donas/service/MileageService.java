@@ -22,7 +22,7 @@ public class MileageService {
 		
 		if(user.getMileage()<amount)
 			return false;
-		user.setMileage(amount);
+		user.setMileage(user.getMileage()-amount);
 		return true;
 	}
 }
