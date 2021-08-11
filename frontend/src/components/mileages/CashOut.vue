@@ -57,14 +57,15 @@ export default {
         userId: this.loginUser.id,
         bank: this.bank,
         accountNum: this.account,
-        amount:parseInt(this.refundAmount)
+        amount:parseInt(this.refundAmount),
+        userName: this.name
       }
 
       MileagesApi.createCashOutRequest(
           data,
           res => {
             console.log(res)
-            // this.$router.push({name: 'CashOutResult', params: data})
+            this.$router.push({name: 'CashOutResult', params: data})
           },
           err => {
             console.log(err)
