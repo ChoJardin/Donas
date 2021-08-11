@@ -72,6 +72,10 @@ public abstract class Quest {
 	@ColumnDefault("0")
 	private int success;
 	
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private double percent;
+	
 	@OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Article> articles = new ArrayList<Article>();
 	

@@ -106,7 +106,7 @@ public class QuestService {
 		for (QuestParticipants qs : questSummaries) {
 			Quest q = qs.getQuest();
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
-					q.getStartAt(), q.getFinishAt(), q.getMileage()));
+					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
 		}
 
 		return quests;

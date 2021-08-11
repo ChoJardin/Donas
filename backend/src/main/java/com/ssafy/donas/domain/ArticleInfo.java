@@ -25,7 +25,6 @@ public class ArticleInfo {
 	private String makerName;
 	private String makerImage;
 
-
 	@Builder
 	public ArticleInfo(long id, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt, String type, boolean isLike, int heartCnt, int commentCnt) {
 		this.id = id;
@@ -37,6 +36,20 @@ public class ArticleInfo {
 		this.isLike = isLike;
 		this.heartCnt = heartCnt;
 		this.commentCnt = commentCnt;
+	}
+	
+	@Builder
+	public ArticleInfo(long id, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt, String type, boolean isLike, int heartCnt, int commentCnt, String questTitle) {
+		this.id = id;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.image = image;
+		this.content = content;
+		this.type = type;
+		this.isLike = isLike;
+		this.heartCnt = heartCnt;
+		this.commentCnt = commentCnt;
+		this.questTitle = questTitle;
 	}
 	
 	@Builder

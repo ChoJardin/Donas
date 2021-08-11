@@ -74,7 +74,7 @@ public class QuestController {
 		if (!userService.checkId(quest.getUserId()))
 			return HttpStatus.NOT_FOUND;
 		
-		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
+		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
 		
 		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
@@ -89,7 +89,7 @@ public class QuestController {
 		if (!userService.checkId(quest.getUserId()))
 			return HttpStatus.NOT_FOUND;
 		
-		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
+		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
 
 		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getParticipants().size()+1);
@@ -103,7 +103,7 @@ public class QuestController {
 			participants.add(userService.getUser(p));
 			
 			// 참가자에게 참여 요청
-			questAlarmService.addQuestAlarm(p, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] 퀘스트명 : "+groupQuest.getTitle(), LocalDateTime.now());
+			questAlarmService.addQuestAlarm(p, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] "+groupQuest.getTitle(), LocalDateTime.now());
 		}
 		
 		// 퀘스트 생성자만 DB에 넣어두기 (나머지는 승락하면 넣기!)
@@ -120,7 +120,7 @@ public class QuestController {
 		if (!userService.checkId(quest.getUserId()))
 			return HttpStatus.NOT_FOUND;
 		
-		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()))
+		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
 		
 		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getTargetCnt());
@@ -291,7 +291,7 @@ public class QuestController {
 		User sender = userService.getUser(request.getUserId());
 		
 		// 두번째 주자에게 알람
-		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "[릴레이 퀘스트 요청] 퀘스트명 : "+relay.getTitle(), LocalDateTime.now());
+		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "[릴레이 퀘스트 요청] "+relay.getTitle(), LocalDateTime.now());
 		
 		// 두번째 주자 알림 deadline 설정
 		relayWaitService.updateDeadline(relay, request.getNextList().get(0), LocalDateTime.now());
