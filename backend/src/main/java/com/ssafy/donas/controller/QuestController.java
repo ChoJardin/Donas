@@ -361,4 +361,13 @@ public class QuestController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
+	/*
+	 * 전체 퀘스트
+	 * */
+	@GetMapping
+	@ApiOperation(value = "모든 퀘스트 정보")
+	public Object getAllQuests() {
+		return new ResponseEntity<>(questService.findAll(), HttpStatus.OK);
+	}
+	
 }
