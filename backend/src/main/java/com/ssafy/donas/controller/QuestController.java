@@ -94,16 +94,17 @@ public class QuestController {
 
 		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getParticipants().size()+1);
 		
-		List<Long> participantUsers = quest.getParticipants();
+		List<String> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
-		for (long p : participantUsers) {
-			if (!userService.checkId(p))
+		for (String p : participantUsers) {
+			long id = userService.getIdByNickname(p);
+			if (id == -1)
 				return HttpStatus.NOT_FOUND;
 			
-			participants.add(userService.getUser(p));
+			participants.add(userService.getUser(id));
 			
 			// 참가자에게 참여 요청
-			questAlarmService.addQuestAlarm(p, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] "+groupQuest.getTitle(), LocalDateTime.now());
+			questAlarmService.addQuestAlarm(id, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] "+groupQuest.getTitle(), LocalDateTime.now());
 		}
 		
 		// 퀘스트 생성자만 DB에 넣어두기 (나머지는 승락하면 넣기!)
@@ -299,5 +300,15 @@ public class QuestController {
 		return HttpStatus.OK;
 	}
 	
+	/*
+	 * Quest 상세 페이지 : 개인, 공동, 릴레이
+	 * */
+	@GetMapping("/{questId}")
+	@ApiOperation(value = "퀘스트 상세 정보")
+	public Object getPersonalDetail(@PathVariable long questId) {
+		
+		
+		return HttpStatus.OK;
+	}
 	
 }

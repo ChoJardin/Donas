@@ -102,7 +102,6 @@ public class ProfileController {
 		//Article 정보
 		result.articles = articleService.getArticleInfosByUser(user);
 
-		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		System.out.println(result.articles);
 		return response;
