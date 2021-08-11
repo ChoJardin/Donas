@@ -20,7 +20,7 @@ public class CashRequest {
 	
 	@ApiModelProperty(required = true)
 	@NotNull
-	String banck;
+	String bank;
 
 	public long getUserId() {
 		return userId;
@@ -46,12 +46,12 @@ public class CashRequest {
 		this.accountNum = accountNum;
 	}
 
-	public String getBanck() {
-		return banck;
+	public String getBank() {
+		return bank;
 	}
 
-	public void setBanck(String banck) {
-		this.banck = banck;
+	public void setBank(String bank) {
+		this.bank = bank;
 	}
 
 }
