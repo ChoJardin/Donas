@@ -34,15 +34,11 @@ public class Group extends Quest{
 	@Column(name="user_cnt")
 	private int userCnt;
 	
-	@ColumnDefault("0")
-	private Integer percent;
-	
 	public Group() {}
 	
 	@Builder
-	public Group(String type, String title, String description, Date startAt, Date finishAt, int percent, String picture, String certification, long mileage, int userCnt) {
+	public Group(String type, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage, int userCnt) {
 		super(type, title, description, startAt, finishAt, picture, certification, mileage);
-		this.percent = percent;
 		this.userCnt = userCnt;
 	}
 }
