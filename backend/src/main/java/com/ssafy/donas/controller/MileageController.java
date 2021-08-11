@@ -15,6 +15,7 @@ import com.ssafy.donas.request.CashRequest;
 import com.ssafy.donas.request.DonationRequest;
 import com.ssafy.donas.service.CashService;
 import com.ssafy.donas.service.DonationService;
+import com.ssafy.donas.service.MileageService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,9 @@ public class MileageController {
 	@Autowired
 	CashService cashService;
 	
+	@Autowired
+	MileageService mileageService;
+	
 	
 	@PostMapping("/donation")
 	@ApiOperation(value="기부 금액 설정")
@@ -51,6 +55,9 @@ public class MileageController {
 		
 		if(!donationService.setDonation(amount, userId, charityId))
 			return new ResponseEntity<>("마일리지 초과",HttpStatus.BAD_REQUEST);
+		
+		if(!mileageService.minusMileage(userId, amount))
+			return new ResponseEntity<>("마일리지 초과", HttpStatus.BAD_REQUEST);
 		
 		return HttpStatus.OK;
 	}
