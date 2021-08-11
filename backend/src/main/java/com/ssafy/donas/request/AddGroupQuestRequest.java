@@ -40,7 +40,7 @@ public class AddGroupQuestRequest {
 	
 	@ApiModelProperty(required = true)
     @NotNull
-    List<Long> participants;
+    List<String> participants;
 	
 	@ApiModelProperty(required = true)
     @NotNull
@@ -94,11 +94,11 @@ public class AddGroupQuestRequest {
 		this.finishAt = finishAt;
 	}
 
-	public List<Long> getParticipants() {
+	public List<String> getParticipants() {
 		return participants;
 	}
 
-	public void setParticipants(List<Long> participants) {
+	public void setParticipants(List<String> participants) {
 		this.participants = participants;
 	}
 
