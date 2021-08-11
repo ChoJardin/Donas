@@ -2,7 +2,7 @@
   <div>
     <div class="on-going-quests">
       {{title}} 퀘스트
-      <span class="material-icons-outlined">chevron_right</span>
+      <span @click="$router.push(`/quests/${questType}`)" class="material-icons-outlined">chevron_right</span>
     </div>
 
     <div class="quest-card-wrap">
@@ -28,11 +28,21 @@ export default {
   // props
   props: {
     title: String,
-    quests: Array
+    quests: Array,
+    type: String,
   },
   // data
   // methods
   // computed
+  computed: {
+    questType() {
+      if (this.type === 'G') {
+        return 'group'
+      } else if (this.type === 'P') {
+        return 'solo'
+      } else return 'relay'
+    }
+  }
   // watch
   // lifecycle hook
   // navigation guard
