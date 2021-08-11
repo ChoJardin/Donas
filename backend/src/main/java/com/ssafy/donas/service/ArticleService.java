@@ -19,6 +19,7 @@ import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.repository.ArticleRepo;
 import com.ssafy.donas.repository.FollowRepo;
+import com.ssafy.donas.repository.quest.QuestRepo;
 
 @Service
 @Transactional
@@ -32,7 +33,8 @@ public class ArticleService {
 	@Autowired
 	ArticleRepo articleRepo;
 	
-	
+	@Autowired
+	QuestRepo questRepo;
 
 	public boolean checkArticle(long articleId) {
 		Optional<Article> article = articleRepo.findById(articleId);
@@ -80,9 +82,8 @@ public class ArticleService {
 				}
 			}
 			
-			infos.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size()));
-		}
-		
+			infos.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle()));
+		}		
 		return infos;
 	}
 	

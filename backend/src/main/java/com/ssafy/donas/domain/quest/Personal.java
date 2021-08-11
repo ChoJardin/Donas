@@ -30,6 +30,6 @@ public class Personal extends Quest{
 	
 	@Builder
 	public Personal(String type, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage) {
-		super(type, title, description, startAt, finishAt, picture, certification, mileage);
+		super(type, title, description, startAt, finishAt, picture, certification, mileage, 0);
 	}
 }
