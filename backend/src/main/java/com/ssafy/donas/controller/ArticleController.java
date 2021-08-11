@@ -111,26 +111,26 @@ public class ArticleController {
 	
 	@GetMapping("/mine")
 	@ApiOperation(value = "퀘스트 종류별 나의 게시물 목록")
-	public Object getArticleByType(@RequestParam long user_id, @RequestParam String type) {
-		if(!userService.checkId(user_id))
+	public Object getArticleByType(@RequestParam long userId, @RequestParam String type) {
+		if(!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
 		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
-		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(user_id,type,"mine");
+		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(userId,type,"mine");
 		for(ArticleInfo article : articles) {
 			ArticleResponse res = new ArticleResponse();
-			res.articleId = article.getId();
-			res.questId = article.getQuestId();
-			res.image = article.getImage();
-			res.content = article.getContent();
+			res.id = article.getId();
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
+			res.image = article.getImage();
+			res.content = article.getContent();
 			res.type = article.getType();
-			res.likeCnt = article.getHeartCnt();
-			res.commentCnt = article.getCommentCnt();
-			res.questTitle = article.getQuestTitle();
-			res.makerName = article.getMakerName();
-			res.makerImage = article.getMakerImage();
 			res.isLike = article.isLike();
+			res.heartCnt = article.getHeartCnt();
+			res.commentCnt = article.getCommentCnt();
+			res.makerImage = article.getMakerImage();
+			res.makerName = article.getMakerName();
+			res.questId = article.getQuestId();
+			res.questTitle = article.getQuestTitle();
 			result.add(res);
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);
@@ -173,27 +173,27 @@ public class ArticleController {
 	
 	@GetMapping("/following")
 	@ApiOperation(value = "팔로잉 중인 유저들의 개인 퀘스트 피드")
-	public Object getPersonalQuestFeed(@RequestParam long user_id, @RequestParam String type ) {
-		if(!userService.checkId(user_id))
+	public Object getPersonalQuestFeed(@RequestParam long userId, @RequestParam String type ) {
+		if(!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
 		
 		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
-		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(user_id,type,"other");
+		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(userId,type,"other");
 		for(ArticleInfo article : articles) {
 			ArticleResponse res = new ArticleResponse();
-			res.articleId = article.getId();
-			res.questId = article.getQuestId();
-			res.image = article.getImage();
-			res.content = article.getContent();
+			res.id = article.getId();
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
+			res.image = article.getImage();
+			res.content = article.getContent();
 			res.type = article.getType();
-			res.likeCnt = article.getHeartCnt();
-			res.commentCnt = article.getCommentCnt();
-			res.questTitle = article.getQuestTitle();
-			res.makerName = article.getMakerName();
-			res.makerImage = article.getMakerImage();
 			res.isLike = article.isLike();
+			res.heartCnt = article.getHeartCnt();
+			res.commentCnt = article.getCommentCnt();
+			res.makerImage = article.getMakerImage();
+			res.makerName = article.getMakerName();
+			res.questId = article.getQuestId();
+			res.questTitle = article.getQuestTitle();
 			result.add(res);
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);
