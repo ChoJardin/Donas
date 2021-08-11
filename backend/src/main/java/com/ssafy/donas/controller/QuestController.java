@@ -311,7 +311,7 @@ public class QuestController {
 	/*
 	 * Quest 상세 페이지 : 개인, 공동, 릴레이
 	 * */
-	@GetMapping("/{questId}")
+	@GetMapping("/detail/{questId}")
 	@ApiOperation(value = "퀘스트 상세 정보")
 	public Object getPersonalDetail(@PathVariable long questId, @RequestParam long userId) {
 		if(!questService.checkQuest(questId) || !userService.checkId(userId))
