@@ -7,10 +7,9 @@
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
           <div style="font-size: 0.8em">{{alarm.content}}</div>
-          <div style="font-size: 0.8em">{{alarm.confirm}}</div>
           <div class="decision">
-            <button class="answer">참여</button>
-            <button class="answer">거절</button>
+            <button @click="onAccept" class="answer">참여</button>
+            <button @click="onDecline" class="answer">거절</button>
           </div>
 
         </div>
@@ -32,6 +31,7 @@
 <script>
 import moment from 'moment'
 import UserApi from "../../api/UserApi";
+import {mapState} from "vuex";
 export default {
   name: "SingleQuestAlarm",
   props: {
@@ -39,11 +39,43 @@ export default {
   },
   methods: {
     //읽음 상태 변경
+    onAccept(){
+      let data = {
+        alarmId: this.alarm.id,
+        questId: this.alarm.questId,
+        userId: this.loginUser.id
+        }
+      // console.log(data)
+      let path
+      UserApi.acceptAlert(
+          data,
+          res => {
+            console.log(res)
+          },
+          err => {
+            console.log(err)
+          })
+      },
+    onDecline(){
+      // console.log(data)
+      let path
+      UserApi.declineAlert(
+          this.loginUser.id,
+          res => {
+            console.log(res)
+          },
+          err => {
+            console.log(err)
+          })
+      },
   },
   computed: {
     dateFormatted: function (){
       return moment(String(this.alarm.sendTime)).format('MM/DD/YYYY hh:mm')
-    }
+    },
+    ...mapState({
+      loginUser: state => state.user.loginUser,
+    })
   }
 
 }
