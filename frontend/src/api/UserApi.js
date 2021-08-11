@@ -156,7 +156,7 @@ const acceptAlert = (data, callback, errorCallback) => {
     })
 }
 
-const declineAlert = (id, callback, errorCallback) => {
+const declineAlert = (id,callback, errorCallback) => {
   const declineAlertPath = URL + ROUTES.declineAlert + id
   axios.patch(declineAlertPath)
     .then(res => {

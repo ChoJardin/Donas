@@ -6,7 +6,7 @@
       <div class="cashout-input-label" >출금 금액:</div>
       <div style="display: flex; align-items: center">
         <div class="cashout-currency">₩</div>
-        <input type="number" class="cashout-input" v-model="amount">
+        <input type="number" class="cashout-input" v-model="inputAmount">
       </div>
     </div>
 
@@ -37,11 +37,14 @@
 </template>
 
 <script>
+import MileagesApi from "../../api/MileagesApi";
+import {mapState} from "vuex";
+
 export default {
   name: "CashOut.vue",
   data:  () => {
     return {
-      amount: '',
+      inputAmount: '',
       name:'',
       bank: '',
       account:'',
@@ -51,23 +54,37 @@ export default {
   methods: {
     confirmPage () {
       let data = {
-        name: this.name,
+        userId: this.loginUser.id,
         bank: this.bank,
-        account: this.account,
-        refundAmount:this.refundAmount
+        accountNum: this.account,
+        amount:parseInt(this.refundAmount)
       }
-      this.$router.push({name: 'CashOutResult', params: data})
+
+      MileagesApi.createCashOutRequest(
+          data,
+          res => {
+            console.log(res)
+            // this.$router.push({name: 'CashOutResult', params: data})
+          },
+          err => {
+            console.log(err)
+          }
+      )
+
     }
   },
   //computed
   computed: {
     donationAmount: function (){
 
-      return Math.round(this.amount * 0.1)
+      return Math.round(this.inputAmount * 0.1)
     },
     refundAmount: function (){
-      return Math.round(this.amount - this.donationAmount)
-    }
+      return Math.round(this.inputAmount - this.donationAmount)
+    },
+    ...mapState({
+      loginUser: state => state.user.loginUser,
+    })
   },
 
 }

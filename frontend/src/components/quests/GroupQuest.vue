@@ -1,12 +1,14 @@
 <template>
   <div>
-      <QuestSingle class="quest-single" v-for="n in 10" :key="n" @click.native=setQuestId(n) />
+    <div v-for="quest in groupQuest" :key="quest.id">
+      <QuestSingle class="quest-single" :quest="quest" @click.native=setQuestId(quest.id) />
+    </div>
   </div>
 </template>
 
 <script>
 import QuestSingle from "@/components/quests/QuestSingle";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "GroupQuest",
@@ -21,6 +23,9 @@ export default {
     ...mapActions(["setQuestId"])
   },
   // computed
+  computed: {
+    ...mapGetters(['groupQuest'])
+  }
 }
 </script>
 

@@ -1,25 +1,31 @@
 <template>
   <div>
-    <h1>QuestSingle</h1>
+    <ComponentNav
+      @on-arrow="$router.back()"
+      title="퀘스트 상세"/>
+
     <div>
       <div id="flex-container">
         <div id="quest-wrap">
           <img id="quest-image" src="../../assets/donut1.png" alt="">
           <div id="quest-info">
-            <h1 id="title">{{ questId }}</h1>
-            <div id="summary">summary</div>
+            <h1 id="title">{{ questDetail.title }}</h1>
+            <div id="summary">{{ questDetail.description }}</div>
           </div>
 
 
-        <div id="description">
-          소개글
-        </div>
 
       </div>
+        <div>
+          {{dateFormatted}}에 시작되었습니다.
+        </div>
+        <div id="description">
+          {{ questDetail.certification }}
+        </div>
 
       <!--article start-->
       <div id="article-wrap">
-        <div class="article-image" v-for="article in articles" :key="article.id">
+        <div class="article-image" v-for="article in questDetail.articles" :key="article.id">
           <!--article 같이 보내줘야 함...-->
           <ArticleImage class="inner" :article="article"/>
         </div>
@@ -34,23 +40,42 @@
 <script>
 import ArticleImage from "@/components/articles/ArticleImage";
 import {mapGetters, mapState} from 'vuex'
+import QuestApi from "../../api/QuestApi";
+import moment from "moment";
+import ComponentNav from "../../components/common/ComponentNav";
 
 export default {
   name: "QuestSingle",
   components: {
-    ArticleImage
+    ArticleImage,
+    ComponentNav
   },
    // props
   // data
   // methods
   // computed
-  computed:{
+  computed: {
     ...mapState({
-      articles: state => state.articles.feeds
-    }),
-    ...mapGetters(['questId'])
+      questDetail: state => state.quests.questDetail,
+      questId: state => state.quests.questId,
+      dateFormatted: function () {
+        return moment(String(this.questDetail.startAt)).format('MM/DD/YYYY')
+      },
+    })
   },
-}
+    created() {
+      QuestApi.requestQuestDetail(
+          this.questId,
+          res => {
+            // console.log(res)
+            this.$store.dispatch('setQuestDetail', res.data)
+          },
+          err => {
+            console.log(err)
+          }
+      )
+    }
+  }
 </script>
 
 <style scoped>

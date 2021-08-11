@@ -7,7 +7,9 @@
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
           <div style="font-size: 0.8em">{{alarm.content}}</div>
-          <div class="decision">
+          <div v-if="alarm.confirm === 2">참여 승락</div>
+          <div v-else-if="alarm.confirm === 3">참여 거절</div>
+          <div v-else class="decision">
             <button @click="onAccept" class="answer">참여</button>
             <button @click="onDecline" class="answer">거절</button>
           </div>
