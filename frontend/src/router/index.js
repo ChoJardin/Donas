@@ -55,6 +55,9 @@ import Search from "@/views/common/Search";
 import Error from "@/views/common/Error";
 import PageNotFound from "@/views/common/PageNotFound";
 
+// 테스트용
+import ImageInput from "@/components/common/ImageInput";
+
 
 Vue.use(VueRouter)
 
@@ -145,6 +148,9 @@ const routes = [
 
   // 에러
   {path: '/error', name: 'Error', component: Error},
+
+  // 개발시 테스트용.. 여기에 컴포넌트 연결해서 필요한 거 보시져..
+  {path: '/dev/test', name: 'ImageInput', component: ImageInput}
   // 404
   // {path: '/*', redirect: '/404'},
   // {path: '/404', name: 'PageNotFound', component: PageNotFound}
