@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/main")
 public class MainController {
-	
 	@Autowired
 	QuestService questService;
 	
