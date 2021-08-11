@@ -157,7 +157,8 @@ public class UserController {
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음",HttpStatus.NOT_FOUND);
 				
-		mileageService.minusMileage(userId, amount);
+		if(!mileageService.minusMileage(userId, amount))
+			return new ResponseEntity<>("마일리지 초과", HttpStatus.BAD_REQUEST);
 		
 		return HttpStatus.OK;
 	}
