@@ -35,14 +35,19 @@ public class AlarmService {
 	}
 	
 	public boolean addAlarm(User receivedUser, String sendName,long articleId,String content, LocalDateTime sendTIme) {
+
 		Optional<User> user = userRepo.findById(receivedUser.getId());
 		if(user==null)
 			return false;
 		Alarm alarm = new Alarm(receivedUser,sendName,articleId,content,sendTIme,1);
 		alarmRepo.save(alarm);
-		user.ifPresent(selectUser->{
-			pushService.searchReceivedUser(selectUser,content,sendTIme);
-		});
+		
+		if(articleId!=-2 && articleId!=-3) {
+			user.ifPresent(selectUser->{
+				pushService.searchReceivedUser(selectUser,content,sendTIme);
+			});
+		}
+
 		return true;		
 	}
 	
