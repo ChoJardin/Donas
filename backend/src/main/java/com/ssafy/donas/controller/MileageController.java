@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.CashRequest;
 import com.ssafy.donas.request.DonationRequest;
+import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.CashService;
 import com.ssafy.donas.service.DonationService;
 import com.ssafy.donas.service.MileageService;
@@ -39,6 +41,9 @@ public class MileageController {
 	@Autowired
 	MileageService mileageService;
 	
+	@Autowired
+	AlarmService alarmService;
+	
 	
 	@PostMapping("/donation")
 	@ApiOperation(value="기부 금액 설정")
@@ -46,7 +51,7 @@ public class MileageController {
 		long amount = donation.getAmount();
 		long userId = donation.getUserId();
 		long charityId = donation.getCharityId();
-		System.out.println(charityId);
+		
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);
 		
@@ -59,6 +64,9 @@ public class MileageController {
 		if(!mileageService.minusMileage(userId, amount))
 			return new ResponseEntity<>("마일리지 초과", HttpStatus.BAD_REQUEST);
 		
+		LocalDateTime time = LocalDateTime.now();
+		User user = userService.getUser(userId);
+		alarmService.addAlarm(user, user.getNickname(), -3, amount+"기부 완료", time);
 		return HttpStatus.OK;
 	}
 	
@@ -70,14 +78,16 @@ public class MileageController {
 		long amount = cash.getAmount();
 		String accountNum = cash.getAccountNum();
 		String bank = cash.getBank();
-		
+		LocalDateTime time = LocalDateTime.now();
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);
 		
-		if(!cashService.changeCash(userId, LocalDateTime.now(), amount, accountNum, bank))
+		if(!cashService.changeCash(userId, time, amount, accountNum, bank))
 			return HttpStatus.NOT_FOUND;
 		if(!mileageService.minusMileage(userId, amount))
 			return new ResponseEntity<>("마일리지 초과", HttpStatus.BAD_REQUEST);
+		User user = userService.getUser(userId);
+		alarmService.addAlarm(user, user.getNickname(), -2, amount+"현금화 완료", time);
 		return HttpStatus.OK;
 		
 	}
