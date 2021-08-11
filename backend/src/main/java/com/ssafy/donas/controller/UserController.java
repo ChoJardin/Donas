@@ -1,5 +1,7 @@
 package com.ssafy.donas.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.DonationInfo;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.CheckPasswordRequest;
 import com.ssafy.donas.request.SigninRequest;
 import com.ssafy.donas.request.SignoutRequest;
 import com.ssafy.donas.request.SignupRequest;
 import com.ssafy.donas.request.UserInfoRequest;
+import com.ssafy.donas.response.CashListResponse;
+import com.ssafy.donas.response.DonationListResponse;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.response.MypageResponse;
+import com.ssafy.donas.service.CashService;
+import com.ssafy.donas.service.DonationService;
 import com.ssafy.donas.service.MileageService;
 import com.ssafy.donas.service.UserService;
 
@@ -39,6 +46,12 @@ public class UserController {
 	
 	@Autowired
 	MileageService mileageService;
+	
+	@Autowired
+	DonationService donationService;
+	
+	@Autowired
+	CashService cashService;
 
 	@PostMapping("/signin")
 	@ApiOperation(value = "로그인")
@@ -162,5 +175,30 @@ public class UserController {
 		
 		return HttpStatus.OK;
 	}
+	
+	@GetMapping("/mileage")
+	@ApiOperation(value = "기부내역확인")
+	public Object showDonationList(@RequestParam String type, @RequestParam long userId) {
+		if(!userService.checkId(userId))
+			return new ResponseEntity<>("유저 없음",HttpStatus.NOT_FOUND);
+		
+		if(type.equals("D")) {
+			DonationListResponse result = new DonationListResponse();
+			result.donationList = donationService.showDonationList(userId);		
+			result.total = donationService.getSumDonationById(userId);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+
+		}else if(type.equals("C")) {
+			CashListResponse result = new CashListResponse();
+			result.cashList = cashService.showDonationList(userId);	
+			result.total = cashService.getSumCashById(userId);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("잘못된 내역확인", HttpStatus.NOT_FOUND);
+		}
+
+
+	}
+
 	
 }
