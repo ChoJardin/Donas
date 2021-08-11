@@ -23,6 +23,7 @@ public class MileageService {
 		if(user.getMileage()<amount)
 			return false;
 		user.setMileage(user.getMileage()-amount);
+		userRepo.flush();
 		return true;
 	}
 }
