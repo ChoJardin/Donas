@@ -23,14 +23,17 @@
         <div class="profile-edit-content">
           <div id="profile-image-input">
             <label for="image-input">
-              <img v-if="picture" class="profile-image" :src="picture" alt="">
+              <img v-if="preview" :src="preview" class="profile-image" alt="">
+              <img v-else-if="picture" :src="picture" class="profile-image" alt="">
               <img v-else class="profile-image" src="../../assets/donut1.png" alt="">
             </label>
-            <!--사진첩/ 카메라 선택창 호출됨-->
+            <!--사진첩/ 카메라 선택창 호출됨 -->
+            <!--<ImageInput id=image-input" :preview.sync="newImage.preview" :image-file.sync="newImage.imageFile"-->
+            <!--     :modified-date.sync="newImage.modifiedDate" style="display: none"/>-->
             <input
                 type="file" id="image-input" ref="imgInput"
-                accept="image/jpeg, image/png, image/gif" capture="camera"
-                @change="fileUploaded"
+                accept="image/jpeg, image/png" capture="camera"
+                @change="onImageUploaded"
                 style="display: none;">
             <span class="material-icons-outlined position">add_photo_alternate</span>
           </div>
@@ -100,6 +103,7 @@ import UserApi from "../../api/UserApi";
 import ComponentNav from "../../components/common/ComponentNav";
 import ButtonBig from "../../components/common/ButtonBig";
 import PasswordChange from "../../components/user/PasswordChange";
+import ImageInput from "@/components/common/ImageInput";
 
 import('@/assets/style/user/Profile.css')
 
@@ -109,7 +113,8 @@ export default {
   components: {
     ComponentNav,
     ButtonBig,
-    PasswordChange
+    PasswordChange,
+    // ImageInput,
   },
   // props
   // data
@@ -128,7 +133,12 @@ export default {
         description: false
       },
       // image uploaded
-      selectedFile: ''
+      selectedFile: '',
+      preview: '',
+      newImage: {
+        imageFile: '',
+        modifiedDate: '',
+      }
     }
   },
   // methods
@@ -183,11 +193,48 @@ export default {
       this.passwordChanged = true
     },
     // 이미지 업로드
-    fileUploaded() {
-    //   // 업로드된 파일이 있다면
-    //   if (0 < this.$refs.imgInput.files.length) {
-    //     this.selectFile =
-    //   }
+    onImageUploaded(event) {
+      this.selectedFile = event.target.files[0]
+      // 이미지 확장자/ 크기 확인
+      let extension = this.selectedFile.name.substring(
+          this.selectedFile.name.lastIndexOf('.')+1
+      ).toLowerCase()
+
+      // 이미지 파일이 아닌 경우
+      if (!['jpg', 'jpeg', 'png'].includes(extension)) {
+        this.error = '이미지 파일을 선택해 주세요.'
+      }
+      // 파일의 크기가 너무 큰 경우
+      else if (this.selectedFile.size > 1048576) {
+        this.error = '1MB 이내의 파일만 선택 가능합니다.'
+      }
+
+      // 에러 발생하면 에러메세지 emit
+      if (this.error) {
+        this.$emit('on-error', this.error)
+      }
+      // 오류 없는 경우 미리보기와 formData emit
+      else {
+        // 미리보기
+        const read = new FileReader()
+        read.onload = file => {
+          this.preview = file.target.result
+        }
+        read.readAsDataURL(this.selectedFile)
+
+        // 서버 전송 데이터
+        const imageFile = new FormData()
+        imageFile.append('image', this.selectedFile)
+        this.picture = imageFile
+
+        // for (var key of imageFile.keys()) {
+        //   console.log(key);
+        // }
+        //
+        // for (var value of imageFile.values()) {
+        //   console.log(value);}
+
+      }
     }
   },
   // computed
@@ -304,6 +351,10 @@ export default {
 
 .profile-edit-content {
   flex: 2.5 2.5 0;
+}
+
+.profile-edit-content textarea {
+  resize: none;
 }
 
 /* 닉네임 */

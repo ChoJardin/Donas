@@ -23,6 +23,8 @@ import Footer from "@/components/common/Footer";
 
 // 브라우저 기본 속성 리셋
 import ('./assets/style/reset.css')
+// transition
+import ('./assets/style/transition.css')
 
 export default {
   name: 'App',
