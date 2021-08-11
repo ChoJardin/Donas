@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.Article;
+import com.ssafy.donas.domain.ArticleInfo;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.domain.UserInfo;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
@@ -27,7 +30,9 @@ import com.ssafy.donas.request.AddPersonalQuestRequest;
 import com.ssafy.donas.request.AddRelayQuestRequest;
 import com.ssafy.donas.request.RelayNextListRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
+import com.ssafy.donas.response.QuestDetailResponse;
 import com.ssafy.donas.response.QuestResponse;
+import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.QuestAlarmService;
 import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.QuestService;
@@ -62,6 +67,9 @@ public class QuestController {
 	
 	@Autowired
 	RelayService relayService;
+	
+	@Autowired
+	ArticleService articleService;
 	
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
@@ -305,10 +313,46 @@ public class QuestController {
 	 * */
 	@GetMapping("/{questId}")
 	@ApiOperation(value = "퀘스트 상세 정보")
-	public Object getPersonalDetail(@PathVariable long questId) {
+	public Object getPersonalDetail(@PathVariable long questId, @RequestParam long userId) {
+		if(!questService.checkQuest(questId) || !userService.checkId(userId))
+			return HttpStatus.NOT_FOUND;
 		
+		Quest quest = questService.getQuestById(questId);
+		User u = userService.getUser(userId);
 		
-		return HttpStatus.OK;
+		final QuestDetailResponse response = new QuestDetailResponse();
+		response.setId(quest.getId());
+		response.setTitle(quest.getTitle());
+		response.setDescription(quest.getDescription());
+		response.setPicture(quest.getPicture());
+		response.setType(quest.getType());
+		response.setStartAt(quest.getStartAt());
+		response.setFinishAt(quest.getFinishAt());
+		response.setMileage(quest.getMileage());
+		response.setPercent(quest.getPercent());
+		response.setCertification(quest.getCertification());
+		response.setSuccess(quest.getSuccess());
+		
+		// 참여하는 유저 리스트 보내기
+		List<UserInfo> users = new ArrayList<>();
+		List<QuestParticipants> participants = quest.getParticipants();
+		for(QuestParticipants qp : participants) {
+			User user = qp.getUser();
+			users.add(new UserInfo(user.getId(), user.getNickname(), user.getPicture(), user.getDescription()));
+		}
+		response.setUsers(users);
+		
+		// 게시글 리스트 보내기
+		response.setArticles(articleService.getArticleInfosByUser(u));
+		
+		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
+		if("R".equals(quest.getType())) {
+			Relay relay = relayService.getById(questId);
+			response.setTargetCnt(relay.getTargetCnt());
+			response.setNowCnt(relay.getOrder());
+		}
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 }
