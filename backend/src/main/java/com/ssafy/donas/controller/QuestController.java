@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.ArticleInfo;
+import com.ssafy.donas.domain.ArticleShortInfo;
 import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.UserInfo;
@@ -344,10 +345,10 @@ public class QuestController {
 		response.setUsers(users);
 		
 		// 게시글 리스트 보내기
-		List<ArticleInfo> articleList = new ArrayList<>();
+		List<ArticleShortInfo> articleList = new ArrayList<>();
 		List<Article> articles = quest.getArticles();
 		for(Article a : articles) {
-			articleList.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getUser().getNickname(), a.getUser().getPicture()));
+			articleList.add(new ArticleShortInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getUser().getNickname(), a.getUser().getPicture()));
 		}	
 		response.setArticles(articleList);
 		
