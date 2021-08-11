@@ -228,6 +228,9 @@ public class ProfileController {
 
 		return HttpStatus.OK;
 	}
+	
+	
+	
 
 	@DeleteMapping("/follow")
 	@ApiOperation(value = "팔로우 취소")
