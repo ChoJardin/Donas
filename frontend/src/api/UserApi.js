@@ -19,6 +19,8 @@ const ROUTES = {
   commonAlerts: '/alarm/',
   questAlerts: '/alarm/quest/',
   alertStatus:'/alarm',
+  acceptAlert: '/alarm/group',
+  declineAlert:'/alarm/group/'
 
 
 }
@@ -206,6 +208,27 @@ const updateAlertStatus = (data, callback, errorcallback) => {
     })
 }
 
+const acceptAlert = (data, callback, errorCallback) => {
+  const acceptAlertPath = URL + ROUTES.acceptAlert
+  axios.post(acceptAlertPath, data)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err=> {
+      errorCallback(err)
+    })
+}
+
+const declineAlert = (id, callback, errorCallback) => {
+  const declineAlertPath = URL + ROUTES.declineAlert + id
+  axios.patch(declineAlertPath)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
 
 
 
@@ -227,6 +250,8 @@ const UserApi = {
   requestCommonAlert:(data, callback, errorCallback) => requestCommonAlert(data,callback, errorCallback),
   requestQuestAlert:(data, callback, errorCallback) => requestQuestAlert(data,callback, errorCallback),
   updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
+  acceptAlert: (data, callback, errorCallback) => acceptAlert(data,callback, errorCallback),
+  declineAlert: (id, callback, errorCallback) => declineAlert(id, callback, errorCallback),
 
 
 }

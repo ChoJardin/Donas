@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.donas.domain.DonationInfo;
 import com.ssafy.donas.domain.User;
@@ -139,7 +140,7 @@ public class UserController {
 	
 	@PatchMapping("/profile/{id}")
 	@ApiOperation(value = "회원 정보 변경")
-	public Object updateUserInfo(@PathVariable long id, @RequestBody UserInfoRequest request) {
+	public Object updateUserInfo(@PathVariable long id, @RequestBody UserInfoRequest request) {//, @RequestParam MultipartFile img) {
 		if(!userService.updateUserInfo(id, request.getNickname(), request.getPicture(), request.getDescription()))
 			return HttpStatus.BAD_REQUEST;
 		

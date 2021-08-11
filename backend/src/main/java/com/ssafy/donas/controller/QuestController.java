@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.Article;
+import com.ssafy.donas.domain.ArticleInfo;
+import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.domain.UserInfo;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestInfo;
 import com.ssafy.donas.domain.quest.QuestParticipants;
@@ -27,7 +31,9 @@ import com.ssafy.donas.request.AddPersonalQuestRequest;
 import com.ssafy.donas.request.AddRelayQuestRequest;
 import com.ssafy.donas.request.RelayNextListRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
+import com.ssafy.donas.response.QuestDetailResponse;
 import com.ssafy.donas.response.QuestResponse;
+import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.QuestAlarmService;
 import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.QuestService;
@@ -63,6 +69,9 @@ public class QuestController {
 	@Autowired
 	RelayService relayService;
 	
+	@Autowired
+	ArticleService articleService;
+	
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
 	 * */
@@ -94,16 +103,17 @@ public class QuestController {
 
 		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getParticipants().size()+1);
 		
-		List<Long> participantUsers = quest.getParticipants();
+		List<String> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
-		for (long p : participantUsers) {
-			if (!userService.checkId(p))
+		for (String p : participantUsers) {
+			long id = userService.getIdByNickname(p);
+			if (id == -1)
 				return HttpStatus.NOT_FOUND;
 			
-			participants.add(userService.getUser(p));
+			participants.add(userService.getUser(id));
 			
 			// 참가자에게 참여 요청
-			questAlarmService.addQuestAlarm(p, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] "+groupQuest.getTitle(), LocalDateTime.now());
+			questAlarmService.addQuestAlarm(id, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] "+groupQuest.getTitle(), LocalDateTime.now());
 		}
 		
 		// 퀘스트 생성자만 DB에 넣어두기 (나머지는 승락하면 넣기!)
@@ -299,5 +309,66 @@ public class QuestController {
 		return HttpStatus.OK;
 	}
 	
+	/*
+	 * Quest 상세 페이지 : 개인, 공동, 릴레이
+	 * */
+	@GetMapping("/detail/{questId}")
+	@ApiOperation(value = "퀘스트 상세 정보")
+	public Object getPersonalDetail(@PathVariable long questId, @RequestParam long userId) {
+		if(!questService.checkQuest(questId) || !userService.checkId(userId))
+			return HttpStatus.NOT_FOUND;
+		
+		Quest quest = questService.getQuestById(questId);
+		User u = userService.getUser(userId);
+		
+		final QuestDetailResponse response = new QuestDetailResponse();
+		response.setId(quest.getId());
+		response.setTitle(quest.getTitle());
+		response.setDescription(quest.getDescription());
+		response.setPicture(quest.getPicture());
+		response.setType(quest.getType());
+		response.setStartAt(quest.getStartAt());
+		response.setFinishAt(quest.getFinishAt());
+		response.setMileage(quest.getMileage());
+		response.setPercent(quest.getPercent());
+		response.setCertification(quest.getCertification());
+		response.setSuccess(quest.getSuccess());
+		
+		// 참여하는 유저 리스트 보내기
+		List<UserInfo> users = new ArrayList<>();
+		
+		List<QuestParticipants> participants = quest.getParticipants();
+		for(QuestParticipants qp : participants) {
+			User user = qp.getUser();
+			users.add(new UserInfo(user.getId(), user.getNickname(), user.getPicture(), user.getDescription()));
+		}
+		response.setUsers(users);
+		
+		// 게시글 리스트 보내기
+		List<ArticleInfo> articleList = new ArrayList<>();
+		List<Article> articles = quest.getArticles();
+		for(Article a : articles) {
+			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+			boolean isLike = false;
+			for(Like like: a.getLikes()) {
+				if(like.getUser() == u) {
+					isLike = true;
+					break;
+				}
+			}
+			
+			articleList.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle()));
+		}		
+		response.setArticles(articleList);
+		
+		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
+		if("R".equals(quest.getType())) {
+			Relay relay = relayService.getById(questId);
+			response.setTargetCnt(relay.getTargetCnt());
+			response.setNowCnt(relay.getOrder());
+		}
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 	
 }

@@ -2,8 +2,8 @@
   <div>
     <ul>
       <li v-for="(mutual, idx) in mutuals" :key="idx">
-        <input type="checkbox" v-model="friends" @click="onChange(`${mutual.id}`)" :id="`${mutual.id}`" :value="`${mutual.id}`">
-        <label :for="`${mutual.id}`">{{mutual.nickname}}</label>
+        <input type="checkbox" v-model="friends" @click="onChange(`${mutual.nickname}`)" :id="`${mutual.nickname}`" :value="`${mutual.nickname}`">
+        <label :for="`${mutual.nickname}`">{{mutual.nickname}}</label>
       </li>
     </ul>
   </div>
