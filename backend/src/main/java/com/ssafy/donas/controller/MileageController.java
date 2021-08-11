@@ -61,7 +61,7 @@ public class MileageController {
 		long userId = cash.getUserId();
 		long amount = cash.getAmount();
 		String accountNum = cash.getAccountNum();
-		String bank = cash.getBanck();
+		String bank = cash.getBank();
 		
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);
