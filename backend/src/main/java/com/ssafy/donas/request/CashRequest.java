@@ -16,6 +16,10 @@ public class CashRequest {
 	
 	@ApiModelProperty(required = true)
 	@NotNull
+	String userName;
+	
+	@ApiModelProperty(required = true)
+	@NotNull
 	String accountNum;
 	
 	@ApiModelProperty(required = true)
@@ -52,6 +56,14 @@ public class CashRequest {
 
 	public void setBank(String bank) {
 		this.bank = bank;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

@@ -30,17 +30,19 @@ public class CashService {
 		return cashRepo.sumCashById(userRepo.getById(userId));
 	}
 	
-	public boolean changeCash(long userId,LocalDateTime changeTime, long amount, String accountNum, String bank) {		
-		if(cashRepo.save(new Cash(amount,changeTime,userRepo.getById(userId),accountNum,bank)) == null)
+	public boolean changeCash(long userId,LocalDateTime changeTime, String name, long amount, String accountNum, String bank) {		
+		if(cashRepo.save(new Cash(amount,changeTime,name,userRepo.getById(userId),accountNum,bank)) == null)
 			return false;
 		return true;
 	}
 	public List<CashInfo> showDonationList(long userId){
 		List<Cash> cashList = cashRepo.findCashByUser(userRepo.getById(userId));
-		List<CashInfo> cashInfo = new ArrayList<CashInfo>();
+		if(cashList.size()==0)
+			return null;
 		
+		List<CashInfo> cashInfo = new ArrayList<CashInfo>();	
 		for(Cash c : cashList) {
-			cashInfo.add(new CashInfo(c.getId(),c.getBank(),c.getAmount()));
+			cashInfo.add(new CashInfo(c.getId(),c.getName(),c.getBank(),c.getAmount()));
 		}
 		
 		return cashInfo;
