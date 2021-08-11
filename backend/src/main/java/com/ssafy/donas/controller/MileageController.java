@@ -76,6 +76,8 @@ public class MileageController {
 		
 		if(!cashService.changeCash(userId, LocalDateTime.now(), amount, accountNum, bank))
 			return HttpStatus.NOT_FOUND;
+		if(!mileageService.minusMileage(userId, amount))
+			return new ResponseEntity<>("마일리지 초과", HttpStatus.BAD_REQUEST);
 		return HttpStatus.OK;
 		
 	}
