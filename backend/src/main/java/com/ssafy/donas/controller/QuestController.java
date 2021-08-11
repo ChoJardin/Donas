@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.ArticleInfo;
+import com.ssafy.donas.domain.Like;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.UserInfo;
 import com.ssafy.donas.domain.quest.Quest;
@@ -335,6 +336,7 @@ public class QuestController {
 		
 		// 참여하는 유저 리스트 보내기
 		List<UserInfo> users = new ArrayList<>();
+		
 		List<QuestParticipants> participants = quest.getParticipants();
 		for(QuestParticipants qp : participants) {
 			User user = qp.getUser();
@@ -343,7 +345,20 @@ public class QuestController {
 		response.setUsers(users);
 		
 		// 게시글 리스트 보내기
-		response.setArticles(articleService.getArticleInfosByUser(u));
+		List<ArticleInfo> articleList = new ArrayList<>();
+		List<Article> articles = quest.getArticles();
+		for(Article a : articles) {
+			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+			boolean isLike = false;
+			for(Like like: a.getLikes()) {
+				if(like.getUser() == u) {
+					isLike = true;
+					break;
+				}
+			}
+			
+			articleList.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle()));
+		}		
 		
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
 		if("R".equals(quest.getType())) {
