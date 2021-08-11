@@ -17,4 +17,6 @@ public class QuestAlarmResponse {
 	public String content;
 	@ApiModelProperty(value="sendTime",required = true, position = 6)
 	public LocalDateTime sendTime;
+	@ApiModelProperty(value = "confirm", required = true, position = 7)
+	public int confirm;
 }

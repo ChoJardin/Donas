@@ -122,6 +122,7 @@ public class AlarmController {
 			res.content = alarm.getContents();
 			res.sendTime = alarm.getSendTime();
 			res.questId = alarm.getQuest().getId();
+			res.confirm = alarm.getConfirm();
 			result.add(res);
 		}
 		
