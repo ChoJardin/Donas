@@ -36,7 +36,7 @@
 
       <div v-else class="on-going-quests">
         전체 퀘스트:&nbsp;&nbsp;{{questInfo.questCnt}}&nbsp;개
-        <span class="material-icons-outlined">chevron_right</span>
+        <button @click="$router.push('/quests')" class="material-icons-outlined">chevron_right</button>
       </div>
 
 
@@ -51,9 +51,9 @@
         <div class="charity-history"></div>
       </div>
 
-      <QuestType title="공동" :quests="questInfo.questG"/>
-      <QuestType title="개인" :quests="questInfo.questP"/>
-      <QuestType title="릴레이" :quests="questInfo.questR"/>
+      <QuestType title="공동" :quests="questInfo.questG" type="G"/>
+      <QuestType title="개인" :quests="questInfo.questP" type="P"/>
+      <QuestType title="릴레이" :quests="questInfo.questR" type="R"/>
 
     </div>
   </div>

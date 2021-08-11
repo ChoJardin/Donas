@@ -126,9 +126,15 @@ const actions = {
     commit('SET_SELECTED_ID', articleId)
   },
   // 상세 페이지 들어갔을 때,
-  setArticleDetail({commit}, {likeList, commentList}) {
-    commit('SET_LIKE_LIST', likeList)
+  setArticleDetail({dispatch}, {likeList, commentList}) {
+    dispatch('setLikeList', likeList)
+    dispatch('setCommentList', commentList)
+  },
+  setCommentList({commit}, commentList) {
     commit('SET_COMMENT_LIST', commentList)
+  },
+  setLikeList({commit}, likeList) {
+    commit('SET_LIKE_LIST', likeList)
   },
   // 좋아요
   setLike({commit, state}, {isLike, articleId}) {
