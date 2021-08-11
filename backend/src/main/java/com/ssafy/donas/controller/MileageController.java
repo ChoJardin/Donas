@@ -42,14 +42,13 @@ public class MileageController {
 		long amount = donation.getAmount();
 		long userId = donation.getUserId();
 		long charityId = donation.getCharityId();
-		
+		System.out.println(charityId);
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);
-		System.out.println("여기ㅁㄴㅇㄻㄴㅇㄹㄴㅇㅁ?");
 		
 		if(!donationService.getCharity(charityId))
 			return new ResponseEntity<>("기부 단체 없음", HttpStatus.NOT_FOUND);
-		System.out.println("여기?");
+		
 		if(!donationService.setDonation(amount, userId, charityId))
 			return new ResponseEntity<>("마일리지 초과",HttpStatus.BAD_REQUEST);
 		
