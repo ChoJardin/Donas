@@ -155,13 +155,19 @@ export default {
       myid = this.loginUser.id
     }
     let params = {myid: myid}
+    const profile_owner = this.$route.params.nickname
     UserApi.requestProfileInfo(
-        this.$route.params.nickname,
+        profile_owner,
         params,
         res => {
           // const util = require('util')
           // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
-          const articles = res.data.articles
+          // const articles = res.data.articles
+          const articles = res.data.articles.map(article => {
+            article.makerName = res.data.nickname
+            article.makerImage = res.data.picture
+          })
+          console.log(articles)
           this.$store.dispatch('setUserProfile', res.data)
           this.$store.dispatch('setFeeds', articles)
         },
