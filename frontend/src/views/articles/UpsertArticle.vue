@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import ImageInput from "@/components/common/ImageInput";
+
 export default {
-  name: "UpsertArticle"
+  name: "UpsertArticle",
+  components: {
+    // ImageInput
+  }
 }
 </script>
 

@@ -134,8 +134,12 @@
     font-family: GongGothicLight;
     text-decoration: none;
     color: #292929;
-
 }
+
+.material-icons.red {
+    color: #cd4e3e;
+}
+
 
 
 /*페이지 전환*/

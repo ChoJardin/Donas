@@ -7,10 +7,10 @@
           :id="`a${article.id}`"
           :article="article"/>
 
-    <transition-page>
+    <TransitionPage>
       <router-view>
       </router-view>
-    </transition-page>
+    </TransitionPage>
 
 
   </div>
@@ -48,8 +48,25 @@ export default {
 #vertical-feed-wrap {
   display: flex;
   flex-direction: column;
-  /*height: 100%;*/
-  /*align-items: center;*/
-  /*background-color: #fefbe9;*/
 }
+
+.slide-right-enter {
+  opacity:0;
+  transform: translateX(100%);
+}
+
+.slide-right-enter-active {
+  transition: all .5s ease;
+}
+
+.slide-right-leave-active {
+  transition: all .5s ease;
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to  {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
 </style>

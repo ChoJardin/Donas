@@ -31,10 +31,11 @@
 
           <!--좋아요/ 댓글-->
           <div id="single-article-article-detail">
-            <div class="single-article-details">
-              <i class="material-icons">favorite_border</i>
+            <button @click="onLike" class="single-article-details">
+              <i v-if="article.like" class="material-icons red">favorite</i>
+              <i v-else class="material-icons">favorite_border</i>
               &nbsp;{{article.heartCnt}}
-            </div>
+            </button>
             <router-link :to="`/article/${article.id}`" :key="`ca${article.id}`" class="single-article-details">
             <i class="material-icons-outlined">comment</i>
               &nbsp;<span>{{article.commentCnt}}</span>
@@ -51,6 +52,8 @@
 
 <script>
 import moment from "moment";
+import ArticlesApi from "@/api/ArticlesApi";
+import {mapState} from "vuex";
 
 import ('@/assets/style/articles/SingleArticle.css')
 
@@ -62,8 +65,31 @@ export default {
     article: Object
   },
   // methods
+  methods: {
+    // 좋아요
+    onLike() {
+      const data = {articleId: this.article.id, userId: this.loginUser.id}
+      ArticlesApi.requestLike(
+          !this.article.like,
+          data,
+          res => {
+            if (res.data === 'OK') {
+              data['isLike'] = this.article.like
+              this.$store.dispatch('setLike', data)
+            } else this.$router.push('/404')
+          },
+          err => {
+            // this.$router.push('/error')
+          }
+      )
+
+    }
+  },
   // computed
   computed: {
+    ...mapState({
+      loginUser: state => state.user.loginUser
+    }),
     dateFormatted: function (){
       return moment(String(this.article.createdAt)).format('YYYY/MM/DD hh:mm')
     }
