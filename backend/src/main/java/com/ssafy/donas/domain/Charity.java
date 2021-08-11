@@ -41,6 +41,12 @@ public class Charity {
 	@ColumnDefault("0")
 	private int quarter;
 	
+	@Column(nullable = false)
+	private String accountNum;
+	
+	@Column(nullable = false)
+	private String bank;
+	
 	@OneToMany(mappedBy = "charity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Donation> history = new ArrayList<>();
 	

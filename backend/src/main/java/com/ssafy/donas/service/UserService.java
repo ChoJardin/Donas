@@ -73,7 +73,6 @@ public class UserService {
 		Optional<User> testUser = userRepo.findById(id);
 		if (testUser.isEmpty())
 			return false;
-
 		return true;
 	}
 

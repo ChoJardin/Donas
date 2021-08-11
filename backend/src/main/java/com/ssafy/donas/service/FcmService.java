@@ -47,8 +47,6 @@ public class FcmService {
 
 		RestTemplate rest = new RestTemplate();
 		ResponseEntity<String> response = rest.exchange(API_URL, HttpMethod.POST, enti, String.class); 
-		System.out.println(response.getStatusCode());
-		System.out.println(response.getBody());
 			}
 	
 	private String makeMessage(String targetToken,String title,String message) throws JsonProcessingException{
@@ -63,6 +61,4 @@ public class FcmService {
 		
 		return objectMapper.writeValueAsString(fcmMessage);
 	}
-
-
 }
