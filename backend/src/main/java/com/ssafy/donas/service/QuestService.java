@@ -106,7 +106,7 @@ public class QuestService {
 		for (QuestParticipants qs : questSummaries) {
 			Quest q = qs.getQuest();
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
-					q.getStartAt(), q.getFinishAt(), q.getMileage()));
+					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
 		}
 
 		return quests;
@@ -122,7 +122,7 @@ public class QuestService {
 
 	public Quest addGroupQuest(String title, String description, Date startAt, Date finishAt, String picture,
 			String certification, long mileage, int userCnt) {
-		Group quest = new Group("G", title, description, startAt, finishAt, 0, picture, certification, mileage, userCnt);
+		Group quest = new Group("G", title, description, startAt, finishAt, picture, certification, mileage, userCnt);
 		groupRepo.save(quest);
 
 		return quest;
