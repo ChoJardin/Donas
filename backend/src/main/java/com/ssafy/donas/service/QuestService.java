@@ -60,6 +60,8 @@ public class QuestService {
 		for(Quest q : quests) {
 			System.out.println(q.getStartAt());
 			System.out.println(q.getFinishAt());
+			if(q.getStartAt()==null || q.getFinishAt()==null)
+				return -1;
 			if(q.getStartAt().after(time) && q.getFinishAt().before(time))
 				progressQuest.add(q);
 		}
