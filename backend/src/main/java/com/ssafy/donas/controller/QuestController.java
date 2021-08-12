@@ -1,7 +1,10 @@
 package com.ssafy.donas.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.ArticleInfo;
@@ -51,45 +55,45 @@ import java.time.LocalDateTime;
 @RequestMapping("/quest")
 @RequiredArgsConstructor
 public class QuestController {
-	
+
 	@Autowired
 	UserService userService;
 
 	@Autowired
 	QuestService questService;
-	
+
 	@Autowired
 	QuestParticipantsService questParticipantsService;
-	
+
 	@Autowired
 	RelayWaitService relayWaitService;
-	
+
 	@Autowired
 	QuestAlarmService questAlarmService;
-	
+
 	@Autowired
 	RelayService relayService;
-	
+
 	@Autowired
 	ArticleService articleService;
-	
+
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
-	 * */
-	
-	
+	 */
+
 	@PostMapping("/personal")
 	@ApiOperation(value = "개인퀘스트 생성")
 	public Object addPersonalQuest(@RequestBody AddPersonalQuestRequest quest) {
 		if (!userService.checkId(quest.getUserId()))
 			return HttpStatus.NOT_FOUND;
-		
+
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
-		
-		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+
+		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
+				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
-		
+
 		return HttpStatus.OK;
 	}
 
@@ -98,85 +102,88 @@ public class QuestController {
 	public Object addGroupQuest(@RequestBody AddGroupQuestRequest quest) {
 		if (!userService.checkId(quest.getUserId()))
 			return HttpStatus.NOT_FOUND;
-		
+
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
 
-		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getParticipants().size()+1);
-		
+		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
+				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(),
+				quest.getParticipants().size() + 1);
+
 		List<String> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
 		for (String p : participantUsers) {
 			long id = userService.getIdByNickname(p);
 			if (id == -1)
 				return HttpStatus.NOT_FOUND;
-			
+
 			participants.add(userService.getUser(id));
-			
+
 			// 참가자에게 참여 요청
-			questAlarmService.addQuestAlarm(id, groupQuest, userService.getUser(quest.getUserId()).getNickname(), "[공동 퀘스트 요청] "+groupQuest.getTitle(), LocalDateTime.now());
+			questAlarmService.addQuestAlarm(id, groupQuest, userService.getUser(quest.getUserId()).getNickname(),
+					"[공동 퀘스트 요청] " + groupQuest.getTitle(), LocalDateTime.now());
 		}
-		
+
 		// 퀘스트 생성자만 DB에 넣어두기 (나머지는 승락하면 넣기!)
 		questParticipantsService.addParticipant(quest.getUserId(), groupQuest.getId());
-		
+
 //		questParticipantsService.addParticipants(userService.getUser(quest.getUserId()), participants, groupQuest);
-		
+
 		return HttpStatus.OK;
 	}
-	
+
 	@PostMapping("/relay")
 	@ApiOperation(value = "릴레이퀘스트 생성")
 	public Object addRelayQuest(@RequestBody AddRelayQuestRequest quest) {
 		if (!userService.checkId(quest.getUserId()))
 			return HttpStatus.NOT_FOUND;
-		
+
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
-		
-		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getTargetCnt());
+
+		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
+				quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getTargetCnt());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
-		
+
 		return HttpStatus.OK;
 	}
-	
-	
+
 	/*
 	 * Quest 수정 : 공통
-	 * */
+	 */
 	@PatchMapping
 	@ApiOperation(value = "퀘스트 수정 (title, description 수정)")
 	public Object updateQuest(@RequestBody UpdateQuestRequest quest) {
 		if (!questService.checkQuest(quest.getQuestId()))
 			return HttpStatus.NOT_FOUND;
-		
+
 		questService.updateQuest(quest.getQuestId(), quest.getTitle(), quest.getDescription());
-		
+
 		return HttpStatus.OK;
 	}
 
 	/*
 	 * Quest 삭제 : 공통
-	 * */
+	 */
 	@DeleteMapping
 	@ApiOperation(value = "퀘스트 삭제")
 	public Object deleteQuest(@RequestParam long questId) {
-		if(!questService.delete(questId))
+		if (!questService.delete(questId))
 			return HttpStatus.NOT_FOUND;
-		
+
 		return HttpStatus.OK;
 	}
-	
+
 	@GetMapping("/count")
 	@ApiOperation(value = "현재 생성되어 있는 전체 퀘스트 개수")
-	public Object getAllQuestCnt() {		
+	public Object getAllQuestCnt() {
 		Long questCnt = questService.getAllQuestCnt();
 		return new ResponseEntity<>(questCnt, HttpStatus.OK);
 	}
-	
+
 	/*
 	 * 유저의 Quest 목록 : all, 개인, 릴레이
-	 * */
+	 */
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "유저 별 참여중인 모든 퀘스트 가져오기")
 	public Object getQuestByUser(@PathVariable long userId) {
@@ -205,13 +212,13 @@ public class QuestController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/personal/{userId}")
 	@ApiOperation(value = "유저별 참여중인 개인 퀘스트 가져오기")
 	public Object getPersonalByUser(@PathVariable long userId) {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
-		
+
 		List<QuestInfo> quests = questService.getQuestInfoByUserId(userId);
 
 		final List<QuestResponse> result = new ArrayList<>();
@@ -231,13 +238,13 @@ public class QuestController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/group/{userId}")
 	@ApiOperation(value = "유저별 참여중인 공동 퀘스트 가져오기")
 	public Object getGroupByUser(@PathVariable long userId) {
 		if (!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
-		
+
 		List<QuestInfo> quests = questService.getQuestInfoByUserId(userId);
 
 		final List<QuestResponse> result = new ArrayList<>();
@@ -284,43 +291,115 @@ public class QuestController {
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
+	// 유저의 진행, 완료, 시작 전 퀘스트
+	// 현재 시간 기준으로 구분해서 리스트 가져오기
+	@GetMapping("/participant")
+	@ApiOperation(value = "유저의 참여 퀘스트 현재 기준으로 가져오기")
+	public Object getQuestByTime(@RequestParam long userId, @RequestParam String status) {
+		
+		if (!userService.checkId(userId))
+			return HttpStatus.NOT_FOUND;
+		
+		Date time = new Date();
+		List<QuestResponse> result = new ArrayList<QuestResponse>();
+		List<QuestInfo> quests = questService.getQuestInfoByUserId(userId);
+		
+		if(quests.size()==0)
+			return new ResponseEntity<>("참여한 퀘스트가 없음", HttpStatus.NOT_FOUND);
+		
+		// 진행 중인 퀘스트
+		if(status.equals("p")) {
+			for(QuestInfo q : quests) {					
+				if(q.getStartAt().before(time) && q.getFinishAt().after(time)) {
+					QuestResponse qr = new QuestResponse();
+					qr.id = q.getId();
+					qr.title = q.getTitle();
+					qr.description = q.getDescription();
+					qr.picture = q.getPicture();
+					qr.startAt = q.getStartAt();
+					qr.finishAt = q.getFinishAt();
+					qr.type = q.getType();
+					qr.mileage = q.getMileage();
+					result.add(qr);
+				}
+			}
+		}
+		// 완료한 퀘스트
+		else if(status.equals("c")) {
+			for(QuestInfo q : quests) {					
+				if(q.getFinishAt().before(time)) {
+					QuestResponse qr = new QuestResponse();
+					qr.id = q.getId();
+					qr.title = q.getTitle();
+					qr.description = q.getDescription();
+					qr.picture = q.getPicture();
+					qr.startAt = q.getStartAt();
+					qr.finishAt = q.getFinishAt();
+					qr.type = q.getType();
+					qr.mileage = q.getMileage();
+					result.add(qr);
+				}
+			}
+		}
+		// 시작 전 퀘스트
+		else if(status.equals("b")) {
+			for(QuestInfo q : quests) {					
+				if(q.getStartAt().after(time)) {
+					QuestResponse qr = new QuestResponse();
+					qr.id = q.getId();
+					qr.title = q.getTitle();
+					qr.description = q.getDescription();
+					qr.picture = q.getPicture();
+					qr.startAt = q.getStartAt();
+					qr.finishAt = q.getFinishAt();
+					qr.type = q.getType();
+					qr.mileage = q.getMileage();
+					result.add(qr);
+				}
+			}
+		}
+
+		return new ResponseEntity<>(result,HttpStatus.OK);
+	}
+
 	/*
 	 * Relay 퀘스트 : 다음 주자 선정
-	 * */
+	 */
 	@PostMapping("/relay/next")
 	@ApiOperation(value = "릴레이 퀘스트 다음 주자 선정")
 	public Object setNextList(@RequestBody RelayNextListRequest request) {
 		if (!questService.checkRelay(request.getQuestId()))
 			return HttpStatus.NOT_FOUND;
-		
+
 		Quest relay = questService.getQuestById(request.getQuestId());
-		int order = relayService.getById(request.getQuestId()).getOrder()+1;
-		
+		int order = relayService.getById(request.getQuestId()).getOrder() + 1;
+
 		relayWaitService.addWaitList(relay, request.getNextList(), order);
-		
+
 		User sender = userService.getUser(request.getUserId());
-		
+
 		// 두번째 주자에게 알람
-		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(), "[릴레이 퀘스트 요청] "+relay.getTitle(), LocalDateTime.now());
-		
+		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(),
+				"[릴레이 퀘스트 요청] " + relay.getTitle(), LocalDateTime.now());
+
 		// 두번째 주자 알림 deadline 설정
 		relayWaitService.updateDeadline(relay, request.getNextList().get(0), LocalDateTime.now());
-		
+
 		return HttpStatus.OK;
 	}
-	
+
 	/*
 	 * Quest 상세 페이지 : 개인, 공동, 릴레이
-	 * */
+	 */
 	@GetMapping("/detail/{questId}")
 	@ApiOperation(value = "퀘스트 상세 정보")
 	public Object getPersonalDetail(@PathVariable long questId) {
-		if(!questService.checkQuest(questId))
+		if (!questService.checkQuest(questId))
 			return HttpStatus.NOT_FOUND;
-		
+
 		Quest quest = questService.getQuestById(questId);
-		
+
 		final QuestDetailResponse response = new QuestDetailResponse();
 		response.setId(quest.getId());
 		response.setTitle(quest.getTitle());
@@ -333,42 +412,43 @@ public class QuestController {
 		response.setPercent(quest.getPercent());
 		response.setCertification(quest.getCertification());
 		response.setSuccess(quest.getSuccess());
-		
+
 		// 참여하는 유저 리스트 보내기
 		List<UserInfo> users = new ArrayList<>();
-		
+
 		List<QuestParticipants> participants = quest.getParticipants();
-		for(QuestParticipants qp : participants) {
+		for (QuestParticipants qp : participants) {
 			User user = qp.getUser();
 			users.add(new UserInfo(user.getId(), user.getNickname(), user.getPicture(), user.getDescription()));
 		}
 		response.setUsers(users);
-		
+
 		// 게시글 리스트 보내기
 		List<ArticleShortInfo> articleList = new ArrayList<>();
 		List<Article> articles = quest.getArticles();
-		for(Article a : articles) {
-			articleList.add(new ArticleShortInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getUser().getNickname(), a.getUser().getPicture()));
-		}	
+		for (Article a : articles) {
+			articleList.add(new ArticleShortInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(),
+					a.getUpdatedAt(), a.getUser().getNickname(), a.getUser().getPicture()));
+		}
 		response.setArticles(articleList);
-		
+
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
-		if("R".equals(quest.getType())) {
+		if ("R".equals(quest.getType())) {
 			Relay relay = relayService.getById(questId);
 			response.setTargetCnt(relay.getTargetCnt());
 			response.setNowCnt(relay.getOrder());
 		}
-		
+
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/*
 	 * 전체 퀘스트
-	 * */
+	 */
 	@GetMapping
 	@ApiOperation(value = "모든 퀘스트 정보")
 	public Object getAllQuests() {
 		return new ResponseEntity<>(questService.findAll(), HttpStatus.OK);
 	}
-	
+
 }
