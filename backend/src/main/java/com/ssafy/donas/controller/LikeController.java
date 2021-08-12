@@ -46,11 +46,13 @@ public class LikeController {
 		if (!userService.checkId(like.getUserId()) || !articleService.checkArticle(like.getArticleId()))
 			return new ResponseEntity<>("좋아요 누르기",HttpStatus.NOT_FOUND);
 		
+		if(likeService.checkLike(like.getArticleId(), like.getUserId())==-1)
+			return new ResponseEntity<>("이미 누름",HttpStatus.NOT_FOUND);
+		
 		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
 		
-		
-		// 게시물의 좋아요 불러오기
-		return getLikeByUser(like.getArticleId());
+				
+		return HttpStatus.OK;
 	}
 
 	@DeleteMapping
@@ -60,13 +62,10 @@ public class LikeController {
 		
 		if (likeId == -1)
 			return HttpStatus.NOT_FOUND;
-		
-		
-		
-		
+
 		likeService.delete(likeId);
 		// 게시물의 좋아요 불러오기
-		return getLikeByUser(articleId);
+		return HttpStatus.OK;
 	}
 
 	@GetMapping("/{articleId}")

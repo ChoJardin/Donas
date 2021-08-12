@@ -36,10 +36,8 @@ public class LikeService {
 			return -1;
 	}
 	
-	public boolean checkLikeByUserIdAndArticleId(long userId, long articleID) {
-		//유저 아이디가 그 게시물에 좋아요를 눌렀는지 체크
-		return true;
-	}
+
+	
 	
 	public boolean addLike(User user, Article article) {
 		Like like = new Like(user, article);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Charity;
-import com.ssafy.donas.response.CharityResponse;
+
 import com.ssafy.donas.service.DonationService;
 
 import io.swagger.annotations.ApiOperation;
