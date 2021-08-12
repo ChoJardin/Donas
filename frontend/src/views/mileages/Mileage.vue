@@ -57,10 +57,9 @@ export default {
           err => {
             console.log(err)
           }
-      )
-    MileagesApi.requestCharityList(
+      );
+      MileagesApi.requestCharityList(
         res => {
-          console.log(res)
           this.$store.dispatch('setCharityList', res)
         },
         err => {

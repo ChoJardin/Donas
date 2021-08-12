@@ -1,12 +1,16 @@
 <template>
   <div>
-    <div id="single-quest-main">
-      <div id="single-quest-wrap">
-        <div id="single-quest-profile">
-          <img id="quest-image" src="../../assets/donut1.png">
-          <div id="single-quest-text">
-            <h1 id="single-quest-title">사랑의 열매</h1>
-            <div id="single-quest-description">국내 소외계층을 위한 모금운동</div>
+    <div id="charity-main" >
+      <div id="charity-wrap">
+        <div id="charity-profile">
+          <img id="charity-image" src="../../assets/donut1.png">
+          <div id="charity-text">
+            <div>
+              <h1 id="charity-title">{{charity.name}}</h1>
+              <div id="charity-description">{{ charity.total }}원 모금</div></div>
+            <div>
+              <div id="charity-tag">{{charity.tag}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -17,12 +21,15 @@
 
 <script>
 export default {
-  name: "OrgList"
+  name: "OrgList",
+  props: {
+    charity: Object
+  }
 }
 </script>
 
 <style scoped>
-#single-quest-main {
+#charity-main {
     height: 120px;
     width: 90%;
     margin: 15px 5%;
@@ -35,18 +42,18 @@ export default {
     box-shadow: 0 0 15px -7px #292929;
 }
 
-#single-quest-wrap {
+#charity-wrap {
   width: 280px;
 }
 
 /*게시글 작성 정보*/
-#single-quest-profile {
+#charity-profile {
     display: flex;
     padding-top: 10px;
-    width: 100%;
+    /*width: 100%;*/
 }
 
-#quest-image {
+#charity-image {
     height: 100px;
     width: 110px;
     border: 1px solid #292929;
@@ -56,24 +63,37 @@ export default {
     /*margin-top: 15px;*/
 }
 
-#single-quest-text {
+#charity-text {
     /*flex-direction: column;*/
-    margin-left: 15px;
+
     justify-content: center;
-    margin-top: 13px
+
 }
 
-#single-quest-title {
+#charity-title {
+  margin-left: 15px;
+  margin-top: 13px;
   display: flex;
   justify-items: start;
   font-weight: bold;
   font-size: 1.0em;
 }
 
-#single-quest-description {
-  margin-top: 20px;
+#charity-description {
+  margin-top: 10px;
+  margin-left: 15px;
+  /*margin-top: 13px;*/
   display: flex;
+  font-size: 0.9em;
+
+}
+
+#charity-tag {
+  display: flex;
+  margin-top: 15px;
   font-size: 0.8em;
+  text-align: center;
+  border: #183a1d solid;
 
 }
 </style>

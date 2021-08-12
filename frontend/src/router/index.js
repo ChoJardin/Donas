@@ -33,6 +33,7 @@ import UpsertArticle from "@/views/articles/UpsertArticle";
 // 마일리지
 import Mileage from "@/views/mileages/Mileage";
 import Donation from "@/components/mileages/Donation";
+import CharityDetail from "../components/mileages/CharityDetail";
 import CashOut from "@/components/mileages/CashOut";
 import CashOutResult from "@/components/mileages/CashOutResult"
 
@@ -120,6 +121,7 @@ const routes = [
       {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }}
     ]
   },
+  {path: '/charity/:id', name: 'CharityDetail', component: CharityDetail},
 
   // 프로필
   // {path: '/user/profile/', redirect: '/login'},

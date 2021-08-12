@@ -35,22 +35,28 @@ const createDonationRequest = (data, callback, errorCallback) => {
     })
 }
 
-const requestCharityList = async () => {
-  const requestCharityListPath = URL + ROUTES.requestCharityList
-  let result
-  result = axios.get(requestCharityListPath)
-    .then(res => res.data)
-    .catch(err => 'error')
-  return result
-}
+// const requestCharityList = async () => {
+//   const requestCharityListPath = URL + ROUTES.requestCharityList
+//   let result
+//   result = axios.get(requestCharityListPath)
+//     .then(res => res.data)
+//     .catch(err => 'error')
+//   return result
+// }
 
+const requestCharityList = (callback, errorCallback) => {
+  const requestCharityListPath = URL + ROUTES.requestCharityList
+axios.get(requestCharityListPath)
+    .then(res => callback(res.data))
+    .catch(error => errorCallback(error))
+}
 
 const UserApi = {
   URL,
   ROUTES,
   createCashOutRequest: (data, callback, errorCallback) => createCashOutRequest(data, callback, errorCallback),
   createDonationRequest: (data, callback, errorCallback) => createDonationRequest(data, callback, errorCallback),
-  requestCharityList:() => requestCharityList()
+  requestCharityList: (callback, errorCallback) => requestCharityList(callback, errorCallback),
 
 }
 
