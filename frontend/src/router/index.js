@@ -16,6 +16,8 @@ import CreateQuest from "@/views/quests/CreateQuest";
 import CreateSolo from "@/components/quests/CreateSolo";
 import CreateGroup from "@/components/quests/CreateGroup";
 import CreateRelay from "@/components/quests/CreateRelay";
+// 퀘스트 상세 참여자
+import ParticipantsList from "../components/quests/ParticipantsList";
 
 
 // 피드
@@ -85,7 +87,9 @@ const routes = [
       ]
   },
   //퀘스트 상세
-  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
+  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail,},
+  {path: '/participants', name:'ParticipantsList', component: ParticipantsList},
+
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
