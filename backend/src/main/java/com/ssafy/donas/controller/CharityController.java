@@ -34,7 +34,6 @@ public class CharityController {
 		if(charities==null)
 			return new ResponseEntity<>("기부단체 없음",HttpStatus.NOT_FOUND);
 		
-		
-		return new ResponseEntity<>("",HttpStatus.OK);
+		return new ResponseEntity<>(charities,HttpStatus.OK);
 	}
 }
