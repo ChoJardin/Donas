@@ -44,11 +44,6 @@ export default {
   // computed
   // watch
   // lifecycle hook
-  // created() {
-    // let user = cookies.get('login-user')
-    // if (user)
-    //   this.$store.dispatch('updateUserInfo', user)
-  // }
 }
 
   // components

@@ -32,7 +32,7 @@
 }
 
 .main-greeting .not-logged-in a{
-    text-decoration: none;
+    /*text-decoration: none;*/
     color: #292929;
 }
 

@@ -35,7 +35,7 @@
       </div>
 
       <div v-else class="on-going-quests">
-        전체 퀘스트:&nbsp;&nbsp;{{questInfo.questCnt}}&nbsp;개
+        <button @click="$router.push('/quests')">전체 퀘스트:&nbsp;&nbsp;{{questInfo.questCnt}}&nbsp;개</button>
         <button @click="$router.push('/quests')" class="material-icons-outlined">chevron_right</button>
       </div>
 

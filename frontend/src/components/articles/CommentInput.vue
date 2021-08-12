@@ -7,8 +7,8 @@
     <button @click="$emit('on-click', input)" class="comment-input-button" :disabled="!input || !isLoggedIn">등록</button>
     </div>
     <div class="comment-input-info">
-      <span>최대 xx자 까지 입력 가능합니다.</span>
-      <span>{{}}/xx</span>
+      <span>최대 250자 까지 입력 가능합니다.</span>
+      <span>{{written}}/250</span>
     </div>
   </div>
 </template>
@@ -67,6 +67,9 @@ export default {
       } else {
         return "댓글을 등록하기 위해서는 로그인이 필요합니다."
       }
+    },
+    written() {
+      return this.input.length
     }
   },
   created() {
@@ -77,26 +80,32 @@ export default {
 
 <style scoped>
 .comment-input-button-wrap {
+  display: flex;
   position: relative;
   height: 25px;
 }
 
 .comment-input {
   border: 1px solid #292929;
-  width: 100%;
+  /*border-top: 1px solid #292929;*/
+  /*border-bottom: 1px solid #292929;*/
+  /*border-right: 1px solid #292929;*/
+  width: 83%;
   height: 100%;
   padding: 0 5px;
   font-family: GongGothicLight;
   font-size: 0.8em;
   position: relative;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   /*box-shadow: ;*/
 }
 
 .comment-input-button {
   border: 1px solid #292929;
-  position: absolute;
+  /*position: absolute;*/
   right: 0;
+  width: 17%;
   height: 100%;
   padding: 0 5px;
   font-size: 0.8em;
@@ -114,9 +123,14 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: 3px 6px;
-  font-size: 0.7em;
   font-family: GongGothicLight;
   color: #a0a0a0;
-
 }
+
+/*.comment-input-info span {*/
+/*  font-size: 1px !important;*/
+/**/
+/*}*/
+
+
 </style>

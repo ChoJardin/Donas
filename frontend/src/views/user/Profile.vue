@@ -22,6 +22,7 @@
       <!--기본 프로필 end-->
 
       <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="2" readonly></textarea>
+      <div v-html="parsedDescription"></div>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="profile-follow-wrap">
@@ -141,6 +142,9 @@ export default {
     // 내 프로필 페이지인지 확인
     isMine() {
       return this.loginUser.nickname === this.$route.params.nickname
+    },
+    parsedDescription() {
+      return this.profile.description.replace(/\n/g, '<br/>')
     }
   },
   // watch
