@@ -49,7 +49,7 @@ public class LikeController {
 		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
 		
 		
-		
+		// 게시물의 좋아요 불러오기
 		return getLikeByUser(like.getArticleId());
 	}
 
@@ -62,6 +62,7 @@ public class LikeController {
 			return HttpStatus.NOT_FOUND;
 		
 		likeService.delete(likeId);
+		// 게시물의 좋아요 불러오기
 		return getLikeByUser(articleId);
 	}
 
