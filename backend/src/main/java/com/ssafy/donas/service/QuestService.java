@@ -1,5 +1,6 @@
 package com.ssafy.donas.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,11 @@ public class QuestService {
 		return questRepo.count();			
 	}
 	
+
+	public long getProgressQuestCnt() {
+		List<Quest> quests = questRepo.findProgressQuestByDate(LocalDateTime.now());
+		return quests.size();
+	}
 
 
 	public boolean checkQuest(long id) {
@@ -205,5 +211,8 @@ public class QuestService {
 		
 		return quests;
 	}
+
+
+
 
 }
