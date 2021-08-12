@@ -90,8 +90,9 @@ export default {
     })
   },
     created() {
+      const data = {questId:this.questId, myId: this.loginUser.id}
       QuestApi.requestQuestDetail(
-          this.questId,
+          data,
           res => {
             // console.log(res)
             this.$store.dispatch('setQuestDetail', res.data)

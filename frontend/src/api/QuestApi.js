@@ -9,7 +9,7 @@ const ROUTES = {
   createGroupQuest: '/quest/group',
   requestGroupMutuals:'/search/friends/',
   requestAllQuest: '/quest',
-  requestQuestDetail: '/quest/detail/'
+  requestQuestDetail: '/quest/detail'
 }
 
 
@@ -74,9 +74,9 @@ const requestAllQuest = (callback, errorCallback) => {
     })
 }
 
-const requestQuestDetail = (id, callback, errorCallback) => {
-  const requestQuestDetailPath = URL + ROUTES.requestQuestDetail + id
-  axios.get(requestQuestDetailPath)
+const requestQuestDetail = (data, callback, errorCallback) => {
+  const requestQuestDetailPath = URL + ROUTES.requestQuestDetail
+  axios.get(requestQuestDetailPath, {params: data})
     .then(res => {
       callback(res)
     })
