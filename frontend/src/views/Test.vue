@@ -5,18 +5,20 @@
                  :modified-date.sync="modifiedDate"/>
     <br><br>
 
-    <img :src="preview" alt="">
-    {{imageFile}}
+    <CommentInput></CommentInput>
+
   </div>
 </template>
 
 <script>
 import ImageInput from "@/components/common/ImageInput";
+import CommentInput from "@/components/articles/CommentInput";
 
 export default {
   name: "Test",
   components: {
-    ImageInput
+    ImageInput,
+    CommentInput,
   },
   data() {
     return {

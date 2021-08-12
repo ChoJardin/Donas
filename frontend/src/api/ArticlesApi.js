@@ -4,33 +4,32 @@ import axios from "axios";
 const URL = 'https://i5a603.p.ssafy.io:8081'
 const ROUTES = {
   like: '/like',
-  articleCommentList: '/comment',
+  comment: '/comment',
 }
 
 // 게시글 상세 페이지 정보
 // 좋아요 리스트/ 댓글 리스트
 const requestArticleDetailInfo = async (id) => {
-  const articleLikeListPath = URL + ROUTES.like + `/${id}`
-  const articleCommentListPath = URL + ROUTES.articleCommentList + `/${id}`
-
-  const commentList = await requestCommentList(articleCommentListPath)
-  const likeList = await requestLikeList(articleLikeListPath)
+  const commentList = await requestCommentList(id)
+  const likeList = await requestLikeList(id)
 
   return {commentList: commentList, likeList: likeList}
 }
 // 댓글 리스트
-const requestCommentList = async (path) => {
+const requestCommentList = async (id) => {
+  const articleCommentListPath = URL + ROUTES.comment + `/${id}`
   let commentList
-  commentList = await axios.get(path)
+  commentList = await axios.get(articleCommentListPath)
     .then(res => res.data)
     .catch(err => 'error')
   return commentList
 
 }
 // 좋아요 리스트
-const requestLikeList = async (path) => {
+const requestLikeList = async (id) => {
+  const articleLikeListPath = URL + ROUTES.like + `/${id}`
   let likeList
-  likeList = await axios.get(path)
+  likeList = await axios.get(articleLikeListPath)
     .then(res => res.data)
     .catch(err => 'error')
   return likeList
@@ -50,14 +49,47 @@ const requestLike = (isPost, data, callback, errorCallback) => {
   }
 }
 
+// 댓글 달기
+const createComment = async (data) => {
+  console.log(data)
+  const createCommentPath = URL + ROUTES.comment
+  let result
+  result = axios.post(createCommentPath, data)
+    .then(res => res.data)
+    .catch(err => err)
+  return result
+}
 
+// 댓글 수정
+const updateComment = async (data) => {
+  console.log(data)
+  const updateCommentPath = URL + ROUTES.comment
+  let result
+  result = axios.patch(updateCommentPath, data)
+    .then(res => res.data)
+    .catch(err => 'error')
+  return result
+}
 
+// 댓글 삭제
+const deleteComment = async (data) => {
+  const deleteCommentPath = URL + ROUTES.comment
+  let result
+  result = axios.delete(deleteCommentPath, {params: data})
+    .then(res => res.data)
+    .catch(err => 'error')
+  return result
+}
 
 const ArticlesApi = {
   URL,
   ROUTES,
-  requestArticleDetailInfo:(id)=>requestArticleDetailInfo(id),
+  requestArticleDetailInfo:(id)=> requestArticleDetailInfo(id),
+  requestCommentList:(id) => requestCommentList(id),
   requestLike:(isPost, data, callback, errorCallback) => requestLike(isPost, data, callback, errorCallback),
+  createComment:(data) => createComment(data),
+  updateComment:(data) => updateComment(data),
+  deleteComment:(data) => deleteComment(data),
 }
 
 export default ArticlesApi

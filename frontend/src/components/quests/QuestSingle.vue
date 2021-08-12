@@ -7,8 +7,8 @@
         <div id="single-quest-profile">
           <img id="quest-image" src="../../assets/donut1.png">
           <div id="single-quest-text">
-            <h1 id="single-quest-title">아침에 5시에 기상</h1>
-            <div id="single-quest-description">미라클 모닝에 도전</div>
+            <h1 id="single-quest-title">{{ quest.title }}</h1>
+            <div id="single-quest-description">{{quest.description}}</div>
           </div>
         </div>
         <!--게시글 작성 정보-->
@@ -20,7 +20,10 @@
 <script>
 
 export default {
-  name: "QuestList"
+  name: "QuestList",
+  props: {
+    quest: Object,
+  },
 
 }
 </script>

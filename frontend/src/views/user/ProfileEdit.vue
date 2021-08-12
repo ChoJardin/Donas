@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overlay">
     <!--ProfileEdit-->
     <div class="profile-flex-container">
 

@@ -16,10 +16,13 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: 'QuestAll',
+  methods:{
+    ...mapActions(['setSelectedType'])
+  },
   computed: {
         ...mapGetters(['isLoggedIn']),
   }

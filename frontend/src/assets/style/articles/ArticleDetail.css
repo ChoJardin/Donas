@@ -128,12 +128,17 @@
 #article-detail .heart-comment {
     width: 90%;
     margin: auto;
-    padding-top: 5px;
+    padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-family: GongGothicLight;
     font-size: 0.8em;
+}
+
+#article-detail .heart-comment .link {
+    text-decoration: underline;
+
 }
 
 #article-detail .heart-comment .material-icons.red {
@@ -143,4 +148,11 @@
 #article-detail .heart-cnt {
     display: flex;
     align-items: center;
+}
+
+/* 댓글 */
+#comment-set {
+    width: 94%;
+    margin-left: 3%;
+    margin-top: 10px;
 }

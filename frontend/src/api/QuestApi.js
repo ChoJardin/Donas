@@ -7,7 +7,9 @@ const ROUTES = {
   createPersonalQuest: '/quest/personal',
   createRelayQuest: '/quest/relay',
   createGroupQuest: '/quest/group',
-  requestGroupMutuals:'/search/friends/'
+  requestGroupMutuals:'/search/friends/',
+  requestAllQuest: '/quest',
+  requestQuestDetail: '/quest/detail/'
 }
 
 
@@ -61,6 +63,28 @@ const requestGroupFriends = (id, callback, errorCallback) => {
 
 }
 
+const requestAllQuest = (callback, errorCallback) => {
+  const requestAllQuestPath = URL + ROUTES.requestAllQuest
+  axios.get(requestAllQuestPath)
+    .then(res =>{
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
+const requestQuestDetail = (id, callback, errorCallback) => {
+  const requestQuestDetailPath = URL + ROUTES.requestQuestDetail + id
+  axios.get(requestQuestDetailPath)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
 
 const UserApi = {
   URL,
@@ -69,6 +93,8 @@ const UserApi = {
   createRelayQuest:(data, callback, errorCallback) => createRelayQuest(data,callback, errorCallback),
   createGroupQuest:(data, callback, errorCallback) => createGroupQuest(data,callback, errorCallback),
   requestGroupFriends:(id, callback, errorCallback) => requestGroupFriends(id,callback, errorCallback),
+  requestAllQuest:(callback, errorCallback) => requestAllQuest(callback, errorCallback),
+  requestQuestDetail:(id,callback, errorCallback) => requestQuestDetail(id,callback, errorCallback),
 
 
 }

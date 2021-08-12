@@ -58,7 +58,7 @@
         </button>
         <button @click="onHeartList">
           <span v-if="selectedArticle.heartCnt >= 2">
-            {{likeUser}} 님 외 {{selectedArticle.heartCnt-1}}명이 이 게시글을 좋아합니다.
+            {{likeUser}} 님 외 <span class="link">{{selectedArticle.heartCnt-1}}명</span>이 이 게시글을 좋아합니다.
           </span>
           <span v-else-if="selectedArticle.heartCnt === 1">
             {{likeUser}} 님이 이 게시글을 좋아합니다.
@@ -70,20 +70,11 @@
           <HeartList v-if="isHeartList" @on-click="onHeartList" />
         </transition>
 
-
-
-        <!--<i class="material-icons-outlined">comment</i>-->
-        <!--&nbsp;<span>{{selectedArticle.commentCnt}}</span>-->
       </div>
-
-
-
-
       <!--article-->
-      <br>
-      {{selectedArticle}}
 
-
+      <!--comment-->
+      <CommentSet id="comment-set"/>
 
 
 
@@ -99,6 +90,7 @@ import {mapGetters, mapState} from "vuex";
 import ComponentNav from "../common/ComponentNav";
 import HeartList from "@/components/articles/HeartList";
 import ArticlesApi from "@/api/ArticlesApi";
+import CommentSet from "@/components/articles/CommentSet";
 
 import('@/assets/style/articles/ArticleDetail.css')
 
@@ -107,7 +99,8 @@ export default {
   // components
   components: {
     ComponentNav,
-    HeartList
+    HeartList,
+    CommentSet
   },
   // props
   // data
