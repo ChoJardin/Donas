@@ -23,7 +23,8 @@
             <!--<img :src="article.image" alt="">-->
             <img src="@/assets/IMG_7263.jpeg" alt="">
           </div>
-        <router-link :to="`/quest/${article.questId}`" id="single-article-quest">참여 퀘스트: {{article.questTitle}}</router-link>
+<!--        <router-link :to="`/quest/${article.questId}`" id="single-article-quest">참여 퀘스트: {{article.questTitle}}</router-link>-->
+        <a id="single-article-quest" @click.prevent=setQuestId(article.questId)>참여 퀘스트: {{article.questTitle}}</a>
           <textarea name="content" id="single-article-article-content" cols="30" rows="2"
                     v-model="article.content" readonly/>
           <!--<div id="single-article-article-content">{{article.content}}</div>-->
@@ -53,7 +54,7 @@
 <script>
 import moment from "moment";
 import ArticlesApi from "@/api/ArticlesApi";
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 import ('@/assets/style/articles/SingleArticle.css')
 
@@ -83,7 +84,8 @@ export default {
           }
       )
 
-    }
+    },
+    ...mapActions(["setQuestId"])
   },
   // computed
   computed: {

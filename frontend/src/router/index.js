@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import UserApi from "@/api/UserApi";
+import store from '@/store'
 
 import Main from "@/views/Main";
 
@@ -16,6 +18,8 @@ import CreateQuest from "@/views/quests/CreateQuest";
 import CreateSolo from "@/components/quests/CreateSolo";
 import CreateGroup from "@/components/quests/CreateGroup";
 import CreateRelay from "@/components/quests/CreateRelay";
+// 퀘스트 상세 참여자
+import ParticipantsList from "../components/quests/ParticipantsList";
 
 
 // 피드
@@ -85,7 +89,9 @@ const routes = [
       ]
   },
   //퀘스트 상세
-  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
+  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail,},
+  {path: '/participants', name:'ParticipantsList', component: ParticipantsList},
+
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
@@ -116,7 +122,7 @@ const routes = [
 
   // 프로필
   // {path: '/user/profile/', redirect: '/login'},
-  {path: '/user/profile/undefined', redirect: '/login'},
+  // {path: '/user/profile/undefined', redirect: `/user/profile/`},
   {path: '/user/profile/edit', name: 'ProfileEdit', component: ProfileEdit},
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile, meta: {transitionName: 'slide'}},
 
@@ -150,18 +156,37 @@ const routes = [
   // 에러
   {path: '/error', name: 'Error', component: Error},
 
+  // 개발시 테스트용.. 여기에 컴포넌트 연결해서 필요한 거 보시져..
+  {path: '/dev/test', name: 'Test', component: Test},
+
   // 404
   // {path: '/*', redirect: '/404'},
-  {path: '/404', name: 'PageNotFound', component: PageNotFound},
-
-  // 개발시 테스트용.. 여기에 컴포넌트 연결해서 필요한 거 보시져..
-  {path: '/dev/test', name: 'Test', component: Test}
+  {path: '/*', name: 'PageNotFound', component: PageNotFound},
 ]
+
+// navigation duplicated
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+	return originalPush.call(this, location).catch(err => {
+		if (err.name !== 'NavigationDuplicated') throw err;
+	});
+};
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
 })
+
+router.beforeEach(async (to, from, next) => {
+  // 로그인 되어 있는 경우, 정보를 다시 새로 받아오겠습니다.
+  if (store.getters.isLoggedIn) {
+    await store.dispatch('updateUserInfo')
+  }
+  next()
+})
+
+
+
 
 export default router
