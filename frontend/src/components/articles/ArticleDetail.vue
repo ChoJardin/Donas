@@ -4,7 +4,7 @@
 
       <!--nav-->
       <component-nav @on-arrow="$router.back()" title="인증 게시글"/>
-      <button @click="onClick" class="material-icons-round more">more_horiz</button>
+      <button v-if="isMine" @click="onClick" class="material-icons-round more">more_horiz</button>
       <div v-if="openButton">
         <button>
           수정
@@ -46,8 +46,9 @@
         <span class="quest-title">{{selectedArticle.questTitle}}</span>
       </router-link>
 
-      <textarea name="content" id="article-content" cols="30" rows="3"
-                    v-model="selectedArticle.content" readonly/>
+      <div v-html="parsedContent" id="article-content" />
+      <!--<textarea name="content" id="article-content" cols="30" rows="3"-->
+      <!--              v-model="selectedArticle.content" readonly/>-->
 
       <!--좋아요/ 댓글-->
       <div class="heart-comment">
@@ -134,7 +135,7 @@ export default {
             } else this.$router.push('/404')
           },
           err => {
-            // this.$router.push('/error')
+            this.$router.push('/error')
           }
       )
     },
@@ -151,6 +152,14 @@ export default {
       commentList: state => state.articles.commentList
     }),
     ...mapGetters(['selectedArticle', 'likeUser']),
+    // 줄바꿈 설정
+    parsedContent() {
+      return this.selectedArticle.content.replace(/\n/g, '<br/>')
+    },
+    // 내 게시글인가?
+    isMine() {
+      return this.loginUser.nickname === this.selectedArticle.makerName
+    }
 
   },
   // watch

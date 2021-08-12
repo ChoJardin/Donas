@@ -17,21 +17,24 @@
         </div>
         <!--게시글 작성 정보-->
 
-        <router-link :to="`/article/${article.id}`">
+        <router-link :to="`/article/${article.id}`" style="text-decoration: none">
           <div id="single-article-picture">
             <!--인증 사진-->
             <!--<img :src="article.image" alt="">-->
             <img src="@/assets/IMG_7263.jpeg" alt="">
           </div>
 <!--        <router-link :to="`/quest/${article.questId}`" id="single-article-quest">참여 퀘스트: {{article.questTitle}}</router-link>-->
-        <a id="single-article-quest" @click.prevent=setQuestId(article.questId)>참여 퀘스트: {{article.questTitle}}</a>
-          <textarea name="content" id="single-article-article-content" cols="30" rows="2"
-                    v-model="article.content" readonly/>
-          <!--<div id="single-article-article-content">{{article.content}}</div>-->
+        <a id="single-article-quest" @click.prevent=setQuestId(article.questId)>
+          <span></span>
+          {{article.questTitle}}
+        </a>
+          <div v-html="parsedDescription" id="single-article-article-content"/>
+
         </router-link>
 
           <!--좋아요/ 댓글-->
           <div id="single-article-article-detail">
+            <!--<likeBtn :article="article"></likeBtn>-->
             <button @click="onLike" class="single-article-details">
               <i v-if="article.like" class="material-icons red">favorite</i>
               <i v-else class="material-icons">favorite_border</i>
@@ -52,15 +55,19 @@
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
 import moment from "moment";
 import ArticlesApi from "@/api/ArticlesApi";
-import {mapActions, mapState} from "vuex";
+// import likeBtn from "@/components/articles/likeBtn";
 
 import ('@/assets/style/articles/SingleArticle.css')
 
 export default {
   name: "SingleArticle",
   // components
+  components: {
+    // likeBtn,
+  },
   // props
   props: {
     article: Object
@@ -80,7 +87,8 @@ export default {
             } else this.$router.push('/404')
           },
           err => {
-            // this.$router.push('/error')
+            console.log('here')
+            this.$router.push('/error')
           }
       )
 
@@ -94,6 +102,9 @@ export default {
     }),
     dateFormatted: function (){
       return moment(String(this.article.createdAt)).format('YYYY/MM/DD hh:mm')
+    },
+    parsedDescription() {
+      return this.article.content.replace(/\n/g, '<br/>')
     }
   }
   // watch

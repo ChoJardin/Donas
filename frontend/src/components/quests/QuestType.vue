@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="on-going-quests">
-      {{title}} 퀘스트
-      <span @click="$router.push(`/quests/${questType}`)" class="material-icons-outlined">chevron_right</span>
+      <button>{{title}} 퀘스트</button>
+      <button @click="$router.push(`/quests/${questType}`)" class="material-icons-outlined">chevron_right</button>
     </div>
 
     <div class="quest-card-wrap">
