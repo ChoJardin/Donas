@@ -34,12 +34,20 @@ const requestLogin = (data,callback,errorCallback) => {
 }
 
 // 로그인 사용자 정보 업데이트
-const requestLoginUser = (id, callback, errorcallback) => {
+// const requestLoginUser = (id, callback, errorcallback) => {
+//   const requestLoginUserPath = URL + ROUTES.loginUser + id
+//   // console.log(requestLoginUserPath)
+//   axios.get(requestLoginUserPath)
+//     .then(res => callback(res))
+//     .catch(err => errorcallback(err))
+// }
+
+const requestLoginUser =(id, callback, errorCallback) => {
   const requestLoginUserPath = URL + ROUTES.loginUser + id
   // console.log(requestLoginUserPath)
   axios.get(requestLoginUserPath)
     .then(res => callback(res))
-    .catch(err => errorcallback(err))
+    .catch(err => errorCallback(err))
 }
 
 // 닉네임 중복 확인
@@ -181,6 +189,7 @@ const UserApi = {
   requestFollowings:(data, callback, errorCallback)=>requestFollowings(data, callback, errorCallback),
   requestFollow:(isPost, data, callback, errorCallback)=>requestFollow(isPost, data, callback, errorCallback),
   requestLoginUser:(id, callback, errorCallback)=>requestLoginUser(id, callback, errorCallback),
+  // requestLoginUser:(id)=>requestLoginUser(id),
   updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 

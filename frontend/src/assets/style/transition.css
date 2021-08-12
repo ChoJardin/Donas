@@ -7,6 +7,7 @@
   overflow: scroll;
   background: white;
   padding-bottom: 10px;
+  z-index: 2;
 }
 
 .pop-up-enter {

@@ -1,7 +1,7 @@
 import cookies from 'vue-cookies'
 import UserApi from "@/api/UserApi";
 // import axios from 'axios'
-// import router from '@/router'
+import router from '@/router'
 
 const state ={
   loginUser: {
@@ -103,7 +103,7 @@ const mutations = {
     state.userId = ''
     cookies.remove('login-user')
   },
-  // 선택된 유저의 프로필 정보 저장
+  // 선택된 유저의 프로필 정보 저장 -> 프로필 페이지
   SET_SELECTED_USER_PROFILE(state, profile) {
     state.selectedProfile = profile
   },
@@ -139,12 +139,13 @@ const mutations = {
 const actions = {
   // 로그인된 유저 정보 저장
   requestLoginUserProfile({dispatch}, {id}) {
-    UserApi.requestLoginUser(
+     UserApi.requestLoginUser(
       id,
       res => {
         // 일치하는 유저 아이디 없음
         if (res.data === 'NOT_FOUND') {
-          this.$router.push('/error')
+          console.log('not found')
+          router.push({name: 'PageNotFound'})
         } else {
           // 정상적으로 유저 정보 가져온 경우
           res.data.id = id
@@ -152,16 +153,37 @@ const actions = {
         }
       },
       err => {
-        console.log(err)
-        // this.$router.push('/error')
+        // console.log(err)
+        router.push('/error')
       }
     )
   },
+
+  // 로그인 이용자 정보 업데이트
+  // -> 라우터 새로고침시 매번 로딩
+  async updateUserInfo ({dispatch, state}) {
+    const id = state.loginUser.id
+    await UserApi.requestLoginUser(
+      id,
+      async (res) => {
+        if (res.data === 'OK') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          console.log('ok')
+          console.log(res.data.id)
+          await dispatch('setLoginUser', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
+  },
+
+
   // 로그인된 유저 정보 저장
-  setLoginUser({commit}, profile) {
+  async setLoginUser({commit}, profile) {
     commit('SET_LOGIN_USER', profile)
     cookies.set('login-user', profile, '2d')
   },
+
   // 로그아웃
   logout({commit}) {
     commit('LOGOUT')

@@ -31,7 +31,7 @@ export default {
   },
   created() {
     if (!this.isLoggedIn) {
-      this.$router.push('/login')
+      this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
     }
   }
 }

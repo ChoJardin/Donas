@@ -153,6 +153,10 @@ export default {
   },
   // lifecycle hook
   created() {
+    if (!this.isLoggedIn) {
+      this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+      return
+    }
     // 페이지 로딩시 초기 정보 요청
     // 비회원의 경우 0으로 요청 --> 백 확인 필요
     let myid = 0
