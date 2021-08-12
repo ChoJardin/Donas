@@ -64,9 +64,10 @@ public class ArticleInfo {
 	}
 	
 	@Builder
-	public ArticleInfo(long id, long questId, String image, String content, LocalDateTime createdAt, LocalDateTime updatedAt,
-			String type, boolean isLike, int heartCnt, int commentCnt, String questTitle, String makerName,
-			String makerImage) {
+	public ArticleInfo(long id, long questId, String image, String content, LocalDateTime createdAt,
+			LocalDateTime updatedAt, String type, boolean isLike, int heartCnt, int commentCnt, String questTitle,
+			String makerName, String makerImage) {
+		super();
 		this.id = id;
 		this.questId = questId;
 		this.image = image;
@@ -81,4 +82,6 @@ public class ArticleInfo {
 		this.makerName = makerName;
 		this.makerImage = makerImage;
 	}
+	
+
 }
