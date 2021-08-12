@@ -27,7 +27,7 @@ public class LikeService {
 		return true;
 	}
 	
-	public long checkLike(long articleId, long userId) {
+	public long checkLike( long userId,long articleId) {
 		Optional<Like> like = likeRepo.findByArticleIdAndUserId(articleId, userId);		
 		if(like.isPresent())
 			return like.get().getId();
