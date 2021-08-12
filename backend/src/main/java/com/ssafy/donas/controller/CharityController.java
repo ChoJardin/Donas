@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Charity;
-
+import com.ssafy.donas.response.CharityResponse;
 import com.ssafy.donas.service.DonationService;
 
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +31,22 @@ public class CharityController {
 	@ApiOperation(value="기부단체 목록")
 	public Object getCharityList() {
 		System.out.println("단체 받으러 11111111111111");
+		List<CharityResponse> result = new ArrayList();
 		List<Charity> charities = donationService.getCharityList();
 		if(charities==null)
 			return new ResponseEntity<>("기부단체 없음",HttpStatus.NOT_FOUND);
-		
-		return new ResponseEntity<>(charities,HttpStatus.OK);
+		for(Charity ch : charities) {
+			CharityResponse cr = new CharityResponse();
+			cr.id = ch.getId();
+			cr.name = ch.getName();
+			cr.quarter = ch.getQuarter();
+			cr.total = ch.getTotal();
+			cr.description = ch.getDescription();
+			cr.homepage = ch.getPicture();
+			cr.picture = ch.getPicture();
+			cr.tag = ch.getTag();
+			result.add(cr);
+		}
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 }
