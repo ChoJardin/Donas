@@ -81,8 +81,7 @@ public class ArticleService {
 					break;
 				}
 			}
-			
-			infos.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle()));
+			infos.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle(),a.getUser().getNickname(),a.getUser().getPicture()));
 		}		
 		return infos;
 	}
