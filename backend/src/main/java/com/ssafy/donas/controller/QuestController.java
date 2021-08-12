@@ -392,10 +392,13 @@ public class QuestController {
 	/*
 	 * Quest 상세 페이지 : 개인, 공동, 릴레이
 	 */
-	@GetMapping("/detail/{questId}")
+	@GetMapping("/detail")
 	@ApiOperation(value = "퀘스트 상세 정보")
-	public Object getPersonalDetail(@PathVariable long questId) {
+	public Object getPersonalDetail(@RequestParam long questId, @RequestParam long myId) {
 		if (!questService.checkQuest(questId))
+			return HttpStatus.NOT_FOUND;
+		
+		if(!userService.checkId(myId))
 			return HttpStatus.NOT_FOUND;
 
 		Quest quest = questService.getQuestById(questId);
@@ -424,13 +427,8 @@ public class QuestController {
 		response.setUsers(users);
 
 		// 게시글 리스트 보내기
-		List<ArticleShortInfo> articleList = new ArrayList<>();
-		List<Article> articles = quest.getArticles();
-		for (Article a : articles) {
-			articleList.add(new ArticleShortInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(),
-					a.getUpdatedAt(), a.getUser().getNickname(), a.getUser().getPicture()));
-		}
-		response.setArticles(articleList);
+
+		response.setArticles(articleService.getArticleInfosByUser(userService.getUser(myId)));
 
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
 		if ("R".equals(quest.getType())) {
@@ -438,7 +436,6 @@ public class QuestController {
 			response.setTargetCnt(relay.getTargetCnt());
 			response.setNowCnt(relay.getOrder());
 		}
-
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
