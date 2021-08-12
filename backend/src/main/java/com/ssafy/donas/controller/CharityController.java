@@ -30,6 +30,7 @@ public class CharityController {
 	@GetMapping
 	@ApiOperation(value="기부단체 목록")
 	public Object getCharityList() {
+		System.out.println("단체 받으러 11111111111111");
 		List<Charity> charities = donationService.getCharityList();
 		if(charities==null)
 			return new ResponseEntity<>("기부단체 없음",HttpStatus.NOT_FOUND);

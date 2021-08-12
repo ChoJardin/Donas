@@ -42,7 +42,9 @@ public class DonationService {
 	
 	// 기부단체 목록
 	public List<Charity> getCharityList(){
+		System.out.println("목롣으로 등러옹ㅁ");
 		List<Charity> charities = charityRepo.findAll();
+		System.out.println("단체 목록 받아옴");
 		if(charities.isEmpty())
 			return null;
 		return charities;
