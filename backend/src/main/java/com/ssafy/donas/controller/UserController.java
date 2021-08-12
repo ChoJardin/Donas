@@ -166,8 +166,8 @@ public class UserController {
 		result.picture = user.getPicture();
 		result.description = user.getDescription();
 		result.mileage = user.getMileage();
-		result.questCnt = user.getQuestCnt();
-		result.questPercent = questParticipantsService.getQuestCntById(id);
+		result.questCnt = questParticipantsService.getQuestCntById(id);
+		result.questPercent = user.getQuestPercent();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}	
