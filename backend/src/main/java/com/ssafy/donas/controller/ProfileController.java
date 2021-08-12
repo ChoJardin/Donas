@@ -100,7 +100,7 @@ public class ProfileController {
 		result.isFollowing = followService.isFollowing(userService.getUser(myid), user);
 
 		//Article 정보
-		result.articles = articleService.getArticleInfosByUser(user);
+		result.articles = articleService.getArticleInfosByUser(userService.getUser(myid));
 		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		System.out.println(result.articles);
