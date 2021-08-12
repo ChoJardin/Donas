@@ -41,6 +41,17 @@ public class Charity {
 	@ColumnDefault("0")
 	private int quarter;
 	
+	@Column(nullable = false)
+	private String description;
+	
+	@Column(nullable = false)
+	private String picture;
+	
+	@Column(nullable = false)
+	private String tag;
+	
+	@Column(nullable = false)
+	private String homepage;
 	
 	@OneToMany(mappedBy = "charity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Donation> history = new ArrayList<>();
