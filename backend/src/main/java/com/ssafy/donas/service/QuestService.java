@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Group;
 import com.ssafy.donas.domain.quest.Personal;
@@ -53,10 +54,17 @@ public class QuestService {
 	}
 	
 
-//	public long getProgressQuestCnt() {
-//		List<Quest> quests = questRepo.findProgressQuestByDate(LocalDateTime.now());
-//		return quests.size();
-//	}
+	public long getProgressQuestCnt(Date time) {
+		List<Quest> quests = questRepo.findAll();
+		List<Quest> progressQuest = new ArrayList<Quest>();
+		for(Quest q : quests) {
+			System.out.println(q.getStartAt());
+			System.out.println(q.getFinishAt());
+			if(q.getStartAt().after(time) && q.getFinishAt().before(time))
+				progressQuest.add(q);
+		}
+		return quests.size();
+	}
 
 
 	public boolean checkQuest(long id) {
