@@ -53,10 +53,10 @@ public class QuestService {
 	}
 	
 
-	public long getProgressQuestCnt() {
-		List<Quest> quests = questRepo.findProgressQuestByDate(LocalDateTime.now());
-		return quests.size();
-	}
+//	public long getProgressQuestCnt() {
+//		List<Quest> quests = questRepo.findProgressQuestByDate(LocalDateTime.now());
+//		return quests.size();
+//	}
 
 
 	public boolean checkQuest(long id) {
