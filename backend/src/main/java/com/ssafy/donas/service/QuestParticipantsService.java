@@ -43,4 +43,10 @@ public class QuestParticipantsService {
 		user.setQuestCnt(user.getQuestCnt()+1);
 	}
 	
+	public int getQuestCntById(long userId) {
+		 
+		return questParticipantsRepo.findQuestParticipantsByUser(userRepo.getById(userId)).size();
+	}
+	
+	
 }
