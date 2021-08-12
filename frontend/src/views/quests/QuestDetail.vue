@@ -9,11 +9,14 @@
         <div id="quest-wrap">
           <img id="quest-image" src="../../assets/donut1.png" alt="">
           <div id="quest-info">
-            <div id="quest-detail-title">{{ questDetail.title }}</div>
-            <div id="summary">{{ questDetail.description }}</div>
+            <div v-if="questDetail.type === 'P'" style="font-size: 0.7em">개인 퀘스트</div>
+            <div v-else-if="questDetail.type === 'G'" style="font-size: 0.7em">공동 퀘스트</div>
+            <div v-else-if="questDetail.type === 'R'" style="font-size: 0.7em">릴레이 퀘스트</div>
+            <div id="quest-detail-title" style="margin-bottom: 7px">{{ questDetail.title }}</div>
+            <div id="summary" style="padding-bottom:2px">{{ questDetail.description }}</div>
             <div id="quest-detail-date"><span style="font-size:1.0em ">{{dateFormatted}}</span>에 시작</div>
           </div>
-      </div>
+        </div>
 
 
         <div id="quest-detail-description">
@@ -21,14 +24,20 @@
           <div id="quest-detail-des-text">{{ questDetail.certification }}</div>
         </div>
 
-        <router-link :to="{name:'ParticipantsList'}" class="participants">
-          <div>참여 인원:
-<!--          {{questDetail.users}}-->
-          <span> {{userCount}}명</span></div>
-          <div> <i class="material-icons" style="padding-top: 4px">navigate_next</i> </div>
-        </router-link>
+        <div id="quest-detail-contents">
+          <router-link :to="{name:'ParticipantsList'}" class="participants">
+            <div>참여 인원:
+  <!--          {{questDetail.users}}-->
+            <span> {{userCount}}명</span></div>
+            <div> <i class="material-icons" style="padding-top: 4px">navigate_next</i> </div>
+          </router-link>
+        </div>
       <!--article start-->
-      <div id="article-wrap">
+      <div class="quest-detail-articles">
+        <div>인증 개시글</div>
+        <div>인증 생성</div>
+      </div>
+      <div id="quest-detail-article-wrap">
         <div class="article-image" v-for="article in articles" :key="article.id">
           <!--article 같이 보내줘야 함...-->
           <ArticleImage class="inner" :article="article"/>
@@ -71,6 +80,7 @@ export default {
     ...mapState({
       questDetail: state => state.quests.questDetail,
       questId: state => state.quests.questId,
+      loginUser: state => state.user.loginUser,
       dateFormatted: function () {
         return moment(String(this.questDetail.startAt)).format('YYYY/MM/DD')
       },
@@ -101,15 +111,20 @@ export default {
   flex-direction: column;
   text-align: start;
   margin: 15px;
+
 }
 
 #quest-wrap {
   display: flex;
+  border-bottom: rgba(41, 41, 41, 0.2) solid;
+  padding-bottom: 10px;
 }
 
 #quest-image {
   width: 100px;
   flex: 1 1 0;
+  border: rgba(41, 41, 41, 0.2) solid;
+  border-radius: 50%;
 }
 
 #quest-info {
@@ -118,6 +133,7 @@ export default {
   justify-content: space-around;
   flex: 2 2 0;
   margin-left: 8px;
+
 }
 
 #quest-detail-description {
@@ -129,10 +145,16 @@ export default {
 
 
 
-#article-wrap {
+#quest-detail-article-wrap {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.quest-detail-articles{
+  display: flex;
+  justify-content: space-between;
 }
 
 .article-image {
@@ -159,6 +181,9 @@ export default {
   object-position: center;
 }
 
+#quest-detail-head {
+
+}
 
 #quest-detail-title {
   font-family: GongGothicBold;
@@ -179,7 +204,12 @@ export default {
   height: 50px;
   padding-top: 7px;
   padding-left: 7px;
+  font-size: 0.8em;
 
+}
+
+#quest-detail-contents{
+  height: 100px;
 }
 
 .participants {
