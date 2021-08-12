@@ -33,6 +33,7 @@ import com.ssafy.donas.response.MypageResponse;
 import com.ssafy.donas.service.CashService;
 import com.ssafy.donas.service.DonationService;
 import com.ssafy.donas.service.MileageService;
+import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -53,6 +54,9 @@ public class UserController {
 	
 	@Autowired
 	CashService cashService;
+	
+	@Autowired
+	QuestParticipantsService questParticipantsService;
 
 	@PostMapping("/signin")
 	@ApiOperation(value = "로그인")
@@ -149,10 +153,12 @@ public class UserController {
 	@GetMapping("/mypage/{id}")
 	@ApiOperation(value = "마이페이지")
 	public Object showMypage(@PathVariable long id) {
-		User user = userService.getUser(id);	
-		System.out.println(user.getQuestCnt());
+		User user = userService.getUser(id);
+		
+		
 		if(user == null)
 			return HttpStatus.NOT_FOUND;		
+		
 		final MypageResponse result = new MypageResponse();
 		ResponseEntity response = null;	
 		result.nickname = user.getNickname();
@@ -161,7 +167,7 @@ public class UserController {
 		result.description = user.getDescription();
 		result.mileage = user.getMileage();
 		result.questCnt = user.getQuestCnt();
-		result.questPercent = user.getQuestPercent();
+		result.questPercent = questParticipantsService.getQuestCntById(id);
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}	

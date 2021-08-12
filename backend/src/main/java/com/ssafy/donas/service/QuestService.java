@@ -50,6 +50,8 @@ public class QuestService {
 	public long getAllQuestCnt() {
 		return questRepo.count();			
 	}
+	
+
 
 	public boolean checkQuest(long id) {
 		Optional<Quest> quest = questRepo.findById(id);
