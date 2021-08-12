@@ -58,11 +58,15 @@ export default {
             console.log(err)
           })
       },
-    onDecline(){
+    onDecline() {
       // console.log(data)
-      let path
+      const data = {
+        alarmId:this.alarm.id,
+        userId:this.loginUser.id
+      }
+      console.log(data)
       UserApi.declineAlert(
-          this.loginUser.id,
+          data,
           res => {
             console.log(res)
           },

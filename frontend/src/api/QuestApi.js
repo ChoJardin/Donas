@@ -94,7 +94,7 @@ const UserApi = {
   createGroupQuest:(data, callback, errorCallback) => createGroupQuest(data,callback, errorCallback),
   requestGroupFriends:(id, callback, errorCallback) => requestGroupFriends(id,callback, errorCallback),
   requestAllQuest:(callback, errorCallback) => requestAllQuest(callback, errorCallback),
-  requestQuestDetail:(id,callback, errorCallback) => requestQuestDetail(id,callback, errorCallback),
+  requestQuestDetail:(data,callback, errorCallback) => requestQuestDetail(data,callback, errorCallback),
 
 
 }

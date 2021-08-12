@@ -6,6 +6,7 @@ const URL = 'https://i5a603.p.ssafy.io:8081'
 const ROUTES = {
   createCashOutRequest: '/mileage/cash',
   createDonationRequest: '/mileage/donation',
+  requestCharityList: '/charity',
 }
 
 
@@ -34,12 +35,22 @@ const createDonationRequest = (data, callback, errorCallback) => {
     })
 }
 
+const requestCharityList = async () => {
+  const requestCharityListPath = URL + ROUTES.requestCharityList
+  let result
+  result = axios.get(requestCharityListPath)
+    .then(res => res.data)
+    .catch(err => 'error')
+  return result
+}
+
 
 const UserApi = {
   URL,
   ROUTES,
   createCashOutRequest: (data, callback, errorCallback) => createCashOutRequest(data, callback, errorCallback),
   createDonationRequest: (data, callback, errorCallback) => createDonationRequest(data, callback, errorCallback),
+  requestCharityList:() => requestCharityList()
 
 }
 

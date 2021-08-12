@@ -30,6 +30,7 @@
 // import Donation from "@/components/mileages/Donation";
 import {mapState} from "vuex";
 import UserApi from "../../api/UserApi";
+import MileagesApi from "../../api/MileagesApi";
 export default {
   name: 'Mileage',
   components: {
@@ -57,6 +58,15 @@ export default {
             console.log(err)
           }
       )
+    MileagesApi.requestCharityList(
+        res => {
+          console.log(res)
+          this.$store.dispatch('setCharityList', res)
+        },
+        err => {
+          console.log(err)
+        }
+    )
     }
 }
 </script>
