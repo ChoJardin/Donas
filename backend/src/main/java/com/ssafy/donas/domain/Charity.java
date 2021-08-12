@@ -33,24 +33,24 @@ public class Charity {
 	@Column(nullable = false, length=20)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@ColumnDefault("0")
 	private int total;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@ColumnDefault("0")
 	private int quarter;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String description;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String picture;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String tag;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String homepage;
 	
 	@OneToMany(mappedBy = "charity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
