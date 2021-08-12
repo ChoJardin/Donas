@@ -31,7 +31,7 @@ public class MainController {
 	@ApiOperation(value = "메인페이지")
 	public Object mainPage() {
 		MainResponse result = new MainResponse();
-		result.questCnt = questService.getProgressQuestCnt();
+		result.questCnt = questService.getAllQuestCnt();
 		result.donation = donationService.getSumDonation();
 		result.quarter = "";
 		result.questP = questService.getQuestList("P");
