@@ -96,6 +96,7 @@ const routes = [
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
+  {path: '/article/create', component: UpsertArticle},
   {
     path: '/article', component: VerticalFeed,
     children: [
@@ -109,7 +110,6 @@ const routes = [
     ]
   },
   {path: '/article/:id/edit', component: UpsertArticle},
-  {path: '/article/create', component: UpsertArticle},
 
   // 마일리지
   {

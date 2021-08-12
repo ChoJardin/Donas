@@ -74,7 +74,7 @@ export default {
 #app-content {
   position: absolute;
   top: 60px;
-  bottom: 50px;
+  bottom: 60px;
   width: 100%;
   padding: 0 15px;
   overflow: auto;

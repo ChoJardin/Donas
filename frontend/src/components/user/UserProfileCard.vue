@@ -1,7 +1,8 @@
 <template>
   <div id="follow-user-profile" :class="{background: isColored}">
     <router-link :to="`/user/profile/${profile.nickname}`" id="follow-profile-wrap">
-      <img class="profile-image card" src="@/assets/profile_test.jpeg" alt="">
+        <img v-if="profile.picture" class="profile-image card" :src="profile.picture" alt="">
+        <img v-else class="profile-image card" src="@/assets/donut_profile.png" alt="">
       <div id="follow-profile-nickname">{{profile.nickname}}</div>
     </router-link>
   </div>
