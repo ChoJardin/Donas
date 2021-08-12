@@ -40,6 +40,14 @@ public class DonationService {
 		return true;		
 	}	
 	
+	// 기부단체 목록
+	public List<Charity> getCharityList(){
+		List<Charity> charities = charityRepo.findAll();
+		if(charities.isEmpty())
+			return null;
+		return charities;
+	}
+	
 	public long getSumDonation() {
 		if(donationRepo.count()!=0)
 			return donationRepo.sumDonation();
