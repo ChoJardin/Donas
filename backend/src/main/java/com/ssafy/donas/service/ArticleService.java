@@ -76,7 +76,9 @@ public class ArticleService {
 			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
 			boolean isLike = false;
 			for(Like like: a.getLikes()) {
+				System.out.println(user.getId()+"adfasdfasddfsa");
 				if(like.getUser() == user) {
+					System.out.println("좋아요 누름");
 					isLike = true;
 					break;
 				}
