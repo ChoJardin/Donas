@@ -156,10 +156,8 @@ const actions = {
     await UserApi.requestLoginUser(
       id,
       async (res) => {
-        if (res.data === 'OK') {
+        if (res.data !== 'NOT_FOUND') {
           res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
-          console.log('ok')
-          console.log(res.data.id)
           await dispatch('setLoginUser', res.data)
         }
       },
@@ -169,7 +167,7 @@ const actions = {
 
 
   // 로그인된 유저 정보 저장
-  async setLoginUser({commit}, profile) {
+  setLoginUser({commit}, profile) {
     commit('SET_LOGIN_USER', profile)
     cookies.set('login-user', profile, '2d')
   },

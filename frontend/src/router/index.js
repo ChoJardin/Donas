@@ -178,10 +178,10 @@ const router = new VueRouter({
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   // 로그인 되어 있는 경우, 정보를 다시 새로 받아오겠습니다.
   if (store.getters.isLoggedIn) {
-    await store.dispatch('updateUserInfo')
+    store.dispatch('updateUserInfo')
   }
   next()
 })
