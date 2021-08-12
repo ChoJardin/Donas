@@ -61,6 +61,7 @@ public class QuestAlarmService {
 	public void updateConfirm(long alarmId, int confirm) {
 		QuestAlarm questAlarm = questAlarmRepo.getById(alarmId);
 		questAlarm.setConfirm(confirm);
+		
 	}
 	
 	public QuestAlarm getAlarm(long alarmId) {

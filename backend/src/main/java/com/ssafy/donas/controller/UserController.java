@@ -149,7 +149,8 @@ public class UserController {
 	@GetMapping("/mypage/{id}")
 	@ApiOperation(value = "마이페이지")
 	public Object showMypage(@PathVariable long id) {
-		User user = userService.getUser(id);		
+		User user = userService.getUser(id);	
+		System.out.println(user.getQuestCnt());
 		if(user == null)
 			return HttpStatus.NOT_FOUND;		
 		final MypageResponse result = new MypageResponse();
