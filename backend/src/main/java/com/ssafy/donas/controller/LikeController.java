@@ -46,7 +46,7 @@ public class LikeController {
 		if (!userService.checkId(like.getUserId()) || !articleService.checkArticle(like.getArticleId()))
 			return new ResponseEntity<>("좋아요 누르기",HttpStatus.NOT_FOUND);
 		
-		if(likeService.checkLike(like.getArticleId(), like.getUserId())!=-1)
+		if(likeService.checkLike (like.getUserId(),like.getArticleId())!=-1)
 			return new ResponseEntity<>("이미 누름",HttpStatus.NOT_FOUND);	
 		
 		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
