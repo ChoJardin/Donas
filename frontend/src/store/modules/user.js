@@ -9,6 +9,7 @@ const state ={
     nickname: undefined,
     picture: '',
     description: '',
+    mileage:'',
   },
   // selectedProfile: {
   //   id: '',  // 유저 아이디
@@ -66,23 +67,8 @@ const state ={
     articleId: '',
     sendName: '',
     confirm: '',
-  }]
-
-  // alarms: [{
-  //   id: '1',
-  //   receiver_id: '3',
-  //   content: "ssafy님이 팔로우 했습니다.",
-  //   sendTime: "2021-08-04T03:06:43",
-  //   confirm: '1'
-  // },
-  //   {
-  //     id: '2',
-  //     receiver_id: '3',
-  //     content: "admin님이 팔로우 했습니다.",
-  //     sendTime: "2021-08-09T03:06:43",
-  //     confirm: '0'
-  //   }
-  // ]
+  }],
+  userMileage: 0
 }
 
 
@@ -133,6 +119,10 @@ const mutations = {
   SET_QUEST_ALARMS(state, quest) {
     state.questAlarms = quest
   },
+
+  SET_MILEAGE(state, mileage) {
+    state.userMileage = mileage
+  }
 }
 
 
@@ -196,6 +186,10 @@ const actions = {
   setQuestAlarms({commit}, quest) {
     commit('SET_QUEST_ALARMS', quest)
   },
+
+  setMileage({commit}, mileage) {
+    commit('SET_MILEAGE', mileage)
+  }
 
 }
 
