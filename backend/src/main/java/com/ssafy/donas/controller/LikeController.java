@@ -61,6 +61,9 @@ public class LikeController {
 		if (likeId == -1)
 			return HttpStatus.NOT_FOUND;
 		
+		
+		
+		
 		likeService.delete(likeId);
 		// 게시물의 좋아요 불러오기
 		return getLikeByUser(articleId);
