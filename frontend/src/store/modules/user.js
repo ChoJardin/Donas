@@ -199,10 +199,12 @@ const actions = {
   },
   // 알림 리스트
   setCommonAlarms({commit}, common) {
+    console.log(common)
     commit('SET_COMMON_ALARMS', common)
   },
 
   setQuestAlarms({commit}, quest) {
+    console.log(quest)
     commit('SET_QUEST_ALARMS', quest)
   },
 

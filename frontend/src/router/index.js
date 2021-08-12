@@ -184,7 +184,10 @@ router.beforeEach((to, from, next) => {
   const user = cookies.get('login-user')
   if (user) {
     store.dispatch('updateUserInfo', user)
+    // store.dispatch('setCommonAlarms', user)
+    // store.dispatch('setQuestAlarms', user)
   }
+
   // if (store.getters.isLoggedIn) {
   //   store.dispatch('updateUserInfo')
   // }
