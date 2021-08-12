@@ -147,28 +147,36 @@ public class QuestService {
 			return false;
 
 		String type = getQuestById(questId).getType();
+		List<QuestParticipants> questParticipants = null;
 		if (type.equals("P")) {
 			if (!checkPersonal(questId))
 				return false;
-
+			questParticipants = personalRepo.getById(questId).getParticipants();
 			personalRepo.deleteById(questId);
+			
 			personalRepo.flush();
-			return true;
+
 		} else if (type.equals("G")) {
 			if (!checkGroup(questId))
 				return false;
-
+			questParticipants = groupRepo.getById(questId).getParticipants();
 			groupRepo.deleteById(questId);
 			groupRepo.flush();
-			return true;
+
 		} else {
 			if (!checkRelay(questId))
-				return false;
-			
+				return false;			
+			questParticipants = relayRepo.getById(questId).getParticipants();
 			relayRepo.deleteById(questId);
 			relayRepo.flush();
-			return true;
 		}
+		if(questParticipants!=null) {
+			for(QuestParticipants qp : questParticipants) {
+				User user = qp.getUser();
+				user.setQuestCnt(user.getQuestCnt()-1);
+			}
+		}
+		return true;
 	}
 
 	public void quitQuest(long questId, int success) {

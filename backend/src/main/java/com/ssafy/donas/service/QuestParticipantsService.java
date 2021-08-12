@@ -39,6 +39,8 @@ public class QuestParticipantsService {
 	public void addParticipant(long userId, long questId) {
 		QuestParticipants qp = new QuestParticipants(userRepo.getById(userId), questRepo.getById(questId));
 		questParticipantsRepo.save(qp);
+		User user = userRepo.getById(userId);
+		user.setQuestCnt(user.getQuestCnt()+1);
 	}
 	
 }
