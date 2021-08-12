@@ -66,7 +66,23 @@ public class ArticleService {
 		return articleRepo.findArticleByUser(user);
 	}
 	
-	
+	public List<ArticleInfo> getArticleInfosByUser(User user){
+		List<Article> articles = getArticlesByUser(user);
+		
+		List<ArticleInfo> infos = new ArrayList<ArticleInfo>();
+		for(Article a : articles) {
+			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+			boolean isLike = false;
+			for(Like like: a.getLikes()) {
+				if(like.getUser() == user) {
+					isLike = true;
+					break;
+				}
+			}
+			infos.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle(),a.getUser().getNickname(),a.getUser().getPicture()));
+		}		
+		return infos;
+	}
 	
 	public List<ArticleInfo> getArticleInfosByUser(User ownUser, User otherUser){
 		List<Article> articles = getArticlesByUser(ownUser);
