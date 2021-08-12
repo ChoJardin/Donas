@@ -44,7 +44,7 @@ public class LikeController {
 	@ApiOperation(value = "좋아요 누르기")
 	public Object saveLike(@RequestBody LikeRequest like) {
 		if (!userService.checkId(like.getUserId()) || !articleService.checkArticle(like.getArticleId()))
-			return HttpStatus.NOT_FOUND;
+			return new ResponseEntity<>("좋아요 누르기",HttpStatus.NOT_FOUND);
 		
 		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
 		
@@ -73,7 +73,7 @@ public class LikeController {
 	@ApiOperation(value = "게시물 당 좋아요 누른 유저 목록")
 	public Object getLikeByUser(@PathVariable long articleId) {
 		if (!articleService.checkArticle(articleId))
-			return HttpStatus.NOT_FOUND;
+			return new ResponseEntity<>("좋아요 누른 유저 목록",HttpStatus.NOT_FOUND);
 		
 		List<Like> likes = likeService.getLikes(articleId);
 		final List<SearchResponse> result = new ArrayList<>();
