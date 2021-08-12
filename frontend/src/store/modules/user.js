@@ -151,8 +151,7 @@ const actions = {
 
   // 로그인 이용자 정보 업데이트
   // -> 라우터 새로고침시 매번 로딩
-  async updateUserInfo ({dispatch, state}) {
-    const id = state.loginUser.id
+  async updateUserInfo ({dispatch, state}, {id}) {
     await UserApi.requestLoginUser(
       id,
       async (res) => {

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import UserApi from "@/api/UserApi";
 import store from '@/store'
+import cookies from "vue-cookies";
 
 import Main from "@/views/Main";
 
@@ -180,9 +181,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // 로그인 되어 있는 경우, 정보를 다시 새로 받아오겠습니다.
-  if (store.getters.isLoggedIn) {
-    store.dispatch('updateUserInfo')
+  const user = cookies.get('login-user')
+  if (user) {
+    store.dispatch('updateUserInfo', user)
   }
+  // if (store.getters.isLoggedIn) {
+  //   store.dispatch('updateUserInfo')
+  // }
   next()
 })
 
