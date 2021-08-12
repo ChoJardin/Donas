@@ -1,5 +1,6 @@
 package com.ssafy.donas.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -43,9 +44,14 @@ public class QuestParticipantsService {
 		user.setQuestCnt(user.getQuestCnt()+1);
 	}
 	
-	public int getQuestCntById(long userId) {
-		 
-		return questParticipantsRepo.findQuestParticipantsByUser(userRepo.getById(userId)).size();
+	public int getQuestCntById(long userId, Date time) {
+		List<QuestParticipants> questParticipants = questParticipantsRepo.findQuestParticipantsByUser(userRepo.getById(userId));
+		int questCnt = 0;
+		for(QuestParticipants qp : questParticipants) {
+			 if(questRepo.getById(qp.getQuest().getId()).getStartAt().after(time) &&questRepo.getById(qp.getQuest().getId()).getFinishAt().before(time))
+				 questCnt++;
+		 }
+		return questCnt;
 	}
 	
 	

@@ -34,9 +34,8 @@ public class MainController {
 	@ApiOperation(value = "메인페이지")
 	public Object mainPage() {
 		MainResponse result = new MainResponse();
-		Date today = new Date();
-		System.out.println(today);
-		result.questCnt = questService.getProgressQuestCnt(today);
+
+		result.questCnt = questService.getAllQuestCnt();
 		result.donation = donationService.getSumDonation();
 		result.quarter = "";
 		result.questP = questService.getQuestList("P");

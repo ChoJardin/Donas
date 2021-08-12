@@ -1,5 +1,6 @@
 package com.ssafy.donas.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -161,12 +162,13 @@ public class UserController {
 		
 		final MypageResponse result = new MypageResponse();
 		ResponseEntity response = null;	
+
 		result.nickname = user.getNickname();
 		result.email = user.getEmail();
 		result.picture = user.getPicture();
 		result.description = user.getDescription();
 		result.mileage = user.getMileage();
-		result.questCnt = questParticipantsService.getQuestCntById(id);
+		result.questCnt = questParticipantsService.getQuestCntById(id, new Date());
 		result.questPercent = user.getQuestPercent();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
