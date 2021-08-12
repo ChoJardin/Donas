@@ -58,7 +58,7 @@ public class LikeController {
 	@DeleteMapping
 	@ApiOperation(value = "좋아요 취소")
 	public Object deleteLike(@RequestParam long articleId, @RequestParam long userId) {
-		long likeId = likeService.checkLike(articleId, userId);
+		long likeId = likeService.checkLike(userId, articleId);
 		
 		if (likeId == -1)
 			return HttpStatus.NOT_FOUND;
