@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="onClick" id="quest-card">
+    <button  id="quest-card">
       <img src="@/assets/IMG_7263.jpeg" alt="">
       <!--<img :src="quest.picture" alt="">-->
       <span>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "QuestCard",
   // components
@@ -21,11 +23,9 @@ export default {
   },
   // data
   // methods
-  methods: {
-    onClick() {
-      this.$router.push(`/quest/${this.quest.id}`)
-    }
-  },
+  // methods: {
+  //   ...mapActions(["setQuestId"]),
+  // },
   // computed
   // watch
   // lifecycle hook

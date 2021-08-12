@@ -6,7 +6,7 @@
     </div>
 
     <div class="quest-card-wrap">
-      <QuestCard v-for="quest in quests" :key="quest.id" :quest="quest"></QuestCard>
+      <QuestCard @click.native='setQuestId(quest.id)' v-for="quest in quests" :key="quest.id" :quest="quest"></QuestCard>
     </div>
 
 
@@ -18,6 +18,7 @@
 
 <script>
 import QuestCard from "@/components/quests/QuestCard";
+import {mapActions} from "vuex";
 
 export default {
   name: "QuestType",
@@ -33,6 +34,9 @@ export default {
   },
   // data
   // methods
+  methods: {
+    ...mapActions(["setQuestId"]),
+  },
   // computed
   computed: {
     questType() {
