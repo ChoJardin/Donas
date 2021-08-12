@@ -69,6 +69,7 @@ export default {
           res => {
             // console.log(res)
             this.$store.dispatch('setQuestDetail', res.data)
+            this.$store.dispatch('setFeeds', res.data.articles)
           },
           err => {
             console.log(err)
