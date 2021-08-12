@@ -4,7 +4,7 @@
       type="file" id="image-input" ref="imgInput"
       accept="image/jpeg, image/png" capture="camera"
       @change="handleFile"
-      style="display: none;">
+      >
 
     <!--<button @click="uploadFile()">등록</button>-->
 
@@ -62,7 +62,7 @@ export default {
         read.readAsDataURL(this.file)
 
         // 마지막 수정 날짜
-        this.$emit('update:modified-date', this.file.lastModifiedDate)
+        this.$emit('modified-date', this.file.lastModifiedDate)
       }
 
     },

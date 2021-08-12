@@ -19,24 +19,18 @@
           </div>
         </div>
 
-
         <div class="profile-edit-content">
           <div id="profile-image-input">
-            <div @click="$refs.aws.onOpen()">
+            <!--div 클릭하면 aws의 input창 호출-->
+            <div @click="onLabel">
               <img v-if="preview" :src="preview" class="profile-image" alt="">
               <img v-else-if="picture" :src="picture" class="profile-image" alt="">
-              <img v-else class="profile-image" src="../../assets/donut1.png" alt="">
+              <img v-else class="profile-image" src="@/assets/donut_profile.png" alt="">
             </div>
-
-            <AwsImageUploader id="image-input" ref="aws" @preview="onPreview" @on-error="onError"/>
-            <!--사진첩/ 카메라 선택창 호출됨 -->
-            <!--<ImageInput id=image-input" :preview.sync="newImage.preview" :image-file.sync="newImage.imageFile"-->
-            <!--     :modified-date.sync="newImage.modifiedDate" style="display: none"/>-->
-            <!--<input-->
-            <!--    type="file" id="image-input" ref="imgInput"-->
-            <!--    accept="image/jpeg, image/png" capture="camera"-->
-            <!--    @change="onImageUploaded"-->
-            <!--    style="display: none;">-->
+            <AwsImageUploader
+                id="image-input" ref="aws"
+                @preview="onPreview" @on-error="onError"
+                style="display: none"/>
             <span class="material-icons-outlined position">add_photo_alternate</span>
             <div v-if="imageError">{{imageError}}</div>
           </div>
@@ -139,7 +133,7 @@ export default {
       // image uploaded
       selectedFile: '',
       preview: '',
-      imageError: '',
+      imageError: false,
     }
   },
   // methods
@@ -163,7 +157,7 @@ export default {
           },
           err => {
             console.log('error occurred')
-            // 에러 발생 페이지로 연결 필요
+            // this.$router.push('/error')
           }
       )
     },
@@ -184,14 +178,13 @@ export default {
       Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
           key => data[key] = this[`${key}`]
       )
-      let path
       UserApi.updateProfile(
           this.loginUser.id,
           data,
           res => {
             // 성공응답이 오는 경우 내 프로필 페이지로 아니면 에러페이지로
             // 닉네임이 변경되었을 수 있기 때문에 로그인 유저 정보도 리셋이 필요합니다.
-            path = res.data === 'OK' ? `/user/profile/${this.nickname}` : '/error'
+            const path = res.data === 'OK' ? `/user/profile/${this.nickname}` : {name: 'PageNotFound'}
             this.$router.push(path)
           },
           err => {
@@ -201,6 +194,14 @@ export default {
     },
     onPwChanged() {
       this.passwordChanged = true
+    },
+    // 이미지 라벨 클릭
+    onLabel() {
+      if (this.imageError) {
+        this.imageError = false
+      }
+      // input 호출
+      this.$refs.aws.onOpen()
     },
     // 이미지 미리보기
     onPreview(preview) {

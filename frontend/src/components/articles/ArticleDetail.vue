@@ -34,8 +34,8 @@
       </router-link>
 
       <div class="main-image">
-        <!--<img :src="selectedArticle.image" alt="">-->
-        <img src="@/assets/donut_flag.png" alt="">
+        <img v-if="selectedArticle.image" :src="selectedArticle.image" alt="">
+        <img v-else src="@/assets/donut_flag.png" alt="">
       </div>
 
       <!--퀘스트-->
@@ -47,8 +47,6 @@
       </router-link>
 
       <div v-html="parsedContent" id="article-content" />
-      <!--<textarea name="content" id="article-content" cols="30" rows="3"-->
-      <!--              v-model="selectedArticle.content" readonly/>-->
 
       <!--좋아요/ 댓글-->
       <div class="heart-comment">
@@ -115,7 +113,6 @@ export default {
   methods: {
     // 수정/ 삭제 버튼
     onClick() {
-      // console.log(this.article)
       this.openButton = !this.openButton
     },
     // 날짜 수정
