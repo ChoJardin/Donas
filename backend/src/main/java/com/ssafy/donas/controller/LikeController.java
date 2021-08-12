@@ -47,7 +47,10 @@ public class LikeController {
 			return HttpStatus.NOT_FOUND;
 		
 		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
-		return HttpStatus.OK;
+		
+		
+		
+		return getLikeByUser(like.getArticleId());
 	}
 
 	@DeleteMapping
@@ -59,7 +62,7 @@ public class LikeController {
 			return HttpStatus.NOT_FOUND;
 		
 		likeService.delete(likeId);
-		return HttpStatus.OK;
+		return getLikeByUser(articleId);
 	}
 
 	@GetMapping("/{articleId}")
