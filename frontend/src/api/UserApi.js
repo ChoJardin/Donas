@@ -44,7 +44,7 @@ const requestLogin = (data,callback,errorCallback) => {
 
 const requestLoginUser =(id, callback, errorCallback) => {
   const requestLoginUserPath = URL + ROUTES.loginUser + id
-  // console.log(requestLoginUserPath)
+  console.log(requestLoginUserPath)
   axios.get(requestLoginUserPath)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
