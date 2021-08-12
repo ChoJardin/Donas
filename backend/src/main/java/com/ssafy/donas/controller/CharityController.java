@@ -42,7 +42,7 @@ public class CharityController {
 			cr.quarter = ch.getQuarter();
 			cr.total = ch.getTotal();
 			cr.description = ch.getDescription();
-			cr.homepage = ch.getPicture();
+			cr.homepage = ch.getHomepage();
 			cr.picture = ch.getPicture();
 			cr.tag = ch.getTag();
 			result.add(cr);

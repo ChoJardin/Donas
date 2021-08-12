@@ -39,7 +39,7 @@ public class QuestDetailResponse {
 	
 	// all
 	@ApiModelProperty(value = "articles", position = 13)
-	private List<ArticleShortInfo> articles;
+	private List<ArticleInfo> articles;
 	
 	// 릴레이
 	@ApiModelProperty(value = "targetCnt", position=14)
@@ -143,11 +143,13 @@ public class QuestDetailResponse {
 		this.users = users;
 	}
 
-	public List<ArticleShortInfo> getArticles() {
+
+
+	public List<ArticleInfo> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(List<ArticleShortInfo> articles) {
+	public void setArticles(List<ArticleInfo> articles) {
 		this.articles = articles;
 	}
 
