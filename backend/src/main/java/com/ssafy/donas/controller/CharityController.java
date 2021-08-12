@@ -27,7 +27,7 @@ public class CharityController {
 	@Autowired
 	DonationService donationService;
 	
-	@GetMapping()
+	@GetMapping
 	@ApiOperation(value="기부단체 목록")
 	public Object getCharityList() {
 		List<Charity> charities = donationService.getCharityList();
