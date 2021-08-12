@@ -6,7 +6,7 @@
       <ComponentNav
           @on-arrow="$router.back()"
           title="프로필 정보 수정"
-          button="수정완료" @on-button="onComplete" :disabled="disableComplete"/>
+          button="수정완료" @on-button="onSubmit" :disabled="disableComplete"/>
 
       <!--프로필 사진-->
       <div class="label-content-wrap">
@@ -22,20 +22,23 @@
 
         <div class="profile-edit-content">
           <div id="profile-image-input">
-            <label for="image-input">
+            <div @click="$refs.aws.onOpen()">
               <img v-if="preview" :src="preview" class="profile-image" alt="">
               <img v-else-if="picture" :src="picture" class="profile-image" alt="">
               <img v-else class="profile-image" src="../../assets/donut1.png" alt="">
-            </label>
+            </div>
+
+            <AwsImageUploader id="image-input" ref="aws" @preview="onPreview" @on-error="onError"/>
             <!--사진첩/ 카메라 선택창 호출됨 -->
             <!--<ImageInput id=image-input" :preview.sync="newImage.preview" :image-file.sync="newImage.imageFile"-->
             <!--     :modified-date.sync="newImage.modifiedDate" style="display: none"/>-->
-            <input
-                type="file" id="image-input" ref="imgInput"
-                accept="image/jpeg, image/png" capture="camera"
-                @change="onImageUploaded"
-                style="display: none;">
+            <!--<input-->
+            <!--    type="file" id="image-input" ref="imgInput"-->
+            <!--    accept="image/jpeg, image/png" capture="camera"-->
+            <!--    @change="onImageUploaded"-->
+            <!--    style="display: none;">-->
             <span class="material-icons-outlined position">add_photo_alternate</span>
+            <div v-if="imageError">{{imageError}}</div>
           </div>
         </div>
       </div>
@@ -103,7 +106,7 @@ import UserApi from "../../api/UserApi";
 import ComponentNav from "../../components/common/ComponentNav";
 import ButtonBig from "../../components/common/ButtonBig";
 import PasswordChange from "../../components/user/PasswordChange";
-import ImageInput from "@/components/common/ImageInput";
+import AwsImageUploader from "@/components/common/AwsImageUploader";
 
 import('@/assets/style/user/Profile.css')
 
@@ -114,6 +117,7 @@ export default {
     ComponentNav,
     ButtonBig,
     PasswordChange,
+    AwsImageUploader
     // ImageInput,
   },
   // props
@@ -135,10 +139,7 @@ export default {
       // image uploaded
       selectedFile: '',
       preview: '',
-      newImage: {
-        imageFile: '',
-        modifiedDate: '',
-      }
+      imageError: '',
     }
   },
   // methods
@@ -166,6 +167,16 @@ export default {
           }
       )
     },
+    async onSubmit() {
+      // 미리보기가 있는 경우 -> 사진을 저장
+      if (this.preview) {
+        // 사진 아마존에 먼저 저장하고 경로 받아온 다음에
+        // 받아온 경로를 this.picture 값에 저장
+        this.picture = await this.$refs.aws.uploadFile()
+      }
+      // 실제 저장 함수 실행
+      this.onComplete()
+    },
     // 수정완료
     onComplete() {
       let data = {}
@@ -173,7 +184,6 @@ export default {
       Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
           key => data[key] = this[`${key}`]
       )
-      // let push = {path: ''}
       let path
       UserApi.updateProfile(
           this.loginUser.id,
@@ -192,50 +202,16 @@ export default {
     onPwChanged() {
       this.passwordChanged = true
     },
-    // 이미지 업로드
-    onImageUploaded(event) {
-      this.selectedFile = event.target.files[0]
-      // 이미지 확장자/ 크기 확인
-      let extension = this.selectedFile.name.substring(
-          this.selectedFile.name.lastIndexOf('.')+1
-      ).toLowerCase()
-
-      // 이미지 파일이 아닌 경우
-      if (!['jpg', 'jpeg', 'png'].includes(extension)) {
-        this.error = '이미지 파일을 선택해 주세요.'
-      }
-      // 파일의 크기가 너무 큰 경우
-      else if (this.selectedFile.size > 1048576) {
-        this.error = '1MB 이내의 파일만 선택 가능합니다.'
-      }
-
-      // 에러 발생하면 에러메세지 emit
-      if (this.error) {
-        this.$emit('on-error', this.error)
-      }
-      // 오류 없는 경우 미리보기와 formData emit
-      else {
-        // 미리보기
-        const read = new FileReader()
-        read.onload = file => {
-          this.preview = file.target.result
-        }
-        read.readAsDataURL(this.selectedFile)
-
-        // 서버 전송 데이터
-        const imageFile = new FormData()
-        imageFile.append('image', this.selectedFile)
-        this.picture = imageFile
-
-        // for (var key of imageFile.keys()) {
-        //   console.log(key);
-        // }
-        //
-        // for (var value of imageFile.values()) {
-        //   console.log(value);}
-
-      }
+    // 이미지 미리보기
+    onPreview(preview) {
+      this.preview = preview
+      console.log(preview)
+    },
+    // 형식 혹은 크기
+    onError(error) {
+      this.imageError = error
     }
+
   },
   // computed
   computed: {
@@ -254,8 +230,8 @@ export default {
   },
   // watch
   watch: {
-    picture: function (v) {
-      this.isChanged.picture = !!this.picture !== !!this.loginUser.picture
+    preview: function (v) {
+      this.isChanged.picture = !!this.preview
     },
     nickname: function(v) {
       // 중복확인 종료된 이후 데이터 값의 변화 -> 중복확인 버튼 활성화
@@ -292,13 +268,13 @@ export default {
 
   },
   // navigation guard
-  // 프로필 페이지로 돌아갈 때 변경사항 반영이 필요함
-  beforeRouteLeave(to, from, next) {
-    if (to.name === 'Profile') {
-      this.$store.dispatch('requestLoginUserProfile', this.loginUser)
-    }
-    next()
-  }
+  // 프로필 페이지로 돌아갈 때 변경사항 반영이 필요함 -> 전역 가드에서 처리했습니다.
+  // beforeRouteLeave(to, from, next) {
+  //   if (to.name === 'Profile') {
+  //     this.$store.dispatch('requestLoginUserProfile', this.loginUser)
+  //   }
+  //   next()
+  // }
 }
 </script>
 
