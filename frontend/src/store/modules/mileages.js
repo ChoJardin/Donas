@@ -20,6 +20,8 @@ const state ={
         homepage: '',
         picture: '',
         tag: '',
+        tag2:'',
+        bgPicture:'',
     }],
 
     selectedCharity: {
@@ -31,15 +33,17 @@ const state ={
         homepage: '',
         picture: '',
         tag: '',
+        tag2:'',
+        bgPicture:'',
     },
 
     charityId:0
 }
 
 const getters = {
-    charityDetail: state => (id) => {
-        state.selectedCharity = state.charityList.find(charity => charity.id === id )
-        return id
+    charityDetail: state => {
+        // state.selectedCharity = state.charityList.find(charity => charity.id === id )
+        return  state.charityList.find(charity => charity.id === state.charityId )
     }
 }
 
