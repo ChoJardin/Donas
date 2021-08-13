@@ -54,6 +54,15 @@
   font-size: 0.9em;
 
 }
+/* 내 페이지일 때 소개글이 없는 경우 안내 */
+.info-say-hi {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  /*margin: 15px 0 10px;*/
+  font-family: GongGothicLight;
+  font-size: 0.9em;
+}
 
 /* 팔로우 팔로잉 */
 .profile-follow-wrap {
@@ -110,7 +119,7 @@
 }
 
 .profile-article-image {
-  border: 1px solid olivedrab;
+  /*border: 1px solid olivedrab;*/
   width: 33.3333%;
   position: relative;
 }

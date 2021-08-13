@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <!--article start-->
     <div id="feed-article-wrap">
       <div class="feed-article-image" v-for="article in articles" :key="article.id">
@@ -33,7 +32,7 @@ export default {
     if (!this.isLoggedIn) {
       this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
     }
-  }
+  },
 }
 </script>
 
@@ -45,7 +44,7 @@ export default {
 }
 
 .feed-article-image {
-  border: 1px solid olivedrab;
+  /*border: 1px solid olivedrab;*/
   width: 33.3333%;
   position: relative;
 }

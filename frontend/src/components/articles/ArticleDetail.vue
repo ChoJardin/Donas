@@ -59,6 +59,9 @@
           <span v-if="selectedArticle.heartCnt >= 2">
             {{likeUser}} 님 외 <span class="link">{{selectedArticle.heartCnt-1}}명</span>이 이 게시글을 좋아합니다.
           </span>
+          <span v-else-if="selectedArticle.heartCnt === 1 && selectedArticle.like">
+            {{loginUser.nickname}} 님이 이 게시글을 좋아합니다.
+          </span>
           <span v-else-if="selectedArticle.heartCnt === 1">
             {{likeUser}} 님이 이 게시글을 좋아합니다.
           </span>
@@ -74,9 +77,6 @@
 
       <!--comment-->
       <CommentSet id="comment-set"/>
-
-
-
 
     </div>
   </div>
@@ -139,16 +139,23 @@ export default {
     // 좋아요 목록 열기
     onHeartList() {
       this.isHeartList = !this.isHeartList
+      this.defaultSetting()
     },
+     // 좋아요 유저/ 댓글 불러오기
+    async defaultSetting() {
+      const detailData = await ArticlesApi.requestArticleDetailInfo(this.$route.params.id)
+      this.$store.dispatch('setArticleDetail', detailData)
+    }
   },
   // computed
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
       // likeList: state => state.articles.likeList,
-      commentList: state => state.articles.commentList
+      commentList: state => state.articles.commentList,
+      selectedArticle: state => state.articles.selectedArticle
     }),
-    ...mapGetters(['selectedArticle', 'likeUser']),
+    ...mapGetters(['likeUser']),
     // 줄바꿈 설정
     parsedContent() {
       return this.selectedArticle.content.replace(/\n/g, '<br/>')
@@ -156,21 +163,39 @@ export default {
     // 내 게시글인가?
     isMine() {
       return this.loginUser.nickname === this.selectedArticle.makerName
-    }
-
+    },
+    likeCnt() {
+      return this.$store.getters.articles.likeCnt
+    },
   },
   // watch
-  created() {
-    const articleId = this.$route.params.id
-    this.$store.dispatch('setSelectedId', articleId)
-    // 좋아요 유저/ 댓글 불러오기
-    const defaultSetting = async () => {
-      const detailData = await ArticlesApi.requestArticleDetailInfo(articleId)
-      this.$store.dispatch('setArticleDetail', detailData)
-    }
-    defaultSetting()
-  }
+  // watch: {
+  //   likeCnt() {
+  //     console.log('changed')
+  //     this.defaultSetting()
+  //   }
+  //   '$route.params.path'(v) {
+  //     console.log(this.$route.params.id)
+  //     this.defaultSetting()
+  //   }
+  // },
   // lifecycle hook
+  created() {
+    console.log('here')
+    const articleId = this.$route.params.id
+    this.$store.dispatch('setArticleById', articleId)
+    // 좋아요 유저/ 댓글 불러오기
+    // const defaultSetting = async () => {
+    //   const detailData = await ArticlesApi.requestArticleDetailInfo(articleId)
+    //   this.$store.dispatch('setArticleDetail', detailData)
+    // }
+    this.defaultSetting()
+  },
+  // mounted() {
+  //   console.log('이건 업데이트')
+  //   this.defaultSetting()
+  // }
+
 }
 </script>
 

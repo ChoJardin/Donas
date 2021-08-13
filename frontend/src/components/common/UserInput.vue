@@ -20,7 +20,7 @@
             :placeholder="placeholder"
             :class="{error: !!error}"
             @input="onType($event)"
-            @keyup.enter="onEnter($event)"
+            @keypress.enter="onEnter($event)"
             @focus="onFocus($event)"
         >
 

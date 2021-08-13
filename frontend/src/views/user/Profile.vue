@@ -21,6 +21,7 @@
       <!--기본 프로필 end-->
 
       <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="2" readonly></textarea>
+      <div v-else-if="isMine" class="info-say-hi">정보수정 페이지에서 인사말을 작성해 보세요!</div>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="profile-follow-wrap">
