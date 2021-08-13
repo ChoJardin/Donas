@@ -3,13 +3,16 @@
     <div id="charity-main" >
       <div id="charity-wrap">
         <div id="charity-profile">
-          <img id="charity-image" src="../../assets/donut1.png">
+          <img id="charity-image" :src="`${charity.picture}`">
           <div id="charity-text">
             <div>
               <h1 id="charity-title">{{charity.name}}</h1>
               <div id="charity-description">{{ charity.total }}원 모금</div></div>
             <div>
-              <div id="charity-tag">{{charity.tag}}</div>
+              <div class="charity-tag">
+                <span class="charity-set" style="margin-right: 3px">{{charity.tag}}</span>
+                <span class="charity-set">{{charity.tag2}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -59,6 +62,7 @@ export default {
     border: 1px solid #292929;
     border-radius: 50%;
     margin-bottom: 2px;
+    padding: 7px;
     /*margin-left: 15px;*/
     /*margin-top: 15px;*/
 }
@@ -88,12 +92,18 @@ export default {
 
 }
 
-#charity-tag {
+.charity-tag {
   display: flex;
-  margin-top: 15px;
+  margin-top: 10px;
   font-size: 0.8em;
   text-align: center;
-  border: #183a1d solid;
+  width: 100%;
+  margin-left: 15px;
+}
 
+.charity-set {
+  border: #183a1d solid 1px;
+  padding: 2px 5px;
+  border-radius: 50em;
 }
 </style>

@@ -23,8 +23,11 @@ export default {
   },
   computed: {
     ...mapState({
-      charityList: state => state.mileages.charityList
+      charityList: state => state.mileages.charityList,
     })
+  },
+  created() {
+    this.charity = this.$store.getters.charityDetail
   }
 }
 </script>
