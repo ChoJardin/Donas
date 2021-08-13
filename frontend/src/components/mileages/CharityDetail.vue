@@ -1,13 +1,14 @@
 <template>
   <div class="charity-all">
+    <ComponentNav
+    @on-arrow="$router.back()"
+    title="기부 단체" button="기부하기" @on-button="scrollToBottom"
+    />
 
     <div class="charity-background">
-      <ComponentNav
-      @on-arrow="$router.back()"
-      title="기부 단체" button="기부하기" @on-button="scrollToBottom"/>
 
 
-      <img :src="`${charity.bgPicture}`" style="width: 100%; height: 300px" alt="">
+      <img :src="`${charity.bgPicture}`" style="width: 100%; height: 350px" alt="">
     </div>
 
     <div id="charity-main">
@@ -104,6 +105,23 @@ export default {
   created() {
     this.charity = this.$store.getters.charityDetail;
   },
+  // watch: {
+  //   '$route.params'(v) {
+  //     console.log('erer')
+  //     document.scrollTop
+  //
+  //   },
+  // },
+//   update() {
+//       console.log('update')
+//       // document.getElementById('charity-main').scrollIntoView()
+//   },
+//   beforeRouteLeave((to, from, next) {
+//     // $mount()
+//     console.log('qweqweqweq')
+//     // document.scrollTop
+//     next()
+// })
   // mounted() {
   //   this.$nextTick(function () {
   //     // 누른 위치로 스크롤
@@ -118,6 +136,7 @@ export default {
 <style scoped>
 .charity-background{
   position: fixed;
+  top: 80px;
   left: 0;
   width: 100vw;
   height: 150px;
@@ -128,10 +147,10 @@ export default {
   background-color: #ffffff;
   position: absolute;
   z-index: 1;
-  top: 300px;
+  top: 350px;
   left: 0;
   width: 100vw;
-  padding: 20px 10px 0;
+  padding: 30px 10px 0;
   margin-bottom: 20px;
   border-top: rgba(41, 41, 41, 0.3) solid 1px;
   height: 600px;

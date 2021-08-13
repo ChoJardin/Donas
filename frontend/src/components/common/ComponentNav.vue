@@ -38,12 +38,17 @@ export default {
 <style scoped>
 
 #component-nav {
-  height: 30px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  padding: 10px 15px;
   color: #183a1d;
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  z-index: 5;
+  background: white;
 }
 
 .material-icons.color292929 {
