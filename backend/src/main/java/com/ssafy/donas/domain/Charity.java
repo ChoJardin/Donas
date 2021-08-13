@@ -56,6 +56,9 @@ public class Charity {
 	@Column(nullable = true)
 	private String homepage;
 	
+	@Column(nullable = true)
+	private String bgPicture;
+	
 	@OneToMany(mappedBy = "charity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Donation> history = new ArrayList<>();
 	
