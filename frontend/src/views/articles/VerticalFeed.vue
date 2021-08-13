@@ -1,6 +1,5 @@
 <template>
   <div id="vertical-feed-wrap">
-    <!--<h1>VerticalFeed</h1>-->
 
       <SingleArticle
           v-for="article in articles" :key="article.id"
@@ -11,7 +10,6 @@
       <router-view>
       </router-view>
     </TransitionPage>
-
 
   </div>
 </template>
@@ -25,7 +23,6 @@ import TransitionPage from "@/components/common/TransitionPage";
 export default {
   name: "VerticalFeed",
   components: {
-    // InfiniteLoading,
     SingleArticle,
     TransitionPage,
   },

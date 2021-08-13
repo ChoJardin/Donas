@@ -39,7 +39,7 @@ export default {
   position: fixed;
   top: 70px;
   right: 15px;
-  bottom: 0;
+  bottom: 50px;
   left: 15px;
   overflow: scroll;
   background: white;
