@@ -45,6 +45,7 @@ public class CharityController {
 			cr.homepage = ch.getHomepage();
 			cr.picture = ch.getPicture();
 			cr.tag = ch.getTag();
+			cr.tag2 = ch.getTag2();
 			result.add(cr);
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);
