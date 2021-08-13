@@ -2,7 +2,8 @@
   <div>
     <div id="flex-container">
       <div id="profile-wrap">
-        <img id="profile-image" src="../../assets/donut1.png" alt="">
+        <img v-if="loginUser.picture" class="profile-image" :src="loginUser.picture" alt="">
+        <img v-else class="profile-image" src="../../assets/donut_profile.png" alt="">
         <div id="profile-info">
           <h1 id="username">{{loginUser.nickname}}님의 마일리지</h1>
           <div id="mileage-total">{{mileage}}원</div>
@@ -44,7 +45,7 @@ export default {
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-      mileage: state => state.user.userMileage
+      mileage: state => state.user.userMileage,
     })
   },
   created() {
@@ -82,7 +83,7 @@ export default {
   display: flex;
 }
 
-#profile-image {
+.profile-image {
   width: 100px;
   flex: 1 1 0;
 }
