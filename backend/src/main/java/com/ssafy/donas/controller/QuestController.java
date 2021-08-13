@@ -427,8 +427,8 @@ public class QuestController {
 		response.setUsers(users);
 
 		// 게시글 리스트 보내기
-
-		response.setArticles(articleService.getArticleInfosByUser(userService.getUser(myId)));
+		// 퀘스트 내의 게시글을 보는데 유저가 좋아요를 누른 것인지 확인도 해야함
+		response.setArticles(articleService.getArticleInfoByQuest(questId, userService.getUser(myId)));
 
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
 		if ("R".equals(quest.getType())) {

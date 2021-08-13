@@ -151,11 +151,7 @@ public class ArticleController {
 	public Object getArticlesByQuest(@PathVariable long questId) {
 		if (!questService.checkQuest(questId))
 			return HttpStatus.NOT_FOUND;
-		
-		Quest quest = questService.getQuestById(questId);
-		List<Article> result = null;
-		// 게시글 id도 넘겨주기
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return HttpStatus.NOT_FOUND;
 	}
 
 	// 미완성 코드
