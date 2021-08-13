@@ -37,6 +37,8 @@
         <br/><br/>
         3. 1MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
       </div>
+      <div id="image-error" v-html="error" v-if="error"></div>
+
     </div>
     <AwsImageUploader
         id="image-input" ref="aws"
@@ -51,7 +53,7 @@
 
     <ButtonBig
         class="submit-button" value="작 성 완 료"
-        @click.native="onClick" :disabled="disabled"
+        @click.native="onClick" :class="{disabled: disabled}"
     />
 
   </div>
@@ -66,11 +68,14 @@ import('@/assets/style/articles/UpsertArticle.css')
 
 export default {
   name: "UpsertArticle",
+  // components
   components: {
     ComponentNav,
     AwsImageUploader,
     ButtonBig
   },
+  // props
+  // data
   data() {
     return {
       picture: '',
@@ -79,6 +84,7 @@ export default {
       content: '',
     }
   },
+  // methods
   methods: {
     onPreview(preview) {
       this.preview = preview
@@ -88,8 +94,15 @@ export default {
     },
     // 사진 촬영 날짜 확인
     dateCheck(date) {
-      if (date !== '오늘 날짜') {
-        this.error = '당일에 촬영한 사진만 등록 가능합니다!'
+      // 오늘 날짜
+      const today = String(new Date()).split(' ', 4)
+      // 업로드 된 사진의 최근 수정일
+      const _date = String(date).split(' ', 4)
+      // console.log(JSON.stringify(today) === JSON.stringify(_date))
+      if (JSON.stringify(today) !== JSON.stringify(_date)) {
+        this.error = '인증일 당일에 촬영한 사진만<br/>등록 가능합니다!'
+      } else {
+        this.error = ''
       }
     },
     // aws 요청 보내고 기다리기
@@ -98,15 +111,18 @@ export default {
       this.onSubmit()
     },
     onSubmit() {
-      '여기서 이제 진짜로 뭔가 요청을 보내야 합니다.. ' +
-      '졸려서 내일 할래.. '
+
     }
   },
+  // computed
   computed: {
     disabled() {
-      return !(this.preview && this.content)
-    }
-  }
+      return !(this.preview && this.content && !this.error)
+    },
+  },
+  // watch
+  // lifecycle hook
+  // navigation guard
 }
 </script>
 

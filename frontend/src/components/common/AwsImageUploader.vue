@@ -6,8 +6,6 @@
       @change="handleFile"
       >
 
-    <!--<button @click="uploadFile()">등록</button>-->
-
   </div>
 </template>
 
@@ -83,6 +81,7 @@ export default {
         const result = await s3.upload({
           Key: imageKey,
           Body: image,
+          ContentType: image.type,
           ACL: 'public-read'
         }).promise()
         return result.Location
