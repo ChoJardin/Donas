@@ -56,8 +56,10 @@ public class ArticleController {
 		if ("".equals(article.getContent()))
 			return HttpStatus.NO_CONTENT;
 
-		articleService.add(userService.getUser(article.getUserId()), questService.getQuestById(article.getQuestId()), article.getImage(), article.getContent(), article.getType());
-		return HttpStatus.OK;
+		Article result = articleService.add(userService.getUser(article.getUserId()), questService.getQuestById(article.getQuestId()), article.getImage(), article.getContent(), article.getType());
+		
+		
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
 	@PatchMapping
