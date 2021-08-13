@@ -1,7 +1,6 @@
 <template>
   <div>
-    <CommentInput @on-click="onClick" ref="input"/>
-
+    <CommentInput @on-click="onClick" @on-enter="onClick" ref="input"/>
     <CommentList v-for="comment in commentList" :key="comment.commentId" :comment="comment"/>
 
   </div>
@@ -44,7 +43,7 @@ export default {
     ...mapState({
       commentList: state => state.articles.commentList,
       loginUser: state => state.user.loginUser,
-      articleId: state => state.articles.selectedId
+      articleId: state => state.articles.selectedArticle.id
     }),
     ...mapGetters(['isLoggedIn'])
   },

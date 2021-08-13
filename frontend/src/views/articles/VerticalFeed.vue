@@ -26,18 +26,37 @@ export default {
     SingleArticle,
     TransitionPage,
   },
-  computed: {
-    ...mapState({
-      articles: state => state.articles.feeds
-    })
+  data() {
+    return {
+      articles: [
+          {
+            id: 0,
+            createdAt: "",
+            updatedAt: null,
+            image: "",
+            content: "",
+            type: "",
+            isLike: false,
+            heartCnt: 0,
+            commentCnt: 0,
+            makerImage: null,
+            makerName: "",
+            questId: 0,
+            questTitle: "",
+          },
+      ],
+    }
+  },
+  created() {
+    this.articles = this.$store.state.articles.feeds
   },
   mounted() {
     this.$nextTick(function () {
       // 누른 위치로 스크롤
       document.getElementById(`a${this.$route.query.id}`).scrollIntoView();
     })
-  }
-
+  },
+  // navigation guard
 }
 </script>
 

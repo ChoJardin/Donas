@@ -5,6 +5,7 @@ const URL = 'https://i5a603.p.ssafy.io:8081'
 const ROUTES = {
   like: '/like',
   comment: '/comment',
+  article: '/article'
 }
 
 // 게시글 상세 페이지 정보
@@ -81,6 +82,14 @@ const deleteComment = async (data) => {
   return result
 }
 
+// 게시글 작성
+const createArticle = async (data, callback, errorCallback) => {
+  const requestArticlePath = URL + ROUTES.article
+  axios.post(requestArticlePath, data)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const ArticlesApi = {
   URL,
   ROUTES,
@@ -90,6 +99,7 @@ const ArticlesApi = {
   createComment:(data) => createComment(data),
   updateComment:(data) => updateComment(data),
   deleteComment:(data) => deleteComment(data),
+  createArticle:(data, callback, errorCallback) => createArticle(data, callback, errorCallback),
 }
 
 export default ArticlesApi

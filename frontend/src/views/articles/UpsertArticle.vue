@@ -10,10 +10,10 @@
         퀘스트
       </div>
       <div class="quest-name">
-        <span>공동</span>
-        <span>개인</span>
-        <span>릴레이</span>
-        진짜 퀘스트 이름
+        <span v-if="quest.type === 'G'">공동</span>
+        <span v-else-if="quest.type === 'P'">개인</span>
+        <span v-else>릴레이</span>
+        {{quest.title}}
       </div>
     </div>
 
@@ -48,6 +48,9 @@
       <div class="title">
         내용
       </div>
+      <div class="info">
+        필수 등록값 입니다
+      </div>
     </div>
     <textarea v-model="content" name="content" id="content" cols="28" rows="5"></textarea>
 
@@ -63,6 +66,8 @@
 import ComponentNav from "@/components/common/ComponentNav";
 import AwsImageUploader from "@/components/common/AwsImageUploader";
 import ButtonBig from "@/components/common/ButtonBig";
+import {mapGetters, mapState} from "vuex";
+import ArticlesApi from "@/api/ArticlesApi";
 
 import('@/assets/style/articles/UpsertArticle.css')
 
@@ -78,10 +83,13 @@ export default {
   // data
   data() {
     return {
+      // 수정인가?
+      isUpdate:'',
       picture: '',
       preview: '',
       error: '',
       content: '',
+      savedArticle: {},
     }
   },
   // methods
@@ -108,21 +116,94 @@ export default {
     // aws 요청 보내고 기다리기
     async onClick() {
       this.picture = await this.$refs.aws.uploadFile()
+
       this.onSubmit()
     },
-    onSubmit() {
-
-    }
+    onSubmit () {
+      const data = {
+        userId: this.loginUser.id,
+        questId: this.quest.id,
+        image: this.picture,
+        content: this.content,
+        type: this.quest.type,
+      }
+      ArticlesApi.createArticle(
+          data,
+          res => {
+            if (res.data !== 'NOT_FOUND') {
+              this.savedArticle = res.data
+              this.savedArticle['makerName'] = this.loginUser.nickname
+              this.savedArticle.makerImage = this.loginUser.picture
+              this.savedArticle.isLike = false
+              this.savedArticle.heartCnt = 0
+              this.savedArticle.commentCnt = 0
+              console.log('아직 데이터 저장 중')
+              console.log(this.savedArticle)
+              this.$store.dispatch('setSelectedArticle', this.savedArticle)
+            } else this.$router.push('/404')
+          },
+          err => this.$router.push('/error')
+      )
+    },
   },
   // computed
   computed: {
+    ...mapState({
+      quest: state => state.quests.questDetail,
+      loginUser: state => state.user.loginUser
+    }),
+    // 버튼 비활성화
     disabled() {
       return !(this.preview && this.content && !this.error)
     },
+    isArticleSelected() {
+      return this.$store.getters.isArticleSelected
+    }
   },
   // watch
+  watch: {
+    // watcher on computed
+    isArticleSelected(v)  {
+      // 게시글을 저장했기 때문에 피드로 보내주겠습니다.
+      // 그 전에 먼저 피드에 내 새로운 게시물을 넣어주겠어요.
+      const addArticle  = async () => {
+        await this.$store.dispatch('addNewArticle', this.savedArticle)
+      }
+      addArticle().then(this.$router.push(`/article?id=${this.savedArticle.id}`))
+      // this.$router.push(`/articles/${this.savedArticle.id}`)
+    }
+
+  },
   // lifecycle hook
+  created() {
+    // 혹시 있을지도 모르는 selectedArticle 값을 초기화
+    if (this.isArticleSelected) {
+      const article =
+          {
+            id: 0,
+            createdAt: "",
+            updatedAt: null,
+            image: "",
+            content: "",
+            type: "",
+            isLike: false,
+            heartCnt: 0,
+            commentCnt: 0,
+            makerImage: null,
+            makerName: "",
+            questId: 0,
+            questTitle: "",
+          }
+      this.$store.dispatch('setSelectedArticle', article)
+    }
+  },
   // navigation guard
+  beforeRouteEnter: (to, from, next) => {
+    if (from.name === 'QuestDetail')
+      next()
+    else
+      next('/404')
+  }
 }
 </script>
 

@@ -164,7 +164,7 @@ const routes = [
 
   // 404
   // {path: '/*', redirect: '/404'},
-  {path: '/*', name: 'PageNotFound', component: PageNotFound},
+  {path: '/404', name: 'PageNotFound', component: PageNotFound, alias: '/*'},
 ]
 
 // navigation duplicated

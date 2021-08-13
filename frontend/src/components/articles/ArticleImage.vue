@@ -33,8 +33,9 @@ export default {
 
 #article-image-image {
   position: absolute;
-  width: 100%;
-  height: auto;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  object-fit: cover;
 }
 
 </style>
