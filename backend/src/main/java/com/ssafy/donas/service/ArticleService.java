@@ -45,10 +45,12 @@ public class ArticleService {
 		return true;
 	}
 	
-	public void add(User user, Quest quest, String image, String content, String type) {
+	public Article add(User user, Quest quest, String image, String content, String type) {
 		Article article = new Article(user, quest, image, content, LocalDateTime.now(), null, type);
 		articleRepo.save(article);
 		user.getArticles().add(article);
+		
+		return article;
 	}
 	
 	public void update(long articleId, String content) {
