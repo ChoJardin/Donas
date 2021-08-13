@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="overlay">
     <!--ProfileEdit-->
     <div class="profile-flex-container">
 
       <ComponentNav
           @on-arrow="$router.back()"
           title="프로필 정보 수정"
-          button="수정완료" @on-button="onComplete" :disabled="disableComplete"/>
+          button="수정완료" @on-button="onSubmit" :disabled="disableComplete"/>
 
       <!--프로필 사진-->
       <div class="label-content-wrap">
@@ -19,20 +19,20 @@
           </div>
         </div>
 
-
         <div class="profile-edit-content">
           <div id="profile-image-input">
-            <label for="image-input">
-              <img v-if="picture" class="profile-image" :src="picture" alt="">
-              <img v-else class="profile-image" src="../../assets/donut1.png" alt="">
-            </label>
-            <!--사진첩/ 카메라 선택창 호출됨-->
-            <input
-                type="file" id="image-input" ref="imgInput"
-                accept="image/jpeg, image/png, image/gif" capture="camera"
-                @change="fileUploaded"
-                style="display: none;">
+            <!--div 클릭하면 aws의 input창 호출-->
+            <div @click="onLabel">
+              <img v-if="preview" :src="preview" class="profile-image" alt="">
+              <img v-else-if="picture" :src="picture" class="profile-image" alt="">
+              <img v-else class="profile-image" src="@/assets/donut_profile.png" alt="">
+            </div>
+            <AwsImageUploader
+                id="image-input" ref="aws"
+                @preview="onPreview" @on-error="onError"
+                style="display: none"/>
             <span class="material-icons-outlined position">add_photo_alternate</span>
+            <div v-if="imageError">{{imageError}}</div>
           </div>
         </div>
       </div>
@@ -100,6 +100,7 @@ import UserApi from "../../api/UserApi";
 import ComponentNav from "../../components/common/ComponentNav";
 import ButtonBig from "../../components/common/ButtonBig";
 import PasswordChange from "../../components/user/PasswordChange";
+import AwsImageUploader from "@/components/common/AwsImageUploader";
 
 import('@/assets/style/user/Profile.css')
 
@@ -109,7 +110,9 @@ export default {
   components: {
     ComponentNav,
     ButtonBig,
-    PasswordChange
+    PasswordChange,
+    AwsImageUploader
+    // ImageInput,
   },
   // props
   // data
@@ -128,7 +131,9 @@ export default {
         description: false
       },
       // image uploaded
-      selectedFile: ''
+      selectedFile: '',
+      preview: '',
+      imageError: false,
     }
   },
   // methods
@@ -152,9 +157,19 @@ export default {
           },
           err => {
             console.log('error occurred')
-            // 에러 발생 페이지로 연결 필요
+            // this.$router.push('/error')
           }
       )
+    },
+    async onSubmit() {
+      // 미리보기가 있는 경우 -> 사진을 저장
+      if (this.preview) {
+        // 사진 아마존에 먼저 저장하고 경로 받아온 다음에
+        // 받아온 경로를 this.picture 값에 저장
+        this.picture = await this.$refs.aws.uploadFile()
+      }
+      // 실제 저장 함수 실행
+      this.onComplete()
     },
     // 수정완료
     onComplete() {
@@ -163,15 +178,13 @@ export default {
       Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
           key => data[key] = this[`${key}`]
       )
-      // let push = {path: ''}
-      let path
       UserApi.updateProfile(
           this.loginUser.id,
           data,
           res => {
             // 성공응답이 오는 경우 내 프로필 페이지로 아니면 에러페이지로
             // 닉네임이 변경되었을 수 있기 때문에 로그인 유저 정보도 리셋이 필요합니다.
-            path = res.data === 'OK' ? `/user/profile/${this.nickname}` : '/error'
+            const path = res.data === 'OK' ? `/user/profile/${this.nickname}` : {name: 'PageNotFound'}
             this.$router.push(path)
           },
           err => {
@@ -182,13 +195,24 @@ export default {
     onPwChanged() {
       this.passwordChanged = true
     },
-    // 이미지 업로드
-    fileUploaded() {
-    //   // 업로드된 파일이 있다면
-    //   if (0 < this.$refs.imgInput.files.length) {
-    //     this.selectFile =
-    //   }
+    // 이미지 라벨 클릭
+    onLabel() {
+      if (this.imageError) {
+        this.imageError = false
+      }
+      // input 호출
+      this.$refs.aws.onOpen()
+    },
+    // 이미지 미리보기
+    onPreview(preview) {
+      this.preview = preview
+      console.log(preview)
+    },
+    // 형식 혹은 크기
+    onError(error) {
+      this.imageError = error
     }
+
   },
   // computed
   computed: {
@@ -207,8 +231,8 @@ export default {
   },
   // watch
   watch: {
-    picture: function (v) {
-      this.isChanged.picture = !!this.picture !== !!this.loginUser.picture
+    preview: function (v) {
+      this.isChanged.picture = !!this.preview
     },
     nickname: function(v) {
       // 중복확인 종료된 이후 데이터 값의 변화 -> 중복확인 버튼 활성화
@@ -245,13 +269,13 @@ export default {
 
   },
   // navigation guard
-  // 프로필 페이지로 돌아갈 때 변경사항 반영이 필요함
-  beforeRouteLeave(to, from, next) {
-    if (to.name === 'Profile') {
-      this.$store.dispatch('requestLoginUserProfile', this.loginUser)
-    }
-    next()
-  }
+  // 프로필 페이지로 돌아갈 때 변경사항 반영이 필요함 -> 전역 가드에서 처리했습니다.
+  // beforeRouteLeave(to, from, next) {
+  //   if (to.name === 'Profile') {
+  //     this.$store.dispatch('requestLoginUserProfile', this.loginUser)
+  //   }
+  //   next()
+  // }
 }
 </script>
 
@@ -304,6 +328,10 @@ export default {
 
 .profile-edit-content {
   flex: 2.5 2.5 0;
+}
+
+.profile-edit-content textarea {
+  resize: none;
 }
 
 /* 닉네임 */

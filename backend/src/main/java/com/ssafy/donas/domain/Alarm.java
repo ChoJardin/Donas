@@ -3,11 +3,14 @@ package com.ssafy.donas.domain;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -21,6 +24,7 @@ import lombok.Data;
 
 @Entity
 @Data
+//@NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
@@ -30,7 +34,7 @@ public class Alarm {
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "receive_id",referencedColumnName ="id")
+	@JoinColumn(name = "receive_id", referencedColumnName ="id")
 	private User user;
 	
 	@Column(name="send_name", nullable = false)
@@ -47,13 +51,10 @@ public class Alarm {
 	private LocalDateTime sendTime;
 	
 	@Column(nullable = false)
-	@ColumnDefault("0")
+	@ColumnDefault("1")
 	private int confirm;
 
-
-
 	public Alarm() {}
-
 
 	@Builder
 	public Alarm(User user, String sendName,long articleId,String contents, LocalDateTime sendTime, int confirm) {
@@ -64,9 +65,5 @@ public class Alarm {
 		this.sendTime = sendTime;
 		this.confirm = confirm;
 	}
-
-	
-	
-	
 
 }

@@ -1,0 +1,159 @@
+/*#article-detail {*/
+/*  position: fixed;*/
+/*  top: 60px;*/
+/*  right: 15px;*/
+/*  bottom: 50px;*/
+/*  left: 15px;*/
+/*  overflow: scroll;*/
+/*  background: white;*/
+/*    padding-bottom: 20px;*/
+/*}*/
+
+.material-icons-round.more {
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.article-detail-profile-image {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #292929;
+    padding: 2px;
+}
+
+.profile-router {
+    text-decoration: none;
+    color: #292929;
+}
+
+.profile-router .profile-wrap {
+    display: flex;
+    padding-bottom: 10px;
+    margin: 15px 15px 5px 15px;
+    border-bottom: 1px solid #f1a64b;
+}
+
+.profile-router .info-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.profile-router .nickname {
+    font-family: GongGothicBold;
+    font-size: 0.9em;
+}
+
+.profile-router .article-date {
+    font-family: GongGothicLight;
+    font-size: 0.8em;
+}
+
+.profile-router .article-date span {
+    background-color: #fefbe9;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#article-detail .main-image {
+    /*border: 1px solid #292929;*/
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 10px;
+    position: relative;
+    border-radius: 30px;
+    box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
+}
+
+#article-detail .main-image:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    /*object-fit: cover;*/
+}
+
+#article-detail .main-image img {
+    position: absolute; /* Take your picture out of the flow */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; /* Make the picture taking the size of it's parent */
+    width: 100%; /* This if for the object-fit */
+    height: 100%; /* This if for the object-fit */
+    object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
+    object-position: center;
+    border-radius: 30px;
+}
+
+/* 퀘스트 */
+#article-detail .quest-router {
+    text-decoration: none;
+    color: #292929;
+    display: block;
+    margin: 10px 7%;
+    text-align: start;
+}
+
+#article-detail .quest-type {
+    background-color: #f6c453;
+    font-size: 0.5em;
+    font-family: GongGothicLight;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+#article-detail .quest-title {
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+#article-detail #article-content {
+    background-color: #FDF3E9;
+    padding: 8px 10px;
+    width: 90%;
+    margin: auto;
+    font-size: 0.9em;
+    font-family: GongGothicLight;
+    text-align: start;
+    overflow: scroll;
+    text-overflow:ellipsis;
+    resize: none;
+}
+
+/* 좋아요 댓글 */
+#article-detail .heart-comment {
+    width: 90%;
+    margin: auto;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: GongGothicLight;
+    font-size: 0.8em;
+}
+
+#article-detail .heart-comment .link {
+    text-decoration: underline;
+
+}
+
+#article-detail .heart-comment .material-icons.red {
+    color: #cd4e3e;
+}
+
+#article-detail .heart-cnt {
+    display: flex;
+    align-items: center;
+}
+
+/* 댓글 */
+#comment-set {
+    width: 94%;
+    margin-left: 3%;
+    margin-top: 10px;
+}

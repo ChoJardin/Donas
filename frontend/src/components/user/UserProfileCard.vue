@@ -1,8 +1,9 @@
 <template>
   <div id="follow-user-profile" :class="{background: isColored}">
-    <router-link :to="`/user/profile/${follow.nickname}`" id="follow-profile-wrap">
-      <img class="profile-image card" src="@/assets/profile_test.jpeg" alt="">
-      <div id="follow-profile-nickname">{{follow.nickname}}</div>
+    <router-link :to="`/user/profile/${profile.nickname}`" id="follow-profile-wrap">
+        <img v-if="profile.picture" class="profile-image card" :src="profile.picture" alt="">
+        <img v-else class="profile-image card" src="@/assets/donut_profile.png" alt="">
+      <div id="follow-profile-nickname">{{profile.nickname}}</div>
     </router-link>
   </div>
 </template>
@@ -11,7 +12,7 @@
 export default {
   name: "FollowUserProfile",
   props: {
-    follow: Object
+    profile: Object
   },
   computed: {
     isColored() {

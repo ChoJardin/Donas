@@ -6,7 +6,7 @@
       <div class="cashout-input-label" >출금 금액:</div>
       <div style="display: flex; align-items: center">
         <div class="cashout-currency">₩</div>
-        <input type="number" class="cashout-input" v-model="amount">
+        <input type="number" class="cashout-input" v-model="inputAmount">
       </div>
     </div>
 
@@ -19,35 +19,74 @@
       <div class="cashout-input-label" style="text-align: left">출금 정보</div>
       <div class="cashout-amount">
         <div class="cashout-input-label">이름</div>
-        <input type="text" class="cashout-input">
+        <input type="text" v-model="name" class="cashout-input">
       </div>
       <div class="cashout-amount">
         <div class="cashout-input-label">은행</div>
-        <input type="text" class="cashout-input">
+        <input type="text" v-model="bank" class="cashout-input">
       </div>
       <div class="cashout-amount">
         <div class="cashout-input-label">계좌번호</div>
-        <input type="text" class="cashout-input">
+        <input type="text" v-model="account" class="cashout-input">
       </div>
     </div>
+
+    <button class="button" @click="confirmPage">확인</button>
 
   </div>
 </template>
 
 <script>
+import MileagesApi from "../../api/MileagesApi";
+import {mapState} from "vuex";
+
 export default {
   name: "CashOut.vue",
   data:  () => {
     return {
-      amount: '',
+      inputAmount: '',
+      name:'',
+      bank: '',
+      account:'',
     }
   },
+  //methods
+  methods: {
+    confirmPage () {
+      let data = {
+        userId: this.loginUser.id,
+        bank: this.bank,
+        accountNum: this.account,
+        amount:parseInt(this.refundAmount),
+        userName: this.name
+      }
+
+      MileagesApi.createCashOutRequest(
+          data,
+          res => {
+            console.log(res)
+            this.$router.push({name: 'CashOutResult', params: data})
+          },
+          err => {
+            console.log(err)
+          }
+      )
+
+    }
+  },
+  //computed
   computed: {
     donationAmount: function (){
 
-      return Math.round(this.amount * 0.1)
-    }
-  }
+      return Math.round(this.inputAmount * 0.1)
+    },
+    refundAmount: function (){
+      return Math.round(this.inputAmount - this.donationAmount)
+    },
+    ...mapState({
+      loginUser: state => state.user.loginUser,
+    })
+  },
 
 }
 </script>
@@ -97,4 +136,18 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.button {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 25px;
+  height: 50px;
+  background-color: #183a1d;
+  color: #e1eedd;
+  border-radius: 25px;
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
+  font-size: 1em;
+  cursor: pointer;
+}
+
 </style>

@@ -2,7 +2,7 @@
   <div class="alert-all">
     <div id="alarm-wrap">
       <div class="single-alarm" v-for="alarm in alarms" :key="alarm.id">
-        <SingleAlarm class="inner" :alarm="alarm"/>
+        <SingleQuestAlarm class="inner" :alarm="alarm"/>
       </div>
     </div>
 <!--    <h4>{{alarms.content}}</h4>-->
@@ -14,38 +14,19 @@
 <script>
 import {mapState} from "vuex";
 import UserApi from "../../api/UserApi";
-import SingleAlarm from "./SingleAlarm";
+import SingleQuestAlarm from "./SingleQuestAlarm";
 
 export default {
-  name: "alert",
-  // components:
+  name: "QuestAlert",
   components: {
-    SingleAlarm
+    SingleQuestAlarm
   },
-  // methods
-  //computed
   computed: {
     ...mapState({
       // loginUser: state => state.user.loginUser,
-      alarms: state => state.user.alarms,
+      alarms: state => state.user.questAlarms,
     })
-  },
-  //lifecycle hook
-  // create() {
-  //   console.log('alerts fetched')
-  //   let myid=0
-  //   myid = this.loginUser.id
-  //   let params = {myid:myid}
-  //   UserApi.requestAlertList(
-  //       myid,
-  //       res => {
-  //         this.$store.dispatch('setAlarms', res.data)
-  //       },
-  //       err => {
-  //         console.log(err)
-  //       }
-  //   )
-  // }
+  }
 }
 </script>
 

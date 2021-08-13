@@ -1,7 +1,8 @@
 import axios from "axios";
 // import store from '@/store/modules/user'
 
-const URL = 'http://localhost:8081'
+// const URL = 'http://localhost:8081/api'
+const URL = 'https://i5a603.p.ssafy.io:8081'
 const ROUTES = {
   login: '/user/signin',
   loginUser: '/user/mypage/',
@@ -15,82 +16,69 @@ const ROUTES = {
   updateProfile: '/user/profile/',
   updatePassword: '/user/password',
 
-  alerts: '/alarm/',
+  commonAlerts: '/alarm/',
+  questAlerts: '/alarm/quest/',
+  alertStatus:'/alarm',
+  answerAlert: '/alarm/group',
+  // declineAlert: '/alarm/group',
 
-  createPersonalQuest: '/quest/personal'
+
 }
 
 // 로그인
 const requestLogin = (data,callback,errorCallback) => {
   const path = URL + ROUTES.login
   axios.post(path, data)
-    .then(res => {
-      callback(res)
-    })
-    .catch(error => {
-      errorCallback(error)
-    })
+    .then(res => callback(res))
+    .catch(error => errorCallback(error))
 }
 
 // 로그인 사용자 정보 업데이트
-const requestLoginUser = (id, callback, errorcallback) => {
+// const requestLoginUser = (id, callback, errorcallback) => {
+//   const requestLoginUserPath = URL + ROUTES.loginUser + id
+//   // console.log(requestLoginUserPath)
+//   axios.get(requestLoginUserPath)
+//     .then(res => callback(res))
+//     .catch(err => errorcallback(err))
+// }
+
+const requestLoginUser =(id, callback, errorCallback) => {
   const requestLoginUserPath = URL + ROUTES.loginUser + id
-  // console.log(requestLoginUserPath)
   axios.get(requestLoginUserPath)
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorcallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 // 닉네임 중복 확인
 const checkNickname = (params, callback, errorCallback) => {
   const checkNicknamePath = URL + ROUTES.checkNickname
   axios.get(checkNicknamePath, {params: params})
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorCallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 // 이메일 중복 확인
 const checkEmail = (params, callback, errorCallback) => {
   const checkEmailPath = URL + ROUTES.checkEmail
   axios.get(checkEmailPath, {params: params})
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorCallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 // 회원가입
 const requestSignup = (data, callback, errorCallback) => {
   const signupPath = URL + ROUTES.signup
   axios.post(signupPath, data)
-    .then(res => {
-      callback(res.data)
-    })
-    .catch(error => {
-      errorCallback(error.response.data)
-    })
+    .then(res => callback(res.data))
+    .catch(error => errorCallback(error.response.data))
 }
 
 // 프로필 정보 요청
 const requestProfileInfo = (nickname, params, callback, errorCallback) => {
   const profileInfoPath = URL + ROUTES.profileInfo + nickname
   axios.get(profileInfoPath, {params: params})
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorCallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 
@@ -98,101 +86,94 @@ const requestProfileInfo = (nickname, params, callback, errorCallback) => {
 const updateProfile = (id, data, callback, errorcallback) => {
   const updateProfilePath = URL + ROUTES.updateProfile + id
   axios.patch(updateProfilePath, data)
-    .then(res => {
-      // console.log(res)
-      callback(res)
-    })
-    .catch(err => {
-      // console.log('------')
-      // console.log(err)
-      errorcallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorcallback(err))
 }
 
 // 비밀번호 변경
 const updatePassword = (data, callback, errorcallback) => {
   const updatePasswordPath = URL + ROUTES.updatePassword
   axios.post(updatePasswordPath, data)
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorcallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorcallback(err))
 }
 
 // 팔로워 리스트
 const requestFollowers = (params, callback, errorCallback) => {
   const followerListPath = URL + ROUTES.followers
   axios.get(followerListPath, {params: params})
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorCallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 // 팔로잉 리스트
 const requestFollowings = (params, callback, errorCallback) => {
   const followingListPath = URL + ROUTES.followings
   axios.get(followingListPath, {params: params})
-    .then(res => {
-      callback(res)
-    })
-    .catch(err => {
-      errorCallback(err)
-    })
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 // 팔로우 요청
-const requestFollow = (post, data, callback, errorCallback) => {
+const requestFollow = (isPost, data, callback, errorCallback) => {
   const followPath = URL + ROUTES.follow
-  if (post) {
-    // console.log('팔로우')
-    // console.log(post, data)
+  if (isPost) {
     axios.post(followPath, data)
-      .then(res => {
-        callback(res)
-      })
-      .catch(err => {
-        errorCallback(err)
-      })
+      .then(res => callback(res))
+      .catch(err => errorCallback(err))
   } else {
-    // console.log('언팔')
     axios.delete(followPath, {params: data})
-      .then(res => {
-        callback(res)
-      })
-      .catch(err => {
-        errorCallback(err)
-      })
+      .then(res => callback(res))
+      .catch(err => errorCallback(err))
   }
 }
 
 //알림 리스트 불러오기
-const requestAlertList = (id, callback, errorCallback) => {
-  const AlertListPath = URL + ROUTES.alerts + id
-  axios.get(AlertListPath)
+const requestCommonAlert = (id, callback, errorCallback) => {
+  const CommonAlertPath = URL + ROUTES.commonAlerts + id
+  axios.get(CommonAlertPath)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+
+}
+
+const requestQuestAlert = (id, callback, errorCallback) => {
+  const QuestAlertPath = URL + ROUTES.questAlerts + id
+  axios.get(QuestAlertPath)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+
+}
+
+const updateAlertStatus = (data, callback, errorcallback) => {
+  const updateAlertPath = URL + ROUTES.alertStatus
+  axios.patch(updateAlertPath, data)
+    .then(res => callback(res))
+    .catch(err => errorcallback(err))
+}
+
+const acceptAlert = (data, callback, errorCallback) => {
+  const acceptAlertPath = URL + ROUTES.answerAlert
+  axios.post(acceptAlertPath, data)
     .then(res => {
-      // console.log(res)
+      callback(res)
+    })
+    .catch(err=> {
+      errorCallback(err)
+    })
+}
+
+const declineAlert = (data,callback, errorCallback) => {
+  const declineAlertPath = URL + ROUTES.answerAlert
+  axios.patch(declineAlertPath, null, {params: data})
+    .then(res => {
       callback(res)
     })
     .catch(err => {
       errorCallback(err)
     })
 }
-// 개인 퀘스트 생성
-const createPersonalQuest = (data, callback, errorCallback) => {
-  const createPersonalPath = URL + ROUTES.createPersonalQuest
-  axios.post(createPersonalPath, data)
-    .then(res => {
-      callback(res.data)
-    })
-    .catch(error => {
-      errorCallback(error.response.data)
-    })
-}
+
 
 
 const UserApi = {
@@ -205,16 +186,21 @@ const UserApi = {
   requestProfileInfo:(data, params, callback, errorCallback)=>requestProfileInfo(data, params, callback, errorCallback),
   requestFollowers:(data, callback, errorCallback)=>requestFollowers(data, callback, errorCallback),
   requestFollowings:(data, callback, errorCallback)=>requestFollowings(data, callback, errorCallback),
-  requestFollow:(post, data, callback, errorCallback)=>requestFollow(post, data, callback, errorCallback),
+  requestFollow:(isPost, data, callback, errorCallback)=>requestFollow(isPost, data, callback, errorCallback),
   requestLoginUser:(id, callback, errorCallback)=>requestLoginUser(id, callback, errorCallback),
+  // requestLoginUser:(id)=>requestLoginUser(id),
   updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
   updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
 
-  requestAlertList:(data, callback, errorCallback) => requestAlertList(data,callback, errorCallback),
-
-  createPersonalQuest:(data, callback, errorCallback) => createPersonalQuest(data,callback, errorCallback),
+  requestCommonAlert:(data, callback, errorCallback) => requestCommonAlert(data,callback, errorCallback),
+  requestQuestAlert:(data, callback, errorCallback) => requestQuestAlert(data,callback, errorCallback),
+  updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
+  acceptAlert: (data, callback, errorCallback) => acceptAlert(data,callback, errorCallback),
+  declineAlert: (params, callback, errorCallback) => declineAlert(params, callback, errorCallback),
 
 
 }
+
+
 
 export default UserApi

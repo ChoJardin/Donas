@@ -121,8 +121,6 @@ export default {
                 // 로그인 성공
                 // 유저 정보 다시 불러옵니다.
                 this.$store.dispatch('requestLoginUserProfile', res.data)
-                // 로그인 누르기 전 있던 곳으로
-                this.$router.push(this.$route.params.history)
               }
             },
             err => {
@@ -145,6 +143,11 @@ export default {
     },
   },
   // computed
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
   // watch
   watch: {
     email: function (v) {
@@ -154,6 +157,19 @@ export default {
     },
     password: function (v) {
       this.checkForm()
+    },
+    isLoggedIn() {
+      // 이전에 거쳐온 히스토리 기록이 없으면 메인 페이지로 -> 새로고침으로 인한 현상
+      if (Object.keys(this.$route.params).length === 0) {
+        this.$router.push('/main')
+        // 프로필 페이지에서 넘어왔음
+      } else if (this.$route.params.history === '/user/profile/undefined') {
+        const nickname = this.$store.state.user.loginUser.nickname
+        this.$router.push(`/user/profile/${nickname}`)
+      // 이전에 왔던 곳으로
+      } else {
+        this.$router.push(this.$route.params.history)
+      }
     }
   },
   // lifecycle hook

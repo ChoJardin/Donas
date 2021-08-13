@@ -3,9 +3,9 @@
 <!--    <h1>{{nickname}}'s notification</h1>-->
 
     <div class="branch">
-      <router-link :to="`/notification/${nickname}`" class="button">알림</router-link>
+      <router-link :to="`/notification/${loginUser.nickname}`" class="button">퀘스트 알림</router-link>
 <!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
-      <router-link :to="`/notification/${nickname}/messages`" class="button">메세지</router-link>
+      <router-link :to="`/notification/${loginUser.nickname}/common`" class="button">일반 알림</router-link>
     </div>
 
     <router-view class="router-view"/>
@@ -26,18 +26,29 @@ export default {
   // computed
   computed: {
     ...mapState({
-      nickname: state => state.user.loginUser.nickname,
+      // nickname: state => state.user.loginUser.nickname,
+      loginUser: state => state.user.loginUser,
     })
   },
   // watch
   // lifecycle hook
   created() {
-    // console.log('alerts fetched')
-    UserApi.requestAlertList(
-        this.$route.params.id,
+    console.log('alerts fetched')
+    UserApi.requestQuestAlert(
+        this.loginUser.id,
         res => {
-          // console.log(res)
-          this.$store.dispatch('setAlarms', res.data)
+          console.log(res)
+          this.$store.dispatch('setQuestAlarms', res.data)
+        },
+        err => {
+          console.log(err)
+        }
+    )
+    UserApi.requestCommonAlert(
+        this.loginUser.id,
+        res => {
+          console.log(res)
+          this.$store.dispatch('setCommonAlarms', res.data)
         },
         err => {
           console.log(err)

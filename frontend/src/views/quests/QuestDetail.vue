@@ -1,24 +1,43 @@
 <template>
   <div>
-    <h1>QuestSingle</h1>
-    <div>
+    <ComponentNav
+      @on-arrow="$router.back()"
+      title="퀘스트 상세"/>
+
+    <div id="quest-detail-head">
       <div id="flex-container">
         <div id="quest-wrap">
           <img id="quest-image" src="../../assets/donut1.png" alt="">
           <div id="quest-info">
-            <h1 id="title">{{ questId }}</h1>
-            <div id="summary">summary</div>
+            <div v-if="questDetail.type === 'P'" style="font-size: 0.7em">개인 퀘스트</div>
+            <div v-else-if="questDetail.type === 'G'" style="font-size: 0.7em">공동 퀘스트</div>
+            <div v-else-if="questDetail.type === 'R'" style="font-size: 0.7em">릴레이 퀘스트</div>
+            <div id="quest-detail-title" style="margin-bottom: 7px">{{ questDetail.title }}</div>
+            <div id="summary" style="padding-bottom:2px">{{ questDetail.description }}</div>
+            <div id="quest-detail-date"><span style="font-size:1.0em ">{{dateFormatted}}</span>에 시작</div>
           </div>
-
-
-        <div id="description">
-          소개글
         </div>
 
-      </div>
 
+        <div id="quest-detail-description">
+          <div>인증 방법</div>
+          <div id="quest-detail-des-text">{{ questDetail.certification }}</div>
+        </div>
+
+        <div id="quest-detail-contents">
+          <router-link :to="{name:'ParticipantsList'}" class="participants">
+            <div>참여 인원:
+  <!--          {{questDetail.users}}-->
+            <span> {{userCount}}명</span></div>
+            <div> <i class="material-icons" style="padding-top: 4px">navigate_next</i> </div>
+          </router-link>
+        </div>
       <!--article start-->
-      <div id="article-wrap">
+      <div class="quest-detail-articles">
+        <div>인증 개시글</div>
+        <div>인증 생성</div>
+      </div>
+      <div id="quest-detail-article-wrap">
         <div class="article-image" v-for="article in articles" :key="article.id">
           <!--article 같이 보내줘야 함...-->
           <ArticleImage class="inner" :article="article"/>
@@ -34,23 +53,57 @@
 <script>
 import ArticleImage from "@/components/articles/ArticleImage";
 import {mapGetters, mapState} from 'vuex'
+import QuestApi from "../../api/QuestApi";
+import moment from "moment";
+import ComponentNav from "../../components/common/ComponentNav";
 
 export default {
   name: "QuestSingle",
   components: {
-    ArticleImage
+    ArticleImage,
+    ComponentNav
   },
    // props
   // data
   // methods
   // computed
-  computed:{
+  computed: {
+    articles() {
+      const articles = this.$store.state.quests.questDetail.articles
+      articles.forEach(article => {
+        article['questTitle'] = this.questDetail.title
+        article['questId'] = this.questDetail.id
+      }, articles)
+
+      return articles
+    },
     ...mapState({
-      articles: state => state.articles.feeds
-    }),
-    ...mapGetters(['questId'])
+      questDetail: state => state.quests.questDetail,
+      questId: state => state.quests.questId,
+      loginUser: state => state.user.loginUser,
+      dateFormatted: function () {
+        return moment(String(this.questDetail.startAt)).format('YYYY/MM/DD')
+      },
+      userCount: function () {
+        return this.questDetail.users.length
+      }
+    })
   },
-}
+    created() {
+      const data = {questId:this.questId, myId: this.loginUser.id}
+      QuestApi.requestQuestDetail(
+          data,
+          res => {
+            // console.log(res)
+            this.$store.dispatch('setQuestDetail', res.data)
+            this.$store.dispatch('setFeeds', res.data.articles)
+          },
+          err => {
+            console.log(err)
+          }
+      )
+    }
+  }
 </script>
 
 <style scoped>
@@ -59,15 +112,20 @@ export default {
   flex-direction: column;
   text-align: start;
   margin: 15px;
+
 }
 
 #quest-wrap {
   display: flex;
+  border-bottom: rgba(41, 41, 41, 0.2) solid;
+  padding-bottom: 10px;
 }
 
 #quest-image {
   width: 100px;
   flex: 1 1 0;
+  border: rgba(41, 41, 41, 0.2) solid;
+  border-radius: 50%;
 }
 
 #quest-info {
@@ -75,20 +133,29 @@ export default {
   flex-direction: column;
   justify-content: space-around;
   flex: 2 2 0;
+  margin-left: 8px;
+
 }
 
-#description {
+#quest-detail-description {
   height: 50px;
-  display: flex;
-  align-items: center;
+  /*display: flex;*/
+  /*align-items: center;*/
+  margin-top: 15px;
 }
 
 
 
-#article-wrap {
+#quest-detail-article-wrap {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.quest-detail-articles{
+  display: flex;
+  justify-content: space-between;
 }
 
 .article-image {
@@ -115,4 +182,43 @@ export default {
   object-position: center;
 }
 
+#quest-detail-head {
+
+}
+
+#quest-detail-title {
+  font-family: GongGothicBold;
+  font-size: 1.3em;
+}
+
+#quest-detail-date{
+  font-size: 0.8em;
+}
+#quest-detail-description{
+  height: 70px;
+  margin-bottom: 20px;
+}
+#quest-detail-des-text {
+  /*border: #f1a64b solid;*/
+  background: rgba(241, 166, 75, .3);
+  border-radius: 10px;
+  height: 50px;
+  padding-top: 7px;
+  padding-left: 7px;
+  font-size: 0.8em;
+
+}
+
+#quest-detail-contents{
+  height: 100px;
+}
+
+.participants {
+  color: black;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1em;
+}
 </style>

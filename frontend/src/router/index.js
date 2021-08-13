@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import UserApi from "@/api/UserApi";
+import store from '@/store'
+import cookies from "vue-cookies";
 
 import Main from "@/views/Main";
 
@@ -16,6 +19,8 @@ import CreateQuest from "@/views/quests/CreateQuest";
 import CreateSolo from "@/components/quests/CreateSolo";
 import CreateGroup from "@/components/quests/CreateGroup";
 import CreateRelay from "@/components/quests/CreateRelay";
+// 퀘스트 상세 참여자
+import ParticipantsList from "../components/quests/ParticipantsList";
 
 
 // 피드
@@ -28,7 +33,9 @@ import UpsertArticle from "@/views/articles/UpsertArticle";
 // 마일리지
 import Mileage from "@/views/mileages/Mileage";
 import Donation from "@/components/mileages/Donation";
+import CharityDetail from "../components/mileages/CharityDetail";
 import CashOut from "@/components/mileages/CashOut";
+import CashOutResult from "@/components/mileages/CashOutResult"
 
 // 프로필
 import Profile from "@/views/user/Profile";
@@ -43,7 +50,8 @@ import Following from "@/views/user/Following";
 
 // 알람
 import Alert from "@/views/user/Alert";
-import AlertAll from "@/components/user/AlertAll";
+import CommonAlert from "@/components/user/CommonAlert";
+import QuestAlert from "@/components/user/QuestAlert";
 import MessageAll from "@/components/user/MessageAll";
 
 // 검색
@@ -53,11 +61,16 @@ import Search from "@/views/common/Search";
 import Error from "@/views/common/Error";
 import PageNotFound from "@/views/common/PageNotFound";
 
+// 테스트용
+import ImageInput from "@/components/common/ImageInput";
+import Test from "@/views/Test";
+
 
 Vue.use(VueRouter)
 
 const routes = [
   // 메인
+  {path: '', redirect: '/main'},
   {path: '/main', name: 'Main', component: Main},
 
   // 전체 퀘스트
@@ -78,10 +91,13 @@ const routes = [
       ]
   },
   //퀘스트 상세
-  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
+  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail,},
+  {path: '/participants', name:'ParticipantsList', component: ParticipantsList},
+
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
+  {path: '/article/create', component: UpsertArticle},
   {
     path: '/article', component: VerticalFeed,
     children: [
@@ -89,24 +105,27 @@ const routes = [
         path: ':id',
         name: 'ArticleDetail',
         component: ArticleDetail,
+        props: true,
         meta: { transitionName: 'slide' }
       },
     ]
   },
   {path: '/article/:id/edit', component: UpsertArticle},
-  {path: '/article/create', component: UpsertArticle},
 
   // 마일리지
   {
     path: '/user/mileage', component: Mileage,
     children: [
       {path: '', name: 'Donation', component: Donation},
-      {path: 'cashout', name: 'CashOut', component: CashOut}
+      {path: 'cashout', name: 'CashOut', component: CashOut},
+      {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }}
     ]
   },
+  {path: '/charity/:id', name: 'CharityDetail', component: CharityDetail},
 
   // 프로필
-  {path: '/user/profile/undefined', redirect: '/login'},
+  // {path: '/user/profile/', redirect: '/login'},
+  // {path: '/user/profile/undefined', redirect: `/user/profile/`},
   {path: '/user/profile/edit', name: 'ProfileEdit', component: ProfileEdit},
   {path: '/user/profile/:nickname', name: 'Profile', component: Profile, meta: {transitionName: 'slide'}},
 
@@ -127,29 +146,57 @@ const routes = [
   {
     path: '/notification/:nickname', component: Alert,
     children: [
-      {path: '', name: 'Alert', component: AlertAll},
-      {path: 'messages', name: 'Messages', component: MessageAll}
+      {path: '/', name: 'QuestAlert', component: QuestAlert},
+      {path: 'common', name: 'CommonAlert', component: CommonAlert},
     ]
   },
+  // 메세지
+  {path: '/messages/:nickname', name: 'Messages', component: MessageAll},
 
   //검색
   {path: '/search', name: 'Search', component: Search},
 
   // 에러
   {path: '/error', name: 'Error', component: Error},
+
+  // 개발시 테스트용.. 여기에 컴포넌트 연결해서 필요한 거 보시져..
+  {path: '/dev/test', name: 'Test', component: Test},
+
   // 404
-  // {path: '*', redirect: '/404'},
-  // {path: '/404', name: 'PageNotFound', component: PageNotFound}
+  // {path: '/*', redirect: '/404'},
+  {path: '/*', name: 'PageNotFound', component: PageNotFound},
 ]
+
+// navigation duplicated
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+	return originalPush.call(this, location).catch(err => {
+		if (err.name !== 'NavigationDuplicated') throw err;
+	});
+};
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  // 새 페이지 로딩할 때 항상 스크롤 맨 위로
-  // scrollBehavior(to, from) {
-  //   return {x: 0, y:0}
-  // }
 })
+
+router.beforeEach((to, from, next) => {
+  // 로그인 되어 있는 경우, 정보를 다시 새로 받아오겠습니다.
+  const user = cookies.get('login-user')
+  if (user) {
+    store.dispatch('updateUserInfo', user)
+    // store.dispatch('setCommonAlarms', user)
+    // store.dispatch('setQuestAlarms', user)
+  }
+
+  // if (store.getters.isLoggedIn) {
+  //   store.dispatch('updateUserInfo')
+  // }
+  next()
+})
+
+
+
 
 export default router

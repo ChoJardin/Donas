@@ -146,7 +146,7 @@ export default {
 <style scoped>
 .overlay {
   position: fixed;
-  top: 70px;
+  top: 60px;
   right: 15px;
   bottom: 0;
   left: 15px;

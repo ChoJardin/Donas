@@ -31,15 +31,14 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("G")
 @Table(name="Group_quest")
 public class Group extends Quest{
-	
-	@ColumnDefault("0")
-	private Integer percent;
+	@Column(name="user_cnt")
+	private int userCnt;
 	
 	public Group() {}
 	
 	@Builder
-	public Group(String type, String title, String description, Date startAt, Date finishAt, int percent) {
-		super(type, title, description, startAt, finishAt);
-		this.percent = percent;
+	public Group(String type, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage, int userCnt) {
+		super(type, title, description, startAt, finishAt, picture, certification, mileage);
+		this.userCnt = userCnt;
 	}
 }

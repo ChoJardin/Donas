@@ -1,0 +1,20 @@
+deploy-to-server:
+  stage:
+    deploy
+  only:
+    - master
+  before_script:
+    - echo 'start deployment'
+    - whoami
+  script:
+    - cd /home/ubuntu/S05P13A603/
+    - git pull origin master
+    - cd frontend
+    - npm run build
+    - sudo service nginx restart
+
+  after_script:
+    - echo 'deployment done'
+
+  tags:
+    - deploy

@@ -4,8 +4,8 @@
       <div id="profile-wrap">
         <img id="profile-image" src="../../assets/donut1.png" alt="">
         <div id="profile-info">
-          <h1 id="username">{{nickname}}님의 마일리지</h1>
-          <div id="mileage-total">8,000원</div>
+          <h1 id="username">{{loginUser.nickname}}님의 마일리지</h1>
+          <div id="mileage-total">{{mileage}}원</div>
         </div>
       </div>
     </div>
@@ -29,6 +29,8 @@
 // import CashOut from "@/components/mileages/CashOut";
 // import Donation from "@/components/mileages/Donation";
 import {mapState} from "vuex";
+import UserApi from "../../api/UserApi";
+import MileagesApi from "../../api/MileagesApi";
 export default {
   name: 'Mileage',
   components: {
@@ -41,9 +43,30 @@ export default {
   // computed
   computed: {
     ...mapState({
-      nickname: state => state.user.loginUser.nickname,
+      loginUser: state => state.user.loginUser,
+      mileage: state => state.user.userMileage
     })
-  }
+  },
+  created() {
+      UserApi.requestLoginUser(
+          this.loginUser.id,
+          res => {
+            // console.log(res)
+            this.$store.dispatch('setMileage', res.data.mileage)
+          },
+          err => {
+            console.log(err)
+          }
+      );
+      MileagesApi.requestCharityList(
+        res => {
+          this.$store.dispatch('setCharityList', res)
+        },
+        err => {
+          console.log(err)
+        }
+    )
+    }
 }
 </script>
 
@@ -67,7 +90,8 @@ export default {
 #profile-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  line-height: 1.9em;
   flex: 2 2 0;
   padding-left: 15px;
 }

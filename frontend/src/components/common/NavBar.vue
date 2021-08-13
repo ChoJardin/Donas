@@ -20,7 +20,7 @@
           <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
         </div>
         <div class="notification">
-          <router-link :to="{name:'Alert', params:{nickname:nickname, id:id}}"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
+          <router-link :to="{name:'QuestAlert', params:{nickname:nickname, id:id}}"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
           <span class="badge"><i class="fas fa-circle fa-xs"></i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
@@ -63,18 +63,17 @@ export default {
 /* nav-bar */
 #nav {
   background-color: white;
-
   top: 0;
-  /*왼쪽은 패딩 안 줘도 될 것 같기도 하고..*/
   padding-left: 10px;
   padding-right: 10px;
   position: fixed;
   width: 100vw;
-  height: 70px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e4e6e9;
 }
 
 #logo {

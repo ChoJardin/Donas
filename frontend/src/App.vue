@@ -16,13 +16,15 @@
 
 <script>
 import cookies from "vue-cookies";
-import { token } from '@/services/messaging/messaging.ts';
+// import { token } from '@/services/messaging/messaging.ts';
 
 import navBar from "@/components/common/NavBar";
 import Footer from "@/components/common/Footer";
 
 // 브라우저 기본 속성 리셋
 import ('./assets/style/reset.css')
+// transition
+import ('./assets/style/transition.css')
 
 export default {
   name: 'App',
@@ -42,11 +44,6 @@ export default {
   // computed
   // watch
   // lifecycle hook
-  created() {
-    let user = cookies.get('login-user')
-    if (user)
-      this.$store.dispatch('setLoginUser', user)
-  }
 }
 
   // components
@@ -76,8 +73,8 @@ export default {
 
 #app-content {
   position: absolute;
-  top: 70px;
-  bottom: 50px;
+  top: 60px;
+  bottom: 60px;
   width: 100%;
   padding: 0 15px;
   overflow: auto;

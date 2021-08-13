@@ -1,6 +1,6 @@
 package com.ssafy.donas.domain.quest;
 
-import java.util.Date;
+import java.time.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.donas.domain.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,24 +38,27 @@ public class RelayWait {
 	@Column(nullable = false, name="wait_rank")
 	private int waitRank;
 	
-	@Column(nullable = false, name="user_id")
-	private long userId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date deadline;
+	private LocalDateTime deadline;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "relay_id")
 	private Relay relay;
 	
+	@Column(nullable = false, name="relay_order")
+	private int relayOrder;
+	
 	public RelayWait() {}
 	
 	@Builder
-	public RelayWait(Relay relay, int waitRank, long userId, Date deadline) {
+	public RelayWait(Relay relay, int waitRank, User user, int order) {
 		this.relay = relay;
 		this.waitRank = waitRank;
-		this.userId = userId;
-		this.deadline = deadline;
+		this.user = user;
+		this.relayOrder = order;
 	}
 
 }

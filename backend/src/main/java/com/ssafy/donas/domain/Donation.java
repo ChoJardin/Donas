@@ -1,6 +1,6 @@
 package com.ssafy.donas.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -36,7 +35,10 @@ public class Donation {
 	
 	@Column(insertable = false, updatable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private Date time;
+	private LocalDateTime time;
+	
+	@Column(nullable = false)
+	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -47,12 +49,16 @@ public class Donation {
 	private Charity charity;
 	
 	public Donation() {}
-	
-	@Builder
-	public Donation(long amount, User user, Charity charity) {
+
+	public Donation(long amount, LocalDateTime time, String name, User user, Charity charity) {
+		super();
 		this.amount = amount;
+		this.time = time;
+		this.name = name;
 		this.user = user;
 		this.charity = charity;
 	}
+	
+	
 	
 }

@@ -2,7 +2,7 @@
   <div>
     <FollowUserProfile
         v-for="(following, idx) in followings" :key="idx"
-        :follow="following"/>
+        :profile="following"/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import {mapState} from "vuex";
 import UserApi from "@/api/UserApi";
 
-import FollowUserProfile from "@/components/user/FollowUserProfile";
+import FollowUserProfile from "@/components/user/UserProfileCard";
 
 export default {
   name: "Following",

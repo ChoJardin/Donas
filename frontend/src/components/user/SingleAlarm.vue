@@ -1,34 +1,67 @@
 <template>
   <div class="single-alarm">
-    <router-link v-if="alarm.articleId === -1" :to="{name:'Profile', params:{nickname:alarm.sendName}}" style="text-decoration: none; color: black">
+    <div v-if="alarm.articleId === -1" @click="statusChange" style="text-decoration: none; color: black">
       <div class="alarm-wrap">
-        <div class="alarm-read" v-if="alarm.confirm === '0'"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
+        <div class="alarm-read" v-if="alarm.confirm === 1"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
           <div style="font-size: 1.0em">{{alarm.content}}</div>
         </div>
       </div>
-    </router-link>
-    <router-link v-else :to="{name:'ArticleDetail', params:{id:alarm.articleId}}" style="text-decoration: none; color: black">
+    </div>
+    <div v-if="alarm.articleId === -2" @click="statusChange" style="text-decoration: none; color: black">
       <div class="alarm-wrap">
-        <div class="alarm-read" v-if="alarm.confirm === '0'"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
+        <div class="alarm-read" v-if="alarm.confirm === 1"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
           <div style="font-size: 1.0em">{{alarm.content}}</div>
         </div>
       </div>
-    </router-link>
+    </div>
+<!--    <router-link v-else :to="{name:'ArticleDetail', params:{id:alarm.articleId}}" style="text-decoration: none; color: black">-->
+<!--      <div class="alarm-wrap">-->
+<!--        <div class="alarm-read" v-if="alarm.confirm === '0'"><i class="material-icons" style="font-size: 0.7em">circle</i></div>-->
+<!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
+<!--        <div class="alarm-message">-->
+<!--          <div style="font-size: 0.5em">{{dateFormatted}}</div>-->
+<!--          <div style="font-size: 1.0em">{{alarm.content}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </router-link>-->
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import UserApi from "../../api/UserApi";
 export default {
   name: "SingleAlarm",
   props: {
     alarm: Object,
+  },
+  methods: {
+    //읽음 상태 변경
+    statusChange() {
+      // console.log('change')
+      let data = {
+        id: this.alarm.id,
+        confirm: 0
+      }
+      // console.log(data)
+      let path
+      UserApi.updateAlertStatus(
+          data,
+          res => {
+            // console.log(res)
+            path = res.data === 'OK' ? `/user/profile/${this.alarm.sendName}` : '/error'
+            this.$router.push(path)
+          },
+          err => {
+            console.log(err)
+          })
+    }
   },
   computed: {
     dateFormatted: function (){

@@ -4,28 +4,28 @@
       <div class="create-quest-questions">
         <div class="create-question-title">퀘스트 이름을 입력해 주세요
         <span class="create-question-subtext">(10자 이내)</span></div>
-        <input autofocus class="create-quest-input" :input.sync="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">
+        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">
       </div>
 
       <div class="create-quest-questions">
         <div class="create-question-title">간단한 설명을 입력해 주세요
         <span class="create-question-subtext">(14자 이내)</span></div>
-        <input class="create-quest-input" :input.sync="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <input class="create-quest-input" v-model="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
       </div>
 
       <div class="create-quest-questions">
         <div class="create-question-title">시작일을 지정해 주세요</div>
-        <input class="create-quest-input" :input.sync="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
       </div>
 
       <div class="create-quest-questions">
         <div class="create-question-title">종료일을 지정해 주세요</div>
-        <input class="create-quest-input" :input.sync="finishAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <input class="create-quest-input" v-model="finishAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
       </div>
 
       <div class="create-quest-questions">
         <div class="create-question-title" >인증 방법을 입력하세요</div>
-        <textarea class="create-quest-textarea" :input.sync="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
+        <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
         </textarea>
       </div>
 
@@ -34,28 +34,67 @@
         <input class="create-quest-img" type="file" accept="image/*; capture=camera" :input.sync="picture" >
       </div>
     </div>
+
+    <button class="button" @click="onCreate">생 성 하 기</button>
+
   </div>
 </template>
 
 <script>
-import PV from "password-validator";
+import {mapGetters, mapState} from "vuex";
+import QuestApi from "../../api/QuestApi";
 
 export default {
   name: "CreateSingle",
   data: () => {
     return {
-      type:'Personal',
+      userId: '',
       title: '',
       description: '',
       startAt:'',
       finishAt: '',
-      created_by:'',
       picture:'../../assets/donut_flag.png',
       certification: '',
       mileage:2000,
     }
   },
-}
+  //computed
+  computed: {
+    ...mapState({
+      loginUser: state => state.user.loginUser,
+    })
+  },
+  //methods
+  methods: {
+    onCreate(){
+      let data = {
+        userId: this.loginUser.id,
+        title: this.title,
+        description: this.description,
+        startAt: this.startAt,
+        finishAt: this.finishAt,
+        picture: this.picture,
+        certification: this.certification,
+        mileage: this.mileage
+        }
+      // console.log(data)
+      let path
+      QuestApi.createPersonalQuest(
+          data,
+          res => {
+            if(res === "NO_CONTENT") {
+              alert('입력확인')
+            }
+            else{
+              this.$router.push('/quests')
+            }
+          },
+          err => {
+            console.log(err)
+          })
+      }
+    }
+  }
 </script>
 
 <style scoped>
@@ -109,6 +148,18 @@ label {
 
 .create-quest-img {
   width: 100%;
+}
+
+.button {
+  width: 90%;
+  height: 50px;
+  border-radius:25px;
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
+  font-size: 1em;
+  /*font-weight: bold;*/
+  background-color: #183a1d;
+  color: #e1eedd;
+  cursor: pointer;
 }
 
 </style>

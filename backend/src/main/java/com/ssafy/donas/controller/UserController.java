@@ -1,5 +1,8 @@
 package com.ssafy.donas.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +18,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.donas.domain.DonationInfo;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.CheckPasswordRequest;
 import com.ssafy.donas.request.SigninRequest;
 import com.ssafy.donas.request.SignoutRequest;
 import com.ssafy.donas.request.SignupRequest;
 import com.ssafy.donas.request.UserInfoRequest;
+import com.ssafy.donas.response.CashListResponse;
+import com.ssafy.donas.response.DonationListResponse;
 import com.ssafy.donas.response.LoginResponse;
 import com.ssafy.donas.response.MypageResponse;
+import com.ssafy.donas.service.CashService;
+import com.ssafy.donas.service.DonationService;
+import com.ssafy.donas.service.MileageService;
+import com.ssafy.donas.service.QuestParticipantsService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +46,18 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MileageService mileageService;
+	
+	@Autowired
+	DonationService donationService;
+	
+	@Autowired
+	CashService cashService;
+	
+	@Autowired
+	QuestParticipantsService questParticipantsService;
 
 	@PostMapping("/signin")
 	@ApiOperation(value = "로그인")
@@ -51,7 +74,7 @@ public class UserController {
 			return HttpStatus.NOT_FOUND;
 		
 		// 로그인 아이디별 토큰 저장	
-
+		
 		result.id = user.getId();
 		result.nickname = user.getNickname();
 		result.questCnt = user.getQuestCnt();
@@ -122,32 +145,74 @@ public class UserController {
 	
 	@PatchMapping("/profile/{id}")
 	@ApiOperation(value = "회원 정보 변경")
-	public Object updateUserInfo(@PathVariable long id, @RequestBody UserInfoRequest request) {
+	public Object updateUserInfo(@PathVariable long id, @RequestBody UserInfoRequest request) {//, @RequestParam MultipartFile img) {
 		if(!userService.updateUserInfo(id, request.getNickname(), request.getPicture(), request.getDescription()))
 			return HttpStatus.BAD_REQUEST;
 		
 		return HttpStatus.OK;
 	}
-	
 	@GetMapping("/mypage/{id}")
 	@ApiOperation(value = "마이페이지")
 	public Object showMypage(@PathVariable long id) {
 		User user = userService.getUser(id);
 		
+		
 		if(user == null)
-			return HttpStatus.NOT_FOUND;
+			return HttpStatus.NOT_FOUND;		
 		
 		final MypageResponse result = new MypageResponse();
-		ResponseEntity response = null;
-		
+		ResponseEntity response = null;	
+
 		result.nickname = user.getNickname();
 		result.email = user.getEmail();
 		result.picture = user.getPicture();
 		result.description = user.getDescription();
 		result.mileage = user.getMileage();
-		result.questCnt = user.getQuestCnt();
+		result.questCnt = questParticipantsService.getQuestCntById(id, new Date());
 		result.questPercent = user.getQuestPercent();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}	
+	
+	@PatchMapping("/mileage/{userId}")
+	@ApiOperation(value = "마일리지 차감")
+	public Object minusMileage(@PathVariable long userId, @RequestParam long amount) {
+		if(!userService.checkId(userId))
+			return new ResponseEntity<>("유저 없음",HttpStatus.NOT_FOUND);
+				
+		if(!mileageService.minusMileage(userId, amount))
+			return new ResponseEntity<>("마일리지 초과", HttpStatus.BAD_REQUEST);
+		
+		return HttpStatus.OK;
+	}
+	
+	@GetMapping("/mileage")
+	@ApiOperation(value = "기부내역확인")
+	public Object showDonationList(@RequestParam String type, @RequestParam long userId) {
+		if(!userService.checkId(userId))
+			return new ResponseEntity<>("유저 없음",HttpStatus.NOT_FOUND);
+		
+		if(type.equals("D")) {
+			DonationListResponse result = new DonationListResponse();
+			result.donationList = donationService.showDonationList(userId);
+			if(result.donationList==null)
+				return new ResponseEntity<>("기부 내역 없는 유저", HttpStatus.NOT_FOUND);
+			result.total = donationService.getSumDonationById(userId);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+
+		}else if(type.equals("C")) {
+			CashListResponse result = new CashListResponse();
+			result.cashList = cashService.showDonationList(userId);	
+			if(result.cashList==null)
+				return new ResponseEntity<>("기부 내역 없는 유저", HttpStatus.NOT_FOUND);
+			result.total = cashService.getSumCashById(userId);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("잘못된 내역확인", HttpStatus.NOT_FOUND);
+		}
+
+
+	}
+
+	
 }

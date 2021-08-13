@@ -84,29 +84,56 @@ public class ArticleController {
 		return HttpStatus.OK;
 	}
 
-	@GetMapping("/{userId}")
-	@ApiOperation(value = "아이디 당 게시물 목록")
-	public Object getArticleByUserId(@PathVariable long userId) {
-		if (!userService.checkId(userId))
+//	@GetMapping("/{userId}")
+//	@ApiOperation(value = "아이디 당 모든 게시물 목록")
+//	public Object getArticleByUserId(@PathVariable long userId) {
+//		if (!userService.checkId(userId))
+//			return HttpStatus.NOT_FOUND;
+//		
+//		List<Article> articles = articleService.getArticlesByUser(userService.getUser(userId));
+//		final List<ArticleResponse> result = new ArrayList<>();
+//
+//		for (Article article : articles) {
+//			ArticleResponse res = new ArticleResponse();
+//			res.articleId = article.getId();
+//			res.questId = article.getQuest().getId();
+//			res.image = article.getImage();
+//			res.content = article.getContent();
+//			res.createdAt = article.getCreatedAt();
+//			res.updatedAt = article.getUpdatedAt();
+//			res.type = article.getType();
+//			res.likeCnt = article.getLikes().size();
+//			res.commentCnt = article.getComments().size();
+//			result.add(res);
+//		}
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
+	
+	@GetMapping("/mine")
+	@ApiOperation(value = "퀘스트 종류별 나의 게시물 목록")
+	public Object getArticleByType(@RequestParam long userId, @RequestParam String type) {
+		if(!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
-		
-		List<Article> articles = articleService.getArticlesByUser(userService.getUser(userId));
-		final List<ArticleResponse> result = new ArrayList<>();
-
-		for (Article article : articles) {
+		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
+		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(userId,type,"mine");
+		for(ArticleInfo article : articles) {
 			ArticleResponse res = new ArticleResponse();
-			res.articleId = article.getId();
-			res.questId = article.getQuest().getId();
-			res.image = article.getImage();
-			res.content = article.getContent();
+			res.id = article.getId();
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
+			res.image = article.getImage();
+			res.content = article.getContent();
 			res.type = article.getType();
-			res.likeCnt = article.getLikes().size();
-			res.commentCnt = article.getComments().size();
+			res.isLike = article.isLike();
+			res.heartCnt = article.getHeartCnt();
+			res.commentCnt = article.getCommentCnt();
+			res.makerImage = article.getMakerImage();
+			res.makerName = article.getMakerName();
+			res.questId = article.getQuestId();
+			res.questTitle = article.getQuestTitle();
 			result.add(res);
 		}
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
 	// 미완성 코드
@@ -146,27 +173,29 @@ public class ArticleController {
 	
 	@GetMapping("/following")
 	@ApiOperation(value = "팔로잉 중인 유저들의 개인 퀘스트 피드")
-	public Object getPersonalQuestFeed(@RequestParam long user_id, @RequestParam String type ) {
-		if(!userService.checkId(user_id))
+	public Object getPersonalQuestFeed(@RequestParam long userId, @RequestParam String type ) {
+		if(!userService.checkId(userId))
 			return HttpStatus.NOT_FOUND;
 		
 		List<ArticleResponse> result = new ArrayList<ArticleResponse>();
-		List<Article> articles = articleService.getArticleInfoByUserAndType(user_id,type);
-		for(Article article : articles) {
+		List<ArticleInfo> articles = articleService.getArticleInfoByUserAndType(userId,type,"other");
+		for(ArticleInfo article : articles) {
 			ArticleResponse res = new ArticleResponse();
-			res.articleId = article.getId();
-			res.questId = article.getQuest().getId();
-			res.image = article.getImage();
-			res.content = article.getContent();
+			res.id = article.getId();
 			res.createdAt = article.getCreatedAt();
 			res.updatedAt = article.getUpdatedAt();
+			res.image = article.getImage();
+			res.content = article.getContent();
 			res.type = article.getType();
-			res.likeCnt = article.getLikes().size();
-			res.commentCnt = article.getComments().size();
+			res.isLike = article.isLike();
+			res.heartCnt = article.getHeartCnt();
+			res.commentCnt = article.getCommentCnt();
+			res.makerImage = article.getMakerImage();
+			res.makerName = article.getMakerName();
+			res.questId = article.getQuestId();
+			res.questTitle = article.getQuestTitle();
 			result.add(res);
 		}
-		
-		System.out.println("열ㄴㅇ며랴먼야럼ㅇ냐ㅓ");
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	

@@ -2,6 +2,8 @@ package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,7 @@ import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.repository.ArticleRepo;
 import com.ssafy.donas.repository.FollowRepo;
+import com.ssafy.donas.repository.quest.QuestRepo;
 
 @Service
 @Transactional
@@ -30,7 +33,8 @@ public class ArticleService {
 	@Autowired
 	ArticleRepo articleRepo;
 	
-	
+	@Autowired
+	QuestRepo questRepo;
 
 	public boolean checkArticle(long articleId) {
 		Optional<Article> article = articleRepo.findById(articleId);
@@ -75,10 +79,26 @@ public class ArticleService {
 					break;
 				}
 			}
-			
-			infos.add(new ArticleInfo(a.getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size()));
-		}
+			infos.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle(),a.getUser().getNickname(),a.getUser().getPicture()));
+		}		
+		return infos;
+	}
+	
+	public List<ArticleInfo> getArticleInfosByUser(User ownUser, User otherUser){
+		List<Article> articles = getArticlesByUser(ownUser);
 		
+		List<ArticleInfo> infos = new ArrayList<ArticleInfo>();
+		for(Article a : articles) {
+			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+			boolean isLike = false;
+			for(Like like: a.getLikes()) {
+				if(like.getUser() == otherUser) {
+					isLike = true;
+					break;
+				}
+			}
+			infos.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle(),a.getUser().getNickname(),a.getUser().getPicture()));
+		}		
 		return infos;
 	}
 	
@@ -92,20 +112,73 @@ public class ArticleService {
 		return articleRepo.findTop5ByUserOrderByCreatedAt(user);
 	}
 
-	public List<Article> getArticleInfoByUserAndType(long userId, String type) {
-		User presentUser = userService.getUser(userId);
-		List<Long> followee_ids = followRepo.getFollowers(presentUser);
-		List<Article> articles = new ArrayList<Article>();
-		for(long fd : followee_ids) {
-			User followee = userService.getUser(fd);
-			System.out.println("adisjfiasjdfijasidjfidasjiji");
-			System.out.println(type);
-			List<Article> followee_articles =articleRepo.findArticleByUserAndType(followee, type);
-			System.out.println(followee_articles.size());
-			for(Article a : followee_articles) {
-				articles.add(a);
+	public List<ArticleInfo> getArticleInfoByUserAndType(long userId, String type, String own ) {
+		User presentUser = userService.getUser(userId);		
+		List<ArticleInfo> articles = new ArrayList<ArticleInfo>();
+		List<Article> own_articles = null;
+		if(own.equals("mine")) {
+			if(type.equals("A")) {
+				own_articles = articleRepo.findArticleByUser(presentUser);
+
+			}else {
+				own_articles = articleRepo.findArticleByUserAndType(presentUser, type);
+
+			}
+			for(Article a : own_articles) {
+				User user = a.getUser();
+				// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+				boolean isLike = false;
+				for(Like like: a.getLikes()) {
+					if(like.getUser() == user) {
+						isLike = true;
+						break;
+					}
+				}
+				articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+			}
+		}else if(own.equals("other")){
+			List<Long> followee_ids = followRepo.getFollowers(presentUser);
+			for(long fd : followee_ids) {
+				User followee = userService.getUser(fd);
+				if(type.equals("A")) {
+					own_articles = articleRepo.findArticleByUser(followee);
+					for(Article a : own_articles) {
+						User user = a.getUser();
+						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+						boolean isLike = false;
+						for(Like like: a.getLikes()) {
+							if(like.getUser() == user) {
+								isLike = true;
+								break;
+							}
+						}
+						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+					}
+				}else {
+					own_articles =articleRepo.findArticleByUserAndType(followee, type);
+					for(Article a : own_articles) {
+						User user = a.getUser();
+						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+						boolean isLike = false;
+						for(Like like: a.getLikes()) {
+							if(like.getUser() == user) {
+								isLike = true;
+								break;
+							}
+						}
+						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
+
+					}
+				}
+
 			}
 		}
+		Collections.sort(articles, new Comparator<ArticleInfo>() {
+			@Override
+			public int compare(ArticleInfo o1, ArticleInfo o2) {
+				return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+			}
+		});	
 		return articles;
 	}
 

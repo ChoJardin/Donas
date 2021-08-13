@@ -1,62 +1,129 @@
 <template>
   <div>
     <div>
-      <div>
-        <div class="create-quest-questions">
-          <div class="create-question-title">퀘스트 이름을 입력해 주세요
-          <span class="create-question-subtext">(10자 이내)</span></div>
-          <input autofocus class="create-quest-input" type="text" maxlength="10" placeholder="예) 미라클 모닝">
-        </div>
+      <div class="create-quest-questions">
+        <div class="create-question-title">퀘스트 이름을 입력해 주세요
+        <span class="create-question-subtext">(10자 이내)</span></div>
+        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">
+      </div>
 
-        <div class="create-quest-questions">
-          <div class="create-question-title">어떤 주제의 퀘스트인가요?</div>
-          <input type="checkbox" id="subject1">
-          <label for="subject1">건강</label>
+      <div class="create-quest-questions">
+        <div class="create-question-title">간단한 설명을 입력해 주세요
+        <span class="create-question-subtext">(14자 이내)</span></div>
+        <input class="create-quest-input" v-model="description" type="search" maxlength="20" placeholder="예) 매일 30분 독서하기">
+      </div>
 
-          <input type="checkbox" id="subject2">
-          <label for="subject2">생활</label>
+      <div class="create-quest-questions">
+        <div class="create-question-title">함께 할 동료를 선택해 주세요</div>
+        <CreateGroupFriend @participants="onSelect"></CreateGroupFriend>
+      </div>
 
-          <input type="checkbox" id="subject3">
-          <label for="subject3">취미</label>
+      <div class="create-quest-questions">
+        <div class="create-question-title">시작일을 지정해 주세요</div>
+        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+      </div>
 
-          <input type="checkbox" id="subject4">
-          <label for="subject4">공부</label>
+      <div class="create-quest-questions">
+        <div class="create-question-title">종료일을 지정해 주세요</div>
+        <input class="create-quest-input" v-model="finishAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+      </div>
 
-          <input type="checkbox" id="subject5">
-          <label for="subject5">정서</label>
+      <div class="create-quest-questions">
+        <div class="create-question-title" >인증 방법을 입력하세요</div>
+        <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
+        </textarea>
+      </div>
 
-          <input type="checkbox" id="subject6">
-          <label for="subject6">자산</label>
-
-          <input type="checkbox" id="subject7">
-          <label for="subject7">기타</label>
-        </div>
-
-        <div class="create-quest-questions">
-          <div class="create-question-title">간단한 설명을 입력해 주세요
-          <span class="create-question-subtext">(14자 이내)</span></div>
-          <input class="create-quest-input" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
-        </div>
-
-        <div class="create-quest-questions">
-          <div class="create-question-title" >인증 방법을 입력하세요</div>
-          <textarea class="create-quest-textarea" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
-          </textarea>
-        </div>
-
-        <div class="create-quest-questions">
-          <div class="create-question-title" >퀘스트 대표 사진을 올려주세요</div>
-          <input class="create-quest-img" type="file" accept="image/*; capture=camera">
-        </div>
-
+      <div class="create-quest-questions">
+        <div class="create-question-title" >퀘스트 대표 사진을 올려주세요</div>
+        <input class="create-quest-img" type="file" accept="image/*; capture=camera" :input.sync="picture" >
       </div>
     </div>
+
+    <button class="button" @click="onCreate">회 원 가 입</button>
+
   </div>
 </template>
 
 <script>
+import {mapGetters, mapState} from "vuex";
+import QuestApi from "../../api/QuestApi";
+import UserApi from "../../api/QuestApi";
+import CreateGroupFriend from "./CreateGroupFriend";
+
+
 export default {
-  name: "CreateGroup"
+  name: "CreateGroup",
+  components: {
+    CreateGroupFriend
+  },
+  data: () => {
+    return {
+      userId: '',
+      title: '',
+      description: '',
+      startAt:'',
+      finishAt: '',
+      picture:'../../assets/donut_flag.png',
+      certification: '',
+      mileage:2000,
+      participants: [],
+    }
+  },
+  //computed
+  computed: {
+    ...mapState({
+      loginUser: state => state.user.loginUser,
+    })
+  },
+  //methods
+  methods: {
+    onCreate(){
+      let data = {
+        userId: this.loginUser.id,
+        title: this.title,
+        description: this.description,
+        startAt: this.startAt,
+        finishAt: this.finishAt,
+        picture: this.picture,
+        certification: this.certification,
+        mileage: this.mileage,
+        participants: this.participants
+        }
+      console.log(data)
+      let path
+      QuestApi.createGroupQuest(
+          data,
+          res => {
+            console.log(res)
+            if(res === "NO_CONTENT") {
+              alert('입력확인')
+            }
+            else{
+              this.$router.push('/quests')
+            }
+          },
+          err => {
+            console.log(err)
+          })
+      },
+    onSelect(friends) {
+      this.participants = friends
+    }
+  },
+  created() {
+    console.log('friends fetched')
+    UserApi.requestGroupFriends(
+        this.loginUser.id,
+        res => {
+          console.log(res)
+          this.$store.dispatch('setMutuals', res.data)
+        },
+        err => {
+          console.log(err)
+        }
+    )
+  }
 }
 </script>
 
@@ -101,13 +168,28 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.create-quest-img {
-  width: 100%;
-  /*font-size: 0px;*/
-  display: inline-block;
+.create-solo-questions .create-quest-img {
+  /*height: 10px;*/
 }
 label {
   font-size: 0.8em;
   margin-right: 5px;
 }
+
+.create-quest-img {
+  width: 100%;
+}
+
+.button {
+  width: 90%;
+  height: 50px;
+  border-radius:25px;
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
+  font-size: 1em;
+  /*font-weight: bold;*/
+  background-color: #183a1d;
+  color: #e1eedd;
+  cursor: pointer;
+}
+
 </style>

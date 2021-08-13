@@ -1,4 +1,4 @@
-import  {ref}  from '@/composition/index.ts';
+import  {ref}  from '../../composition/index.ts';
 import firebase from 'firebase/app';
 import '@firebase/messaging';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,7 +21,7 @@ messaging.usePublicVapidKey("BNtJjn9ch7RFp8N9V3C6SDBE02Zr-_W_OIoZSZcP6uT31Nlzsw2
 
 messaging.getToken().then((currentToken) => {
     if (currentToken) {
-        console.log(currentToken);
+        // console.log(currentToken);
         token.value = currentToken;
     } else {
         // Show permission request.

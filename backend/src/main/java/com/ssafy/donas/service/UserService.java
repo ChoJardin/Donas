@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.donas.domain.Token;
 import com.ssafy.donas.domain.User;
@@ -73,7 +74,6 @@ public class UserService {
 		Optional<User> testUser = userRepo.findById(id);
 		if (testUser.isEmpty())
 			return false;
-
 		return true;
 	}
 
@@ -132,6 +132,11 @@ public class UserService {
 	public void updatePassword(long id, String newPassword) {
 		User user = userRepo.getById(id);
 		user.setPassword(newPassword);
+	}
+	
+	// 총 마일리지
+	public long sumMileage() {
+		return userRepo.count();
 	}
 
 }

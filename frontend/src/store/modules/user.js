@@ -1,14 +1,15 @@
 import cookies from 'vue-cookies'
 import UserApi from "@/api/UserApi";
 // import axios from 'axios'
-// import router from '@/router'
+import router from '@/router'
 
 const state ={
   loginUser: {
     id: '',
-    nickname: '',
+    nickname: undefined,
     picture: '',
     description: '',
+    mileage:'',
   },
   // selectedProfile: {
   //   id: '',  // 유저 아이디
@@ -49,30 +50,25 @@ const state ={
   },
 
   //알람 리스트
-  alarms:[{
+  commonAlarms:[{
     id : '',
     receiveId: '',
     contents: '',
     sendTime: '',
     confirm: '',
+    sendName: '',
+  }],
+
+  questAlarms:[{
+    id : '',
+    receiveId: '',
+    contents: '',
+    sendTime: '',
     articleId: '',
     sendName: '',
-  }]
-  // alarms: [{
-  //   id: '1',
-  //   receiver_id: '3',
-  //   content: "ssafy님이 팔로우 했습니다.",
-  //   sendTime: "2021-08-04T03:06:43",
-  //   confirm: '1'
-  // },
-  //   {
-  //     id: '2',
-  //     receiver_id: '3',
-  //     content: "admin님이 팔로우 했습니다.",
-  //     sendTime: "2021-08-09T03:06:43",
-  //     confirm: '0'
-  //   }
-  // ]
+    confirm: '',
+  }],
+  userMileage: 0
 }
 
 
@@ -93,7 +89,7 @@ const mutations = {
     state.userId = ''
     cookies.remove('login-user')
   },
-  // 선택된 유저의 프로필 정보 저장
+  // 선택된 유저의 프로필 정보 저장 -> 프로필 페이지
   SET_SELECTED_USER_PROFILE(state, profile) {
     state.selectedProfile = profile
   },
@@ -117,21 +113,29 @@ const mutations = {
     state.selectedProfile.isFollowing = false
   },
 
-  SET_ALARMS(state, alarms) {
-    state.alarms = alarms
+  SET_COMMON_ALARMS(state, common) {
+    state.commonAlarms = common
   },
+  SET_QUEST_ALARMS(state, quest) {
+    state.questAlarms = quest
+  },
+
+  SET_MILEAGE(state, mileage) {
+    state.userMileage = mileage
+  }
 }
 
 
 const actions = {
   // 로그인된 유저 정보 저장
   requestLoginUserProfile({dispatch}, {id}) {
-    UserApi.requestLoginUser(
+     UserApi.requestLoginUser(
       id,
       res => {
         // 일치하는 유저 아이디 없음
         if (res.data === 'NOT_FOUND') {
-          this.$router.push('/error')
+          console.log('not found')
+          router.push({name: 'PageNotFound'})
         } else {
           // 정상적으로 유저 정보 가져온 경우
           res.data.id = id
@@ -139,16 +143,34 @@ const actions = {
         }
       },
       err => {
-        console.log(err)
-        // this.$router.push('/error')
+        // console.log(err)
+        router.push('/error')
       }
     )
   },
+
+  // 로그인 이용자 정보 업데이트
+  // -> 라우터 새로고침시 매번 로딩
+  async updateUserInfo ({dispatch, state}, {id}) {
+    await UserApi.requestLoginUser(
+      id,
+      async (res) => {
+        if (res.data !== 'NOT_FOUND') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          await dispatch('setLoginUser', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
+  },
+
+
   // 로그인된 유저 정보 저장
   setLoginUser({commit}, profile) {
     commit('SET_LOGIN_USER', profile)
     cookies.set('login-user', profile, '2d')
   },
+
   // 로그아웃
   logout({commit}) {
     commit('LOGOUT')
@@ -175,15 +197,20 @@ const actions = {
       commit('ADD_FOLLOWER')
     }
   },
-  // 프로필 정보 수정
-  // setLoginUser({commit}, profile) {
-  //   commit('SET_LOGIN_USER', profile)
-  // },
-
   // 알림 리스트
-  setAlarms({commit}, alarms) {
-    commit('SET_ALARMS', alarms)
+  setCommonAlarms({commit}, common) {
+    console.log(common)
+    commit('SET_COMMON_ALARMS', common)
   },
+
+  setQuestAlarms({commit}, quest) {
+    console.log(quest)
+    commit('SET_QUEST_ALARMS', quest)
+  },
+
+  setMileage({commit}, mileage) {
+    commit('SET_MILEAGE', mileage)
+  }
 
 }
 

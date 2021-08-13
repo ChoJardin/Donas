@@ -100,9 +100,10 @@ public class ProfileController {
 		result.isFollowing = followService.isFollowing(userService.getUser(myid), user);
 
 		//Article 정보
-		result.articles = articleService.getArticleInfosByUser(user);
+		result.articles = articleService.getArticleInfosByUser(user,userService.getUser(myid));
 		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
+		System.out.println(result.articles);
 		return response;
 	}
 
@@ -119,7 +120,7 @@ public class ProfileController {
 
 		// User 정보
 		result.nickname = user.getNickname();
-		result.picture = user.getPicture();
+		result.picture = user.getPicture();	
 		result.description = user.getDescription();
 		result.questCnt = user.getQuestCnt();
 
@@ -221,11 +222,14 @@ public class ProfileController {
 		if (!followService.addFollow(follower, followee))
 			return HttpStatus.CONFLICT;
 		
-		if(!alarmService.addAlarm(followee,follower.getNickname(),-1, follower.getNickname()+"님이 회원님을 팔로워하기 시작했습니다.", LocalDateTime.now()))
+		if(!alarmService.addAlarm(followee,follower.getNickname(),-1, follower.getNickname()+"님이 회원님을 팔로우하기 시작했습니다.", LocalDateTime.now()))
 			return HttpStatus.CONFLICT;
 
 		return HttpStatus.OK;
 	}
+	
+	
+	
 
 	@DeleteMapping("/follow")
 	@ApiOperation(value = "팔로우 취소")

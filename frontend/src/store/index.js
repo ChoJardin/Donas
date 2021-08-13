@@ -9,7 +9,12 @@ import quests from "@/store/modules/quests";
 
 Vue.use(Vuex)
 
+// const store = new Vuex.Store({
+//   modules: {user, articles, mileages, quests}
+// })
+
 export default new Vuex.Store({
   modules: {user, articles, mileages, quests, },
-
 })
+
+// export default store

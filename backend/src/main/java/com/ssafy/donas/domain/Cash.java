@@ -1,6 +1,8 @@
 package com.ssafy.donas.domain;
 
-import java.util.Date;
+
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,11 +38,20 @@ public class Cash {
 	
 	@Column(insertable = false, updatable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private Date time;
+	private LocalDateTime time;
+	
+	@Column(nullable = false)
+	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@Column(nullable = false)
+	private String accountNum;
+	
+	@Column(nullable = false)
+	private String bank;
 	
 	public Cash() {}
 	
@@ -49,4 +60,17 @@ public class Cash {
 		this.amount = amount;
 		this.user = user;
 	}
+	
+	@Builder
+	public Cash(long amount, LocalDateTime time, String name, User user, String accountNum, String bank) {
+		super();
+		this.amount = amount;
+		this.time = time;
+		this.name = name;
+		this.user = user;
+		this.accountNum = accountNum;
+		this.bank = bank;
+	}
+
+	
 }
