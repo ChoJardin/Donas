@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.ArticleInfo;
+import com.ssafy.donas.domain.ArticleShortInfo;
 import com.ssafy.donas.domain.Follow;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.request.AddArticleRequest;
 import com.ssafy.donas.request.UpdateArticleRequest;
 import com.ssafy.donas.response.ArticleResponse;
+import com.ssafy.donas.response.ArticleSortResponse;
 import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.UserService;
@@ -55,9 +57,14 @@ public class ArticleController {
 		
 		if ("".equals(article.getContent()))
 			return HttpStatus.NO_CONTENT;
-
-		Article result = articleService.add(userService.getUser(article.getUserId()), questService.getQuestById(article.getQuestId()), article.getImage(), article.getContent(), article.getType());
-		
+		ArticleSortResponse result = new ArticleSortResponse();
+		Article arti = articleService.add(userService.getUser(article.getUserId()), questService.getQuestById(article.getQuestId()), article.getImage(), article.getContent(), article.getType());
+		result.id = arti.getId();
+		result.content = arti.getContent();
+		result.image = arti.getImage();
+		result.questId = arti.getQuest().getId();
+		result.type = arti.getType();
+		result.questTitle = arti.getQuest().getTitle();
 		
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
