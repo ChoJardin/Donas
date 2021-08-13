@@ -20,4 +20,6 @@ public class CharityResponse {
 	public String picture;
 	@ApiModelProperty(value="tage",position = 8)
 	public String tag;
+	@ApiModelProperty(value="tage2",position = 8)
+	public String tag2;
 }
