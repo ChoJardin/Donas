@@ -2,7 +2,7 @@
   <div>
     <input
       type="file" id="image-input" ref="imgInput"
-      accept="image/jpeg, image/png" capture="camera"
+      accept="image/jpeg, image/png"
       @change="handleFile"
       >
 
@@ -43,8 +43,8 @@ export default {
         this.error = '이미지 파일을 선택해 주세요.'
       }
       // 파일의 크기가 너무 큰 경우
-      else if (this.file.size > 1048576) {
-        this.error = '1MB 이내의 파일만 선택 가능합니다.'
+      else if (this.file.size > 5242880) {
+        this.error = '5MB 이내의 파일만 선택 가능합니다.'
       }
       // 에러 발생하면 에러메세지 emit
       if (this.error) {
