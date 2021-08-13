@@ -35,7 +35,7 @@ public class Charity {
 	
 	@Column(nullable = true)
 	@ColumnDefault("0")
-	private int total;
+	private long total;
 	
 	@Column(nullable = true)
 	@ColumnDefault("0")
@@ -49,6 +49,9 @@ public class Charity {
 	
 	@Column(nullable = true)
 	private String tag;
+	
+	@Column(nullable = true)
+	private String tag2;
 	
 	@Column(nullable = true)
 	private String homepage;
