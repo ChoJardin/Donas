@@ -105,6 +105,11 @@ export default {
   },
   // props
   // data
+  data() {
+    return {
+      params: '',
+    }
+  },
   // methods
   methods: {
     // 팔로우
@@ -127,6 +132,40 @@ export default {
             // this.$router.push('/error')
           }
       )
+    },
+    setProfile() {
+      let myid = 0
+      if (this.isLoggedIn) {
+        myid = this.loginUser.id
+      }
+      let params = {myid: myid}
+      const profile_owner = this.$route.params.nickname
+      UserApi.requestProfileInfo(
+          profile_owner,
+          params,
+          res => {
+
+            // const util = require('util')
+            // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
+            const data = res.data
+            let articles = data.articles
+            articles.forEach(article => {
+              article['makerName'] = data.nickname
+              article['makerImage'] = data.picture
+            }, articles)
+            // articles = articles.map(article => {
+            //   console.log(article)
+            // })
+            // console.log(articles)
+            this.$store.dispatch('setUserProfile', res.data)
+            this.$store.dispatch('setFeeds', articles)
+          },
+          // 요청 실패하는 경우 -> 에러 페이지로 연결
+          err => {
+            console.log(err)
+            // this.$router.push('/error')
+          }
+      )
     }
   },
   // computed
@@ -141,6 +180,7 @@ export default {
     isMine() {
       return this.loginUser.nickname === this.$route.params.nickname
     },
+
     // parsedDescription() {
     //   return this.profile.description.replace(/\n/g, '<br/>')
     // }
@@ -151,6 +191,9 @@ export default {
     // 페이지 다시 마운트
     'isLoggedIn'(v) {
       this.$mount()
+    },
+    '$route.params.nickname'(v) {
+      this.setProfile()
     }
   },
   // lifecycle hook
@@ -161,40 +204,10 @@ export default {
     }
     // 페이지 로딩시 초기 정보 요청
     // 비회원의 경우 0으로 요청 --> 백 확인 필요
-    let myid = 0
-    if (this.isLoggedIn) {
-      myid = this.loginUser.id
-    }
-    let params = {myid: myid}
-    const profile_owner = this.$route.params.nickname
-    UserApi.requestProfileInfo(
-        profile_owner,
-        params,
-        res => {
-
-          // const util = require('util')
-          // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
-          const data = res.data
-          let articles = data.articles
-          articles.forEach(article => {
-            article['makerName'] = data.nickname
-            article['makerImage'] = data.picture
-          }, articles)
-          // articles = articles.map(article => {
-          //   console.log(article)
-          // })
-          // console.log(articles)
-          this.$store.dispatch('setUserProfile', res.data)
-          this.$store.dispatch('setFeeds', articles)
-        },
-        // 요청 실패하는 경우 -> 에러 페이지로 연결
-        err => {
-          console.log(err)
-          // this.$router.push('/error')
-        }
-    )
+    this.setProfile()
+    console.log('생성인가 ')
   },
-  // navigatio guard
+  // navigation guard
 }
 </script>
 

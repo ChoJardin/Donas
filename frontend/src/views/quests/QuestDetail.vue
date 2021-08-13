@@ -35,7 +35,7 @@
       <!--article start-->
       <div class="quest-detail-articles">
         <div>인증 개시글</div>
-        <div>인증 생성</div>
+        <button @click="$router.push('/article/create/')">인증 생성</button>
       </div>
       <div id="quest-detail-article-wrap">
         <div class="article-image" v-for="article in articles" :key="article.id">

@@ -50,7 +50,7 @@ input {
   cursor: pointer;
 }
 
-input.disabled {
+input .disabled {
   opacity: 0.6;
   cursor: default;
 }
