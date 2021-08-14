@@ -3,7 +3,7 @@
     <div class="comment-input-button-wrap">
     <input
         class="comment-input" v-model="input" @input="onType($event)"
-        type="text" :placeholder="placeholder" @keyup.enter="$emit('on-click', input)">
+        type="text" :placeholder="placeholder" @keypress.enter="$emit('on-enter', input)">
     <button @click="$emit('on-click', input)" class="comment-input-button" :disabled="!input || !isLoggedIn">등록</button>
     </div>
     <div class="comment-input-info">

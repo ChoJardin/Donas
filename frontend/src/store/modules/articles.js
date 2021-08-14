@@ -1,6 +1,7 @@
 // import cookies from 'vue-cookies'
 // import axios from 'axios'
 // import routes from './routes'
+import router from "@/router";
 
 const state ={
   feeds: [
@@ -69,6 +70,22 @@ const state ={
   //   },
   // ],
   selectedId: 0,
+  selectedArticle:
+    {
+      id: 0,
+      createdAt: "",
+      updatedAt: null,
+      image: "",
+      content: "",
+      type: "",
+      isLike: false,
+      heartCnt: 0,
+      commentCnt: 0,
+      makerImage: null,
+      makerName: "",
+      questId: 0,
+      questTitle: "",
+    },
   // 상세 페이지에서,
   // 게시글 좋아요 누른 이용자 목록
   likeList: [],
@@ -78,12 +95,18 @@ const state ={
 }
 
 const getters = {
-  selectedArticle: state => {
-    return state.feeds.find(article => article.id === Number(state.selectedId))
+  isArticleSelected: state => {
+    return !!state.selectedId
   },
+  // selectedArticle: state => {
+  //   return state.feeds.find(article => article.id === Number(state.selectedId))
+  // },
   likeUser(state) {
     if (state.likeList.length)
       return state.likeList[0].nickname
+  },
+  likeCnt(state) {
+    return state.selectedArticle.likeCnt
   }
 }
 
@@ -96,6 +119,10 @@ const mutations = {
   SET_SELECTED_ID(state, articleId) {
     state.selectedId = articleId
   },
+  // 게시물 상세 정보 등록
+  SET_SELECTED_ARTICLE(state, article) {
+    state.selectedArticle = article
+  },
   // 게시물 상세 좋아요 목록
   SET_LIKE_LIST(state, likeList) {
     state.likeList = likeList
@@ -103,6 +130,10 @@ const mutations = {
   // 게시물 상세 댓글 목록
   SET_COMMENT_LIST(state, commentList) {
     state.commentList = commentList
+  },
+  // 작성한 게시글 피드에 추가
+  ADD_NEW_ARTICLE(state, articles) {
+    state.feeds = articles
   },
   // 좋아요
   ADD_LIKE(state, idx) {
@@ -122,8 +153,18 @@ const actions = {
     commit('SET_FEEDS', articles)
   },
   // 게시물 상세보기 선택
-  setSelectedId({commit}, articleId) {
-    commit('SET_SELECTED_ID', articleId)
+  setArticleById({commit, state, dispatch}, articleId) {
+    const selectedArticle = state.feeds.find(article =>
+      article.id === Number(articleId))
+    dispatch('setSelectedArticle', selectedArticle)
+    dispatch('setSelectedId', articleId)
+  },
+  // 상세 정보 업데이트
+  setSelectedArticle({commit}, article) {
+    commit('SET_SELECTED_ARTICLE', article)
+  },
+  setSelectedId({commit}, id) {
+    commit('SET_SELECTED_ID', id)
   },
   // 상세 페이지 들어갔을 때,
   setArticleDetail({dispatch}, {likeList, commentList}) {
@@ -135,6 +176,22 @@ const actions = {
   },
   setLikeList({commit}, likeList) {
     commit('SET_LIKE_LIST', likeList)
+  },
+  // 작성한 게시글 피드에 추가
+  async addNewArticle({commit, state}, article) {
+    const articles = [article, ...state.feeds]
+    await commit('ADD_NEW_ARTICLE', articles)
+  },
+  // 수정한 게시물 교체
+  async replaceOldArticle({commit, state}, {id, content}) {
+    const articles = state.feeds
+    articles.forEach(article => {
+      if (article['id'] === id)
+        article['content'] = content
+    }, articles)
+    await commit('SET_FEEDS', articles)
+    // console.log('durl dhsl? ')
+    // router.push({path: '/article', query: {id: id}})
   },
   // 좋아요
   setLike({commit, state}, {isLike, articleId}) {

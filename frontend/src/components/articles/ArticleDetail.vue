@@ -6,7 +6,7 @@
       <component-nav @on-arrow="$router.back()" title="인증 게시글"/>
       <button v-if="isMine" @click="onClick" class="material-icons-round more">more_horiz</button>
       <div v-if="openButton">
-        <button>
+        <button @click="onEdit">
           수정
         </button>
         <button>
@@ -39,12 +39,12 @@
       </div>
 
       <!--퀘스트-->
-      <router-link :to="`/quest/${selectedArticle.questId}`" class="quest-router">
+      <a @click.prevent=setQuestId(selectedArticle.questId) class="quest-router">
         <span v-if="selectedArticle.type==='G'" class="quest-type">공동</span>
         <span v-else-if="selectedArticle.type==='P'" class="quest-type">개인</span>
         <span v-else class="quest-type">릴레이</span>
         <span class="quest-title">{{selectedArticle.questTitle}}</span>
-      </router-link>
+      </a>
 
       <div v-html="parsedContent" id="article-content" />
 
@@ -58,6 +58,9 @@
         <button @click="onHeartList">
           <span v-if="selectedArticle.heartCnt >= 2">
             {{likeUser}} 님 외 <span class="link">{{selectedArticle.heartCnt-1}}명</span>이 이 게시글을 좋아합니다.
+          </span>
+          <span v-else-if="selectedArticle.heartCnt === 1 && selectedArticle.like">
+            {{loginUser.nickname}} 님이 이 게시글을 좋아합니다.
           </span>
           <span v-else-if="selectedArticle.heartCnt === 1">
             {{likeUser}} 님이 이 게시글을 좋아합니다.
@@ -75,16 +78,13 @@
       <!--comment-->
       <CommentSet id="comment-set"/>
 
-
-
-
     </div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
-import {mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 import ComponentNav from "../common/ComponentNav";
 import HeartList from "@/components/articles/HeartList";
@@ -111,9 +111,22 @@ export default {
   },
   // methods
   methods: {
-    // 수정/ 삭제 버튼
+    ...mapActions(['setQuestId']),
+    // 수정/ 삭제 버튼 열기
     onClick() {
       this.openButton = !this.openButton
+    },
+    // 수정하기
+    onEdit() {
+      const setQuest = async () => {
+        let quest = {
+          questId: this.selectedArticle.questId,
+          type: this.selectedArticle.type,
+          title: this.selectedArticle.questTitle
+        }
+        await this.$store.dispatch('setQuestDetail', quest)
+      }
+      setQuest().then(this.$router.push('/article/edit'))
     },
     // 날짜 수정
     dateFormatted(date) {
@@ -139,16 +152,23 @@ export default {
     // 좋아요 목록 열기
     onHeartList() {
       this.isHeartList = !this.isHeartList
+      this.defaultSetting()
     },
+     // 좋아요 유저/ 댓글 불러오기
+    async defaultSetting() {
+      const detailData = await ArticlesApi.requestArticleDetailInfo(this.$route.params.id)
+      this.$store.dispatch('setArticleDetail', detailData)
+    }
   },
   // computed
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
       // likeList: state => state.articles.likeList,
-      commentList: state => state.articles.commentList
+      commentList: state => state.articles.commentList,
+      selectedArticle: state => state.articles.selectedArticle
     }),
-    ...mapGetters(['selectedArticle', 'likeUser']),
+    ...mapGetters(['likeUser']),
     // 줄바꿈 설정
     parsedContent() {
       return this.selectedArticle.content.replace(/\n/g, '<br/>')
@@ -156,21 +176,39 @@ export default {
     // 내 게시글인가?
     isMine() {
       return this.loginUser.nickname === this.selectedArticle.makerName
-    }
-
+    },
+    likeCnt() {
+      return this.$store.getters.articles.likeCnt
+    },
   },
   // watch
-  created() {
-    const articleId = this.$route.params.id
-    this.$store.dispatch('setSelectedId', articleId)
-    // 좋아요 유저/ 댓글 불러오기
-    const defaultSetting = async () => {
-      const detailData = await ArticlesApi.requestArticleDetailInfo(articleId)
-      this.$store.dispatch('setArticleDetail', detailData)
-    }
-    defaultSetting()
-  }
+  // watch: {
+  //   likeCnt() {
+  //     console.log('changed')
+  //     this.defaultSetting()
+  //   }
+  //   '$route.params.path'(v) {
+  //     console.log(this.$route.params.id)
+  //     this.defaultSetting()
+  //   }
+  // },
   // lifecycle hook
+  created() {
+    console.log('here')
+    const articleId = this.$route.params.id
+    this.$store.dispatch('setArticleById', articleId)
+    // 좋아요 유저/ 댓글 불러오기
+    // const defaultSetting = async () => {
+    //   const detailData = await ArticlesApi.requestArticleDetailInfo(articleId)
+    //   this.$store.dispatch('setArticleDetail', detailData)
+    // }
+    this.defaultSetting()
+  },
+  // mounted() {
+  //   console.log('이건 업데이트')
+  //   this.defaultSetting()
+  // }
+
 }
 </script>
 

@@ -20,8 +20,8 @@
         <router-link :to="`/article/${article.id}`" style="text-decoration: none">
           <div id="single-article-picture">
             <!--인증 사진-->
-            <!--<img :src="article.image" alt="">-->
-            <img src="@/assets/IMG_7263.jpeg" alt="">
+            <img v-if="article.image" :src="article.image" alt="">
+            <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
           </div>
 <!--        <router-link :to="`/quest/${article.questId}`" id="single-article-quest">참여 퀘스트: {{article.questTitle}}</router-link>-->
         <a id="single-article-quest" @click.prevent=setQuestId(article.questId)>
@@ -106,9 +106,10 @@ export default {
     parsedDescription() {
       return this.article.content.replace(/\n/g, '<br/>')
     }
-  }
+  },
   // watch
   // lifecycle hook
+  //navigation guard
 }
 </script>
 

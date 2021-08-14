@@ -135,7 +135,7 @@ const actions = {
         // 일치하는 유저 아이디 없음
         if (res.data === 'NOT_FOUND') {
           console.log('not found')
-          router.push({name: 'PageNotFound'})
+          router.push('/404')
         } else {
           // 정상적으로 유저 정보 가져온 경우
           res.data.id = id

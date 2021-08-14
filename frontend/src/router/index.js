@@ -97,7 +97,7 @@ const routes = [
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
-  {path: '/article/create', component: UpsertArticle},
+  {path: '/article/create', name: 'UpsertArticle', component: UpsertArticle, alias: '/article/edit'},
   {
     path: '/article', component: VerticalFeed,
     children: [
@@ -164,7 +164,7 @@ const routes = [
 
   // 404
   // {path: '/*', redirect: '/404'},
-  {path: '/*', name: 'PageNotFound', component: PageNotFound},
+  {path: '/404', name: 'PageNotFound', component: PageNotFound, alias: '/*'},
 ]
 
 // navigation duplicated
@@ -179,6 +179,9 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior (to, from, savedPosition) {
+  return { x: 0, y: 0 }
+}
 })
 
 router.beforeEach((to, from, next) => {

@@ -184,7 +184,7 @@ export default {
           res => {
             // 성공응답이 오는 경우 내 프로필 페이지로 아니면 에러페이지로
             // 닉네임이 변경되었을 수 있기 때문에 로그인 유저 정보도 리셋이 필요합니다.
-            const path = res.data === 'OK' ? `/user/profile/${this.nickname}` : {name: 'PageNotFound'}
+            const path = res.data === 'OK' ? `/user/profile/${this.nickname}` : '/404'
             this.$router.push(path)
           },
           err => {
