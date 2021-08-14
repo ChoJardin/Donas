@@ -1,6 +1,7 @@
 import  {ref}  from '../../composition/index.ts';
 import firebase from 'firebase/app';
-import '@firebase/messaging';
+import 'firebase/messaging';
+// import '@firebase/messaging';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const Config = {
   apiKey: "AIzaSyAlkz45CmAwsU4sJhmjJjAoqHUWPMka8oE",
@@ -19,6 +20,7 @@ const token = ref("AAAAlALZIPc:APA91bFPmuJhhTAeltNqFrm5OpS0Y7FVJHTQrr685xhCdqZmM
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey("BNtJjn9ch7RFp8N9V3C6SDBE02Zr-_W_OIoZSZcP6uT31Nlzsw22xpRbZ_EcX_04U0zjSePNFaF71aNG7tDZkMY");
 
+
 messaging.getToken().then((currentToken) => {
     if (currentToken) {
         // console.log(currentToken);
@@ -29,7 +31,7 @@ messaging.getToken().then((currentToken) => {
     }
 });
 messaging.onMessage((payload) => {
-    console.log(payload);
+    console.log('foreground',payload);
     const title = 'Title';
     const options = {
         body: payload.data.message,

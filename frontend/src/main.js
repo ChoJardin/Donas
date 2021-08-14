@@ -8,6 +8,7 @@ import VueKakaoSdkPlugin from "vue-kakao-sdk";
 
 import './registerServiceWorker'
 
+
 Vue.config.productionTip = false
 
 Vue.use(VueCookies)
@@ -20,5 +21,6 @@ new Vue({
   router,
   store,
   vuetify,
+  // firebase,
   render: h => h(App)
 }).$mount('#app')

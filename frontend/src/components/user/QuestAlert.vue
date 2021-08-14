@@ -1,7 +1,8 @@
 <template>
   <div class="alert-all">
-    <div id="alarm-wrap">
-      <div class="single-alarm" v-for="alarm in alarms" :key="alarm.id">
+
+    <div id="alarm-wrap" v-if="alarms.length !== null ">
+      <div  class="single-alarm" v-for="alarm in alarms" :key="alarm.id">
         <SingleQuestAlarm class="inner" :alarm="alarm"/>
       </div>
     </div>
