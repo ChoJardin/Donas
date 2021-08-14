@@ -1,6 +1,7 @@
 // import cookies from 'vue-cookies'
 // import axios from 'axios'
 // import routes from './routes'
+import router from "@/router";
 
 const state ={
   feeds: [
@@ -68,7 +69,7 @@ const state ={
   //     questTitle: "1일1알고",
   //   },
   // ],
-  // selectedId: 0,
+  selectedId: 0,
   selectedArticle:
     {
       id: 0,
@@ -95,7 +96,7 @@ const state ={
 
 const getters = {
   isArticleSelected: state => {
-    return !!state.selectedArticle.id
+    return !!state.selectedId
   },
   // selectedArticle: state => {
   //   return state.feeds.find(article => article.id === Number(state.selectedId))
@@ -152,15 +153,18 @@ const actions = {
     commit('SET_FEEDS', articles)
   },
   // 게시물 상세보기 선택
-  setArticleById({ state, dispatch}, articleId) {
+  setArticleById({commit, state, dispatch}, articleId) {
     const selectedArticle = state.feeds.find(article =>
       article.id === Number(articleId))
     dispatch('setSelectedArticle', selectedArticle)
-    // commit('SET_SELECTED_ID', articleId)
+    dispatch('setSelectedId', articleId)
   },
   // 상세 정보 업데이트
   setSelectedArticle({commit}, article) {
     commit('SET_SELECTED_ARTICLE', article)
+  },
+  setSelectedId({commit}, id) {
+    commit('SET_SELECTED_ID', id)
   },
   // 상세 페이지 들어갔을 때,
   setArticleDetail({dispatch}, {likeList, commentList}) {
@@ -177,6 +181,17 @@ const actions = {
   async addNewArticle({commit, state}, article) {
     const articles = [article, ...state.feeds]
     await commit('ADD_NEW_ARTICLE', articles)
+  },
+  // 수정한 게시물 교체
+  async replaceOldArticle({commit, state}, {id, content}) {
+    const articles = state.feeds
+    articles.forEach(article => {
+      if (article['id'] === id)
+        article['content'] = content
+    }, articles)
+    await commit('SET_FEEDS', articles)
+    // console.log('durl dhsl? ')
+    // router.push({path: '/article', query: {id: id}})
   },
   // 좋아요
   setLike({commit, state}, {isLike, articleId}) {

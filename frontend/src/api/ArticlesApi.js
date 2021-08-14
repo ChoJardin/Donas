@@ -84,10 +84,18 @@ const deleteComment = async (data) => {
 
 // 게시글 작성
 const createArticle = async (data, callback, errorCallback) => {
-  const requestArticlePath = URL + ROUTES.article
-  axios.post(requestArticlePath, data)
+  const createArticlePath = URL + ROUTES.article
+  axios.post(createArticlePath, data)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
+}
+
+// 게시글 수정
+const editArticle = async (data, callback, errorCallback) => {
+  const editArticlePath = URL + ROUTES.article
+  axios.patch(editArticlePath, data)
+    .then(res => callback(res))
+    .catch(err => errorCallback('error'))
 }
 
 const ArticlesApi = {
@@ -100,6 +108,7 @@ const ArticlesApi = {
   updateComment:(data) => updateComment(data),
   deleteComment:(data) => deleteComment(data),
   createArticle:(data, callback, errorCallback) => createArticle(data, callback, errorCallback),
+  editArticle:(data, callback, errorCallback) => editArticle(data, callback, errorCallback),
 }
 
 export default ArticlesApi
