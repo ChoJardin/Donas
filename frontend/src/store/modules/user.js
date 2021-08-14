@@ -203,9 +203,35 @@ const actions = {
     commit('SET_COMMON_ALARMS', common)
   },
 
+  async updateCommonAlarms ({dispatch, state}, {id}) {
+    await UserApi.requestCommonAlert(
+      id,
+      async (res) => {
+        if (res.data !== 'NOT_FOUND') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          await dispatch('setCommonAlarms', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
+  },
+
   setQuestAlarms({commit}, quest) {
     console.log(quest)
     commit('SET_QUEST_ALARMS', quest)
+  },
+
+  async updateQuestAlarms ({dispatch, state}, {id}) {
+    await UserApi.requestQuestAlert(
+      id,
+      async (res) => {
+        if (res.data !== 'NOT_FOUND') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          await dispatch('setQuestAlarms', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
   },
 
   setMileage({commit}, mileage) {
