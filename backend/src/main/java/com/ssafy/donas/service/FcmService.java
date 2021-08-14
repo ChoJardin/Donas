@@ -53,7 +53,7 @@ public class FcmService {
 	
 	private String makeMessage(String targetToken,String title,String message) throws JsonProcessingException{
 		FcmMessage fcmMessage = FcmMessage.builder()
-						.data(FcmMessage.Data.builder()
+						.notification(FcmMessage.Notification.builder()
 								.title(title)
 								.message(message)
 								.build()
