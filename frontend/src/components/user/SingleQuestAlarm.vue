@@ -1,19 +1,27 @@
 <template>
   <div class="single-alarm">
     <div style="text-decoration: none; color: black">
-      <div class="alarm-wrap">
-        <div class="alarm-read"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
+      <div class="alarm-wrap" v-if="alarm.confirm !== 0" @click="setQuestId(alarm.questId)">
+        <div class="alarm-read"><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>
 <!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
           <div style="font-size: 0.8em">{{alarm.content}}</div>
           <div v-if="alarm.confirm === 2">참여 승락</div>
-          <div v-else-if="alarm.confirm === 3">참여 거절</div>
-          <div v-else class="decision">
+          <div v-else>참여 거절</div>
+        </div>
+      </div>
+
+      <div class="alarm-wrap" v-else>
+        <div class="alarm-read"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
+<!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
+        <div class="alarm-message">
+          <div style="font-size: 0.5em">{{dateFormatted}}</div>
+          <div style="font-size: 0.8em">{{alarm.content}}</div>
+          <div class="decision">
             <button @click="onAccept" class="answer">참여</button>
             <button @click="onDecline" class="answer">거절</button>
           </div>
-
         </div>
       </div>
     </div>
@@ -33,7 +41,7 @@
 <script>
 import moment from 'moment'
 import UserApi from "../../api/UserApi";
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 export default {
   name: "SingleQuestAlarm",
   props: {
@@ -53,6 +61,8 @@ export default {
           data,
           res => {
             console.log(res)
+            path = res.data === 'OK' ? `/quests/${this.alarm.questId}` : '/error'
+            this.$router.push(path)
           },
           err => {
             console.log(err)
@@ -65,15 +75,19 @@ export default {
         userId:this.loginUser.id
       }
       console.log(data)
+      let path
       UserApi.declineAlert(
           data,
           res => {
             console.log(res)
+            path = res.data === 'OK' ? `/notificatoin/${this.loginUser.nickname}` : '/error'
+            this.$router.push(path)
           },
           err => {
             console.log(err)
           })
       },
+    ...mapActions(['setQuestId'])
   },
   computed: {
     dateFormatted: function (){

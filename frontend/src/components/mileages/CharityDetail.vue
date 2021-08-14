@@ -85,6 +85,10 @@ export default {
           data,
           res => {
             console.log(res)
+            data.cashout = '0'
+            data.charityName = this.charity.name
+            console.log(data)
+            this.$router.push({name: 'CashOutResult', params: data})
           },
           err => {
             console.log(err)

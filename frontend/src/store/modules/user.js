@@ -64,7 +64,7 @@ const state ={
     receiveId: '',
     contents: '',
     sendTime: '',
-    articleId: '',
+    questId: '',
     sendName: '',
     confirm: '',
   }],
@@ -199,7 +199,7 @@ const actions = {
   },
   // 알림 리스트
   setCommonAlarms({commit}, common) {
-    console.log(common)
+    // console.log(common)
     commit('SET_COMMON_ALARMS', common)
   },
 
@@ -217,7 +217,7 @@ const actions = {
   },
 
   setQuestAlarms({commit}, quest) {
-    console.log(quest)
+    // console.log(quest)
     commit('SET_QUEST_ALARMS', quest)
   },
 
