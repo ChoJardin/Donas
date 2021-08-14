@@ -88,7 +88,7 @@ export default {
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-      articleId: state => state.articles.selectedId
+      articleId: state => state.articles.selectedArticle.id
     }),
     ismine() {
       return this.loginUser.id === this.comment.userId

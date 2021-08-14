@@ -45,10 +45,12 @@ public class ArticleService {
 		return true;
 	}
 	
-	public void add(User user, Quest quest, String image, String content, String type) {
+	public Article add(User user, Quest quest, String image, String content, String type) {
 		Article article = new Article(user, quest, image, content, LocalDateTime.now(), null, type);
 		articleRepo.save(article);
 		user.getArticles().add(article);
+		
+		return article;
 	}
 	
 	public void update(long articleId, String content) {
@@ -62,10 +64,36 @@ public class ArticleService {
 		articleRepo.flush();
 	}
 	
+	// 퀘스트 내의 게시물 가져오기
+	public List<Article> getArticlesByQuest(Quest quest){
+		return articleRepo.findArticleByQuest(quest);
+	}
+	
 	public List<Article> getArticlesByUser(User user){
 		return articleRepo.findArticleByUser(user);
 	}
 	
+	// 퀘스트 내의 게시물들 정보 리스트
+	public List<ArticleInfo> getArticleInfoByQuest(long questId,User user){
+		List<Article> articles = getArticlesByQuest(questRepo.getById(questId));
+		
+		List<ArticleInfo> infos = new ArrayList<ArticleInfo>();
+		for(Article a : articles) {
+			// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
+			boolean isLike = false;
+			for(Like like: a.getLikes()) {
+				if(like.getUser() == user) {
+					isLike = true;
+					break;
+				}
+			}
+			infos.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(), isLike, a.getLikes().size(), a.getComments().size(), a.getQuest().getTitle(),a.getUser().getNickname(),a.getUser().getPicture()));
+		}		
+		return infos;
+		
+	}
+	
+	// 유저의 게시물 가져오기
 	public List<ArticleInfo> getArticleInfosByUser(User user){
 		List<Article> articles = getArticlesByUser(user);
 		
@@ -84,6 +112,7 @@ public class ArticleService {
 		return infos;
 	}
 	
+	// 다른 사람의 게시물들 확인
 	public List<ArticleInfo> getArticleInfosByUser(User ownUser, User otherUser){
 		List<Article> articles = getArticlesByUser(ownUser);
 		

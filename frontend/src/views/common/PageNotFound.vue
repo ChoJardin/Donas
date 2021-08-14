@@ -1,30 +1,16 @@
 <template>
   <div>
-    <!--<div class="error-404">-->
-    <!--  <p class="text">404</p>-->
-    <!--  <p>-->
-    <!--    Page Not Found-->
-    <!--    <br>-->
-    <!--    요청하신 페이지를-->
-    <!--    <br>-->
-    <!--    찾을 수 없습니다.-->
-    <!--  </p>-->
-    <!--</div>-->
 
     <img class="error-404" src="@/assets/donut_404.png" alt="">
     
-    <button @click="goBack" class="btn-bottom go-back">돌아가기</button>
+    <button @click="$router.push('/main')" class="btn-bottom go-back">홈으로 이동</button>
   </div>
 </template>
 
 <script>
 
 export default {
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    }
-  }
+  name: 'PageNotFound',
 }
 </script>
 

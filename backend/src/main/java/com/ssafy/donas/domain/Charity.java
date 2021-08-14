@@ -35,7 +35,7 @@ public class Charity {
 	
 	@Column(nullable = true)
 	@ColumnDefault("0")
-	private int total;
+	private long total;
 	
 	@Column(nullable = true)
 	@ColumnDefault("0")
@@ -51,7 +51,13 @@ public class Charity {
 	private String tag;
 	
 	@Column(nullable = true)
+	private String tag2;
+	
+	@Column(nullable = true)
 	private String homepage;
+	
+	@Column(nullable = true)
+	private String bgPicture;
 	
 	@OneToMany(mappedBy = "charity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Donation> history = new ArrayList<>();

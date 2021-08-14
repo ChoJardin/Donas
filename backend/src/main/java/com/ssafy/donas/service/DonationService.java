@@ -42,25 +42,24 @@ public class DonationService {
 	
 	// 기부단체 목록
 	public List<Charity> getCharityList(){
-		System.out.println("목롣으로 등러옹ㅁ");
 		List<Charity> charities = charityRepo.findAll();
-		System.out.println("단체 목록 받아옴");
 		if(charities.isEmpty())
 			return null;
 		return charities;
 	}
 	
+	// 현재 기부된 총 금액
 	public long getSumDonation() {
 		if(donationRepo.count()!=0)
 			return donationRepo.sumDonation();
 		else
 			return 0;	
 	}
-	
+	// 각 유저별 기부 총액
 	public long getSumDonationById(long userId) {
 		return donationRepo.sumDonationById(userRepo.getById(userId));
 	}
-	
+	// 분기별 기부 총액
 	public long getSumQuaDonation() {
 		if(donationRepo.count()!=0)
 			return donationRepo.sumQuarDonation();
@@ -68,6 +67,7 @@ public class DonationService {
 			return 0;
 	}
 	
+	// 기부내역 저장, 기부한 단체 total에 추가
 	public boolean setDonation(long amount,String name, LocalDateTime time, long userId,long charityId) {
 		User user = userRepo.getById(userId);
 		if(user.getMileage()<amount)
@@ -76,6 +76,11 @@ public class DonationService {
 		if(donationRepo.save(new Donation(amount,time,name,user,charityRepo.getById(charityId))) == null) {
 			return false;
 		}
+		Optional<Charity> charity =  charityRepo.findById(charityId);
+		charity.ifPresent(presentCharity->{
+			presentCharity.setTotal(presentCharity.getTotal()+amount);
+		});		
+		
 		return true;
 	}
 	

@@ -33,6 +33,7 @@ import UpsertArticle from "@/views/articles/UpsertArticle";
 // 마일리지
 import Mileage from "@/views/mileages/Mileage";
 import Donation from "@/components/mileages/Donation";
+import CharityDetail from "../components/mileages/CharityDetail";
 import CashOut from "@/components/mileages/CashOut";
 import CashOutResult from "@/components/mileages/CashOutResult"
 
@@ -96,6 +97,7 @@ const routes = [
 
   // 피드
   {path: '/feed', name: 'Feed', component: Feed},
+  {path: '/article/create', name: 'UpsertArticle', component: UpsertArticle, alias: '/article/edit'},
   {
     path: '/article', component: VerticalFeed,
     children: [
@@ -109,7 +111,6 @@ const routes = [
     ]
   },
   {path: '/article/:id/edit', component: UpsertArticle},
-  {path: '/article/create', component: UpsertArticle},
 
   // 마일리지
   {
@@ -120,6 +121,7 @@ const routes = [
       {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }}
     ]
   },
+  {path: '/charity/:id', name: 'CharityDetail', component: CharityDetail},
 
   // 프로필
   // {path: '/user/profile/', redirect: '/login'},
@@ -162,7 +164,7 @@ const routes = [
 
   // 404
   // {path: '/*', redirect: '/404'},
-  {path: '/*', name: 'PageNotFound', component: PageNotFound},
+  {path: '/404', name: 'PageNotFound', component: PageNotFound, alias: '/*'},
 ]
 
 // navigation duplicated
@@ -177,6 +179,9 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior (to, from, savedPosition) {
+  return { x: 0, y: 0 }
+}
 })
 
 router.beforeEach((to, from, next) => {
@@ -184,7 +189,10 @@ router.beforeEach((to, from, next) => {
   const user = cookies.get('login-user')
   if (user) {
     store.dispatch('updateUserInfo', user)
+    // store.dispatch('setCommonAlarms', user)
+    // store.dispatch('setQuestAlarms', user)
   }
+
   // if (store.getters.isLoggedIn) {
   //   store.dispatch('updateUserInfo')
   // }

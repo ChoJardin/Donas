@@ -75,32 +75,33 @@ public class ProfileController {
 	@GetMapping("/{nickname}")
 	@ApiOperation(value = "개인 프로필 보기")
 	public Object showProfile(@PathVariable String nickname, @RequestParam long myid) {
-		User user = userService.getUser(userService.getIdByNickname(nickname));
+		User otherUser = userService.getUser(userService.getIdByNickname(nickname));
 
-		if (user == null)
+		if (otherUser == null)
 			return HttpStatus.NOT_FOUND;
 
 		final AllProfileResponse result = new AllProfileResponse();
 		ResponseEntity response = null;
 		
 		// User 정보
-		result.id = user.getId();
-		result.nickname = user.getNickname();
-		result.picture = user.getPicture();
-		result.description = user.getDescription();
+		result.id = otherUser.getId();
+		result.nickname = otherUser.getNickname();
+		result.picture = otherUser.getPicture();
+		result.description = otherUser.getDescription();
 		
 		// Quest 정보
-		result.quests = questService.getQuestInfoByUserId(user.getId());
-		result.questCnt = user.getQuestCnt();
-		result.questPercent = user.getQuestPercent();
+		result.quests = questService.getQuestInfoByUserId(otherUser.getId());
+		result.questCnt = otherUser.getQuestCnt();
+		result.questPercent = otherUser.getQuestPercent();
 		
 		// Follow 정보
-		result.follower = user.getFollower().size();
-		result.following = user.getFollowing().size();
-		result.isFollowing = followService.isFollowing(userService.getUser(myid), user);
+		result.follower = otherUser.getFollower().size();
+		result.following = otherUser.getFollowing().size();
+		result.isFollowing = followService.isFollowing(userService.getUser(myid), otherUser);
 
-		//Article 정보
-		result.articles = articleService.getArticleInfosByUser(user,userService.getUser(myid));
+		// Article 정보
+		// 다른 사람의 게시물 보는데 내가 좋아요 누른 것인지 확인
+		result.articles = articleService.getArticleInfosByUser(otherUser,userService.getUser(myid));
 		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		System.out.println(result.articles);

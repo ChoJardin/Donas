@@ -44,11 +44,6 @@ export default {
   // computed
   // watch
   // lifecycle hook
-  // created() {
-    // let user = cookies.get('login-user')
-    // if (user)
-    //   this.$store.dispatch('updateUserInfo', user)
-  // }
 }
 
   // components
@@ -79,7 +74,7 @@ export default {
 #app-content {
   position: absolute;
   top: 60px;
-  bottom: 50px;
+  bottom: 60px;
   width: 100%;
   padding: 0 15px;
   overflow: auto;
