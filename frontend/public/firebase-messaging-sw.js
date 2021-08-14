@@ -14,8 +14,32 @@ const config = {
 
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
+
+//token값 알아내기
+messaging.requestPermission()
+  .then(function () {
+    console.log("Have permission");
+    return messaging.getToken();
+  })
+  .then(function (token) {
+    console.log(token);
+  })
+  .catch(function (arr) {
+    console.log("Error Occured");
+  });
+
 console.log("포그라운드에서 받은 알림");
-console.log(messaging);
+
+messaging.onMessage(function (payload) {
+  console.log('onMessage: ', payload);
+  var title = "고라니 서비스";
+  var options = {
+    body: payload.notification.body
+  };
+
+  var notification = new Notification(title, options);
+});
+
 // 백그라운드 상태에서 받은 알림 처리
 messaging.setBackgroundMessageHandler((payload) => {
   console.log('Message received. ', payload);
