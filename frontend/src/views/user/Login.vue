@@ -1,9 +1,13 @@
 <template>
   <div id="login">
-    <ComponentNav @on-arrow="$router.back()"/>
-    <div id="title">
-      로그인
-    </div>
+    <!--<button class="back-button" @click="$router.back()">-->
+    <!--  <i class="material-icons color292929">arrow_back</i>-->
+    <!--</button>-->
+    <!--<ComponentNav @on-arrow="$router.back()"/>-->
+    <!--<div id="title">-->
+    <!--  로 그 인-->
+    <!--</div>-->
+    <div class="login-input">
 
     <UserInput class="user-input"
         id="email" label="Email" placeholder="이메일을 입력하세요" type="email"
@@ -14,6 +18,7 @@
         id="password" label="비밀번호" placeholder="비밀번호를 입력하세요" type="password"
         :input.sync="password" :error="error.password"
         @keyup-enter="onLogin" @on-focus="onFocus" ref="password"/>
+    </div>
 
     <div v-if="loginError.isFailed" class="error-message">
       {{ loginError.message }}
@@ -22,23 +27,26 @@
     <button class="button" :disabled="!isSubmit" @click="onLogin">로 그 인</button>
 
     <!--소셜 로그인-->
-    <div id="login-social" class="login-description">
-      <hr>
-      <span style="margin-left: 8%">소셜 로그인</span>
-    </div>
+    <!--<div id="login-social" class="login-description">-->
+    <!--  <hr>-->
+    <!--  <span style="margin-left: 8%">카카오로 함께하기</span>-->
+    <!--  <img src="@/assets/kakao_login_medium.png" alt="카카오 로그인"-->
+    <!--       class="kakao-login">-->
+    <!--</div>-->
     <!--소셜 로그인-->
-
     <!--to 회원가입-->
     <div id="login-to-signup">
       <div class="login-description">
         <hr>
-        <span> 아직 회원이 아니신가요? </span>
+        <span> 소셜 로그인 </span>
         <hr>
       </div>
+      <KakaoLogin class="kakao-login-long"></KakaoLogin>
+    <!--<img src="@/assets/kakao_login_medium_wide.png" alt="" class="kakao-login-long">-->
 
-    <ButtonBig
-        @on-click="$router.push({name: 'Signup', params: $route.params})"
-        value="회 원 가 입" color="#e1eedd" text="#183a1d" id="to-signup-button"/>
+    <!--<ButtonBig-->
+    <!--    @on-click="$router.push({name: 'Signup', params: $route.params})"-->
+    <!--    value="회 원 가 입" color="#e1eedd" text="#183a1d" id="to-signup-button"/>-->
     </div>
     <!--to 회원가입-->
 
@@ -54,14 +62,16 @@ import ComponentNav from "@/components/common/ComponentNav";
 import UserInput from "@/components/common/UserInput";
 import ButtonBig from "@/components/common/ButtonBig";
 import { token } from '@/services/messaging/messaging.ts';
+import KakaoLogin from "@/views/user/KakaoLogin";
 
 export default {
   name: "Login",
   // components
   components: {
-    ComponentNav,
+    // ComponentNav,
     UserInput,
-    ButtonBig
+    KakaoLogin
+    // ButtonBig
   },
   // props
   // data
@@ -173,21 +183,43 @@ export default {
     }
   },
   // lifecycle hook
+  //navigation guard
+  beforeRouteLeave(to, from, next) {
+    if (to.name === 'Signup') {
+      to.params.history = this.$route.params.history
+      next(to.params)
+    } else {
+      next()
+    }
+
+  }
 }
 </script>
 
 <style scoped>
+
 #login {
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
+  /*position: absolute;*/
+  /*width: 90%;*/
+  /*top: 60px;*/
+}
+
+#login .back-button {
+  /*position: absolute;*/
+  /*top: 10px;*/
+  display: flex;
+  margin-top: 10px;
 }
 
 #login #title {
   color: #183a1d;
-  margin-bottom: 30px;
+  margin: 30px 0 40px;
   padding: 10px 0;
   font-family: GongGothicBold;
-  font-size: 1.2em;
+  font-size: 1.4em;
 }
 
 .user-input {
@@ -207,7 +239,7 @@ export default {
 .button {
   width: 90%;
   margin-left: 5%;
-  margin-top: 25px;
+  margin-top: 20px;
   height: 50px;
   background-color: #183a1d;
   color: #e1eedd;
@@ -239,14 +271,28 @@ hr {
   display: flex;
   align-items: center;
   justify-items: start;
-  margin-top: 60px;
+  justify-content: space-between;
+  margin-top: 40px;
 }
+
+.kakao-login {
+  height: 40px;
+}
+
+.kakao-login-long {
+  height: 50px;
+  width: 90%;
+  margin: auto;
+  /*margin-left: 5%;*/
+  /*margin-top: 10px;*/
+}
+
 
 #login-to-signup .login-description{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 80px;
   margin-bottom: 30px;
 }
 

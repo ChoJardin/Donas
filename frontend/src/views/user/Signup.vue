@@ -1,9 +1,12 @@
 <template>
   <div id="signup">
-    <ComponentNav @on-arrow="$router.back()"/>
-    <div id="title">
-      회원가입
-    </div>
+    <!--<button class="back-button" @click="$router.back()">-->
+    <!--  <i class="material-icons color292929">arrow_back</i>-->
+    <!--</button>-->
+    <!--<ComponentNav @on-arrow="$router.back()"/>-->
+    <!--<div id="title">-->
+    <!--  회 원 가 입-->
+    <!--</div>-->
 
     <div class="input-with-button">
       <UserInput class="user-input set"
@@ -49,7 +52,7 @@ import UserInput from "@/components/common/UserInput";
 export default {
   name: "Signup",
   components: {
-    ComponentNav,
+    // ComponentNav,
     UserInput,
   },
   // components
@@ -229,18 +232,37 @@ export default {
       .is().max(16)
       .has().digits()
       .has().letters()
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name === 'Login') {
+      to.params.history = this.$route.params.history
+      next(to.params)
+    } else {
+      next()
+    }
+
   }
 }
 </script>
 
 <style scoped>
 
+#signup{
+  margin-top: 40px;
+}
+
+
+#signup .back-button {
+  display: flex;
+  margin-top: 10px;
+}
+
 #signup #title {
   color: #183a1d;
-  margin-bottom: 30px;
+  margin: 30px 0 40px;
   padding: 10px 0;
   font-family: GongGothicBold;
-  font-size: 1.2em;
+  font-size: 1.4em;
 }
 
 .user-input {

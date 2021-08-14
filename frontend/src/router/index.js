@@ -64,6 +64,7 @@ import PageNotFound from "@/views/common/PageNotFound";
 // 테스트용
 import ImageInput from "@/components/common/ImageInput";
 import Test from "@/views/Test";
+import SignInUp from "@/views/user/SignInUp";
 
 
 Vue.use(VueRouter)
@@ -138,10 +139,15 @@ const routes = [
     ]
   },
 
-  // 로그인
-  {path: '/login', name: 'Login', component: Login},
-  // 회원가입
-  {path: '/signup', name: 'Signup', component: Signup},
+  // 로그인/ 회원가입
+  {
+    path: '/login', component: SignInUp,
+    children: [
+        {path: '', name: 'Login', component: Login},
+        // 회원가입
+        {path: '/signup', name: 'Signup', component: Signup},
+      ]
+  },
   // 알림
   {
     path: '/notification/:nickname', component: Alert,
