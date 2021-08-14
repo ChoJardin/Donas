@@ -7,16 +7,27 @@
     <div id="comment-text-wrap">
       <div class="comment-text-line">
         <div id="comment-nickname">{{comment.nickname}}</div>
-        <button @click="onEdit" v-if="ismine">
-          <span v-if="isEdit">취소</span>
-          <span v-else>수정</span>
-        </button>
+        <button v-if="isMine" @click="showModal = !showModal" class="material-icons-round">more_horiz</button>
+        <!--<button @click="onEdit" v-if="isMine">-->
+        <button v-if="isEdit" class="cancel-edit" @click="isEdit = false">취소</button>
+        <!--  <span v-else>수정</span>-->
+        <!--</button>-->
+
+      <Modal v-if="showModal" @close="showModal = !showModal">
+        <button slot="opt1" @click="onEdit">수정하기</button>
+        <button slot="opt2" @click="onDelete">삭제하기</button>
+        <button slot="opt3" @click="showModal = false">닫기</button>
+      </Modal>
+
+
+
+
       </div>
       <div class="comment-text-line">
         <div id="comment-time">{{comment.updatedAt}}</div>
-        <button @click="onDelete" v-if="ismine">삭제</button>
+        <!--<button @click="onDelete" v-if="isMine">삭제</button>-->
       </div>
-      <CommentInput v-if="isEdit" :input.sync="content" :content="content" @on-click="onSubmit"/>
+      <CommentInput v-if="isEdit" :input.sync="content" :content="content" @on-click="onSubmit" @on-enter="onSubmit"/>
       <div v-else id="comment-content">{{comment.content}}</div>
     </div>
 
@@ -30,17 +41,20 @@
 import {mapState} from "vuex";
 import CommentInput from "@/components/articles/CommentInput";
 import ArticlesApi from "@/api/ArticlesApi";
+import Modal from "@/components/common/Modal";
 
 export default {
   name: "CommentList",
   components: {
-    CommentInput
+    CommentInput,
+    Modal
   },
   props: {
     comment: Object
   },
   data() {
     return {
+      showModal: false,
       isEdit: false,
       content: '',
     }
@@ -67,6 +81,7 @@ export default {
     onEdit() {
       this.content = this.comment.content
       this.isEdit = !this.isEdit
+      this.showModal = !this.showModal
     },
     onDelete() {
       const deleteComment = async(data) => {
@@ -90,7 +105,7 @@ export default {
       loginUser: state => state.user.loginUser,
       articleId: state => state.articles.selectedArticle.id
     }),
-    ismine() {
+    isMine() {
       return this.loginUser.id === this.comment.userId
     }
   }
@@ -134,5 +149,18 @@ export default {
   font-size: 0.8em;
   text-align: start;
   font-family: GongGothicLight;
+}
+
+.cancel-edit {
+  position: absolute;
+  right: 15px;
+  /*top: 15px;*/
+  margin-top: 5px;
+  color: #cd4e3e;
+  border: 1px solid #cd4e3e;
+  background-color: #fefbe9;
+  padding: 3px;
+  border-radius: 8px;
+  z-index: 2;
 }
 </style>
