@@ -30,8 +30,10 @@ import com.ssafy.donas.domain.FcmMessage;
 @Transactional
 public class FcmService {
 	
+//	private final String API_URL=
+//			"https://fcm.googleapis.com/fcm/send";
 	private final String API_URL=
-			"https://fcm.googleapis.com/fcm/send";
+			"https://fcm.googleapis.com/v1/projects/donas-d47d8/messages:send";
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	
 	public void sendMessageTo(String targetToken,String title, String body) throws IOException {
