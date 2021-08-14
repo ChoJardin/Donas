@@ -3,14 +3,15 @@
     <ComponentNav
       @on-arrow="$router.back()"
       title="퀘스트 참가자"/>
-
-    <FollowUserProfile
-        v-for="(following, idx) in questDetail.users" :key="idx"
-        :profile="following"/>
+    <div style="margin-top: 60px">
+      <FollowUserProfile
+          v-for="(following, idx) in questDetail.users" :key="idx"
+          :profile="following" />
 <!--    <button  id="participants-card">-->
 <!--      <img src="@/assets/IMG_7263.jpeg" alt="">-->
 <!--      &lt;!&ndash;<img :src="quest.picture" alt="">&ndash;&gt;-->
 <!--    </button>-->
+    </div>
   </div>
 </template>
 

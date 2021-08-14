@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <button class="button" @click="onCreate">회 원 가 입</button>
+    <button class="button" @click="onCreate">생 성 하 기</button>
 
   </div>
 </template>

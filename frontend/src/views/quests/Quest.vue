@@ -87,6 +87,6 @@ export default {
 }
 
 #quest-router-view {
-  padding-top: 15%;
+  padding-top: 25px;
 }
 </style>

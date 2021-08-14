@@ -61,7 +61,7 @@ export default {
 <style scoped>
 .branch {
   height: 30px;
-  margin: 30px 0;
+  margin: 10px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
