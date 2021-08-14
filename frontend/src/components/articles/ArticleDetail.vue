@@ -4,18 +4,24 @@
 
       <!--nav-->
       <component-nav @on-arrow="$router.back()" title="인증 게시글"/>
-      <button v-if="isMine" @click="onClick" class="material-icons-round more">more_horiz</button>
-      <div v-if="openButton">
-        <button @click="onEdit">
-          수정
-        </button>
-        <button>
-          삭제
-        </button>
-      </div>
+      <button v-if="isMine" @click="showModal = !showModal" class="material-icons-round more">more_horiz</button>
+      <!--<div v-if="openModal" class="change-article">-->
+      <!--  <button @click="onEdit" >-->
+      <!--    수정-->
+      <!--  </button>-->
+      <!--  <button >-->
+      <!--    삭제-->
+      <!--  </button>-->
+      <!--</div>-->
+      <Modal v-if="showModal" @close="showModal = !showModal">
+        <button slot="opt1" @click="onEdit">수정하기</button>
+        <button slot="opt2">삭제하기</button>
+        <button slot="opt3" @click="showModal = false">닫기</button>
+      </Modal>
       <!--nav-->
 
       <!--article-->
+      <div class="article-detail-profile">
       <router-link :to="`/user/profile/${selectedArticle.makerName}`" class="profile-router">
         <div class="profile-wrap">
           <img v-if="selectedArticle.makerImage" :src="selectedArticle.makerImage" alt="" class="article-detail-profile-image">
@@ -32,6 +38,7 @@
           </div>  <!--info-wrap end-->
         </div>
       </router-link>
+      </div>
 
       <div class="main-image">
         <img v-if="selectedArticle.image" :src="selectedArticle.image" alt="">
@@ -90,6 +97,7 @@ import ComponentNav from "../common/ComponentNav";
 import HeartList from "@/components/articles/HeartList";
 import ArticlesApi from "@/api/ArticlesApi";
 import CommentSet from "@/components/articles/CommentSet";
+import Modal from "@/components/common/Modal";
 
 import('@/assets/style/articles/ArticleDetail.css')
 
@@ -98,14 +106,15 @@ export default {
   // components
   components: {
     ComponentNav,
+    Modal,
     HeartList,
-    CommentSet
+    CommentSet,
   },
   // props
   // data
   data() {
     return {
-      openButton: false,
+      showModal: false,
       isHeartList: false,
     }
   },

@@ -1,18 +1,30 @@
-/*#article-detail {*/
-/*  position: fixed;*/
-/*  top: 60px;*/
+#article-detail {
+  position: absolute;
+  top: 60px;
+    width: 100%;
+
 /*  right: 15px;*/
 /*  bottom: 50px;*/
 /*  left: 15px;*/
 /*  overflow: scroll;*/
 /*  background: white;*/
 /*    padding-bottom: 20px;*/
-/*}*/
+}
 
 .material-icons-round.more {
-  position: absolute;
-  top: 10px;
-  right: 0;
+  position: fixed;
+  top: 70px;
+  right: 15px;
+    z-index: 4;
+}
+
+#article-detail .change-article {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px;
 }
 
 .article-detail-profile-image {
@@ -32,7 +44,7 @@
 .profile-router .profile-wrap {
     display: flex;
     padding-bottom: 10px;
-    margin: 15px 15px 5px 15px;
+    margin: 10px 15px 5px 15px;
     border-bottom: 1px solid #f1a64b;
 }
 
