@@ -30,17 +30,7 @@ export default {
     }),
   },
 
-  created() {
-    // console.log('quests fetched')
-    QuestApi.requestAllQuest(
-        res => {
-          // console.log(res)
-          this.$store.dispatch('setQuest', res.data)
-        },
-        err => {
-          console.log(err)
-        }
-    )}
+
 }
 </script>
 
