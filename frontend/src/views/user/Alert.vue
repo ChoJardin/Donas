@@ -32,29 +32,29 @@ export default {
   },
   // watch
   // lifecycle hook
-  created() {
-    console.log('alerts fetched')
-    UserApi.requestQuestAlert(
-        this.loginUser.id,
-        res => {
-          console.log(res)
-          this.$store.dispatch('setQuestAlarms', res.data)
-        },
-        err => {
-          console.log(err)
-        }
-    )
-    UserApi.requestCommonAlert(
-        this.loginUser.id,
-        res => {
-          console.log(res)
-          this.$store.dispatch('setCommonAlarms', res.data)
-        },
-        err => {
-          console.log(err)
-        }
-    )
-  }
+//   created() {
+//     console.log('alerts fetched')
+//     UserApi.requestQuestAlert(
+//         this.loginUser.id,
+//         res => {
+//           console.log(res)
+//           this.$store.dispatch('setQuestAlarms', res.data)
+//         },
+//         err => {
+//           console.log(err)
+//         }
+//     )
+//     UserApi.requestCommonAlert(
+//         this.loginUser.id,
+//         res => {
+//           console.log(res)
+//           this.$store.dispatch('setCommonAlarms', res.data)
+//         },
+//         err => {
+//           console.log(err)
+//         }
+//     )
+//   }
 }
 </script>
 

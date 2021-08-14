@@ -42,7 +42,7 @@ const messaging = firebase.messaging();
 
 // 백그라운드 상태에서 받은 알림 처리
 messaging.setBackgroundMessageHandler((payload) => {
-  console.log('background');
+  console.log('background', payload);
   // Customize notification here
   const title = 'Background Message Title'
   const options = {
