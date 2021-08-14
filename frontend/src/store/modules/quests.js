@@ -148,9 +148,9 @@ const actions = {
       commit('SET_QUESTS', quests)
   },
 
-  setQuestDetail({commit}, questDetail){
+  async setQuestDetail({commit}, questDetail){
       // console.log(questDetail)
-    commit('SET_QUESTDETAIL', questDetail)
+    await commit('SET_QUESTDETAIL', questDetail)
   },
 
 

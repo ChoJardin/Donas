@@ -6,7 +6,7 @@
       <component-nav @on-arrow="$router.back()" title="인증 게시글"/>
       <button v-if="isMine" @click="onClick" class="material-icons-round more">more_horiz</button>
       <div v-if="openButton">
-        <button>
+        <button @click="onEdit">
           수정
         </button>
         <button>
@@ -39,12 +39,12 @@
       </div>
 
       <!--퀘스트-->
-      <router-link :to="`/quest/${selectedArticle.questId}`" class="quest-router">
+      <a @click.prevent=setQuestId(selectedArticle.questId) class="quest-router">
         <span v-if="selectedArticle.type==='G'" class="quest-type">공동</span>
         <span v-else-if="selectedArticle.type==='P'" class="quest-type">개인</span>
         <span v-else class="quest-type">릴레이</span>
         <span class="quest-title">{{selectedArticle.questTitle}}</span>
-      </router-link>
+      </a>
 
       <div v-html="parsedContent" id="article-content" />
 
@@ -84,7 +84,7 @@
 
 <script>
 import moment from "moment";
-import {mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 import ComponentNav from "../common/ComponentNav";
 import HeartList from "@/components/articles/HeartList";
@@ -111,9 +111,22 @@ export default {
   },
   // methods
   methods: {
-    // 수정/ 삭제 버튼
+    ...mapActions(['setQuestId']),
+    // 수정/ 삭제 버튼 열기
     onClick() {
       this.openButton = !this.openButton
+    },
+    // 수정하기
+    onEdit() {
+      const setQuest = async () => {
+        let quest = {
+          questId: this.selectedArticle.questId,
+          type: this.selectedArticle.type,
+          title: this.selectedArticle.questTitle
+        }
+        await this.$store.dispatch('setQuestDetail', quest)
+      }
+      setQuest().then(this.$router.push('/article/edit'))
     },
     // 날짜 수정
     dateFormatted(date) {

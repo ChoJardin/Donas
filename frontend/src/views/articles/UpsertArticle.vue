@@ -27,7 +27,8 @@
     </div>
 
     <div class="article-image">
-      <img v-if="preview" :src="preview" alt="">
+      <img v-if="isUpdate" :src="selectedArticle.image" alt="">
+      <img v-else-if="preview" :src="preview" alt="">
       <div v-else class="upload-info">
         유의사항<br/><br/>
         1. 등록한 이미지는 수정이 불가합니다.
@@ -41,7 +42,7 @@
 
     </div>
     <AwsImageUploader
-        id="image-input" ref="aws"
+        v-show="!isUpdate" id="image-input" ref="aws"
         @preview="onPreview" @on-error="onError" @modified-date="dateCheck"/>
 
     <div class="element-wrap">
@@ -84,7 +85,9 @@ export default {
   data() {
     return {
       // 수정인가?
-      isUpdate:'',
+      isUpdate: false,
+      // 저장완료?
+      isSaved: false,
       picture: '',
       preview: '',
       error: '',
@@ -113,13 +116,24 @@ export default {
         this.error = ''
       }
     },
-    // aws 요청 보내고 기다리기
-    async onClick() {
-      this.picture = await this.$refs.aws.uploadFile()
-
-      this.onSubmit()
+    // 버튼 눌렀을 때,
+    onClick() {
+      // 수정하는 경우
+      if (this.isUpdate) {
+        this.onEdit()
+      }
+      else
+        // 생성
+        this.onCreate()
     },
-    onSubmit () {
+    // 새로 글 생성하는 경우
+    // aws 요청 보내고 기다리기
+    async onCreate() {
+      this.picture = await this.$refs.aws.uploadFile()
+      this.onSubmit().then(this.isSaved = true )
+    },
+    // 서버로 요청 보내기
+    async onSubmit () {
       const data = {
         userId: this.loginUser.id,
         questId: this.quest.id,
@@ -127,7 +141,7 @@ export default {
         content: this.content,
         type: this.quest.type,
       }
-      ArticlesApi.createArticle(
+      await ArticlesApi.createArticle(
           data,
           res => {
             if (res.data !== 'NOT_FOUND') {
@@ -140,21 +154,44 @@ export default {
               console.log('아직 데이터 저장 중')
               console.log(this.savedArticle)
               this.$store.dispatch('setSelectedArticle', this.savedArticle)
+              this.$store.dispatch('setSelectedId', this.savedArticle.id)
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
       )
     },
+    async onEdit() {
+      const data = {
+        articleId: this.selectedArticle.id,
+        content: this.content
+      }
+      await ArticlesApi.editArticle(
+          data,
+          res => {
+            console.log(res)
+            if (res.data === 'OK') {
+              this.savedArticle = this.selectedArticle
+              this.savedArticle['content'] = this.content
+            } else this.$router.push('/404')
+          },
+          err => this.$router.push('/error')
+      ).then(this.$store.dispatch('replaceOldArticle', this.savedArticle))
+    }
+
   },
   // computed
   computed: {
     ...mapState({
       quest: state => state.quests.questDetail,
-      loginUser: state => state.user.loginUser
+      loginUser: state => state.user.loginUser,
+      selectedArticle: state => state.articles.selectedArticle
     }),
     // 버튼 비활성화
     disabled() {
-      return !(this.preview && this.content && !this.error)
+      if (this.isUpdate)
+        return this.content === this.selectedArticle.content || !this.content
+      else
+        return !(this.preview && this.content && !this.error)
     },
     isArticleSelected() {
       return this.$store.getters.isArticleSelected
@@ -163,14 +200,23 @@ export default {
   // watch
   watch: {
     // watcher on computed
-    isArticleSelected(v)  {
-      // 게시글을 저장했기 때문에 피드로 보내주겠습니다.
-      // 그 전에 먼저 피드에 내 새로운 게시물을 넣어주겠어요.
-      const addArticle  = async () => {
-        await this.$store.dispatch('addNewArticle', this.savedArticle)
+    isSaved(v)  {
+      if (this.isUpdate) {
+        // 수정한 게시물을 피드에 반영해줍니다.
+        const replaceArticle = async () => {
+          await this.$store.dispatch('replaceOldArticle', this.savedArticle)
+        }
+        replaceArticle().then(this.$router.push({path: '/article', query: {id: this.savedArticle.id}}))
+
+      } else  {
+        // 게시글을 작성하고 저장했기 때문에 피드로 보내주겠습니다.
+        // 그 전에 먼저 피드에 내 새로운 게시물을 넣어주겠어요.
+        const addArticle  = async () => {
+          await this.$store.dispatch('addNewArticle', this.savedArticle)
+        }
+        addArticle().then(this.$router.push({path: '/article', query: {id: this.savedArticle.id}}))
+        // this.$router.push(`/articles/${this.savedArticle.id}`)
       }
-      addArticle().then(this.$router.push(`/article?id=${this.savedArticle.id}`))
-      // this.$router.push(`/articles/${this.savedArticle.id}`)
     }
 
   },
@@ -178,29 +224,19 @@ export default {
   created() {
     // 혹시 있을지도 모르는 selectedArticle 값을 초기화
     if (this.isArticleSelected) {
-      const article =
-          {
-            id: 0,
-            createdAt: "",
-            updatedAt: null,
-            image: "",
-            content: "",
-            type: "",
-            isLike: false,
-            heartCnt: 0,
-            commentCnt: 0,
-            makerImage: null,
-            makerName: "",
-            questId: 0,
-            questTitle: "",
-          }
-      this.$store.dispatch('setSelectedArticle', article)
+      this.$store.dispatch('setSelectedId', undefined)
     }
   },
   // navigation guard
   beforeRouteEnter: (to, from, next) => {
     if (from.name === 'QuestDetail')
       next()
+    else if (from.name === 'ArticleDetail')
+      next(vm => {
+        vm.isUpdate = true
+        vm.error = '사진은 수정하실 수 없습니다.'
+        vm.content = vm.selectedArticle.content
+      })
     else
       next('/404')
   }
