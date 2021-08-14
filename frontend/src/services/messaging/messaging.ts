@@ -1,6 +1,7 @@
 import  {ref}  from '../../composition/index.ts';
 import firebase from 'firebase/app';
-import '@firebase/messaging';
+import 'firebase/messaging';
+// import '@firebase/messaging';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const Config = {
   apiKey: "AIzaSyAlkz45CmAwsU4sJhmjJjAoqHUWPMka8oE",
