@@ -218,7 +218,7 @@ const recentSearch = (id, callback, errorCallback) => {
 
 const searchAuto = (data,callback, errorCallback) => {
   const searchAutoPath = URL + ROUTES.searchAuto
-  axios.patch(searchAutoPath, null, {params: data})
+  axios.get(searchAutoPath, {params: data})
     .then(res => {
       callback(res)
     })
@@ -228,8 +228,9 @@ const searchAuto = (data,callback, errorCallback) => {
 }
 
 const searchResult = (data,callback, errorCallback) => {
-  const searchResultPath = URL + ROUTES.searchAuto
-  axios.patch(searchResultPath, null, {params: data})
+  const searchResultPath = URL + ROUTES.searchResult
+  console.log(searchResultPath)
+  axios.get(searchResultPath,  {params: data})
     .then(res => {
       callback(res)
     })
@@ -240,7 +241,7 @@ const searchResult = (data,callback, errorCallback) => {
 
 const saveSearch = (data,callback, errorCallback) => {
   const saveSearchPath = URL + ROUTES.saveSearch
-  axios.patch(saveSearchPath, data)
+  axios.post(saveSearchPath, data)
     .then(res => {
       callback(res)
     })
