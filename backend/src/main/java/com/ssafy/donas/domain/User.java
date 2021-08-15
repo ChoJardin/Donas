@@ -113,10 +113,11 @@ public class User {
 	public User() {}
 
 	@Builder
-	public User(String email, String password, String nickname) {
+	public User(String email, String password, String nickname, LocalDateTime joindate) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
+		this.joindate = joindate;
 	}
 
 }

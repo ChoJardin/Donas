@@ -53,7 +53,7 @@ public class MileageController {
 		String name = donation.getUserName();
 		long userId = donation.getUserId();
 		long charityId = donation.getCharityId();
-		LocalDateTime time = LocalDateTime.now();
+		LocalDateTime time = LocalDateTime.now().plusHours(9);
 		
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);
@@ -82,7 +82,7 @@ public class MileageController {
 		long amount = cash.getAmount();
 		String accountNum = cash.getAccountNum();
 		String bank = cash.getBank();
-		LocalDateTime time = LocalDateTime.now();
+		LocalDateTime time = LocalDateTime.now().plusHours(9);
 		
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);

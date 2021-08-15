@@ -1,5 +1,7 @@
 package com.ssafy.donas.service;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +65,7 @@ public class UserService {
 	}
 
 	public boolean join(String email, String password, String nickname) {
-		User user = new User(email, password, nickname);
+		User user = new User(email, password, nickname,LocalDateTime.now().plusHours(9));
 		userRepo.save(user);
 
 		return true;
