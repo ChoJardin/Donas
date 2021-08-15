@@ -14,9 +14,9 @@
         <div >{{donationAmount}}원이 자동 기부 됩니다.</div>
     </div>
 
-      <div id="cashout-donation">
+      <div class="cashout-donation">
         <div> 후원 단체 </div>
-        <select v-model="charityId" id="cashout-charity">
+        <select v-model="charityId" class="cashout-charity">
           <option v-for="charity in charityList" :key="charity.id" :value="charity.id">
             {{charity.name}}
           </option>
@@ -32,10 +32,16 @@
         <div class="cashout-input-label">이름</div>
         <input type="text" v-model="name" class="cashout-input">
       </div>
-      <div class="cashout-amount">
-        <div class="cashout-input-label">은행</div>
-        <input type="text" v-model="bank" class="cashout-input">
+
+      <div class="cashout-donation">
+        <div> 이체 은행 </div>
+        <select v-model="bank" class="cashout-charity">
+          <option v-for="(bank,idx) in bankList" :key="idx" :value="bank">
+            {{bank}}
+          </option>
+        </select>
       </div>
+
       <div class="cashout-amount">
         <div class="cashout-input-label">계좌번호</div>
         <input type="text" v-model="account" class="cashout-input">
@@ -88,6 +94,7 @@ export default {
         accountNum: this.account,
         amount:parseInt(this.refundAmount),
         userName: this.name,
+        charityId: this.charityId
       }
 
       MileagesApi.createCashOutRequest(
@@ -113,11 +120,22 @@ export default {
     refundAmount: function (){
       return Math.round(this.inputAmount - this.donationAmount)
     },
+    // overLimit: function ()  {
+    //   if (this.inputAmount > parseInt(this.loginUser.mileage))
+    //     this.inputAmount = 0
+    //     return 1
+    //
+    //
+    // },
     ...mapState({
       loginUser: state => state.user.loginUser,
       charityList: state => state.mileages.charityList,
+      bankList: state => state.mileages.bankList
     })
   },
+  watch: {
+
+  }
 
 }
 </script>
@@ -140,7 +158,7 @@ export default {
   align-items: center;
 }
 
-#cashout-donation {
+.cashout-donation {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
@@ -154,7 +172,7 @@ export default {
   color: #183a1d;
 }
 
-#cashout-charity{
+.cashout-charity{
   display: flex;
   border: black solid 1px;
   font-size: 0.8em;

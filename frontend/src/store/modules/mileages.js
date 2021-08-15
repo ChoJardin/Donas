@@ -37,7 +37,11 @@ const state ={
         bgPicture:'',
     },
 
-    charityId:0
+    charityId:0,
+
+    bankList: ['KB국민은행', '신한은행', '우리은행', '하나은행', 'KDB산업은행', 'IBK기업은행',
+    'NH농협은행', '수협은행', '대구은행', '부산은행',' 경남은행',' 광주은행', '전북은행',
+    '제주은행', '카카오뱅크']
 }
 
 const getters = {

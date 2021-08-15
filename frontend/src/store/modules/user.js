@@ -97,7 +97,8 @@ const state ={
 const getters = {
   isLoggedIn(state) {
     return !!state.loginUser.nickname
-  }
+  },
+
 }
 
 const mutations = {

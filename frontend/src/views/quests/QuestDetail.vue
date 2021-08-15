@@ -35,9 +35,9 @@
         <!--article start-->
         <div class="quest-detail-articles">
           <div>인증 개시글</div>
-<!--          <button v-if="isItMine==='1'" @click="$router.push('/article/create/')">인증 생성</button>-->
-          <button @click="onCreate">인증 생성</button>
-<!--          <button v-else-if="isItMine==='0' && questDetail.type==='P'">참여 하기</button>-->
+          <button v-if="isItMine" @click="$router.push('/article/create/')">인증 생성</button>
+<!--          <button @click="onCreate">인증 생성</button>-->
+          <button v-else-if="isItMine === false && questDetail.type==='P'">참여 하기</button>
         </div>
         <div id="quest-detail-article-wrap">
           <div class="article-image" v-for="article in articles" :key="article.id">
@@ -67,7 +67,11 @@ export default {
     ComponentNav
   },
    // props
-  // data
+  // data() {
+  //   return {
+  //     isIt: this.participants.some(this.isItMine)
+  //   }
+  // },
   // methods
   methods: {
     onCreate() {
@@ -86,33 +90,53 @@ export default {
 
       return articles
     },
+    isItMine(){
+      const me = this.loginUser.id
+      return this.participants.some(function(element){ if(element.id === me) {return true}})
+      },
+
+      // return participants.filter(participant => {
+      //   if (participant.id === this.loginUser.id)
+      //     return 1
+      //   else
+      //     return 0
+      // })
+
     ...mapState({
       questDetail: state => state.quests.questDetail,
+      participants: state => state.quests.questDetail.users,
       questId: state => state.quests.questId,
       loginUser: state => state.user.loginUser,
       isLoggedIn: state => state.user.isLoggedIn,
+    }),
       dateFormatted: function () {
         return moment(String(this.questDetail.startAt)).format('YYYY/MM/DD')
       },
       userCount: function () {
         return this.questDetail.users.length
       }
-    }),
-    isItMine: function () {
-      const username = this.loginUser.nickname
-      this.questDetail.users.filter(function (user){
-        if (user.nickname === username)
-          return 1
-      // return this.questDetail.users.filter(function (user){
-      //   if (user.nickname === username)
-      //     console.log('yes')
-      }
-      )
-      return 1
-    },
-    },
-    created() {
-      const data = {questId:this.questId, myId: this.loginUser.id}
+  },
+    // ...mapGetters(['isItMine']),
+    // isItMineCheck: function () {
+    //   const username = this.loginUser.nickname
+    //   this.questDetail.users.filter(function (user){
+    //     if (user.nickname === username)
+    //       this.isItMine = '1'
+    //   // return this.questDetail.users.filter(function (user){
+    //   //   if (user.nickname === username)
+    //   //     console.log('yes')
+    //   }
+    //   )
+    //   return 1
+    // },
+    // mountedAfter() {
+    //
+    // },
+  created() {
+      const data = {questid:this.questId, myid: 0}
+      if (this.loginUser.id !== 0 && this.loginUser.id !== undefined)
+          data.myid = this.loginUser.id
+      console.log(data)
       QuestApi.requestQuestDetail(
           data,
           res => {
@@ -123,7 +147,12 @@ export default {
           err => {
             console.log(err)
           }
-      )
+      );
+      // const me = this.loginUser.nickname
+      // this.questDetail.users.filter(function (user){
+      //   if (user.nickname === me)
+      //     this.$store.dispatch('setIsItMine', '1')
+      // })
     }
   }
 </script>

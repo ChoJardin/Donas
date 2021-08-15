@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="create-solo-main">
     <div>
       <div class="create-quest-questions">
         <div class="create-question-title">퀘스트 이름을 입력해 주세요
@@ -29,33 +29,54 @@
         </textarea>
       </div>
 
-      <div class="create-quest-questions">
-        <div class="create-question-title" >퀘스트 대표 사진을 올려주세요</div>
-        <input class="create-quest-img" type="file" accept="image/*; capture=camera" :input.sync="picture" >
+    <div class="solo-img-input" style="width: 80%; margin-left: 15px">
+      <AwsImageUploader
+          id="image-input" ref="aws"
+          @preview="onPreview" @on-error="onError"/>
+    </div>
+      <div class="solo-quest-image">
+  <!--      <img v-if="isUpdate" :src="quest.picture" alt="">-->
+        <img v-if="preview" :src="preview" style="width: 200px; height: 200px" alt="">
+        <div v-else class="solo-upload-info">
+          등록한 이미지는 수정이 불가합니다.
+          <br/>신중히 선택해 주세요.
+          <br/><br/>
+          3. 1MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
+        </div>
+        <div id="image-error" v-html="error" v-if="error"></div>
+
+      </div>
+
+      <button class="button" @click="onClick">생 성 하 기</button>
       </div>
     </div>
-
-    <button class="button" @click="onCreate">생 성 하 기</button>
-
-  </div>
 </template>
 
 <script>
 import {mapGetters, mapState} from "vuex";
 import QuestApi from "../../api/QuestApi";
+import AwsImageUploader from "@/components/common/AwsImageUploader";
 
 export default {
   name: "CreateSingle",
+  components: {
+    AwsImageUploader,
+  },
   data: () => {
     return {
       userId: '',
       title: '',
       description: '',
-      startAt:'',
+      startAt: '',
       finishAt: '',
-      picture:'../../assets/donut_flag.png',
+      picture: '',
       certification: '',
-      mileage:2000,
+      mileage: 2000,
+      //image
+      selectedFile: '',
+      preview: '',
+      error: '',
+      isSaved: false,
     }
   },
   //computed
@@ -66,7 +87,17 @@ export default {
   },
   //methods
   methods: {
-    onCreate(){
+    onPreview(preview) {
+      this.preview = preview
+    },
+    onError(error) {
+      this.error = error
+    },
+    async onClick() {
+      this.picture = await this.$refs.aws.uploadFile()
+      this.onSubmit()
+    },
+    onSubmit() {
       let data = {
         userId: this.loginUser.id,
         title: this.title,
@@ -78,7 +109,7 @@ export default {
         mileage: this.mileage
         }
       // console.log(data)
-      let path
+      // let path
       QuestApi.createPersonalQuest(
           data,
           res => {
@@ -86,14 +117,15 @@ export default {
               alert('입력확인')
             }
             else{
-              this.$router.push('/quests')
+              this.$router.push('/quests/solo')
             }
           },
           err => {
             console.log(err)
           })
-      }
-    }
+      },
+    },
+
   }
 </script>
 
@@ -146,9 +178,6 @@ label {
   margin-right: 5px;
 }
 
-.create-quest-img {
-  width: 100%;
-}
 
 .button {
   width: 90%;
@@ -160,6 +189,18 @@ label {
   background-color: #183a1d;
   color: #e1eedd;
   cursor: pointer;
+}
+/*.solo-img-input{*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
+.solo-quest-image{
+  width: 250px;
+  height: 250px;
+  /*margin-left: 50px;*/
+  margin-top: 20px;
 }
 
 </style>

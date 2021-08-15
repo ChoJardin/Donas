@@ -5,7 +5,8 @@
 
         <!--게시글 작성 정보-->
         <div id="single-quest-profile">
-          <img id="quest-image" src="../../assets/donut1.png">
+          <img v-if="quest.picture" class="quest-image" :src="quest.picture" alt="">
+          <img v-else class="quest-image" src="../../assets/donut1.png">
           <div id="single-quest-text">
             <h1 id="single-quest-title">{{ quest.title }}</h1>
             <div id="single-quest-description">{{quest.description}}</div>
@@ -53,7 +54,7 @@ export default {
     width: 100%;
 }
 
-#quest-image {
+.quest-image {
     height: 100px;
     width: 110px;
     border: 1px solid #292929;
