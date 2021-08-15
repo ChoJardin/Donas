@@ -6,8 +6,6 @@
     />
 
     <div class="charity-background">
-
-
       <img :src="`${charity.bgPicture}`" style="width: 100%; height: 350px" alt="">
     </div>
 
@@ -17,40 +15,44 @@
         <div class="charity-title">{{charity.name}}</div>
         <a :href="`${charity.homepage}`"><i class="material-icons" style="padding-top: 4px">link</i></a>
       </div>
-    <div class="charity-tag">
-      <span>{{charity.tag}}</span>
-    </div>
-    <div class="charity-description">{{charity.description}}</div>
-
-    <div class="charity-status-label" style="font-size: 1.2em">기부 현황</div>
-    <div class="charity-status" >
-      <div class="charity-amount">지난 분기 기부금: {{charity.quarter}}</div>
-      <div class="charity-amount">현재 모금액: {{charity.total}}</div>
-    </div>
-
-    <div id="donation-form-main">
-      <div style="font-size: 1.2em; margin-bottom: 3px">{{charity.name}} 후원하기</div>
-        <div class="donation-form">
-          <div style="font-size: 0.8em; margin-bottom: 15px">후원하시려면 아래의 내역을 작성해 주세요</div>
-          <div class="donation-amount">
-          <div class="donation-input-label"  >기부 금액:</div>
-          <div class="donation-int">
-  <!--        <div class="donation-currency">₩</div>-->
-          <input type="number" class="donation-input" v-model="inputAmount">
-        </div>
+      <div class="charity-tag">
+        <span>{{charity.tag}}</span>
+        <span style="margin-left: 3px">{{charity.tag2}}</span>
       </div>
-      <div class="donation-info">
-        <div class="donation-amount">
-          <div class="donation-input-label">기부자 명:</div>
-          <div class="donation-int">
-            <input type="text" v-model="name" class="donation-input">
+      <div class="charity-description">{{charity.description}}</div>
+
+      <div class="charity-status-label" style="font-size: 1.2em">기부 현황</div>
+      <div class="charity-status" >
+        <div class="charity-amount" style="margin-bottom:5px">지난 분기 기부 마일리지: {{charity.quarter}}</div>
+        <div class="charity-amount">현재 모금 마일리지: {{charity.total}}</div>
+      </div>
+
+      <div id="donation-form-main" v-if="isLoggedIn">
+          <div style="font-size: 1.2em; margin-bottom: 3px">{{charity.name}} 후원하기</div>
+            <div class="donation-form">
+              <div style="font-size: 0.8em; margin-bottom: 15px">후원하시려면 아래의 내역을 작성해 주세요</div>
+              <div class="donation-amount">
+              <div class="donation-input-label"  >기부 마일리지:</div>
+              <div class="donation-int">
+      <!--        <div class="donation-currency">₩</div>-->
+              <input type="number" class="donation-input" v-model="inputAmount">
+            </div>
           </div>
+          <div class="donation-info">
+            <div class="donation-amount">
+              <div class="donation-input-label">기부자 명:</div>
+              <div class="donation-int">
+                <input type="text" v-model="name" class="donation-input">
+              </div>
+            </div>
+          </div>
+
+          <button class="donation-button" @click="confirmPage">확인</button>
         </div>
       </div>
-
-      <button class="donation-button" @click="confirmPage">확인</button>
-    </div>
-    </div>
+      <div v-else>
+        <div>로그인 하시면 더 많은 기능이 보여요!</div>
+      </div>
     </div>
   </div>
 </template>
@@ -96,15 +98,18 @@ export default {
       )
     },
     scrollToBottom(){
-      document.getElementById('donation-form-main').scrollIntoView();
+      if (this.isLoggedIn)
+        return document.getElementById('donation-form-main').scrollIntoView();
+      else
+        this.$router.push(({name: 'Login', params: {history: this.$route.fullPath}}))
     }
   },
   computed: {
     ...mapState({
       charityId: state => state.mileages.charityId,
       loginUser: state => state.user.loginUser,
-
     }),
+    ...mapGetters(['isLoggedIn']),
   },
   created() {
     this.charity = this.$store.getters.charityDetail;
@@ -200,8 +205,8 @@ export default {
   margin-top: 30px;
 }
 .charity-status{
-  display: flex;
-  justify-content: space-evenly;
+  /*display: flex;*/
+  /*justify-content: space-evenly;*/
   margin: 15px 0;
   padding-bottom: 20px;
   border-bottom: rgba(41, 41, 41, 0.50) dotted 1px;

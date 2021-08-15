@@ -68,7 +68,22 @@ const state ={
     sendName: '',
     confirm: '',
   }],
-  userMileage: 0
+  userMileage: 0,
+
+  recentSearch: [{
+    id: '',
+    nickname: undefined,
+    picture: '',
+    description: '',
+  }],
+
+  searchResult: [{
+    id: '',
+    nickname: undefined,
+    picture: '',
+    description: '',
+  }],
+
 }
 
 
@@ -122,6 +137,14 @@ const mutations = {
 
   SET_MILEAGE(state, mileage) {
     state.userMileage = mileage
+  },
+
+  SET_RECENT_SEARCH(state, recent) {
+    state.recentSearch = recent
+  },
+
+  SET_SEARCH_RESULT(state, result) {
+    state.searchResult = result
   }
 }
 
@@ -236,7 +259,15 @@ const actions = {
 
   setMileage({commit}, mileage) {
     commit('SET_MILEAGE', mileage)
-  }
+  },
+
+  setRecentSearch({commit}, recent) {
+    commit('SET_RECENT_SEARCH', recent)
+  },
+
+  setSearchResult({commit}, result) {
+    commit('SET_SEARCH_RESULT', result)
+  },
 
 }
 

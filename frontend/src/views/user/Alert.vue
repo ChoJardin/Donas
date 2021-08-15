@@ -15,7 +15,7 @@
 
 <script>
 import {mapState} from "vuex";
-import UserApi from "../../api/UserApi";
+
 
 export default {
   name: "Notification",

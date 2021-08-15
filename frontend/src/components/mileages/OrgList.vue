@@ -7,7 +7,7 @@
           <div id="charity-text">
             <div>
               <h1 id="charity-title">{{charity.name}}</h1>
-              <div id="charity-description">{{ charity.total }}원 모금</div></div>
+              <div id="charity-description">{{ charity.total }} 마일리지 모금</div></div>
             <div>
               <div class="charity-tag">
                 <span class="charity-set" style="margin-right: 3px">{{charity.tag}}</span>

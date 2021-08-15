@@ -1,12 +1,23 @@
 <template>
   <div>
-    <div id="flex-container">
-      <div id="profile-wrap">
+    <div v-if="isLoggedIn" class="flex-container">
+      <div class="profile-wrap">
         <img v-if="loginUser.picture" class="profile-image" :src="loginUser.picture" alt="">
         <img v-else class="profile-image" src="../../assets/donut_profile.png" alt="">
-        <div id="profile-info">
-          <h1 id="username">{{loginUser.nickname}}님의 마일리지</h1>
-          <div id="mileage-total">{{mileage}}원</div>
+        <div class="profile-info">
+          <div id="mileage-receipt"><span id="mileage-receipt-button">사용 내역</span></div>
+          <h1 class="username">{{loginUser.nickname}}님의 마일리지</h1>
+          <div class="mileage-total">{{mileage}} 마일리지</div>
+        </div>
+      </div>
+    </div>
+
+    <div v-else class="flex-container">
+      <div class="profile-wrap">
+        <img class="profile-image" src="../../assets/donut_profile.png" alt="">
+        <div class="profile-info">
+          <h1 class="username">함께 하시려면</h1>
+          <div class="mileage-total"><router-link :to="{name: 'Login', params: {history: this.$route.fullPath}}">로그인</router-link> 을 해주세요!</div>
         </div>
       </div>
     </div>
@@ -15,10 +26,14 @@
       <i class="fas fa-star" style="color: #fcb131"></i>
       <a id='title' href="">2021 1분기 기부 내역</a>
     </div>
-    <div class="branch">
+    <div v-if="isLoggedIn" class="branch">
       <router-link to="/user/mileage" class="button">기부</router-link>
 <!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
       <router-link to="/user/mileage/cashout" class="button">출금</router-link>
+    </div>
+
+    <div v-else class="branch">
+      <router-link to="/user/mileage" class="button" style="margin: 0; width: 100%">기부</router-link>
     </div>
 
 
@@ -29,7 +44,7 @@
 <script>
 // import CashOut from "@/components/mileages/CashOut";
 // import Donation from "@/components/mileages/Donation";
-import {mapState} from "vuex";
+import {mapGetters, mapState} from "vuex";
 import UserApi from "../../api/UserApi";
 import MileagesApi from "../../api/MileagesApi";
 export default {
@@ -46,7 +61,8 @@ export default {
     ...mapState({
       loginUser: state => state.user.loginUser,
       mileage: state => state.user.userMileage,
-    })
+    }),
+    ...mapGetters(['isLoggedIn']),
   },
   created() {
       UserApi.requestLoginUser(
@@ -72,14 +88,14 @@ export default {
 </script>
 
 <style scoped>
-#flex-container {
+.flex-container {
   display: flex;
   flex-direction: column;
   text-align: start;
   margin: 15px;
 }
 
-#profile-wrap {
+.profile-wrap {
   display: flex;
 }
 
@@ -88,7 +104,7 @@ export default {
   flex: 1 1 0;
 }
 
-#profile-info {
+.profile-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -97,7 +113,19 @@ export default {
   padding-left: 15px;
 }
 
-#mileage-total{
+#mileage-receipt{
+  text-align: right;
+  font-size: 0.7em;
+  line-height: 1.2em;
+}
+
+#mileage-receipt-button{
+  border: #183a1d solid 1px;
+  padding: 2px 5px;
+  border-radius: 20px;
+}
+
+.mileage-total{
   font-size: larger;
   font-weight: bold;
 }
@@ -139,6 +167,7 @@ export default {
   text-align: center;
   font-size: 1.0em;
 }
+
 
 
 </style>

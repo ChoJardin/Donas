@@ -11,7 +11,7 @@
 
 <script>
 import OrgList from "../../components/mileages/OrgList";
-import {mapActions, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 export default {
   name: "Donation.vue",
@@ -24,10 +24,15 @@ export default {
   computed: {
     ...mapState({
       charityList: state => state.mileages.charityList,
-    })
+    }),
+    ...mapGetters(['isLoggedIn']),
   },
   created() {
-    this.charity = this.$store.getters.charityDetail
+    this.charity = this.$store.getters.charityDetail;
+    // if (!this.isLoggedIn) {
+    //   this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+    //   return
+    // }
   }
 }
 </script>

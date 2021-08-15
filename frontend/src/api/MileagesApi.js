@@ -7,6 +7,7 @@ const ROUTES = {
   createCashOutRequest: '/mileage/cash',
   createDonationRequest: '/mileage/donation',
   requestCharityList: '/charity',
+  MileageUsageList: '/user/mileage'
 }
 
 
@@ -51,12 +52,20 @@ axios.get(requestCharityListPath)
     .catch(error => errorCallback(error))
 }
 
+const requestMileageUsage = (data, callback, errorCallback) => {
+  const requestMileagePath = URL + ROUTES.MileageUsageList
+  axios.get(requestMileagePath, {params: data})
+    .then(res => callback(res.data))
+    .catch(res=> callback(res.data))
+}
+
 const UserApi = {
   URL,
   ROUTES,
   createCashOutRequest: (data, callback, errorCallback) => createCashOutRequest(data, callback, errorCallback),
   createDonationRequest: (data, callback, errorCallback) => createDonationRequest(data, callback, errorCallback),
   requestCharityList: (callback, errorCallback) => requestCharityList(callback, errorCallback),
+  requestMileageUsage: (data, callback, errorCallback) => requestMileageUsage(data, callback,errorCallback),
 
 }
 
