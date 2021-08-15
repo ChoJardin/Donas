@@ -16,6 +16,7 @@
 
 import ArticleImage from "@/components/articles/ArticleImage";
 import {mapGetters, mapState} from "vuex";
+import ArticlesApi from "@/api/ArticlesApi";
 
 export default {
   name: 'Feed',
@@ -29,8 +30,25 @@ export default {
     ...mapGetters(['isLoggedIn'])
   },
   created() {
+    // 로그인하지 않은 경우
     if (!this.isLoggedIn) {
       this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+    } else {
+      // 로그인 했으면 내가 팔로우 하고 있는 사람 게시글 보여주기
+      const data = {
+        userId: this.$store.state.user.loginUser.id,
+        type: 'A'
+      }
+      ArticlesApi.requestFeed(
+          data,
+          res => {
+            console.log(res)
+            if (res.data !== 'NOT_FOUND')
+              this.$store.dispatch('setFeeds', res.data)
+            else this.$router.push('/404')
+          },
+          err => this.$router.push('/error')
+      )
     }
   },
 }
