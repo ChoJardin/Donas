@@ -7,7 +7,7 @@ const ROUTES = {
   createCashOutRequest: '/mileage/cash',
   createDonationRequest: '/mileage/donation',
   requestCharityList: '/charity',
-  MileageUsageList: '/user/mileage'
+  MileageUsageList: '/user/mileage',
 }
 
 
