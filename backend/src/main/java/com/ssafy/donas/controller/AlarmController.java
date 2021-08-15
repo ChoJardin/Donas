@@ -70,9 +70,10 @@ public class AlarmController {
 	@GetMapping("/{userId}")
 	@ApiOperation(value="알림 리스트")
 	public Object getAlarmList(@PathVariable long userId) {
+		if(!userService.checkId(userId) && userId!=0) 
+			return HttpStatus.NOT_FOUND;
 		User user = userService.getUser(userId);
-		if(user==null)
-			return HttpStatus.NO_CONTENT;
+
 		List<Alarm> alarms = alarmService.getAlarms(user);		
 		if(alarms.size()==0)
 			return new ResponseEntity<>("알림없음",HttpStatus.OK);
@@ -108,9 +109,9 @@ public class AlarmController {
 	@GetMapping("/quest/{userId}")
 	@ApiOperation(value="퀘스트 알림 리스트")
 	public Object getQuestAlarmList(@PathVariable long userId) {
+		if(!userService.checkId(userId) && userId!=0) 
+			return HttpStatus.NOT_FOUND;
 		User user = userService.getUser(userId);
-		if(user==null)
-			return HttpStatus.NO_CONTENT;
 		
 		List<QuestAlarm> questAlarms = questAlarmService.getAlarms(user);
 		final List<QuestAlarmResponse> result = new ArrayList<QuestAlarmResponse>();

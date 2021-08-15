@@ -76,7 +76,9 @@ public class ProfileController {
 	@ApiOperation(value = "개인 프로필 보기")
 	public Object showProfile(@PathVariable String nickname, @RequestParam long myid) {
 		User otherUser = userService.getUser(userService.getIdByNickname(nickname));
-
+		if(!userService.checkId(myid) && myid!=0) 
+			return HttpStatus.NOT_FOUND;
+		
 		if (otherUser == null)
 			return HttpStatus.NOT_FOUND;
 
