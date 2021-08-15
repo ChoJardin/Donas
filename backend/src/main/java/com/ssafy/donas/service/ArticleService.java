@@ -66,7 +66,7 @@ public class ArticleService {
 	
 	// 퀘스트 내의 게시물 가져오기
 	public List<Article> getArticlesByQuest(Quest quest){
-		return articleRepo.findArticleByQuestByIdDesc(quest);
+		return articleRepo.findArticleByQuestOrderByIdDesc(quest);
 	}
 	
 	public List<Article> getArticlesByUser(User user){
@@ -150,7 +150,7 @@ public class ArticleService {
 				own_articles = articleRepo.findArticleByUserOrderByIdDesc(presentUser);
 
 			}else {
-				own_articles = articleRepo.findArticleByUserAndTypeByIdDesc(presentUser, type);
+				own_articles = articleRepo.findArticleByUserAndTypeOrderByIdDesc(presentUser, type);
 
 			}
 			for(Article a : own_articles) {
@@ -184,7 +184,7 @@ public class ArticleService {
 						articles.add(new ArticleInfo(a.getId(),a.getQuest().getId(), a.getImage(), a.getContent(), a.getCreatedAt(), a.getUpdatedAt(), a.getType(),isLike,a.getLikes().size(), a.getComments().size(),a.getQuest().getTitle(),user.getNickname(),user.getPicture()));
 					}
 				}else {
-					own_articles =articleRepo.findArticleByUserAndTypeByIdDesc(followee, type);
+					own_articles =articleRepo.findArticleByUserAndTypeOrderByIdDesc(followee, type);
 					for(Article a : own_articles) {
 						User user = a.getUser();
 						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
