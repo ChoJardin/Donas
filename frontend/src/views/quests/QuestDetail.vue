@@ -90,6 +90,7 @@ export default {
       questDetail: state => state.quests.questDetail,
       questId: state => state.quests.questId,
       loginUser: state => state.user.loginUser,
+      isLoggedIn: state => state.user.isLoggedIn,
       dateFormatted: function () {
         return moment(String(this.questDetail.startAt)).format('YYYY/MM/DD')
       },
