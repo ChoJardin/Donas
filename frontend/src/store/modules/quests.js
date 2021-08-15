@@ -105,6 +105,9 @@ const getters = {
   relayQuest: state => {
     return state.questsList.filter(quest => quest.type === 'R')
   },
+  // isItMine: state => {
+  //   return state.selectedProfile.filter(quest => quest.users.id === state.loginUser.id )
+  // }
 }
 
 const mutations = {
@@ -123,6 +126,7 @@ const mutations = {
     SET_QUESTDETAIL(state, questDetail) {
       state.questDetail = questDetail
     },
+
 
 }
 
@@ -152,6 +156,7 @@ const actions = {
       // console.log(questDetail)
     await commit('SET_QUESTDETAIL', questDetail)
   },
+
 
 
 }
