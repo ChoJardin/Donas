@@ -142,7 +142,6 @@ public class QuestService {
 			String certification, long mileage, int userCnt) {
 		Group quest = new Group("G", title, description, startAt, finishAt, picture, certification, mileage, userCnt);
 		groupRepo.save(quest);
-
 		return quest;
 	}
 

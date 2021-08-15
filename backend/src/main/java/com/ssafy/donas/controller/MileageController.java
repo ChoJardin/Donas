@@ -78,6 +78,7 @@ public class MileageController {
 	public Object changeCash(@RequestBody CashRequest cash) {
 		
 		long userId = cash.getUserId();
+		long charityId = cash.getCharityId();
 		String name = cash.getUserName();
 		long amount = cash.getAmount();
 		String accountNum = cash.getAccountNum();
@@ -87,7 +88,7 @@ public class MileageController {
 		if(!userService.checkId(userId))
 			return new ResponseEntity<>("유저 없음", HttpStatus.NOT_FOUND);
 		
-		if(!cashService.changeCash(userId, time,name, amount, accountNum, bank))
+		if(!cashService.changeCash(userId, time,name, amount, accountNum, bank,charityId))
 			return HttpStatus.NOT_FOUND;
 		
 		if(!mileageService.minusMileage(userId, amount))
