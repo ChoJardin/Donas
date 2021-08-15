@@ -31,6 +31,8 @@ public class CashService {
 	CharityRepo charityRepo;
 	
 	public long getSumCashById(long userId) {
+		
+		
 		return cashRepo.sumCashById(userRepo.getById(userId));
 	}
 	
@@ -42,16 +44,15 @@ public class CashService {
 		
 		return true;
 	}
-	public List<CashInfo> showDonationList(long userId){
+	public List<CashInfo> showCashList(long userId){
 		List<Cash> cashList = cashRepo.findCashByUser(userRepo.getById(userId));
 		if(cashList.size()==0)
 			return null;
 		
 		List<CashInfo> cashInfo = new ArrayList<CashInfo>();	
 		for(Cash c : cashList) {
-			cashInfo.add(new CashInfo(c.getId(),c.getCharity().getName(),c.getName(),c.getBank(),c.getAmount()));
-		}
-		
+			cashInfo.add(new CashInfo(c.getId(),c.getCharity().getName(),c.getTime(),c.getName(),c.getBank(),c.getAmount()));
+		}		
 		return cashInfo;
 	}
 		

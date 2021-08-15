@@ -200,9 +200,9 @@ public class UserController {
 
 		}else if(type.equals("C")) {
 			CashListResponse result = new CashListResponse();
-			result.cashList = cashService.showDonationList(userId);	
+			result.cashList = cashService.showCashList(userId);	
 			if(result.cashList==null)
-				return new ResponseEntity<>("기부 내역 없는 유저", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>("현금화 내역 없는 유저", HttpStatus.NOT_FOUND);
 			result.total = cashService.getSumCashById(userId);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}else {
