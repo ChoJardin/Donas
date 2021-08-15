@@ -13,7 +13,7 @@ import com.ssafy.donas.domain.quest.Quest;
 @Repository
 public interface ArticleRepo extends JpaRepository<Article, Long>{
 	List<Article> findArticleByQuest(Quest quest);
-	List<Article> findArticleByUser(User user);
+	List<Article> findArticleByOrderByUserDesc(User user);
 	List<Article> findTop5ByUserOrderByCreatedAt(User user);
 	List<Article> findArticleByUserAndType(User user, String type);
 }
