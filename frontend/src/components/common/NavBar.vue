@@ -19,9 +19,9 @@
         <div class="search">
           <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
         </div>
-        <div class="notification">
+        <div class="notification" >
           <router-link :to="{name:'QuestAlert', params:{nickname:nickname, id:id}}"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
-          <span class="badge"><i class="fas fa-circle fa-xs"></i></span></router-link>
+          <span class="badge" ><i  class="fas fa-circle fa-xs" v-if="newQuestAlarm || newCommonAlarm"></i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
       </div>
@@ -59,12 +59,21 @@ export default {
   },
   // computed
   computed: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters(['isLoggedIn',]),
     ...mapState({
       nickname: state => state.user.loginUser.nickname,
-      id: state => state.user.loginUser.id
-    })
+      id: state => state.user.loginUser.id,
+      questAlarms: state => state.user.questAlarms,
+      commonAlarms: state => state.user.commonAlarms,
+    }),
+   newQuestAlarm(){
+      return this.questAlarms.some(function(element){ if(element.confirm === 1) {return true}})
+      },
+    newCommonAlarm(){
+      return this.commonAlarms.some(function(element){ if(element.confirm === 1) {return true}})
+      },
   },
+
   // watch
   // lifecycle hook
 
