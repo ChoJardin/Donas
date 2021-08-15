@@ -74,6 +74,8 @@ public class AlarmController {
 		if(user==null)
 			return HttpStatus.NO_CONTENT;
 		List<Alarm> alarms = alarmService.getAlarms(user);		
+		if(alarms.size()==0)
+			return new ResponseEntity<>("알림없음",HttpStatus.OK);
 		final List<AlarmResponse> result = new ArrayList<AlarmResponse>();
 		for(Alarm alarm : alarms) {
 			AlarmResponse res = new AlarmResponse();
@@ -86,8 +88,7 @@ public class AlarmController {
 			res.confirm = alarm.getConfirm();
 			result.add(res);
 		}
-//		alarmService.update(user);
-		
+
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
