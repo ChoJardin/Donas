@@ -32,7 +32,7 @@ public class CommentService {
 	}
 
 	public void add(Article article, long userId, String content) {
-		Comment comment = new Comment(content, userRepo.getById(userId), article, LocalDateTime.now(), LocalDateTime.now(), 0);
+		Comment comment = new Comment(content, userRepo.getById(userId), article, LocalDateTime.now().plusHours(9), LocalDateTime.now(), 0);
 		commentRepo.save(comment);
 		
 		article.getComments().add(comment);
@@ -41,7 +41,7 @@ public class CommentService {
 	public void update(long commentId, String content) {
 		Comment comment = commentRepo.findById(commentId).get();
 		comment.setContent(content);
-		comment.setUpdatedAt(LocalDateTime.now());
+		comment.setUpdatedAt(LocalDateTime.now().plusHours(9));
 	}
 
 	public void delete(long commentId) {

@@ -17,13 +17,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 //import com.google.common.net.HttpHeaders;
 import com.ssafy.donas.domain.FcmMessage;
+
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 
 @Service
@@ -38,6 +41,7 @@ public class FcmService {
 	
 	public void sendMessageTo(String targetToken,String title, String body) throws IOException {
 		String message = makeMessage(targetToken, title, body);
+				
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.add("body", message);
 		HttpHeaders headers = new HttpHeaders();
@@ -53,7 +57,7 @@ public class FcmService {
 	
 	private String makeMessage(String targetToken,String title,String message) throws JsonProcessingException{
 		FcmMessage fcmMessage = FcmMessage.builder()
-						.notification(FcmMessage.Notification.builder()
+						.data(FcmMessage.Data.builder()
 								.title(title)
 								.message(message)
 								.build()

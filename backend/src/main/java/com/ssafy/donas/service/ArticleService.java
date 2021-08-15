@@ -46,7 +46,7 @@ public class ArticleService {
 	}
 	
 	public Article add(User user, Quest quest, String image, String content, String type) {
-		Article article = new Article(user, quest, image, content, LocalDateTime.now(), null, type);
+		Article article = new Article(user, quest, image, content, LocalDateTime.now().plusHours(9), null, type);
 		articleRepo.save(article);
 		user.getArticles().add(article);
 		
@@ -70,7 +70,7 @@ public class ArticleService {
 	}
 	
 	public List<Article> getArticlesByUser(User user){
-		return articleRepo.findArticleByUser(user);
+		return articleRepo.findArticleByUserOrderByIdDesc(user);
 	}
 	
 	// 퀘스트 내의 게시물들 정보 리스트
@@ -147,7 +147,7 @@ public class ArticleService {
 		List<Article> own_articles = null;
 		if(own.equals("mine")) {
 			if(type.equals("A")) {
-				own_articles = articleRepo.findArticleByUser(presentUser);
+				own_articles = articleRepo.findArticleByUserOrderByIdDesc(presentUser);
 
 			}else {
 				own_articles = articleRepo.findArticleByUserAndType(presentUser, type);
@@ -170,7 +170,7 @@ public class ArticleService {
 			for(long fd : followee_ids) {
 				User followee = userService.getUser(fd);
 				if(type.equals("A")) {
-					own_articles = articleRepo.findArticleByUser(followee);
+					own_articles = articleRepo.findArticleByUserOrderByIdDesc(followee);
 					for(Article a : own_articles) {
 						User user = a.getUser();
 						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인

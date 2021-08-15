@@ -3,7 +3,7 @@
     <div id="article-detail">
 
       <!--nav-->
-      <component-nav @on-arrow="$router.back()" title="인증 게시글"/>
+      <component-nav @on-arrow="$router.push({path: '/article', query: {id: selectedArticle.id}})" title="인증 게시글"/>
       <button v-if="isMine" @click="showModal = !showModal" class="material-icons-round more">more_horiz</button>
       <!--<div v-if="openModal" class="change-article">-->
       <!--  <button @click="onEdit" >-->
