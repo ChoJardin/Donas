@@ -394,14 +394,14 @@ public class QuestController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperation(value = "퀘스트 상세 정보")
-	public Object getPersonalDetail(@RequestParam long questId, @RequestParam long myId) {
-		if (!questService.checkQuest(questId))
+	public Object getPersonalDetail(@RequestParam long questid, @RequestParam long myid) {
+		if (!questService.checkQuest(questid))
 			return HttpStatus.NOT_FOUND;
 		
-		if(!userService.checkId(myId))
+		if(!userService.checkId(myid) && myid!=0) 
 			return HttpStatus.NOT_FOUND;
 
-		Quest quest = questService.getQuestById(questId);
+		Quest quest = questService.getQuestById(questid);
 
 		final QuestDetailResponse response = new QuestDetailResponse();
 		response.setId(quest.getId());
@@ -428,11 +428,11 @@ public class QuestController {
 
 		// 게시글 리스트 보내기
 		// 퀘스트 내의 게시글을 보는데 유저가 좋아요를 누른 것인지 확인도 해야함
-		response.setArticles(articleService.getArticleInfoByQuest(questId, userService.getUser(myId)));
+		response.setArticles(articleService.getArticleInfoByQuest(questid, userService.getUser(myid)));
 
 		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
 		if ("R".equals(quest.getType())) {
-			Relay relay = relayService.getById(questId);
+			Relay relay = relayService.getById(questid);
 			response.setTargetCnt(relay.getTargetCnt());
 			response.setNowCnt(relay.getOrder());
 		}
