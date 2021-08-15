@@ -64,11 +64,26 @@ const state ={
     receiveId: '',
     contents: '',
     sendTime: '',
-    articleId: '',
+    questId: '',
     sendName: '',
     confirm: '',
   }],
-  userMileage: 0
+  userMileage: 0,
+
+  recentSearch: [{
+    id: '',
+    nickname: undefined,
+    picture: '',
+    description: '',
+  }],
+
+  searchResult: [{
+    id: '',
+    nickname: undefined,
+    picture: '',
+    description: '',
+  }],
+
 }
 
 
@@ -122,6 +137,14 @@ const mutations = {
 
   SET_MILEAGE(state, mileage) {
     state.userMileage = mileage
+  },
+
+  SET_RECENT_SEARCH(state, recent) {
+    state.recentSearch = recent
+  },
+
+  SET_SEARCH_RESULT(state, result) {
+    state.searchResult = result
   }
 }
 
@@ -199,18 +222,52 @@ const actions = {
   },
   // 알림 리스트
   setCommonAlarms({commit}, common) {
-    console.log(common)
+    // console.log(common)
     commit('SET_COMMON_ALARMS', common)
   },
 
+  async updateCommonAlarms ({dispatch, state}, {id}) {
+    await UserApi.requestCommonAlert(
+      id,
+      async (res) => {
+        if (res.data !== 'NOT_FOUND') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          await dispatch('setCommonAlarms', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
+  },
+
   setQuestAlarms({commit}, quest) {
-    console.log(quest)
+    // console.log(quest)
     commit('SET_QUEST_ALARMS', quest)
+  },
+
+  async updateQuestAlarms ({dispatch, state}, {id}) {
+    await UserApi.requestQuestAlert(
+      id,
+      async (res) => {
+        if (res.data !== 'NOT_FOUND') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          await dispatch('setQuestAlarms', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
   },
 
   setMileage({commit}, mileage) {
     commit('SET_MILEAGE', mileage)
-  }
+  },
+
+  setRecentSearch({commit}, recent) {
+    commit('SET_RECENT_SEARCH', recent)
+  },
+
+  setSearchResult({commit}, result) {
+    commit('SET_SEARCH_RESULT', result)
+  },
 
 }
 

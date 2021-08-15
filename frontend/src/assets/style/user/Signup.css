@@ -1,3 +1,8 @@
+#signup .back-button {
+  display: flex;
+  margin-top: 10px;
+}
+
 
 .user-input {
   width: 80%;

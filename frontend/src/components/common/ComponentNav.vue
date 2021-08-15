@@ -47,8 +47,10 @@ export default {
   position: fixed;
   left: 0;
   width: 100vw;
-  z-index: 5;
+  z-index: 3;
   background: white;
+  top: 60px;
+  border-bottom: 1px solid #e4e6e9;
 }
 
 .material-icons.color292929 {

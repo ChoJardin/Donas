@@ -14,6 +14,17 @@
         <div >{{donationAmount}}원이 자동 기부 됩니다.</div>
     </div>
 
+      <div id="cashout-donation">
+        <div> 후원 단체 </div>
+        <select v-model="charityId" id="cashout-charity">
+          <option v-for="charity in charityList" :key="charity.id" :value="charity.id">
+            {{charity.name}}
+          </option>
+        </select>
+      </div>
+
+
+
 
     <div class="cashout-info">
       <div class="cashout-input-label" style="text-align: left">출금 정보</div>
@@ -48,30 +59,49 @@ export default {
       name:'',
       bank: '',
       account:'',
+      charityId:'',
     }
   },
   //methods
   methods: {
     confirmPage () {
+      let donationData = {
+        userId: this.loginUser.id,
+        userName: this.name,
+        amount:parseInt(this.donationAmount),
+        charityId: this.charityId
+      }
+      console.log(donationData)
+      MileagesApi.createDonationRequest(
+          donationData,
+          res => {
+            console.log(res)
+          },
+          err => {
+            console.log(err)
+          }
+      )
+      console.log('cashout')
       let data = {
         userId: this.loginUser.id,
         bank: this.bank,
         accountNum: this.account,
         amount:parseInt(this.refundAmount),
-        userName: this.name
+        userName: this.name,
       }
 
       MileagesApi.createCashOutRequest(
           data,
           res => {
             console.log(res)
+            data.cashout = '1'
+            console.log(data)
             this.$router.push({name: 'CashOutResult', params: data})
           },
           err => {
             console.log(err)
           }
       )
-
     }
   },
   //computed
@@ -85,6 +115,7 @@ export default {
     },
     ...mapState({
       loginUser: state => state.user.loginUser,
+      charityList: state => state.mileages.charityList,
     })
   },
 
@@ -109,10 +140,24 @@ export default {
   align-items: center;
 }
 
+#cashout-donation {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  margin: 7px 0px 15px 0px;
+  border-bottom: rgba(41, 41, 41, 0.40) dotted;
+}
+
 .donation-amount{
   text-align: right;
   font-size: 0.8em;
   color: #183a1d;
+}
+
+#cashout-charity{
+  display: flex;
+  border: black solid 1px;
+  font-size: 0.8em;
 }
 
 .cashout-input-label{

@@ -3,48 +3,51 @@
     <ComponentNav
       @on-arrow="$router.back()"
       title="퀘스트 상세"/>
+    <div id="quest-detail-main">
+      <div id="quest-detail-head">
+        <div id="flex-container">
+          <div id="quest-wrap">
+            <img id="quest-image" src="../../assets/donut1.png" alt="">
+            <div id="quest-info">
+              <div v-if="questDetail.type === 'P'" style="font-size: 0.7em">개인 퀘스트</div>
+              <div v-else-if="questDetail.type === 'G'" style="font-size: 0.7em">공동 퀘스트</div>
+              <div v-else-if="questDetail.type === 'R'" style="font-size: 0.7em">릴레이 퀘스트</div>
+              <div id="quest-detail-title" style="margin-bottom: 7px">{{ questDetail.title }}</div>
+              <div id="summary" style="padding-bottom:2px">{{ questDetail.description }}</div>
+              <div id="quest-detail-date"><span style="font-size:1.0em ">{{dateFormatted}}</span>에 시작</div>
+            </div>
+          </div>
 
-    <div id="quest-detail-head">
-      <div id="flex-container">
-        <div id="quest-wrap">
-          <img id="quest-image" src="../../assets/donut1.png" alt="">
-          <div id="quest-info">
-            <div v-if="questDetail.type === 'P'" style="font-size: 0.7em">개인 퀘스트</div>
-            <div v-else-if="questDetail.type === 'G'" style="font-size: 0.7em">공동 퀘스트</div>
-            <div v-else-if="questDetail.type === 'R'" style="font-size: 0.7em">릴레이 퀘스트</div>
-            <div id="quest-detail-title" style="margin-bottom: 7px">{{ questDetail.title }}</div>
-            <div id="summary" style="padding-bottom:2px">{{ questDetail.description }}</div>
-            <div id="quest-detail-date"><span style="font-size:1.0em ">{{dateFormatted}}</span>에 시작</div>
+
+          <div id="quest-detail-description">
+            <div>인증 방법</div>
+            <div id="quest-detail-des-text">{{ questDetail.certification }}</div>
+          </div>
+
+          <div id="quest-detail-contents">
+            <router-link :to="{name:'ParticipantsList'}" class="participants">
+              <div>참여 인원:
+    <!--          {{questDetail.users}}-->
+              <span> {{userCount}}명</span></div>
+              <div> <i class="material-icons" style="padding-top: 4px">navigate_next</i> </div>
+            </router-link>
+          </div>
+        <!--article start-->
+        <div class="quest-detail-articles">
+          <div>인증 개시글</div>
+<!--          <button v-if="isItMine==='1'" @click="$router.push('/article/create/')">인증 생성</button>-->
+          <button @click="$router.push('/article/create/')">인증 생성</button>
+<!--          <button v-else-if="isItMine==='0' && questDetail.type==='P'">참여 하기</button>-->
+        </div>
+        <div id="quest-detail-article-wrap">
+          <div class="article-image" v-for="article in articles" :key="article.id">
+            <!--article 같이 보내줘야 함...-->
+            <ArticleImage class="inner" :article="article"/>
           </div>
         </div>
+      <!--article end-->
 
-
-        <div id="quest-detail-description">
-          <div>인증 방법</div>
-          <div id="quest-detail-des-text">{{ questDetail.certification }}</div>
-        </div>
-
-        <div id="quest-detail-contents">
-          <router-link :to="{name:'ParticipantsList'}" class="participants">
-            <div>참여 인원:
-  <!--          {{questDetail.users}}-->
-            <span> {{userCount}}명</span></div>
-            <div> <i class="material-icons" style="padding-top: 4px">navigate_next</i> </div>
-          </router-link>
-        </div>
-      <!--article start-->
-      <div class="quest-detail-articles">
-        <div>인증 개시글</div>
-        <button @click="$router.push('/article/create/')">인증 생성</button>
       </div>
-      <div id="quest-detail-article-wrap">
-        <div class="article-image" v-for="article in articles" :key="article.id">
-          <!--article 같이 보내줘야 함...-->
-          <ArticleImage class="inner" :article="article"/>
-        </div>
-      </div>
-    <!--article end-->
-
     </div>
   </div>
   </div>
@@ -87,8 +90,20 @@ export default {
       userCount: function () {
         return this.questDetail.users.length
       }
-    })
-  },
+    }),
+    isItMine: function () {
+      const username = this.loginUser.nickname
+      this.questDetail.users.filter(function (user){
+        if (user.nickname === username)
+          return 1
+      // return this.questDetail.users.filter(function (user){
+      //   if (user.nickname === username)
+      //     console.log('yes')
+      }
+      )
+      return 1
+    },
+    },
     created() {
       const data = {questId:this.questId, myId: this.loginUser.id}
       QuestApi.requestQuestDetail(
@@ -107,6 +122,10 @@ export default {
 </script>
 
 <style scoped>
+#quest-detail-main{
+  margin-top: 60px;
+}
+
 #flex-container {
   display: flex;
   flex-direction: column;

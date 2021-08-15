@@ -1,6 +1,8 @@
 <template>
   <div class="overlay">
-    <componentNav
+    <div id="heart-list">
+
+    <componentNav style="z-index: 5"
         @on-arrow="$emit('on-click')"
         title="좋아요"/>
 
@@ -8,6 +10,7 @@
         v-for="(likeUser, idx) in likeList" :key="idx"
         :profile="likeUser"/>
 
+    </div>
   </div>
 </template>
 
@@ -44,6 +47,11 @@ export default {
 </script>
 
 <style scoped>
+#heart-list {
+  position: absolute;
+  top: 60px;
+  width: 100%;
+}
 
 #profile-edit-password {
   margin-top: 25px;

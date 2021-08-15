@@ -4,6 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--pwa-->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png">
+    <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png">
     <!--favicon-->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/public/img/icons/apple-touch-icon.png">
@@ -62,6 +68,45 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+
+<!--    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>-->
+<!--    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-messaging.js"></script>-->
+
+<!--    <script>-->
+<!--      // import firebase from "firebase/app";-->
+<!--      // import "firebase/messaging";-->
+<!--  // Retrieve Firebase Messaging object.-->
+
+<!--      const config = {-->
+<!--      apiKey: "AIzaSyAlkz45CmAwsU4sJhmjJjAoqHUWPMka8oE",-->
+<!--      authDomain: "donas-d47d8.firebaseapp.com",-->
+<!--      databaseURL: "https://donas-d47d8-default-rtdb.asia-southeast1.firebasedatabase.app",-->
+<!--      projectId: "donas-d47d8",-->
+<!--      storageBucket: "donas-d47d8.appspot.com",-->
+<!--      messagingSenderId: "635702943991",-->
+<!--      appId: "1:635702943991:web:ea99975d129734b24ef3f2",-->
+<!--      measurementId: "G-VJ7XLPCD90"-->
+<!--      };-->
+<!--      firebase.initializeApp(config);-->
+<!--  const messaging = firebase.messaging();-->
+
+<!--  // IDs of divs that display registration token UI or request permission UI.-->
+
+
+
+<!--messaging.onMessage(function(payload){-->
+<!--        // console.log('onMessage: ', payload);-->
+<!--        var title = "고라니 서비스";-->
+<!--        var options = {-->
+<!--                body: payload.notification.body-->
+
+<!--        };-->
+<!--        var notification = new Notification(title,options);-->
+<!--});-->
+
+<!--  </script>-->
     <!-- built files will be auto injected -->
+  <!-- 카카오 로그인 -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   </body>
 </html>
