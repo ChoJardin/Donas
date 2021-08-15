@@ -24,6 +24,16 @@
       {{ loginError.message }}
     </div>
 
+    <div class="login-duration">
+      <span>
+        30일간 로그인 유지하기
+      </span>
+      <label class="switch switch-primary">
+          <input id="switch1" type="checkbox" v-model="autoLogin"/>
+          <span class="switch-slider"></span>
+      </label>
+    </div>
+
     <button class="button" :disabled="!isSubmit" @click="onLogin">로 그 인</button>
 
     <!--소셜 로그인-->
@@ -63,6 +73,7 @@ import UserInput from "@/components/common/UserInput";
 import ButtonBig from "@/components/common/ButtonBig";
 import { token } from '@/services/messaging/messaging.ts';
 import KakaoLogin from "@/views/user/KakaoLogin";
+import cookies from "vue-cookies";
 
 export default {
   name: "Login",
@@ -80,6 +91,7 @@ export default {
      email: "",
      password: "",
      passwordSchema: new PV(),
+     autoLogin: false,
      error: {
        email: false,
        password: false
@@ -130,7 +142,18 @@ export default {
               } else {
                 // 로그인 성공
                 // 유저 정보 다시 불러옵니다.
+                // 자동로그인 정보 저장
+                res.data['autoLogin'] = this.autoLogin
                 this.$store.dispatch('requestLoginUserProfile', res.data)
+                // 쿠키에 유저 토큰 저장
+                if (this.autoLogin) {
+                  cookies.set('auto-login', res.data, '30d')
+                  cookies.set('alarm-token', data.token, '30d')
+                }
+                else {
+                  cookies.set('auto-login', res.data, 0)
+                  cookies.set('alarm-token', data.token, 0)
+                }
               }
             },
             err => {
@@ -235,6 +258,89 @@ export default {
   width: 65%;
   align-self: center;
 }
+
+/* 자동로그인 */
+.login-duration {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: GongGothicLight;
+  font-size: 0.8em;
+}
+
+.switch {
+    display: inline-block;
+    height: 25px;
+    position: relative;
+    width: 50px;
+}
+
+.switch > input {
+    height: 0px;
+    opacity: 0;
+    width: 0px;
+}
+
+.switch > .switch-slider {
+    -webkit-transition: .4s;
+    background-color: #ccc;
+    border-radius: 20px;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.switch > .switch-slider:before {
+    -webkit-transition: .4s;
+    background-color: white;
+    border-radius: 50%;
+    bottom: 4px;
+    content: "";
+    height: 18px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 18px;
+}
+
+.switch > input:checked + .switch-slider:before {
+    -ms-transform: translateX(24px);
+    -webkit-transform: translateX(24px);
+    transform: translateX(24px);
+}
+
+.switch.switch-off-primary > input + .switch-slider {
+  background-color: #183a1d;
+}
+
+.switch.switch-primary > input:checked + .switch-slider {
+  background-color: #183a1d;
+  box-shadow: 0 0 3px #183a1d;
+}
+
+/*.switch-label, .label-switch {*/
+/*    float: left;*/
+/*    font-weight: bold;*/
+/*    padding-top: 5px;*/
+/*}*/
+.switch-sm > .switch-slider:before {
+    height: 18px;
+    width: 18px;
+}
+.switch-sm > input:checked + .switch-slider:before {
+    -ms-transform: translateX(22px);
+    -webkit-transform: translateX(22px);
+    transform: translateX(22px);
+}
+
+
+
 
 .button {
   width: 90%;

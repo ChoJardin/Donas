@@ -1,12 +1,17 @@
 <template>
   <div class="overlay">
     <!--ProfileEdit-->
-    <div class="profile-flex-container">
+          <!--button="수정완료" @on-button="onSubmit" :disabled="disableComplete"/>-->
+    <componentNav v-if="isPasswordChange"
+        @on-arrow="onClick"
+        title="비밀번호 변경"/>
+        <!--button="저장" @on-button="onSubmit"/>-->
+    <ComponentNav v-else
+        @on-arrow="$router.back()"
+        title="프로필 정보 수정"/>
 
-      <ComponentNav
-          @on-arrow="$router.back()"
-          title="프로필 정보 수정"
-          button="수정완료" @on-button="onSubmit" :disabled="disableComplete"/>
+
+    <div class="profile-flex-container">
 
       <!--프로필 사진-->
       <div class="label-content-wrap">
@@ -74,13 +79,23 @@
               v-model="description"></textarea>
         </div>
       </div>
+      <button-big
+          class="profile-change-complete" value="수 정 완 료"
+          @on-click="onSubmit" :class="{disabled: disableComplete}"/>
       <!--description-->
 
       <!--비밀번호 변경-->
+
+      <div class="login-description">
+        <hr>
+        <span> 비밀번호 변경 </span>
+        <hr>
+      </div>
+
       <button-big
           class="profile-password-change" value="비밀번호 변경하기"
           @on-click="onClick"/>
-      <div v-if="passwordChanged">
+      <div v-if="passwordChanged" class="change-success-info">
         비밀번호가 성공적으로 변경되었습니다.
       </div>
       <transition name="pop-up">
@@ -173,11 +188,21 @@ export default {
     },
     // 수정완료
     onComplete() {
-      let data = {}
+      // let data = {}
       // 값이 수정된 경우에만 data에 추가
+      // Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
+      //     key => data[key] = this[`${key}`]
+      // )
+      let data = {
+        picture: this.loginUser.picture,
+        description: this.loginUser.description,
+        nickname: this.loginUser.nickname
+      }
+      console.log(data)
       Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
           key => data[key] = this[`${key}`]
       )
+      console.log(data)
       UserApi.updateProfile(
           this.loginUser.id,
           data,
@@ -399,9 +424,40 @@ export default {
   border: 1px solid #183a1d;
 }
 
-/* 비밀번호 변경 */
-.profile-password-change {
+/* 수정완료 */
+.profile-change-complete {
   margin-top: 20px
+}
+.profile-change-complete.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+
+.login-description{
+  width: 90%;
+  margin-left: 5%;
+  font-family: GongGothicLight;
+  font-size: 0.9em;
+  color: #183a1d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+hr {
+  display: inline-block;
+  width: calc((100% - 200px) / 2)
+}
+
+.change-success-info {
+  text-align: center;
+  font-family: GongGothicLight;
+  /*border: 1px solid #f1a64b;*/
+  background-color: #f6c453;
+
 }
 
 .pop-up-enter {

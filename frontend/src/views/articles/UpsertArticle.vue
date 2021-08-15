@@ -5,6 +5,8 @@
         @on-arrow="$router.back()"
         title="퀘스트 인증"/>
 
+    <div id="upsert-article-content">
+
     <div class="element-wrap">
       <div class="title">
         퀘스트
@@ -59,6 +61,7 @@
         class="submit-button" value="작 성 완 료"
         @click.native="onClick" :class="{disabled: disabled}"
     />
+    </div>
 
   </div>
 </template>

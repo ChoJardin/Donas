@@ -4,6 +4,7 @@ import axios from "axios";
 // const URL = 'http://localhost:8081/api'
 const URL = 'https://i5a603.p.ssafy.io:8081'
 const ROUTES = {
+  logout: '/user/signout',
   login: '/user/signin',
   loginUser: '/user/mypage/',
   checkNickname: '/user/nickname',
@@ -27,6 +28,13 @@ const ROUTES = {
   searchResult: '/search/result',
   saveSearch: '/search/add'
 
+}
+// 로그아웃
+const requestLogout = (data, callback, errorCallback) => {
+  const logoutPath = URL + ROUTES.logout
+  axios.delete(logoutPath, {data: data})
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
 }
 
 // 로그인
@@ -255,6 +263,7 @@ const saveSearch = (data, callback, errorCallback) => {
 const UserApi = {
   URL,
   ROUTES,
+  requestLogout: (data, callback, errorCallback) => requestLogout(data, callback, errorCallback),
   requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
   checkNickname: (data, callback, errorCallback) => checkNickname(data, callback, errorCallback),
   checkEmail: (data, callback, errorCallback) => checkEmail(data, callback, errorCallback),

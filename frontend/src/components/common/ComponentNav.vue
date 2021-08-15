@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 #component-nav {
   height: 50px;

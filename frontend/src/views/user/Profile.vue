@@ -21,7 +21,7 @@
       <!--기본 프로필 end-->
 
       <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="2" readonly></textarea>
-      <div v-else-if="isMine" class="info-say-hi">정보수정 페이지에서 인사말을 작성해 보세요!</div>
+      <div v-else-if="isMine" class="info-say-hi">프로필 수정 페이지에서 인사말을 작성해 보세요!</div>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
       <div class="profile-follow-wrap">
@@ -46,10 +46,11 @@
         </router-link>
 
         <!--isLoggedIn start-->
+        <!--isLoggedIn start-->
         <div v-if="this.isLoggedIn" id="profile-button">
           <!--본인 프로필-->
           <router-link to="/user/profile/edit" v-if="isMine" class="button">
-            정보수정
+            프로필 수정
           </router-link>
           <!--다른 유저 프로필-->
           <button v-else class="button" @click="onFollow">
@@ -71,7 +72,7 @@
 
     <!--article start-->
     <div id="profile-on-going-quests">
-      진행 중 퀘스트 컴포넌트
+    <OnGoingQuests></OnGoingQuests>
     </div>
 
     <div id="profile-article-wrap">
@@ -91,10 +92,12 @@
 
 <script>
 import {mapGetters, mapState} from "vuex";
+import axios from "axios";
+
+import UserApi from "@/api/UserApi";
 
 import ArticleImage from "@/components/articles/ArticleImage";
-import UserApi from "@/api/UserApi";
-import axios from "axios";
+import OnGoingQuests from "@/components/quests/OnGoingQuests";
 
 import('@/assets/style/user/Profile.css')
 
@@ -102,7 +105,8 @@ export default {
   name: "Profile",
   // components
   components: {
-    ArticleImage
+    ArticleImage,
+    OnGoingQuests
   },
   // props
   // data
@@ -145,26 +149,29 @@ export default {
           profile_owner,
           params,
           res => {
-
-            // const util = require('util')
-            // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
-            const data = res.data
-            let articles = data.articles
-            articles.forEach(article => {
-              article['makerName'] = data.nickname
-              article['makerImage'] = data.picture
-            }, articles)
-            // articles = articles.map(article => {
-            //   console.log(article)
-            // })
-            // console.log(articles)
-            this.$store.dispatch('setUserProfile', res.data)
-            this.$store.dispatch('setFeeds', articles)
+            if (res.data === 'NOT_FOUND') {
+              this.$router.push('/404')
+            } else {
+              // const util = require('util')
+              // console.log(util.inspect(res.data, {showHidden: false, depth: null}))
+              const data = res.data
+              let articles = data.articles
+              articles.forEach(article => {
+                article['makerName'] = data.nickname
+                article['makerImage'] = data.picture
+              }, articles)
+              // articles = articles.map(article => {
+              //   console.log(article)
+              // })
+              // console.log(articles)
+              this.$store.dispatch('setUserProfile', res.data)
+              this.$store.dispatch('setFeeds', articles)
+            }
           },
           // 요청 실패하는 경우 -> 에러 페이지로 연결
           err => {
-            console.log(err)
-            // this.$router.push('/error')
+            // console.log(err)
+            this.$router.push('/error')
           }
       )
     }
@@ -199,8 +206,8 @@ export default {
   },
   // lifecycle hook
   created() {
-    if (!this.isLoggedIn) {
-      // this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+    if (!this.isLoggedIn && this.$route.params.nickname === 'undefined') {
+      this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
       return
     }
     // 페이지 로딩시 초기 정보 요청
@@ -209,6 +216,13 @@ export default {
     console.log('생성인가 ')
   },
   // navigation guard
+  beforeRouteEnter(to, from, next) {
+    if (to.params.nickname === 'profileundefined') {
+      next(vm => vm.$router.push(`/user/profile${vm.$store.state.user.loginUser.nickname}`))
+    } else {
+      next()
+    }
+  }
 }
 </script>
 

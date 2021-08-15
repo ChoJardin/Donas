@@ -185,7 +185,7 @@ export default {
 }
 
 .article-image {
-  border: 1px solid olivedrab;
+  /*border: 1px solid olivedrab;*/
   width: 33.3333%;
   position: relative;
 }

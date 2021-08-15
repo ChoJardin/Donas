@@ -1,7 +1,13 @@
 <template>
   <div>
+    <ComponentNav title="친구 게시글 보기" @on-arrow="$router.back()"></ComponentNav>
+
     <!--article start-->
     <div id="feed-article-wrap">
+      <div v-if="!articles.length" class="info">
+        아직 팔로우하는 친구가 없거나, <br/>
+        친구가 게시글을 작성하지 않았어요!
+      </div>
       <div class="feed-article-image" v-for="article in articles" :key="article.id">
         <ArticleImage class="inner" :article="article"/>
       </div>
@@ -17,11 +23,13 @@
 import ArticleImage from "@/components/articles/ArticleImage";
 import {mapGetters, mapState} from "vuex";
 import ArticlesApi from "@/api/ArticlesApi";
+import ComponentNav from "@/components/common/ComponentNav";
 
 export default {
   name: 'Feed',
   components: {
-    ArticleImage
+    ArticleImage,
+    ComponentNav
   },
   computed: {
     ...mapState({
@@ -56,9 +64,15 @@ export default {
 
 <style scoped>
 #feed-article-wrap {
+  margin-top: 70px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+}
+
+#feed-article-wrap .info {
+  margin: auto;
+  font-family: GongGothicLight;
 }
 
 .feed-article-image {

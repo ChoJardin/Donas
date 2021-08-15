@@ -109,7 +109,9 @@ const mutations = {
   LOGOUT(state) {
     state.loginUser = ''
     state.userId = ''
+    cookies.remove('auto-login')
     cookies.remove('login-user')
+    cookies.remove('alarm-token')
   },
   // 선택된 유저의 프로필 정보 저장 -> 프로필 페이지
   SET_SELECTED_USER_PROFILE(state, profile) {
@@ -202,7 +204,7 @@ const actions = {
   // 로그인된 유저 정보 저장
   setLoginUser({commit}, profile) {
     commit('SET_LOGIN_USER', profile)
-    cookies.set('login-user', profile, '2d')
+    cookies.set('login-user', profile, 0)
   },
 
   // 로그아웃
