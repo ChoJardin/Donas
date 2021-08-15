@@ -36,6 +36,7 @@ import Donation from "@/components/mileages/Donation";
 import CharityDetail from "../components/mileages/CharityDetail";
 import CashOut from "@/components/mileages/CashOut";
 import CashOutResult from "@/components/mileages/CashOutResult"
+import MileageReceipt from "../components/mileages/MileageReceipt";
 
 // 프로필
 import Profile from "@/views/user/Profile";
@@ -120,10 +121,13 @@ const routes = [
     children: [
       {path: '', name: 'Donation', component: Donation},
       {path: 'cashout', name: 'CashOut', component: CashOut},
-      {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }}
+      {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }},
     ]
   },
+  {path: '/user/mileage/usage', name: 'MileageReceipt', component: MileageReceipt},
+
   {path: '/charity/:id', name: 'CharityDetail', component: CharityDetail},
+
 
   // 프로필
   // {path: '/user/profile/', redirect: '/login'},

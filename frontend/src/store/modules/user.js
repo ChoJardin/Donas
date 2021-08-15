@@ -2,6 +2,7 @@ import cookies from 'vue-cookies'
 import UserApi from "@/api/UserApi";
 // import axios from 'axios'
 import router from '@/router'
+import moment from "moment";
 
 const state ={
   loginUser: {
@@ -98,6 +99,12 @@ const getters = {
   isLoggedIn(state) {
     return !!state.loginUser.nickname
   },
+  // newQuestAlarm(state) {
+  //   return state.questAlarms.some(function(element){ if(element.confirm === '1') {return true}})
+  // },
+  // newCommonAlarm: state => {
+  //    return state.commonAlarms.some(function(element){ if(element.confirm === '1') {return true}})
+  // }
 
 }
 

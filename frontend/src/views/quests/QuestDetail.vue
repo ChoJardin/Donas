@@ -7,7 +7,8 @@
       <div id="quest-detail-head">
         <div id="flex-container">
           <div id="quest-wrap">
-            <img id="quest-image" src="../../assets/donut1.png" alt="">
+            <img v-if="questDetail.picture" class="quest-image" :src="questDetail.picture" alt="">
+          <img v-else class="quest-image" src="../../assets/donut_flag.png">
             <div id="quest-info">
               <div v-if="questDetail.type === 'P'" style="font-size: 0.7em">개인 퀘스트</div>
               <div v-else-if="questDetail.type === 'G'" style="font-size: 0.7em">공동 퀘스트</div>
@@ -176,11 +177,12 @@ export default {
   padding-bottom: 10px;
 }
 
-#quest-image {
+.quest-image {
   width: 100px;
   flex: 1 1 0;
   border: rgba(41, 41, 41, 0.2) solid;
   border-radius: 50%;
+  height: 100px;
 }
 
 #quest-info {
