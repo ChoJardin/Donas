@@ -12,8 +12,8 @@ import com.ssafy.donas.domain.quest.Quest;
 
 @Repository
 public interface ArticleRepo extends JpaRepository<Article, Long>{
-	List<Article> findArticleByQuest(Quest quest);
+	List<Article> findArticleByQuestByIdDesc(Quest quest);
 	List<Article> findArticleByUserOrderByIdDesc(User user);
 	List<Article> findTop5ByUserOrderByCreatedAt(User user);
-	List<Article> findArticleByUserAndType(User user, String type);
+	List<Article> findArticleByUserAndTypeByIdDesc(User user, String type);
 }
