@@ -27,7 +27,7 @@ import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.request.AddArticleRequest;
 import com.ssafy.donas.request.UpdateArticleRequest;
 import com.ssafy.donas.response.ArticleResponse;
-import com.ssafy.donas.response.ArticleSortResponse;
+import com.ssafy.donas.response.ArticleShortResponse;
 import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.UserService;
@@ -57,14 +57,17 @@ public class ArticleController {
 		
 		if ("".equals(article.getContent()))
 			return HttpStatus.NO_CONTENT;
-		ArticleSortResponse result = new ArticleSortResponse();
+		ArticleShortResponse result = new ArticleShortResponse();
 		Article arti = articleService.add(userService.getUser(article.getUserId()), questService.getQuestById(article.getQuestId()), article.getImage(), article.getContent(), article.getType());
-		result.id = arti.getId();
+		result.articleId = arti.getId();
 		result.content = arti.getContent();
 		result.image = arti.getImage();
 		result.questId = arti.getQuest().getId();
 		result.type = arti.getType();
-		result.questTitle = arti.getQuest().getTitle();
+		result.createAt = arti.getCreatedAt();
+		result.updateAte = arti.getUpdatedAt();
+		result.commentCnt = arti.getComments().size();
+		result.likeCnt = arti.getLikes().size();
 		
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
