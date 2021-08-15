@@ -5,7 +5,7 @@ import router from '@/router'
 
 const state ={
   loginUser: {
-    id: '',
+    id: 0,
     nickname: undefined,
     picture: '',
     description: '',

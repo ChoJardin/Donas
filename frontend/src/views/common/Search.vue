@@ -139,8 +139,7 @@ export default {
     // this.setProfile()
     // console.log('생성인가 ')
   },
-  updated() {
-  }
+
 
 }
 </script>
