@@ -25,7 +25,9 @@
           </div>
 <!--        <router-link :to="`/quest/${article.questId}`" id="single-article-quest">참여 퀘스트: {{article.questTitle}}</router-link>-->
         <a id="single-article-quest" @click.prevent=setQuestId(article.questId)>
-          <span></span>
+          <span v-if="article.type === 'P'">개인</span>
+          <span v-else-if="article.type === 'G'">공동</span>
+          <span v-else >릴레이</span>
           {{article.questTitle}}
         </a>
           <div v-html="parsedDescription" id="single-article-article-content"/>

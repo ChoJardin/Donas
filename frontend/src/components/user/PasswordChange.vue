@@ -1,10 +1,10 @@
 <template>
   <div class="overlay">
 
-    <componentNav
-        @on-arrow="$emit('on-click')"
-        title="비밀번호 변경"
-        button="저장" @on-button="onSubmit"/>
+    <!--<componentNav id="nav-password-change"-->
+    <!--    @on-arrow="$emit('on-click')"-->
+    <!--    title="비밀번호 변경"-->
+    <!--    button="저장" @on-button="onSubmit"/>-->
 
     <div id="profile-edit-password">
       <UserInput class="user-input"
@@ -21,6 +21,10 @@
           id="new-password-confirm" label="비밀번호<br/>확인" placeholder="새로운 비밀번호를 다시 입력하세요" type="password"
           :input.sync="newPasswordConfirm" :error="error.newPasswordConfirm"
           @keyup-enter="onSubmit" ref="newPasswordConfirm"/>
+
+      <ButtonBig value="새로운 비밀번호 저장" @click.native="onSubmit"/>
+
+
     </div>
 
   </div>
@@ -32,13 +36,16 @@ import PV from 'password-validator'
 import UserApi from "../../api/UserApi";
 import ComponentNav from "../common/ComponentNav";
 import UserInput from "../common/UserInput";
+import ButtonBig from "@/components/common/ButtonBig";
 
 export default {
   name: "PasswordChange",
   // components
   components: {
-    ComponentNav,
+    ButtonBig,
+    // ComponentNav,
     UserInput,
+
   },
   // props
   props: {
@@ -144,6 +151,11 @@ export default {
 </script>
 
 <style scoped>
+/*#nav-password-change {*/
+/*  z-index: 999999 !important;*/
+/*}*/
+
+
 .overlay {
   position: fixed;
   top: 60px;
@@ -155,7 +167,7 @@ export default {
 }
 
 #profile-edit-password {
-  margin-top: 25px;
+  margin-top: 85px;
   width: 90%;
   margin-left: 5%;
 }

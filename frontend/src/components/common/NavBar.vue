@@ -32,6 +32,8 @@
 
 <script>
 import {mapGetters, mapState} from "vuex";
+import UserApi from "@/api/UserApi";
+import cookies from "vue-cookies";
 
 export default {
   name: "navBar",
@@ -41,8 +43,18 @@ export default {
   // methods
   methods: {
     onLogout() {
-      this.$store.dispatch('logout')
-      this.$router.push('/main')
+      const data = {
+        userId: this.id,
+        token: cookies.get('alarm-token')
+      }
+      UserApi.requestLogout(
+          data,
+          res => {
+            this.$store.dispatch('logout')
+            this.$router.push('/main')
+          },
+          err => this.$router.push('/error')
+      )
     },
   },
   // computed
@@ -88,7 +100,7 @@ export default {
   color: black;
   font-family: 'GongGothicLight';
   /*color: white;*/
-  padding: 3px;
+  padding: 2px 3px;
   height: 28px;
   text-align: center;
   text-decoration: none;
@@ -98,7 +110,7 @@ export default {
   cursor: pointer;
   transition-duration: 0.4s;
   border: 2px #f0a04b solid;
-  border-radius: 10px;
+  border-radius: 8px;
   /*display: inline-block;*/
 }
 
@@ -138,8 +150,8 @@ export default {
 }
 .notification .badge {
   position: absolute;
-  top: 7px;
-  right: 8px;
+  top: 5px;
+  right: 5px;
   color: red;
 }
 

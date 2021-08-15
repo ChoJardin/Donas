@@ -81,6 +81,14 @@
     text-align: start;
 }
 
+#single-article-quest span {
+    background-color: #f6c453;
+    font-size: 0.5em;
+    font-family: GongGothicLight;
+    padding: 2px;
+    border-radius: 5px;
+}
+
 #single-article-picture {
     /*border-bottom: 1px solid #f0a04b;*/
 }
