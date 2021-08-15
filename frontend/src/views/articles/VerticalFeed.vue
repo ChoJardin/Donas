@@ -57,6 +57,12 @@ export default {
     })
   },
   // navigation guard
+  beforeRouteEnter(to, from, next) {
+    if (from.name === 'UpsertArticle') {
+      console.log('여기는 왔냐?')
+      next(vm => vm.$router.push(`/article/${vm.$route.query.id}`))
+    } else next()
+  }
 }
 </script>
 

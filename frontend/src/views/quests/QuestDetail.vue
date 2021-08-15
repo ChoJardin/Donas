@@ -36,7 +36,7 @@
         <div class="quest-detail-articles">
           <div>인증 개시글</div>
 <!--          <button v-if="isItMine==='1'" @click="$router.push('/article/create/')">인증 생성</button>-->
-          <button @click="$router.push('/article/create/')">인증 생성</button>
+          <button @click="onCreate">인증 생성</button>
 <!--          <button v-else-if="isItMine==='0' && questDetail.type==='P'">참여 하기</button>-->
         </div>
         <div id="quest-detail-article-wrap">
@@ -69,6 +69,12 @@ export default {
    // props
   // data
   // methods
+  methods: {
+    onCreate() {
+      this.$store.dispatch('setSelectedId', 0)
+      this.$router.push('/article/create/')
+    }
+  },
   // computed
   computed: {
     articles() {
