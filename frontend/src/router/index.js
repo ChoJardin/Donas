@@ -70,6 +70,7 @@ import SignInUp from "@/views/user/SignInUp";
 Vue.use(VueRouter)
 
 const routes = [
+  {path: '/index.html', component: Main, alias: '/'},
   // 메인
   {path: '', redirect: '/main'},
   {path: '/main', name: 'Main', component: Main},

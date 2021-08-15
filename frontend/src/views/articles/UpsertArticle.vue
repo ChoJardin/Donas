@@ -130,10 +130,10 @@ export default {
     // aws 요청 보내고 기다리기
     async onCreate() {
       this.picture = await this.$refs.aws.uploadFile()
-      this.onSubmit().then(this.isSaved = true )
+      this.onSubmit()
     },
     // 서버로 요청 보내기
-    async onSubmit () {
+    onSubmit () {
       const data = {
         userId: this.loginUser.id,
         questId: this.quest.id,
@@ -141,7 +141,7 @@ export default {
         content: this.content,
         type: this.quest.type,
       }
-      await ArticlesApi.createArticle(
+      ArticlesApi.createArticle(
           data,
           res => {
             if (res.data !== 'NOT_FOUND') {
@@ -151,31 +151,33 @@ export default {
               this.savedArticle.isLike = false
               this.savedArticle.heartCnt = 0
               this.savedArticle.commentCnt = 0
-              console.log('아직 데이터 저장 중')
-              console.log(this.savedArticle)
-              this.$store.dispatch('setSelectedArticle', this.savedArticle)
+              // this.$store.dispatch('setSelectedArticle', this.savedArticle)
+              this.$store.dispatch('addNewArticle', this.savedArticle)
               this.$store.dispatch('setSelectedId', this.savedArticle.id)
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
       )
     },
-    async onEdit() {
+    // 수정
+    onEdit() {
       const data = {
         articleId: this.selectedArticle.id,
         content: this.content
       }
-      await ArticlesApi.editArticle(
+      ArticlesApi.editArticle(
           data,
           res => {
             console.log(res)
             if (res.data === 'OK') {
               this.savedArticle = this.selectedArticle
               this.savedArticle['content'] = this.content
+              this.$store.dispatch('replaceOldArticle', this.savedArticle)
+              this.$store.dispatch('setSelectedId', 0)
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
-      ).then(this.$store.dispatch('replaceOldArticle', this.savedArticle))
+      )
     }
 
   },
@@ -200,33 +202,22 @@ export default {
   // watch
   watch: {
     // watcher on computed
-    isSaved(v)  {
-      if (this.isUpdate) {
-        // 수정한 게시물을 피드에 반영해줍니다.
-        const replaceArticle = async () => {
-          await this.$store.dispatch('replaceOldArticle', this.savedArticle)
-        }
-        replaceArticle().then(this.$router.push({path: '/article', query: {id: this.savedArticle.id}}))
+    isArticleSelected(v) {
+      // if (this.isUpdate) {
+        this.$router.push({path: '/article', query: {id: this.savedArticle.id}})
 
-      } else  {
+      // } else  {
         // 게시글을 작성하고 저장했기 때문에 피드로 보내주겠습니다.
         // 그 전에 먼저 피드에 내 새로운 게시물을 넣어주겠어요.
-        const addArticle  = async () => {
-          await this.$store.dispatch('addNewArticle', this.savedArticle)
-        }
-        addArticle().then(this.$router.push({path: '/article', query: {id: this.savedArticle.id}}))
-        // this.$router.push(`/articles/${this.savedArticle.id}`)
-      }
+        // this.$store.dispatch('addNewArticle', this.savedArticle)
+        // }
+        // setTimeout(() => {
+          this.$router.push({path: '/article', query: {id: this.savedArticle.id}})
+    // }
+            // , 100)
     }
-
   },
   // lifecycle hook
-  created() {
-    // 혹시 있을지도 모르는 selectedArticle 값을 초기화
-    if (this.isArticleSelected) {
-      this.$store.dispatch('setSelectedId', undefined)
-    }
-  },
   // navigation guard
   beforeRouteEnter: (to, from, next) => {
     if (from.name === 'QuestDetail')
