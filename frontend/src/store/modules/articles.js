@@ -96,8 +96,9 @@ const state ={
 
 const getters = {
   isArticleSelected: state => {
-    return !!state.selectedId
+    return state.selectedId
   },
+
   // selectedArticle: state => {
   //   return state.feeds.find(article => article.id === Number(state.selectedId))
   // },
@@ -178,20 +179,19 @@ const actions = {
     commit('SET_LIKE_LIST', likeList)
   },
   // 작성한 게시글 피드에 추가
-  async addNewArticle({commit, state}, article) {
+  addNewArticle({commit, state}, article) {
     const articles = [article, ...state.feeds]
-    await commit('ADD_NEW_ARTICLE', articles)
+    commit('SET_SELECTED_ARTICLE', article)
+    commit('ADD_NEW_ARTICLE', articles)
   },
   // 수정한 게시물 교체
-  async replaceOldArticle({commit, state}, {id, content}) {
+  replaceOldArticle({commit, state}, {id, content}) {
     const articles = state.feeds
     articles.forEach(article => {
       if (article['id'] === id)
         article['content'] = content
     }, articles)
-    await commit('SET_FEEDS', articles)
-    // console.log('durl dhsl? ')
-    // router.push({path: '/article', query: {id: id}})
+    commit('SET_FEEDS', articles)
   },
   // 좋아요
   setLike({commit, state}, {isLike, articleId}) {

@@ -5,7 +5,7 @@ import router from '@/router'
 
 const state ={
   loginUser: {
-    id: '',
+    id: 0,
     nickname: undefined,
     picture: '',
     description: '',
@@ -84,6 +84,13 @@ const state ={
     description: '',
   }],
 
+  autoResult: [{
+    id: '',
+    nickname: undefined,
+    picture: '',
+    description: '',
+  }],
+
 }
 
 
@@ -145,6 +152,10 @@ const mutations = {
 
   SET_SEARCH_RESULT(state, result) {
     state.searchResult = result
+  },
+
+  SET_AUTO_RESULT(state, result) {
+    state.autoResult = result
   }
 }
 
@@ -267,6 +278,10 @@ const actions = {
 
   setSearchResult({commit}, result) {
     commit('SET_SEARCH_RESULT', result)
+  },
+
+  setAutoResult({commit}, auto) {
+    commit('SET_AUTO_RESULT', auto)
   },
 
 }
