@@ -31,7 +31,7 @@ public class CashService {
 	}
 	
 	public boolean changeCash(long userId,LocalDateTime changeTime, String name, long amount, String accountNum, String bank) {		
-		if(cashRepo.save(new Cash(amount,changeTime,name,userRepo.getById(userId),accountNum,bank)) == null)
+		if(cashRepo.save(new Cash(amount,changeTime.plusHours(9),name,userRepo.getById(userId),accountNum,bank)) == null)
 			return false;
 		return true;
 	}
