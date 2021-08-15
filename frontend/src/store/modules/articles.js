@@ -133,9 +133,9 @@ const mutations = {
     state.commentList = commentList
   },
   // 작성한 게시글 피드에 추가
-  ADD_NEW_ARTICLE(state, articles) {
-    state.feeds = articles
-  },
+  // ADD_NEW_ARTICLE(state, articles) {
+  //   state.feeds = articles
+  // },
   // 좋아요
   ADD_LIKE(state, idx) {
     state.feeds[idx].like = true
@@ -180,9 +180,10 @@ const actions = {
   },
   // 작성한 게시글 피드에 추가
   addNewArticle({commit, state}, article) {
-    const articles = [article, ...state.feeds]
+    // const articles = [article, ...state.feeds]
+    const articles = [article].concat(state.feeds)
     commit('SET_SELECTED_ARTICLE', article)
-    commit('ADD_NEW_ARTICLE', articles)
+    commit('SET_FEEDS', articles)
   },
   // 수정한 게시물 교체
   replaceOldArticle({commit, state}, {id, content}) {
