@@ -145,12 +145,14 @@ export default {
           data,
           res => {
             if (res.data !== 'NOT_FOUND') {
+              console.log(res.data)
               this.savedArticle = res.data
-              this.savedArticle['makerName'] = this.loginUser.nickname
+              this.savedArticle.makerName = this.loginUser.nickname
               this.savedArticle.makerImage = this.loginUser.picture
               this.savedArticle.isLike = false
               this.savedArticle.heartCnt = 0
               this.savedArticle.commentCnt = 0
+              this.savedArticle.createdAt = this.savedArticle.createAt
               // this.$store.dispatch('setSelectedArticle', this.savedArticle)
               this.$store.dispatch('addNewArticle', this.savedArticle)
               this.$store.dispatch('setSelectedId', this.savedArticle.id)
@@ -168,7 +170,6 @@ export default {
       ArticlesApi.editArticle(
           data,
           res => {
-            console.log(res)
             if (res.data === 'OK') {
               this.savedArticle = this.selectedArticle
               this.savedArticle['content'] = this.content
