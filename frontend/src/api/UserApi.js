@@ -18,7 +18,7 @@ const ROUTES = {
 
   commonAlerts: '/alarm/',
   questAlerts: '/alarm/quest/',
-  alertStatus:'/alarm',
+  alertStatus: '/alarm',
   answerAlert: '/alarm/group',
   // declineAlert: '/alarm/group',
 
@@ -26,7 +26,7 @@ const ROUTES = {
 }
 
 // 로그인
-const requestLogin = (data,callback,errorCallback) => {
+const requestLogin = (data, callback, errorCallback) => {
   const path = URL + ROUTES.login
   axios.post(path, data)
     .then(res => callback(res))
@@ -42,7 +42,7 @@ const requestLogin = (data,callback,errorCallback) => {
 //     .catch(err => errorcallback(err))
 // }
 
-const requestLoginUser =(id, callback, errorCallback) => {
+const requestLoginUser = (id, callback, errorCallback) => {
   const requestLoginUserPath = URL + ROUTES.loginUser + id
   axios.get(requestLoginUserPath)
     .then(res => callback(res))
@@ -52,7 +52,7 @@ const requestLoginUser =(id, callback, errorCallback) => {
 // 닉네임 중복 확인
 const checkNickname = (params, callback, errorCallback) => {
   const checkNicknamePath = URL + ROUTES.checkNickname
-  axios.get(checkNicknamePath, {params: params})
+  axios.get(checkNicknamePath, { params: params })
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -60,7 +60,7 @@ const checkNickname = (params, callback, errorCallback) => {
 // 이메일 중복 확인
 const checkEmail = (params, callback, errorCallback) => {
   const checkEmailPath = URL + ROUTES.checkEmail
-  axios.get(checkEmailPath, {params: params})
+  axios.get(checkEmailPath, { params: params })
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -76,7 +76,7 @@ const requestSignup = (data, callback, errorCallback) => {
 // 프로필 정보 요청
 const requestProfileInfo = (nickname, params, callback, errorCallback) => {
   const profileInfoPath = URL + ROUTES.profileInfo + nickname
-  axios.get(profileInfoPath, {params: params})
+  axios.get(profileInfoPath, { params: params })
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -101,7 +101,7 @@ const updatePassword = (data, callback, errorcallback) => {
 // 팔로워 리스트
 const requestFollowers = (params, callback, errorCallback) => {
   const followerListPath = URL + ROUTES.followers
-  axios.get(followerListPath, {params: params})
+  axios.get(followerListPath, { params: params })
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -109,7 +109,7 @@ const requestFollowers = (params, callback, errorCallback) => {
 // 팔로잉 리스트
 const requestFollowings = (params, callback, errorCallback) => {
   const followingListPath = URL + ROUTES.followings
-  axios.get(followingListPath, {params: params})
+  axios.get(followingListPath, { params: params })
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -122,7 +122,7 @@ const requestFollow = (isPost, data, callback, errorCallback) => {
       .then(res => callback(res))
       .catch(err => errorCallback(err))
   } else {
-    axios.delete(followPath, {params: data})
+    axios.delete(followPath, { params: data })
       .then(res => callback(res))
       .catch(err => errorCallback(err))
   }
@@ -158,14 +158,14 @@ const acceptAlert = (data, callback, errorCallback) => {
     .then(res => {
       callback(res)
     })
-    .catch(err=> {
+    .catch(err => {
       errorCallback(err)
     })
 }
 
-const declineAlert = (data,callback, errorCallback) => {
+const declineAlert = (data, callback, errorCallback) => {
   const declineAlertPath = URL + ROUTES.answerAlert
-  axios.patch(declineAlertPath, null, {params: data})
+  axios.patch(declineAlertPath, null, { params: data })
     .then(res => {
       callback(res)
     })
@@ -179,23 +179,23 @@ const declineAlert = (data,callback, errorCallback) => {
 const UserApi = {
   URL,
   ROUTES,
-  requestLogin:(data, callback, errorCallback)=>requestLogin(data, callback, errorCallback),
-  checkNickname:(data, callback, errorCallback)=>checkNickname(data, callback, errorCallback),
-  checkEmail:(data, callback, errorCallback)=>checkEmail(data, callback, errorCallback),
-  requestSignup:(data, callback, errorCallback)=>requestSignup(data, callback, errorCallback),
-  requestProfileInfo:(data, params, callback, errorCallback)=>requestProfileInfo(data, params, callback, errorCallback),
-  requestFollowers:(data, callback, errorCallback)=>requestFollowers(data, callback, errorCallback),
-  requestFollowings:(data, callback, errorCallback)=>requestFollowings(data, callback, errorCallback),
-  requestFollow:(isPost, data, callback, errorCallback)=>requestFollow(isPost, data, callback, errorCallback),
-  requestLoginUser:(id, callback, errorCallback)=>requestLoginUser(id, callback, errorCallback),
+  requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
+  checkNickname: (data, callback, errorCallback) => checkNickname(data, callback, errorCallback),
+  checkEmail: (data, callback, errorCallback) => checkEmail(data, callback, errorCallback),
+  requestSignup: (data, callback, errorCallback) => requestSignup(data, callback, errorCallback),
+  requestProfileInfo: (data, params, callback, errorCallback) => requestProfileInfo(data, params, callback, errorCallback),
+  requestFollowers: (data, callback, errorCallback) => requestFollowers(data, callback, errorCallback),
+  requestFollowings: (data, callback, errorCallback) => requestFollowings(data, callback, errorCallback),
+  requestFollow: (isPost, data, callback, errorCallback) => requestFollow(isPost, data, callback, errorCallback),
+  requestLoginUser: (id, callback, errorCallback) => requestLoginUser(id, callback, errorCallback),
   // requestLoginUser:(id)=>requestLoginUser(id),
-  updateProfile:(id, data, callback, errorCallback)=>updateProfile(id, data, callback, errorCallback),
-  updatePassword:(data, callback, errorCallback)=>updatePassword(data, callback, errorCallback),
+  updateProfile: (id, data, callback, errorCallback) => updateProfile(id, data, callback, errorCallback),
+  updatePassword: (data, callback, errorCallback) => updatePassword(data, callback, errorCallback),
 
-  requestCommonAlert:(data, callback, errorCallback) => requestCommonAlert(data,callback, errorCallback),
-  requestQuestAlert:(data, callback, errorCallback) => requestQuestAlert(data,callback, errorCallback),
-  updateAlertStatus:(data, callback, errorCallback) => updateAlertStatus(data,callback, errorCallback),
-  acceptAlert: (data, callback, errorCallback) => acceptAlert(data,callback, errorCallback),
+  requestCommonAlert: (data, callback, errorCallback) => requestCommonAlert(data, callback, errorCallback),
+  requestQuestAlert: (data, callback, errorCallback) => requestQuestAlert(data, callback, errorCallback),
+  updateAlertStatus: (data, callback, errorCallback) => updateAlertStatus(data, callback, errorCallback),
+  acceptAlert: (data, callback, errorCallback) => acceptAlert(data, callback, errorCallback),
   declineAlert: (params, callback, errorCallback) => declineAlert(params, callback, errorCallback),
 
 
