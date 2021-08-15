@@ -41,7 +41,30 @@ const state ={
 
     bankList: ['KB국민은행', '신한은행', '우리은행', '하나은행', 'KDB산업은행', 'IBK기업은행',
     'NH농협은행', '수협은행', '대구은행', '부산은행',' 경남은행',' 광주은행', '전북은행',
-    '제주은행', '카카오뱅크']
+    '제주은행', '카카오뱅크'],
+
+    usageDonation: {
+        total: 0,
+        donationList: [{
+            id: 0,
+            time: '',
+            charityName: '',
+            name: '',
+            amount: 0
+    }]
+    },
+
+    usageCash: {
+        total: 0,
+        cashList: [{
+            id: 0,
+            time: '',
+            charityName: '',
+            name: '',
+            amount: 0,
+            bank: '',
+    }]
+    }
 }
 
 const getters = {
@@ -62,7 +85,14 @@ const mutations = {
 
     SET_CHARITY_LIST(state, charityList) {
         state.charityList = charityList
-    }
+    },
+
+    SET_DONATION_USAGE(state, donation) {
+        state.usageDonation = donation
+    },
+    SET_CASH_USAGE(state, cash) {
+        state.usageCash = cash
+    },
 }
 
 const actions = {
@@ -79,6 +109,16 @@ const actions = {
     setCharityList({commit}, charityList) {
         console.log(charityList)
         commit('SET_CHARITY_LIST', charityList)
+    },
+
+    setDonationUsage({commit}, donation) {
+        console.log(donation)
+        commit('SET_DONATION_USAGE', donation)
+    },
+
+    setCashUsage({commit}, cash) {
+        console.log(cash)
+        commit('SET_CASH_USAGE', cash)
     },
 }
 
