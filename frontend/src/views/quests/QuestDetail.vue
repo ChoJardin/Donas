@@ -35,8 +35,9 @@
         <!--article start-->
         <div class="quest-detail-articles">
           <div>인증 개시글</div>
-          <button v-if="isItMine===1" @click="$router.push('/article/create/')">인증 생성</button>
-          <button v-else-if="questDetail.type==='P'">참여 하기</button>
+<!--          <button v-if="isItMine==='1'" @click="$router.push('/article/create/')">인증 생성</button>-->
+          <button @click="$router.push('/article/create/')">인증 생성</button>
+<!--          <button v-else-if="isItMine==='0' && questDetail.type==='P'">참여 하기</button>-->
         </div>
         <div id="quest-detail-article-wrap">
           <div class="article-image" v-for="article in articles" :key="article.id">
@@ -92,10 +93,15 @@ export default {
     }),
     isItMine: function () {
       const username = this.loginUser.nickname
-      return this.questDetail.users.filter(function (user){
+      this.questDetail.users.filter(function (user){
         if (user.nickname === username)
           return 1
-      })
+      // return this.questDetail.users.filter(function (user){
+      //   if (user.nickname === username)
+      //     console.log('yes')
+      }
+      )
+      return 1
     },
     },
     created() {

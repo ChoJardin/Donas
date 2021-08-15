@@ -22,6 +22,10 @@ const ROUTES = {
   answerAlert: '/alarm/group',
   // declineAlert: '/alarm/group',
 
+  recentSearch: '/search/recent/',
+  searchAuto: '/search/auto',
+  searchResult: '/search/result',
+  saveSearch: '/search/add'
 
 }
 
@@ -40,6 +44,7 @@ const requestLogin = (data,callback,errorCallback) => {
 //   axios.get(requestLoginUserPath)
 //     .then(res => callback(res))
 //     .catch(err => errorcallback(err))
+
 // }
 
 const requestLoginUser =(id, callback, errorCallback) => {
@@ -204,7 +209,45 @@ const kakaoLogin = async (code) => {
 
 }
 
+const recentSearch = (id, callback, errorCallback) => {
+  const recentSearchPath = URL + ROUTES.recentSearch + id
+  axios.get(recentSearchPath)
+    .then( res => {callback(res)})
+    .catch(err => {errorCallback(err)})
+}
 
+const searchAuto = (data,callback, errorCallback) => {
+  const searchAutoPath = URL + ROUTES.searchAuto
+  axios.patch(searchAutoPath, null, {params: data})
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
+const searchResult = (data,callback, errorCallback) => {
+  const searchResultPath = URL + ROUTES.searchAuto
+  axios.patch(searchResultPath, null, {params: data})
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
+
+const saveSearch = (data,callback, errorCallback) => {
+  const saveSearchPath = URL + ROUTES.saveSearch
+  axios.patch(saveSearchPath, data)
+    .then(res => {
+      callback(res)
+    })
+    .catch(err => {
+      errorCallback(err)
+    })
+}
 
 const UserApi = {
   URL,
@@ -230,8 +273,10 @@ const UserApi = {
 
   kakaoLogin: (code) => kakaoLogin(code),
 
+  recentSearch: (id, callback, errorCallback) => recentSearch(id, callback, errorCallback),
+  searchAuto: (data, callback, errorCallback) => searchAuto(data, callback, errorCallback),
+  searchResult: (data, callback, errorCallback) => searchResult(data, callback, errorCallback),
+  saveSearch: (data, callback, errorCallback) => saveSearch(data, callback, errorCallback),
 }
-
-
 
 export default UserApi

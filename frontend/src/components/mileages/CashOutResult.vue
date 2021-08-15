@@ -6,6 +6,7 @@
       <div>기부금을 제외한 <span style="color: red">{{$route.params.amount}}</span>원이 </div>
       <div>영업일 기준 5일 이내에</div>
       <div>{{$route.params.bank}} {{$route.params.accountNum}}로 입금 될 예정입니다</div>
+<!--      <div>{{$route.params.amount}} {{$route.params.accountNum}}로 입금 될 예정입니다</div>-->
     </div>
 
     <div v-if="$route.params.cashout === '0'" class="confirm-text">
