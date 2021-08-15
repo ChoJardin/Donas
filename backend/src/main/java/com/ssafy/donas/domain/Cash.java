@@ -33,6 +33,10 @@ public class Cash {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "charity_id")
+	private Charity charity;
+	
 	@Column(nullable = false)
 	private long amount;
 	
@@ -62,9 +66,10 @@ public class Cash {
 	}
 	
 	@Builder
-	public Cash(long amount, LocalDateTime time, String name, User user, String accountNum, String bank) {
+	public Cash(long amount, Charity charity,LocalDateTime time, String name, User user, String accountNum, String bank) {
 		super();
 		this.amount = amount;
+		this.charity = charity;
 		this.time = time;
 		this.name = name;
 		this.user = user;

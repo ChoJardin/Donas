@@ -10,14 +10,20 @@ import lombok.NoArgsConstructor;
 public class CashInfo {
 	
 	private long id;
+	private String charityName;
 	private String name;
 	private String bank;
 	private long amount;
 	
-	public CashInfo(long id, String name, String bank, long amount) {
+	public CashInfo(long id, String charityName, String name, String bank, long amount) {
+		super();
 		this.id = id;
+		this.charityName = charityName;
+		this.name = name;
 		this.bank = bank;
 		this.amount = amount;
 	}
+	
+
 
 }

@@ -12,6 +12,10 @@ public class CashRequest {
 	
 	@ApiModelProperty(required = true)
 	@NotNull
+	long charityId;
+	
+	@ApiModelProperty(required = true)
+	@NotNull
 	long amount;
 	
 	@ApiModelProperty(required = true)
@@ -25,6 +29,15 @@ public class CashRequest {
 	@ApiModelProperty(required = true)
 	@NotNull
 	String bank;
+	
+
+	public long getCharityId() {
+		return charityId;
+	}
+
+	public void setCharityId(long charityId) {
+		this.charityId = charityId;
+	}
 
 	public long getUserId() {
 		return userId;
