@@ -121,7 +121,7 @@ public class QuestController {
 
 			// 참가자에게 참여 요청
 			questAlarmService.addQuestAlarm(id, groupQuest, userService.getUser(quest.getUserId()).getNickname(),
-					"[공동 퀘스트 요청] " + groupQuest.getTitle(), LocalDateTime.now());
+					"[공동 퀘스트 요청] " + groupQuest.getTitle(), LocalDateTime.now().plusHours(9));
 		}
 
 		// 퀘스트 생성자만 DB에 넣어두기 (나머지는 승락하면 넣기!)

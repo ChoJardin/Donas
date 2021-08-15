@@ -46,7 +46,7 @@ public class ArticleService {
 	}
 	
 	public Article add(User user, Quest quest, String image, String content, String type) {
-		Article article = new Article(user, quest, image, content, LocalDateTime.now(), null, type);
+		Article article = new Article(user, quest, image, content, LocalDateTime.now().plusHours(9), null, type);
 		articleRepo.save(article);
 		user.getArticles().add(article);
 		
