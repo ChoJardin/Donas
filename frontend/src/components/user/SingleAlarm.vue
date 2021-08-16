@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     dateFormatted: function (){
-      return moment(String(this.alarm.sendTime)).format('MM/DD/YYYY hh:mm')
+      return moment(String(this.alarm.sendTime)).format('MM/DD/YYYY HH:mm')
     }
   },
 

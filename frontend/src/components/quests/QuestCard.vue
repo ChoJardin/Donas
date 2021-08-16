@@ -36,11 +36,11 @@ export default {
 <style scoped>
 #quest-card {
   /*border: 1px solid #183a1d;*/
-  height: 180px;
-  width: 150px;
-  margin: 15px 10px 10px;
+  height: 200px;
+  width: 140px;
+  margin: 15px 8px 10px;
   border-radius: 17px;
-  box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
   /*background-color: #fefbe9;*/
 }
 

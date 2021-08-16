@@ -123,6 +123,10 @@ export default {
   // methods
   methods: {
     ...mapActions(['setQuestId']),
+    // 날짜 수정
+    dateFormatted(date) {
+      return moment(String(date)).format('YYYY/MM/DD hh:mm')
+    },
     // 수정/ 삭제 버튼 열기
     onClick() {
       this.openButton = !this.openButton
@@ -138,10 +142,6 @@ export default {
         await this.$store.dispatch('setQuestDetail', quest)
       }
       setQuest().then(this.$router.push('/article/edit'))
-    },
-    // 날짜 수정
-    dateFormatted(date) {
-      return moment(String(date)).format('YYYY/MM/DD hh:mm')
     },
     // 좋아요
     onLike() {

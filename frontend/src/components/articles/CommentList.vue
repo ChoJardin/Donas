@@ -111,7 +111,7 @@ export default {
     },
     // 날짜 수정
     dateFormatted() {
-      return moment(String(this.comment.updatedAt)).format('YYYY/MM/DD hh:mm')
+      return moment(String(this.comment.updatedAt)).format('YYYY/MM/DD HH:mm')
     },
   }
 }

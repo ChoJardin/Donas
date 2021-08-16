@@ -1,16 +1,43 @@
 <template>
   <div>
-    <h1>OnGoingQuests</h1>
+
+    <MyQuestInfo @click.native="setQuestId(quest.id)"
+        v-for="quest in quests" :key="quest.id" :quest="quest">
+    </MyQuestInfo>
+
   </div>
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+import moment from "moment";
 import QuestApi from "@/api/QuestApi";
-import {mapState} from "vuex";
+import MyQuestInfo from "@/components/quests/MyQuestInfo";
 
 export default {
   name: "OnGoingQuests",
-  components: {},
+  components: {
+    MyQuestInfo
+  },
+  data() {
+    return {
+      quests: [
+          {
+            id: 0,
+            title: '',
+            description: '',
+            picture: '',
+            type: "P",
+            startAt: moment(),
+            finishAt: moment(),
+            mileage: 0
+          }
+      ],
+    }
+  },
+  methods: {
+    ...mapActions(['setQuestId'])
+  },
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser
@@ -24,10 +51,12 @@ export default {
     QuestApi.requestMyQuests(
         data,
         res => {
-          // if (res.data !== 'NOT_FOUND') {
-          //
-          // }
-        }
+          if (res.data === 'NOT_FOUND') {
+            this.$router.push('/404')
+          } else
+            this.quests = res.data
+        },
+        err => console.log('/error')
     )
   }
 }
