@@ -36,7 +36,7 @@ export default {
             image: "",
             content: "",
             type: "",
-            isLike: false,
+            like: false,
             heartCnt: 0,
             commentCnt: 0,
             makerImage: null,

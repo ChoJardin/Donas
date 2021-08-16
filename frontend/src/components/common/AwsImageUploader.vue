@@ -1,10 +1,13 @@
 <template>
   <div>
-    <input
-      type="file" id="image-input" ref="imgInput"
-      accept="image/jpeg, image/png"
-      @change="handleFile"
-      >
+    <form action="">
+
+      <input
+        type="file" id="image-input" ref="imgInput"
+        accept="image/jpeg, image/png"
+        @change="handleFile"
+        >
+    </form>
 
   </div>
 </template>
@@ -27,6 +30,13 @@ export default {
     }
   },
   methods:{
+    // 업로드 취소
+    onReset() {
+      this.file = null
+      this.$emit('on-error', '')
+      this.$emit('on-preview', '')
+      this.$refs.imgInput.value = null
+    },
     // 이미지 입력창 실행
     onOpen() {
       this.$refs.imgInput.click()
