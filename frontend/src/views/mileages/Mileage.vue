@@ -7,7 +7,7 @@
         <div class="profile-info">
           <router-link to="/mileage/usage"><div id="mileage-receipt"><span id="mileage-receipt-button">사용 내역</span></div></router-link>
           <h1 class="username">{{loginUser.nickname}}님의 마일리지</h1>
-          <div class="mileage-total">{{mileage}} 마일리지</div>
+          <div class="mileage-total">{{currencyString}} 마일리지</div>
         </div>
       </div>
     </div>
@@ -63,6 +63,10 @@ export default {
       mileage: state => state.user.userMileage,
     }),
     ...mapGetters(['isLoggedIn']),
+    currencyString: function (){
+      const amount = this.mileage
+      return amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
   },
   created() {
       UserApi.requestLoginUser(
