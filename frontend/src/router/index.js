@@ -111,7 +111,7 @@ const routes = [
       ]
   },
   //퀘스트 상세
-  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail,},
+  {path: '/quests/:questId', name: 'QuestDetail', component: QuestDetail},
   {path: '/participants', name:'ParticipantsList', component: ParticipantsList},
 
 

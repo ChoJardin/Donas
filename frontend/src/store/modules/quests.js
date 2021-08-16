@@ -133,7 +133,7 @@ const mutations = {
 const actions = {
     setQuestId({commit}, questId){
         commit('SET_QUESTID', questId)
-        router.push({name:'QuestDetail', params:{questId:state.questId}})
+        router.push({name:'QuestDetail', params:{questId:questId}})
     },
 
     // 메인 페이지 퀘스트관련 초기 정보
