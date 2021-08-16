@@ -56,10 +56,11 @@ public class LikeController {
 		if(likeService.checkLike (like.getUserId(),like.getArticleId())!=-1)
 			return new ResponseEntity<>("이미 누름",HttpStatus.NOT_FOUND);	
 	
+		User sendUser = userService.getUser(like.getUserId());
 		Article article = articleService.getArticleById(like.getArticleId());
 		User receivedUser = article.getUser();
 		likeService.addLike(receivedUser, article);
-		if(!alarmService.addAlarm(receivedUser,article.getUser().getNickname(),article.getId(),sendUser.getNickname()+"님이 "+article.getQuest().getTitle()+" 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
+		if(!alarmService.addAlarm(receivedUser,sendUser.getNickname(),article.getId(),sendUser.getNickname()+"님이 "+article.getQuest().getTitle()+" 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
 			return HttpStatus.CONFLICT;
 		return HttpStatus.OK;
 	}
