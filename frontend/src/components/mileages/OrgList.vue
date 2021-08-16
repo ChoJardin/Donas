@@ -7,7 +7,7 @@
           <div id="charity-text">
             <div>
               <h1 id="charity-title">{{charity.name}}</h1>
-              <div id="charity-description">{{ charity.total }} 마일리지 모금</div></div>
+              <div id="charity-description">{{ currencyString }} 마일리지 모금</div></div>
             <div>
               <div class="charity-tag">
                 <span class="charity-set" style="margin-right: 3px">{{charity.tag}}</span>
@@ -23,11 +23,18 @@
 </template>
 
 <script>
+
 export default {
   name: "OrgList",
   props: {
     charity: Object
-  }
+  },
+  computed: {
+    currencyString: function (){
+      const amount = this.charity.total
+      return amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
 }
 </script>
 

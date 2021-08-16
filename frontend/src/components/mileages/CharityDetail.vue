@@ -23,8 +23,8 @@
 
       <div class="charity-status-label" style="font-size: 1.2em">기부 현황</div>
       <div class="charity-status" >
-        <div class="charity-amount" style="margin-bottom:5px">지난 분기 기부 마일리지: {{charity.quarter}}</div>
-        <div class="charity-amount">현재 모금 마일리지: {{charity.total}}</div>
+        <div class="charity-amount" style="margin-bottom:5px">지난 분기 기부 마일리지: {{currencyString2}}</div>
+        <div class="charity-amount">현재 모금 마일리지: {{currencyString1}}</div>
       </div>
 
       <div id="donation-form-main" v-if="isLoggedIn">
@@ -110,6 +110,16 @@ export default {
       loginUser: state => state.user.loginUser,
     }),
     ...mapGetters(['isLoggedIn']),
+
+    currencyString1: function (){
+      const amount = this.charity.total
+      return amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    },
+    currencyString2: function (){
+      const amount = this.charity.quarter
+      return amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+
   },
   created() {
     this.charity = this.$store.getters.charityDetail;
