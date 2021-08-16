@@ -29,7 +29,7 @@
 
 
     <div class="main-contents">
-      <div v-if="this.isLoggedIn" class="on-going-quests">
+      <div v-if="this.isLoggedIn" class="on-going-quests" @click="$router.push('/quests/mine')">
         진행 중인 퀘스트:&nbsp;&nbsp;{{loginUser.questCnt}}&nbsp;개
         <span class="material-icons-outlined">chevron_right</span>
       </div>

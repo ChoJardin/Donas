@@ -103,7 +103,7 @@ export default {
       loginUser: state => state.user.loginUser
     }),
     dateFormatted: function (){
-      return moment(String(this.article.createdAt)).format('YYYY/MM/DD hh:mm')
+      return moment(String(this.article.createdAt)).format('YYYY/MM/DD HH:mm')
     },
     parsedDescription() {
       return this.article.content.replace(/\n/g, '<br/>')
