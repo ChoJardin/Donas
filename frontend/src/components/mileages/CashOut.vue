@@ -1,6 +1,6 @@
 <template>
   <div class="cashout">
-    <div class="cashout-warning">*출금 금액의 10%는 자동으로 기부 됩니다.</div>
+    <div class="cashout-warning">*출금 금액의 80%는 자동으로 기부 됩니다.</div>
 
     <div class="cashout-amount">
       <div class="cashout-input-label" >출금 금액:</div>
@@ -115,7 +115,7 @@ export default {
   computed: {
     donationAmount: function (){
 
-      return Math.round(this.inputAmount * 0.1)
+      return Math.round(this.inputAmount * 0.8)
     },
     refundAmount: function (){
       return Math.round(this.inputAmount - this.donationAmount)
