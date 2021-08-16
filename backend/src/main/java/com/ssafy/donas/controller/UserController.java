@@ -71,15 +71,12 @@ public class UserController {
 		User user = userService.checkPassword(email, password, token);
 		
 		if(user==null)
-			return HttpStatus.NOT_FOUND;
-		
-		// 로그인 아이디별 토큰 저장	
-		
+			return HttpStatus.NOT_FOUND;		
+		// 로그인 아이디별 토큰 저장		
 		result.id = user.getId();
 		result.nickname = user.getNickname();
 		result.questCnt = user.getQuestCnt();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
-
 		return response;
 	}
 	
