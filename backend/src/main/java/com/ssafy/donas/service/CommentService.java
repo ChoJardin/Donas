@@ -23,7 +23,7 @@ public class CommentService {
 	
 	@Autowired
 	UserRepo userRepo;
-
+	
 	public boolean checkComment(long commentId) {
 		Comment comment = commentRepo.getById(commentId);
 		if (comment == null)
