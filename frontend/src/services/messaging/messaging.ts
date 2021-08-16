@@ -2,6 +2,7 @@ import  {ref}  from '../../composition/index.ts';
 import firebase from 'firebase/app';
 import 'firebase/messaging';
 import Config from '../../../firebase';
+import store from "../../store";
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
 
@@ -35,7 +36,8 @@ messaging.getToken().then((currentToken) => {
     }
 });
 messaging.onMessage((payload) => {
-    console.log('foreground',payload);
+    // console.log('foreground',payload);
+    store.dispatch('setPayload', payload)
     const title = '도나쓰';
     const options = {
         body: payload.data.message,

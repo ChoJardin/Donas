@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <div v-if="alarm.articleId === -2" style="text-decoration: none; color: black">
+    <div v-else-if="alarm.articleId === -2" style="text-decoration: none; color: black">
       <div class="alarm-wrap">
         <div class="alarm-read"  v-if="alarm.confirm === 1" @click="statusChange"><i class="material-icons" style="font-size: 1em">markunread</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div v-if="alarm.articleId === -3" style="text-decoration: none; color: black">
+    <div v-else-if="alarm.articleId === -3" style="text-decoration: none; color: black">
       <div class="alarm-wrap">
         <div class="alarm-read" v-if="alarm.confirm === 1" @click="statusChange"><i class="material-icons" style="font-size: 1em">markunread</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
@@ -113,6 +113,7 @@ export default {
           data,
           res => {
             // console.log(res)
+            // path = res.data === 'OK' ? `/article/${this.alarm.articleId}` : '/error'
             path = res.data === 'OK' ? `/article/${this.alarm.articleId}` : '/error'
             this.$router.push(path)
           },

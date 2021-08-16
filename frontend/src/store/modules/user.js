@@ -92,6 +92,8 @@ const state ={
     description: '',
   }],
 
+  payload: {}
+
 }
 
 
@@ -166,6 +168,10 @@ const mutations = {
 
   SET_AUTO_RESULT(state, result) {
     state.autoResult = result
+  },
+
+  SET_PAYLOAD(state, payload) {
+    state.payload = payload
   }
 }
 
@@ -293,6 +299,11 @@ const actions = {
   setAutoResult({commit}, auto) {
     commit('SET_AUTO_RESULT', auto)
   },
+
+  setPayload ({commit}, payload){
+    console.log(payload)
+    commit('SET_PAYLOAD', payload)
+  }
 
 }
 

@@ -18,7 +18,7 @@ export default new Vuex.Store({
   modules: {user, articles, mileages, quests, },
   plugins: [
     createPersistedState({
-      path: ['articles.feeds'],
+      path: ['articles'],
     })
   ]
 })
