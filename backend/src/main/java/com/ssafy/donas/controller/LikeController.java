@@ -60,7 +60,7 @@ public class LikeController {
 		Article article = articleService.getArticleById(like.getArticleId());
 		User receivedUser = article.getUser();
 		likeService.addLike(receivedUser, article);
-		if(!alarmService.addAlarm(receivedUser,sendUser.getNickname(),article.getId(),sendUser.getNickname()+"님이 "+article.getQuest().getTitle()+" 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
+		if(!alarmService.addAlarm(receivedUser,sendUser.getNickname(),article.getId(),sendUser.getNickname()+"님이 "+"\""+article.getQuest().getTitle()+"\""+"퀘스트의 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
 			return HttpStatus.CONFLICT;
 		return HttpStatus.OK;
 	}
