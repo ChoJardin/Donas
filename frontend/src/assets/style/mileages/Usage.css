@@ -1,0 +1,32 @@
+.donation-usage-single{
+  margin-top: 20px;
+}
+
+.donation-usage-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+  padding: 0 10px;
+  border-bottom: #292929 dashed 1px;
+
+}
+
+.donation-usage-left{
+  display: flex;
+  flex-direction: column;
+
+
+}
+
+.donation-usage-left-bottom{
+  display: flex;
+  font-size: 0.8em;
+  color: #292929;
+  font-family: 'GongGothicLight';
+}
+
+.donation-usage-right{
+  font-size: 1em;
+  font-family: 'GongGothicLight';
+}
