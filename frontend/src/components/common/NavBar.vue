@@ -67,7 +67,7 @@ export default {
       commonAlarms: state => state.user.commonAlarms,
     }),
    newQuestAlarm(){
-      return this.questAlarms.some(function(element){ if(element.confirm === 1) {return true}})
+      return this.questAlarms.some(function(element){ if(element.confirm === 0) {return true}})
       },
     newCommonAlarm(){
       return this.commonAlarms.some(function(element){ if(element.confirm === 1) {return true}})

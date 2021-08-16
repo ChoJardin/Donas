@@ -2,7 +2,7 @@
   <div class="single-alarm">
     <div style="text-decoration: none; color: black">
       <div class="alarm-wrap" v-if="alarm.confirm !== 0" @click="setQuestId(alarm.questId)">
-        <div class="alarm-read"><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>
+        <div class="alarm-read"><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
 <!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="alarm-wrap" v-else>
-        <div class="alarm-read"><i class="material-icons" style="font-size: 0.7em">circle</i></div>
+        <div class="alarm-read"><i class="material-icons" style="font-size: 1em">markunread</i></div>
 <!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
         <div class="alarm-message">
           <div style="font-size: 0.5em">{{dateFormatted}}</div>
@@ -56,13 +56,14 @@ export default {
         userId: this.loginUser.id
         }
       // console.log(data)
-      let path
+      // let path
       UserApi.acceptAlert(
           data,
           res => {
             console.log(res)
-            path = res.data === 'OK' ? `/quests/${this.alarm.questId}` : '/error'
-            this.$router.push(path)
+            this.alarm.confirm = 2
+            // path = res.data === 'OK' ? `/quests/${this.alarm.questId}` : '/error'
+            // this.$router.push(path)
           },
           err => {
             console.log(err)
@@ -80,8 +81,9 @@ export default {
           data,
           res => {
             console.log(res)
-            path = res.data === 'OK' ? `/notificatoin/${this.loginUser.nickname}` : '/error'
-            this.$router.push(path)
+            this.alarm.confirm = 3
+            // path = res.data === 'OK' ? `/notificatoin/${this.loginUser.nickname}` : '/error'
+            // this.$router.push(path)
           },
           err => {
             console.log(err)
@@ -116,6 +118,7 @@ export default {
   width: 10%;
   margin-left: 5px;
   color: #183a1d;
+  padding-top: 8px
 
 }
 
