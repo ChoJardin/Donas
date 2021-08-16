@@ -16,9 +16,9 @@
               </slot>
             </div>
 
-            <hr>
+            <hr v-if="opt2">
 
-            <div class="modal-body">
+            <div v-if="opt2" class="modal-body">
               <slot name="opt2">
                 default body
               </slot>
@@ -48,6 +48,12 @@
 <script>
 export default {
   name: "Modal",
+  props: {
+    opt2: {
+      type: Boolean,
+      default: true
+    }
+  }
 
 
 

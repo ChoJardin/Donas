@@ -2,7 +2,7 @@
   <div class="overlay">
     <div id="heart-list">
 
-    <componentNav style="z-index: 5"
+    <componentNav
         @on-arrow="$emit('on-click')"
         title="좋아요"/>
 

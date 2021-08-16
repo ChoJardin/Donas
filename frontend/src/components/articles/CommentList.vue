@@ -2,7 +2,8 @@
   <div id="follow-user-profile">
 
     <router-link :to="`/user/profile/${comment.nickname}`" id="follow-profile-wrap">
-      <img class="profile-image card" src="@/assets/profile_test.jpeg" alt="">
+      <img v-if="comment.picture" class="profile-image card" :src="comment.picture" alt="">
+      <img v-else class="profile-image card" src="@/assets/donut_profile.png" alt="">
     </router-link>
     <div id="comment-text-wrap">
       <div class="comment-text-line">
@@ -20,11 +21,9 @@
       </Modal>
 
 
-
-
       </div>
       <div class="comment-text-line">
-        <div id="comment-time">{{comment.updatedAt}}</div>
+        <div id="comment-time">{{dateFormatted}}</div>
         <!--<button @click="onDelete" v-if="isMine">삭제</button>-->
       </div>
       <CommentInput v-if="isEdit" :input.sync="content" :content="content" @on-click="onSubmit" @on-enter="onSubmit"/>
@@ -42,6 +41,7 @@ import {mapState} from "vuex";
 import CommentInput from "@/components/articles/CommentInput";
 import ArticlesApi from "@/api/ArticlesApi";
 import Modal from "@/components/common/Modal";
+import moment from "moment";
 
 export default {
   name: "CommentList",
@@ -90,6 +90,7 @@ export default {
           const commentList = await ArticlesApi.requestCommentList(this.articleId)
           await this.$store.dispatch('setCommentList', commentList)
           this.$mount()
+          this.$store.dispatch('resetCommentCnt', {isAdd: false, articleId: this.articleId})
         } else {
           this.$router.push('/404')
         }
@@ -107,7 +108,11 @@ export default {
     }),
     isMine() {
       return this.loginUser.id === this.comment.userId
-    }
+    },
+    // 날짜 수정
+    dateFormatted() {
+      return moment(String(this.comment.updatedAt)).format('YYYY/MM/DD hh:mm')
+    },
   }
 }
 </script>

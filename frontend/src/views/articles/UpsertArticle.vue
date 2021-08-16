@@ -38,7 +38,7 @@
         <br/><br/>
         2. 퀘스트 인증 당일에 촬영한 사진만 <br/>등록 가능합니다.
         <br/><br/>
-        3. 1MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
+        3. 5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
       </div>
       <div id="image-error" v-html="error" v-if="error"></div>
 
