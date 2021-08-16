@@ -34,6 +34,7 @@ import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AddGroupQuestRequest;
 import com.ssafy.donas.request.AddPersonalQuestRequest;
 import com.ssafy.donas.request.AddRelayQuestRequest;
+import com.ssafy.donas.request.ParticiPersonalQuest;
 import com.ssafy.donas.request.RelayNextListRequest;
 import com.ssafy.donas.request.UpdateQuestRequest;
 import com.ssafy.donas.response.QuestDetailResponse;
@@ -94,6 +95,17 @@ public class QuestController {
 				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
 
+		return HttpStatus.OK;
+	}
+	
+	@PostMapping("/personal")
+	@ApiOperation(value = "개인퀘스트 참여")
+	public Object particiPersonalQuest(@RequestBody ParticiPersonalQuest quest) {
+		if (!userService.checkId(quest.getUserId()))
+			return HttpStatus.NOT_FOUND;		
+		if(questService.getQuestById(quest.getQuestId())==null)
+			return HttpStatus.NOT_FOUND;
+		questParticipantsService.addParticipant(quest.getUserId(), quest.getQuestId());		
 		return HttpStatus.OK;
 	}
 
