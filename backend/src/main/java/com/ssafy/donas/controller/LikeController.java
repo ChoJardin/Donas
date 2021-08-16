@@ -59,7 +59,7 @@ public class LikeController {
 		User sendUser = userService.getUser(like.getUserId());
 		Article article = articleService.getArticleById(like.getArticleId());
 		User receivedUser = article.getUser();
-		likeService.addLike(receivedUser, article);
+		likeService.addLike(sendUser, article);
 		if(!alarmService.addAlarm(receivedUser,sendUser.getNickname(),article.getId(),sendUser.getNickname()+"님이 "+"\""+article.getQuest().getTitle()+"\""+"퀘스트의 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
 			return HttpStatus.CONFLICT;
 		return HttpStatus.OK;
@@ -68,8 +68,7 @@ public class LikeController {
 	@DeleteMapping
 	@ApiOperation(value = "좋아요 취소")
 	public Object deleteLike(@RequestParam long articleId, @RequestParam long userId) {
-		long likeId = likeService.checkLike(userId, articleId);
-		
+		long likeId = likeService.checkLike(userId, articleId);	
 		if (likeId == -1)
 			return HttpStatus.NOT_FOUND;
 
