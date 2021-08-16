@@ -1,5 +1,6 @@
 package com.ssafy.donas.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Like;
+import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.LikeRequest;
 import com.ssafy.donas.response.SearchResponse;
+import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.LikeService;
 import com.ssafy.donas.service.UserService;
@@ -40,6 +44,9 @@ public class LikeController {
 	@Autowired
 	ArticleService articleService;
 	
+	@Autowired
+	AlarmService alarmService;
+	
 	@PostMapping
 	@ApiOperation(value = "좋아요 누르기")
 	public Object saveLike(@RequestBody LikeRequest like) {
@@ -48,10 +55,12 @@ public class LikeController {
 		
 		if(likeService.checkLike (like.getUserId(),like.getArticleId())!=-1)
 			return new ResponseEntity<>("이미 누름",HttpStatus.NOT_FOUND);	
-		
-		likeService.addLike(userService.getUser(like.getUserId()), articleService.getArticleById(like.getArticleId()));
-		
-				
+	
+		Article article = articleService.getArticleById(like.getArticleId());
+		User sendUser = userService.getUser(like.getUserId());
+		likeService.addLike(sendUser, article);
+		if(!alarmService.addAlarm(sendUser,article.getUser().getNickname(),article.getId(),sendUser.getNickname()+"님이 "+article.getQuest().getTitle()+" 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
+			return HttpStatus.CONFLICT;
 		return HttpStatus.OK;
 	}
 
