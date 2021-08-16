@@ -1,9 +1,9 @@
 <template>
   <div>
     <button  id="quest-card">
-      <img src="@/assets/IMG_7263.jpeg" alt="">
-      <!--<img :src="quest.picture" alt="">-->
-      <span>
+      <img v-if="quest.picture" :src="quest.picture" alt="">
+      <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
+      <span class="quest-card-title">
         <!--퀘스트 이름이 들어갑니다-->
         {{quest.title}}
       </span>
@@ -36,8 +36,8 @@ export default {
 <style scoped>
 #quest-card {
   /*border: 1px solid #183a1d;*/
-  height: 150px;
-  width: 120px;
+  height: 180px;
+  width: 150px;
   margin: 15px 10px 10px;
   border-radius: 17px;
   box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
@@ -51,7 +51,7 @@ img {
   object-fit: cover;
 }
 
-span {
+.quest-card-title {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -73,7 +73,7 @@
         </div>
         <div class="profile-edit-content">
           <textarea
-              name="description" id="" cols="25" rows="2"
+              name="description" id="" rows="3"
               autocapitalize="sentences" wrap="hard"
               placeholder="인사말을 작성해보세요!"
               v-model="description"></textarea>
@@ -188,20 +188,20 @@ export default {
     },
     // 수정완료
     onComplete() {
-      // let data = {}
+      let data = {}
       // 값이 수정된 경우에만 data에 추가
-      // Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
-      //     key => data[key] = this[`${key}`]
-      // )
-      let data = {
-        picture: this.loginUser.picture,
-        description: this.loginUser.description,
-        nickname: this.loginUser.nickname
-      }
-      console.log(data)
       Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
           key => data[key] = this[`${key}`]
       )
+      // let data = {
+      //   picture: this.loginUser.picture,
+      //   description: this.loginUser.description,
+      //   nickname: this.loginUser.nickname
+      // }
+      // console.log(data)
+      // Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
+      //     key => data[key] = this[`${key}`]
+      // )
       console.log(data)
       UserApi.updateProfile(
           this.loginUser.id,
@@ -353,6 +353,10 @@ export default {
 
 .profile-edit-content {
   flex: 2.5 2.5 0;
+}
+
+.profile-edit-content textarea {
+  width: 100%;
 }
 
 .profile-edit-content textarea {
