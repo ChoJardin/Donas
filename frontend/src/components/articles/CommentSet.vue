@@ -26,6 +26,7 @@ export default {
         if (result === 'OK') {
           const commentList = await ArticlesApi.requestCommentList(data.articleId)
           await this.$store.dispatch('setCommentList', commentList)
+          await this.$store.dispatch('resetCommentCnt', {isAdd: true, articleId: data.articleId})
           this.$refs.input.onReset()
         } else {
           this.$router.push('/404')
@@ -37,6 +38,7 @@ export default {
         userId: this.loginUser.id
       }
       createComment(data)
+      // 피드 댓글 개수 수정
     },
   },
   computed: {

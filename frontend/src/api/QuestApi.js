@@ -9,7 +9,8 @@ const ROUTES = {
   createGroupQuest: '/quest/group',
   requestGroupMutuals:'/search/friends/',
   requestAllQuest: '/quest',
-  requestQuestDetail: '/quest/detail'
+  requestQuestDetail: '/quest/detail',
+  myQuests: '/quest/participant'
 }
 
 
@@ -85,6 +86,15 @@ const requestQuestDetail = (data, callback, errorCallback) => {
     })
 }
 
+// 개인 퀘스트 요청
+// c === 완료, p === 진행, b === 예정
+const requestMyQuests = (data, callback, errorCallback) => {
+  const requestMyQuestsPath = URL + ROUTES.myQuests
+  axios.get(requestMyQuestsPath, {params: data})
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 
 const UserApi = {
   URL,
@@ -95,6 +105,7 @@ const UserApi = {
   requestGroupFriends:(id, callback, errorCallback) => requestGroupFriends(id,callback, errorCallback),
   requestAllQuest:(callback, errorCallback) => requestAllQuest(callback, errorCallback),
   requestQuestDetail:(data,callback, errorCallback) => requestQuestDetail(data,callback, errorCallback),
+  requestMyQuests:(data,callback, errorCallback) => requestMyQuests(data,callback, errorCallback),
 
 
 }

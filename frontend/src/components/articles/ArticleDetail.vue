@@ -3,8 +3,11 @@
     <div id="article-detail">
 
       <!--nav-->
-      <component-nav @on-arrow="$router.push({path: '/article', query: {id: selectedArticle.id}})" title="인증 게시글"/>
-      <button v-if="isMine" @click="showModal = !showModal" class="material-icons-round more">more_horiz</button>
+      <componentNav v-if="isHeartList"
+        @on-arrow="isHeartList = !isHeartList"
+        title="좋아요"/>
+      <component-nav v-else @on-arrow="$router.push({path: '/article', query: {id: selectedArticle.id}})" title="인증 게시글"/>
+      <button v-if="isMine && !isHeartList" @click="showModal = !showModal" class="material-icons-round more">more_horiz</button>
       <!--<div v-if="openModal" class="change-article">-->
       <!--  <button @click="onEdit" >-->
       <!--    수정-->
@@ -13,9 +16,8 @@
       <!--    삭제-->
       <!--  </button>-->
       <!--</div>-->
-      <Modal v-if="showModal" @close="showModal = !showModal">
+      <Modal v-if="showModal" @close="showModal = !showModal" :opt2="false">
         <button slot="opt1" @click="onEdit">수정하기</button>
-        <button slot="opt2">삭제하기</button>
         <button slot="opt3" @click="showModal = false">닫기</button>
       </Modal>
       <!--nav-->
