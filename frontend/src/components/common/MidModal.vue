@@ -4,11 +4,11 @@
         <div class="mid-modal-wrapper">
           <div class="mid-modal-container">
 
-            <!--<div class="mid-modal-header">-->
-            <!--  <slot name="header">-->
-            <!--    default he-->
-            <!--  </slot>-->
-            <!--</div>-->
+            <div class="mid-modal-header">
+              <slot name="header">
+                default he
+              </slot>
+            </div>
 
             <div class="mid-modal-body">
               <slot name="opt1">
@@ -16,15 +16,14 @@
               </slot>
             </div>
 
-            <hr>
 
-          <div class="mid-modal-container">
-            <div class="mid-modal-footer">
-              <slot name="opt3">
-                default body
-              </slot>
-            </div>
-          </div>
+<!--          <div class="mid-modal-container">-->
+<!--            <div class="mid-modal-footer">-->
+<!--              <slot name="opt3">-->
+<!--                default body-->
+<!--              </slot>-->
+<!--            </div>-->
+<!--          </div>-->
             <!--<div class="mid-modal-footer">-->
             <!--  <slot name="footer">-->
             <!--    default footer-->
@@ -33,6 +32,7 @@
             <!--    </button>-->
             <!--  </slot>-->
             <!--</div>-->
+        </div>
         </div>
       </div>
     </transition>
@@ -61,27 +61,34 @@ export default {
   display: table-cell;
   vertical-align: middle;
   position: absolute;
-  bottom: 0;
+  top: 20%;
   left: calc((100vw - 300px) / 2);
 }
 
 .mid-modal-container {
   width: 300px;
   margin: 10px auto;
-  padding: 0 30px;
-  background-color: #fff;
+  padding: 0 20px;
+  background-color: rgba(255, 255, 255);
   /*border-top-left-radius: 30px;*/
   /*border-top-right-radius: 30px;*/
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: GongGothicLight;
+  height: 500px;
+  overflow-y: scroll;
   /*font-family: Helvetica, Arial, sans-serif;*/
 }
 
-.mid-modal-header h3 {
+.mid-modal-header {
   margin-top: 0;
-  color: #42b983;
+  color: #000302;
+  padding-top: 5px;
+  float: right;
+  width: 100%;
+  padding-left: 50px;
+  padding-bottom: 20px;
 }
 
 .mid-modal-body button {
