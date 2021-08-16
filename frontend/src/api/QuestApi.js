@@ -10,7 +10,8 @@ const ROUTES = {
   requestGroupMutuals:'/search/friends/',
   requestAllQuest: '/quest',
   requestQuestDetail: '/quest/detail',
-  myQuests: '/quest/participant'
+  myQuests: '/quest/participant',
+  participate: '/quest/personal/participant'
 }
 
 
@@ -95,6 +96,14 @@ const requestMyQuests = (data, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+//개인 퀘스트 참여
+const participate = (data, callback, errorCallback) => {
+  const participatePath = URL + ROUTES.participate
+  axios.post(participatePath, data)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 
 const UserApi = {
   URL,
@@ -106,6 +115,7 @@ const UserApi = {
   requestAllQuest:(callback, errorCallback) => requestAllQuest(callback, errorCallback),
   requestQuestDetail:(data,callback, errorCallback) => requestQuestDetail(data,callback, errorCallback),
   requestMyQuests:(data,callback, errorCallback) => requestMyQuests(data,callback, errorCallback),
+  participate:(data,callback, errorCallback) => participate(data,callback, errorCallback),
 
 
 }

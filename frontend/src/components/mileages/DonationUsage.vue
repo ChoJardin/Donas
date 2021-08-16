@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{loginUser.nickname}}님, </h1>
-    <h4>총  {{currencyString}} 마일리지를 기부하셨습니다!</h4>
+    <h4>총  {{currencyString(usageDonation.total)}} 마일리지를 기부하셨습니다!</h4>
 
 
     <div class="donation-usage-single" >
@@ -11,14 +11,13 @@
           <div class="donation-usage-left">
             <div style="font-size: 1em">{{donation.charityName}}</div>
             <div class="donation-usage-left-bottom">
-              <div>
-                <div>{{donation.time.split("T")[0]}} | </div></div>
-              <div>기부</div>
+              <div>{{dateFormatted(donation.time)}} | </div>
+              <div style="margin-left: 2px">기부</div>
             </div>
           </div>
 
           <div class="donation-usage-right">
-            <div>{{donation.amount}} 마일리지</div>
+            <div>{{currencyString(donation.amount)}} 마일리지</div>
           </div>
 
         </div>
@@ -31,6 +30,7 @@
 
 <script>
 import {mapState} from "vuex";
+import moment from "moment";
 
 import('@/assets/style/mileages/Usage.css')
 
@@ -41,15 +41,20 @@ export default {
       formatDate: ''
     }
   },
+  methods: {
+    currencyString(amount) {
+      return amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    },
+    dateFormatted(date){
+      return moment(String(date)).format('YYYY/MM/DD')
+    },
+  },
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
       usageDonation: state => state.mileages.usageDonation,
     }),
-    currencyString: function (){
-      const amount = this.usageDonation.total
-      return amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    }
+
   },
 }
 </script>

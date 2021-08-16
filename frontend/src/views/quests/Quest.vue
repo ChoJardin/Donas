@@ -8,6 +8,31 @@
     </div>
 
     <router-view id="quest-router-view"/>
+
+    <v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>
+
+    <MidModal  v-if="showModal" @close="showModal= !showModal">
+      <div slot="header" @click="showModal = false"><div style="padding-left: 30px">퀘스트 설명<i class="material-icons" style="margin-left: 70px">close</i></div> </div>
+      <div slot="opt1">
+        <div style="margin-bottom: 5px">개인 퀘스트</div>
+        <div> 개별적으로 참여하는 퀘스트입니다. </div>
+        <div>명시된 기간내에 자유롭게 참여 가능하며 성공 인증 조건을 충족하면</div>
+        <div style="padding-bottom:5px">종료일 이후 성공 보상 100 마일리지가 부여됩니다.</div>
+        <hr>
+        <div style="margin:10px 0 5px 0">공동 퀘스트</div>
+        <div>서로 팔로우를 하는 유저들 중 선택하여</div>
+        <div>함께 하는 퀘스트 입니다.</div>
+        <div>생성 혹은 초대로만 참여가 가능하며 </div>
+        <div>모든 유저가 각각 85%이상 인증률을 달성하면</div>
+        <div>종료일 이후 참여자당 성공보상 150 마일리지가 부여됩니다.</div>
+        <hr>
+        <div style="margin:10px 0 5px 0">릴레이 퀘스트</div>
+        <div>먼저 성공 후 원하는 유저를 선택하여 해당 유저가 이어가는 퀘스트 입니다.</div>
+        <div>생성 혹은 초대로만 참여 가능하며 지정기간동안 목표인원에 도달하면</div>
+        <div>종료일 이후 참여자당 성공보상 200 마일리지가 부여됩니다.</div>
+      </div>
+    </MidModal>
+
     <v-btn v-if="isLoggedIn" id="create-button" class="mx-2 text-decoration-none" fab color="indigo">
       <router-link to="/quests/create"><i class="fas fa-plus fa-lg" style="color: #f19b36"></i></router-link>
 
@@ -18,9 +43,18 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import QuestApi from "../../api/QuestApi";
+import MidModal from "../../components/common/MidModal";
 
 export default {
   name: 'QuestAll',
+  components: {
+    MidModal
+  },
+  data() {
+    return {
+      showModal: false,
+    }
+  },
   methods:{
     ...mapActions(['setSelectedType'])
   },
@@ -74,6 +108,16 @@ export default {
   color: black;
   text-align: center;
   height: 100%;
+}
+
+#explain-modal {
+  color: #292929;
+  text-decoration-color: transparent;
+  position: fixed;
+  bottom: 140px;
+  right: 15px;
+  display: flex;
+  align-content: center;
 }
 
 #create-button {
