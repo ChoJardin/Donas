@@ -1,5 +1,6 @@
 package com.ssafy.donas.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.Comment;
+import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.AddCommentRequest;
 import com.ssafy.donas.request.UpdateCommentRequest;
 import com.ssafy.donas.response.CommentResponse;
+import com.ssafy.donas.service.AlarmService;
 import com.ssafy.donas.service.ArticleService;
 import com.ssafy.donas.service.CommentService;
 import com.ssafy.donas.service.UserService;
@@ -43,6 +47,9 @@ public class CommentController {
 
 	@Autowired
 	ArticleService articleService;
+	
+	@Autowired
+	AlarmService alarmService;
 
 	@PostMapping
 	@ApiOperation(value = "댓글 달기")
@@ -53,7 +60,12 @@ public class CommentController {
 		if ("".equals(comment.getContent()))
 			return HttpStatus.NO_CONTENT;
 		
-		commentService.add(articleService.getArticleById(comment.getArticleId()), comment.getUserId(), comment.getContent());
+		User sendUser = userService.getUser(comment.getUserId());
+		Article article = articleService.getArticleById(comment.getArticleId());
+		User receivedUser = article.getUser();
+		commentService.add(article, comment.getUserId(), comment.getContent());
+		if(!alarmService.addAlarm(receivedUser,sendUser.getNickname(),article.getId(),sendUser.getNickname()+"님이 "+"\""+article.getQuest().getTitle()+"\""+"퀘스트의 게시물에 댓글을 남겼습니다.", LocalDateTime.now().plusHours(9)))
+			return HttpStatus.CONFLICT;
 		return HttpStatus.OK;
 	}
 

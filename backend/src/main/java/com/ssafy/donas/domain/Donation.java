@@ -48,6 +48,10 @@ public class Donation {
 	@JoinColumn(name = "charity_id")
 	private Charity charity;
 	
+	@Column(nullable = false, name = "cash_out")
+	@ColumnDefault("0")
+	private int cashOut;
+	
 	public Donation() {}
 
 	public Donation(long amount, LocalDateTime time, String name, User user, Charity charity) {
