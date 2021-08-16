@@ -36,7 +36,7 @@ messaging.getToken().then((currentToken) => {
 });
 messaging.onMessage((payload) => {
     console.log('foreground',payload);
-    const title = 'Title';
+    const title = '도나쓰 알림';
     const options = {
         body: payload.data.message,
         icon: '/firebase-logo.png',
