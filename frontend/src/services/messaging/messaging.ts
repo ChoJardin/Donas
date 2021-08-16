@@ -2,6 +2,8 @@ import  {ref}  from '../../composition/index.ts';
 import firebase from 'firebase/app';
 import 'firebase/messaging';
 import Config from '../../../firebase';
+import Vue from "vue";
+import Vuex, { StoreOptions } from "vuex";
 
 // import '@firebase/messaging';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
