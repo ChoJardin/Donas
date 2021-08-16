@@ -9,10 +9,6 @@
       <QuestCard @click.native='setQuestId(quest.id)' v-for="quest in quests" :key="quest.id" :quest="quest"></QuestCard>
     </div>
 
-
-
-
-
   </div>
 </template>
 
