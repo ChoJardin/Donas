@@ -98,7 +98,7 @@ public class QuestController {
 		return HttpStatus.OK;
 	}
 	
-	@PostMapping("/personal")
+	@PostMapping("/personal/participant")
 	@ApiOperation(value = "개인퀘스트 참여")
 	public Object particiPersonalQuest(@RequestBody ParticiPersonalQuest quest) {
 		if (!userService.checkId(quest.getUserId()))
