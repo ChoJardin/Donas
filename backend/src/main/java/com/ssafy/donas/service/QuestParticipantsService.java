@@ -32,6 +32,16 @@ public class QuestParticipantsService {
 		List<QuestParticipants> userList = questParticipantsRepo.findQuestParticipantsByQuest(quest);
 		return userList;
 	}
+	public User participantByQuest(User user) {
+		
+		List<QuestParticipants> participants = questParticipantsRepo.findQuestParticipantsByUser(user);
+		for(QuestParticipants qp : participants) {
+			if(qp.getUser().getId()==user.getId()) {
+				return qp.getUser();
+			}
+		}
+		return null;
+	}
 	
 	public void addParticipants(User adminUser, List<User> participants, Quest groupQuest) {
 		QuestParticipants admin = new QuestParticipants(adminUser, groupQuest);
