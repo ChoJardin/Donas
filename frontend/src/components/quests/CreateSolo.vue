@@ -200,7 +200,7 @@ label {
   width: 250px;
   height: 250px;
   /*margin-left: 50px;*/
-  margin-top: 20px;
+  margin: 20px auto;
 }
 
 </style>
