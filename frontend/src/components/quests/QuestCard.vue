@@ -41,6 +41,7 @@ export default {
   margin: 15px 10px 10px;
   border-radius: 17px;
   box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
+  /*background-color: #fefbe9;*/
 }
 
 img {
@@ -48,6 +49,8 @@ img {
   height: 75%;
   border-top-left-radius: 17px;
   border-top-right-radius: 17px;
+  padding-bottom: 3px;
+  /*border-bottom: 1px solid #e4e6e9;*/
   object-fit: cover;
 }
 
@@ -58,6 +61,6 @@ img {
   height: 25%;
   font-size: 0.8em;
   text-align: left;
-
+  font-family: GongGothicLight;
 }
 </style>
