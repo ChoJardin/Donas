@@ -66,6 +66,10 @@ import PageNotFound from "@/views/common/PageNotFound";
 import ImageInput from "@/components/common/ImageInput";
 import Test from "@/views/Test";
 import SignInUp from "@/views/user/SignInUp";
+import MyQuests from "@/views/quests/MyQuests";
+import CompletedQuests from "@/components/quests/CompletedQuests";
+import OnGoingQuests from "@/components/quests/OnGoingQuests";
+import UpcomingQuests from "@/components/quests/UpcomingQuests";
 
 
 Vue.use(VueRouter)
@@ -83,6 +87,14 @@ const routes = [
       {path: 'solo', name: 'SoloQuest', component: SoloQuest},
       {path: 'group', name: 'GroupQuest', component: GroupQuest},
       {path: 'relay', name: 'RelayQuest', component: RelayQuest},
+    ]
+  },
+  // 내 퀘스트
+  {path: '/quests/mine', component: MyQuests,
+    children: [
+      {path: 'completed', name: 'CompletedQuests', component: CompletedQuests},
+      {path: '', name: 'OnGoingQuests', component: OnGoingQuests},
+      {path: 'upcoming', name: 'UpcomingQuests', component: UpcomingQuests}
     ]
   },
   //퀘스트 생성
