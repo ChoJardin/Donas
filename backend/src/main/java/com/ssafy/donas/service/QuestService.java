@@ -207,7 +207,7 @@ public class QuestService {
 			return null;
 		List<QuestMainInfo> questInfo = new ArrayList<QuestMainInfo>();
 		for(Quest q : quests) {
-			questInfo.add(new QuestMainInfo(q.getId(),q.getTitle(),q.getDescription(),q.getPicture()));
+			questInfo.add(new QuestMainInfo(q.getId(),q.getTitle(),q.getPicture(),q.getDescription()));
 		}
 		return questInfo;
 	}
@@ -216,8 +216,7 @@ public class QuestService {
 		List<QuestInfo> quests = new ArrayList<>();
 		for(Quest q : questRepo.findAll()) {
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(), q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
-		}
-		
+		}	
 		return quests;
 	}
 
