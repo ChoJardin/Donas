@@ -105,6 +105,8 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;		
 		if(questService.getQuestById(quest.getQuestId())==null)
 			return HttpStatus.NOT_FOUND;
+		if(questParticipantsService.participantByQuest(userService.getUser(quest.getUserId()))!=null)
+			return HttpStatus.NOT_FOUND;
 		questParticipantsService.addParticipant(quest.getUserId(), quest.getQuestId());		
 		return HttpStatus.OK;
 	}
