@@ -20,7 +20,7 @@
       </div>
       <!--기본 프로필 end-->
 
-      <textarea v-if="profile.description" v-model="profile.description" name="description" id="profile-description" cols="25" rows="2" readonly></textarea>
+      <div v-if="profile.description" v-html="parsedDescription" id="profile-description" ></div>
       <div v-else-if="isMine" class="info-say-hi">프로필 수정 페이지에서 인사말을 작성해 보세요!</div>
 
       <!--팔로우/ 팔로잉/ 정보수정 start-->
@@ -187,6 +187,9 @@ export default {
     // 내 프로필 페이지인지 확인
     isMine() {
       return this.loginUser.nickname === this.$route.params.nickname
+    },
+    parsedDescription() {
+      return this.profile.description.replace(/\n/g, '<br/>')
     },
 
     // parsedDescription() {
