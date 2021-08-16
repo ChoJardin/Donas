@@ -59,13 +59,13 @@ public class ArticleController {
 			return HttpStatus.NO_CONTENT;
 		ArticleShortResponse result = new ArticleShortResponse();
 		Article arti = articleService.add(userService.getUser(article.getUserId()), questService.getQuestById(article.getQuestId()), article.getImage(), article.getContent(), article.getType());
-		result.articleId = arti.getId();
+		result.id = arti.getId();
 		result.content = arti.getContent();
 		result.image = arti.getImage();
 		result.questId = arti.getQuest().getId();
 		result.type = arti.getType();
-		result.createAt = arti.getCreatedAt();
-		result.updateAte = arti.getUpdatedAt();
+		result.createdAt = arti.getCreatedAt();
+		result.updatedAt = arti.getUpdatedAt();
 		result.commentCnt = arti.getComments().size();
 		result.likeCnt = arti.getLikes().size();
 		
@@ -136,7 +136,7 @@ public class ArticleController {
 			res.image = article.getImage();
 			res.content = article.getContent();
 			res.type = article.getType();
-			res.isLike = article.isLike();
+			res.like = article.isLike();
 			res.heartCnt = article.getHeartCnt();
 			res.commentCnt = article.getCommentCnt();
 			res.makerImage = article.getMakerImage();
@@ -195,7 +195,7 @@ public class ArticleController {
 			res.image = article.getImage();
 			res.content = article.getContent();
 			res.type = article.getType();
-			res.isLike = article.isLike();
+			res.like = article.isLike();
 			res.heartCnt = article.getHeartCnt();
 			res.commentCnt = article.getCommentCnt();
 			res.makerImage = article.getMakerImage();

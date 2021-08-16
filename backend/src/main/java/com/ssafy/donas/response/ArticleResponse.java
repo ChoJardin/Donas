@@ -17,8 +17,8 @@ public class ArticleResponse {
 	public String content;
 	@ApiModelProperty(value = "type", position = 6)
 	public String type;
-	@ApiModelProperty(value = "isLike", position = 7)
-	public boolean isLike;
+	@ApiModelProperty(value = "like", position = 7)
+	public boolean like;
 	@ApiModelProperty(value = "likeCnt", position = 8)
 	public int heartCnt;
 	@ApiModelProperty(value = "commentCnt", position = 9)

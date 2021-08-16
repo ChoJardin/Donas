@@ -28,6 +28,13 @@ public class AddRelayQuestRequest {
 	
 	@ApiModelProperty(required = true)
     @NotNull
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	Date finishAt;
+	
+
+
+	@ApiModelProperty(required = true)
+    @NotNull
 	String picture;
 	
 	@ApiModelProperty(required = true)
@@ -61,6 +68,9 @@ public class AddRelayQuestRequest {
 
 	public Date getStartAt() {
 		return startAt;
+	}
+	public Date getFinishAt() {
+		return finishAt;
 	}
 
 	public String getPicture() {

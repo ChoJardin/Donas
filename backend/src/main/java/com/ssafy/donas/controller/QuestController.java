@@ -155,7 +155,7 @@ public class QuestController {
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
 
-		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
+		long questId = questService.addRelayQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),quest.getFinishAt(),
 				quest.getPicture(), quest.getCertification(), quest.getMileage(), quest.getTargetCnt());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
 
