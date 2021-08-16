@@ -105,9 +105,10 @@ public class UserService {
 		
 		if (nickname != null)
 			user.setNickname(nickname);
-		
-		user.setPicture(picture);
-		user.setDescription(description);
+		if(picture!=null)
+			user.setPicture(picture);
+		if(description!=null)
+			user.setDescription(description);
 
 		return true;
 	}
