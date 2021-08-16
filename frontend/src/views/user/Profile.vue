@@ -72,7 +72,7 @@
 
     <!--article start-->
     <div id="profile-on-going-quests">
-    <OnGoingQuests></OnGoingQuests>
+    <MyOnGoingQuests></MyOnGoingQuests>
     </div>
 
     <div id="profile-article-wrap">
@@ -97,7 +97,7 @@ import axios from "axios";
 import UserApi from "@/api/UserApi";
 
 import ArticleImage from "@/components/articles/ArticleImage";
-import OnGoingQuests from "@/components/quests/OnGoingQuests";
+import MyOnGoingQuests from "@/components/quests/MyOnGoingQuests";
 
 import('@/assets/style/user/Profile.css')
 
@@ -106,7 +106,7 @@ export default {
   // components
   components: {
     ArticleImage,
-    OnGoingQuests
+    MyOnGoingQuests
   },
   // props
   // data

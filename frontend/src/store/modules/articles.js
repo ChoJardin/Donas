@@ -132,6 +132,13 @@ const mutations = {
   SET_COMMENT_LIST(state, commentList) {
     state.commentList = commentList
   },
+  // 피드에 댓글 개수 반영
+  ADD_COMMENT_CNT(state, idx) {
+    state.feeds[idx].commentCnt += 1
+  },
+  DELETE_COMMENT_CNT(state, idx) {
+    state.feeds[idx].commentCnt -= 1
+  },
   // 작성한 게시글 피드에 추가
   // ADD_NEW_ARTICLE(state, articles) {
   //   state.feeds = articles
@@ -174,6 +181,13 @@ const actions = {
   },
   setCommentList({commit}, commentList) {
     commit('SET_COMMENT_LIST', commentList)
+  },
+  // 수정된 댓글 개수 피드에도 반영
+  resetCommentCnt({commit}, {isAdd, articleId}) {
+    const idx = state.feeds.findIndex(article => article.id === articleId)
+    if (isAdd)
+      commit('ADD_COMMENT_CNT', idx)
+    else commit('DELETE_COMMENT_CNT', idx)
   },
   setLikeList({commit}, likeList) {
     commit('SET_LIKE_LIST', likeList)

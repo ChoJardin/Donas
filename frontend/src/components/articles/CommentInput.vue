@@ -122,8 +122,12 @@ export default {
 .comment-input-info {
   display: flex;
   justify-content: space-between;
+}
+
+.comment-input-info span {
   margin: 3px 6px;
   font-family: GongGothicLight;
+  font-size: 0.8em;
   color: #a0a0a0;
 }
 

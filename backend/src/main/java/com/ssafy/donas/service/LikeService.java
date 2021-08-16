@@ -34,10 +34,7 @@ public class LikeService {
 		else
 			return -1;
 	}
-	
 
-	
-	
 	public boolean addLike(User user, Article article) {
 		Like like = new Like(user, article);
 		likeRepo.save(like);

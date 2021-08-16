@@ -72,8 +72,8 @@ public class DonationService {
 		User user = userRepo.getById(userId);
 		if(user.getMileage()<amount)
 			return false;
-		
-		if(donationRepo.save(new Donation(amount,time,name,user,charityRepo.getById(charityId))) == null) {
+		Donation donation = new Donation(amount,time,name,user,charityRepo.getById(charityId));
+		if(donationRepo.save(donation) == null) {
 			return false;
 		}
 		Optional<Charity> charity =  charityRepo.findById(charityId);
@@ -92,7 +92,7 @@ public class DonationService {
 		List<DonationInfo> donationInfo = new ArrayList<DonationInfo>();
 		
 		for(Donation d : donationList) {
-			donationInfo.add(new DonationInfo(d.getId(),d.getName(),d.getCharity().getName(),d.getAmount()));
+			donationInfo.add(new DonationInfo(d.getId(),d.getTime(),d.getName(),d.getCharity().getName(),d.getAmount()));
 		}
 		
 		return donationInfo;
