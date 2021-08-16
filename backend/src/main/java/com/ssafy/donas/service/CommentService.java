@@ -32,7 +32,7 @@ public class CommentService {
 	}
 
 	public void add(Article article, long userId, String content) {
-		Comment comment = new Comment(content, userRepo.getById(userId), article, LocalDateTime.now().plusHours(9), LocalDateTime.now(), 0);
+		Comment comment = new Comment(content, userRepo.getById(userId), article, LocalDateTime.now().plusHours(9), LocalDateTime.now().plusHours(9), 0);
 		commentRepo.save(comment);
 		
 		article.getComments().add(comment);
