@@ -16,10 +16,10 @@ import Config from '../../../firebase';
 //   measurementId: "G-VJ7XLPCD90"
 // };
 
-// firebase.initializeApp(Config);
+firebase.initializeApp(Config);
 
 const token = ref("AAAAlALZIPc:APA91bFPmuJhhTAeltNqFrm5OpS0Y7FVJHTQrr685xhCdqZmM5QUVU3u1NAXp6NtgeVg0M6w88tDeGvL30aHOUIdL8o7nDQlT_Nr90CgVPjSpj6lGORaXmpaVBx6k4VQla_rsuP5ZVxL");
-const messaging = Config;
+const messaging = firebase.messaging();
 messaging.usePublicVapidKey("BNtJjn9ch7RFp8N9V3C6SDBE02Zr-_W_OIoZSZcP6uT31Nlzsw22xpRbZ_EcX_04U0zjSePNFaF71aNG7tDZkMY");
 
 
