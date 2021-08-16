@@ -17,7 +17,7 @@
       <!--  </button>-->
       <!--</div>-->
       <Modal v-if="showModal" @close="showModal = !showModal" :opt2="false">
-        <button slot="opt1">수정하기</button>
+        <button slot="opt1" @click="onEdit">수정하기</button>
         <button slot="opt3" @click="showModal = false">닫기</button>
       </Modal>
       <!--nav-->

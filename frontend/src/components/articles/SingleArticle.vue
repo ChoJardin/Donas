@@ -84,7 +84,7 @@ export default {
           data,
           res => {
             if (res.data === 'OK') {
-              data['isLike'] = this.article.like
+              data['like'] = this.article.like
               this.$store.dispatch('setLike', data)
             } else this.$router.push('/404')
           },

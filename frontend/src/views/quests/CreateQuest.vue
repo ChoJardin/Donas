@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ComponentNav @on-arrow="$router.push('/quests')" title="퀘스트 생성"></ComponentNav>
     <div id="router-list">
       <router-link to="/quests/create/solo" style="margin-left: 5px">개인</router-link>
       <p style="padding: 2px"></p>
@@ -17,13 +18,19 @@
 </template>
 
 <script>
+import ComponentNav from "@/components/common/ComponentNav";
+
 export default {
-  name: "CreateQuest"
+  name: "CreateQuest",
+  components: {
+    ComponentNav
+  }
 }
 </script>
 
 <style scoped>
 #router-list {
+  margin-top: 60px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -31,20 +38,20 @@ export default {
 
 #router-list a {
   flex: 1 1 0;
-  border: #f1a64b solid;
+  border: 1.5px #f1a64b solid;
   padding: 5px 10px 5px 10px;
   /*margin-left: 20px;*/
   border-radius: 99em;
   text-decoration: none;
   text-decoration-color: transparent;
-  font-weight: bold;
-  color: black;
+  /*font-family: GongGothicBold;*/
+  color: #292929;
 
 }
 
 #router-list a.router-link-exact-active {
   background: rgba(241, 166, 75, 0.6);
-
+  font-family: GongGothicBold;
 }
 
 #open{

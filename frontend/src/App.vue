@@ -69,6 +69,8 @@ export default {
   font-family: 'GongGothicMedium';
   /* 행간 조정 */
   line-height: 1.2em;
+  /*max-width: 425px;*/
+  /*margin: 0 calc((100vw - 425px) / 2);*/
 }
 
 #app-content {
@@ -76,6 +78,7 @@ export default {
   top: 60px;
   bottom: 60px;
   width: 100%;
+  max-width: 425px;
   padding: 0 15px;
   overflow: auto;
 }

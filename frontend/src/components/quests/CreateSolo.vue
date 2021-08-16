@@ -1,53 +1,88 @@
 <template>
   <div class="create-solo-main">
+
+    <div class="create-quest-info">
+      생성된 퀘스트는 수정 및 삭제가 <span style="color: #cd4e3e">불가</span>합니다. <br/> 신중한 생성바랍니다.
+    </div>
+
     <div>
       <div class="create-quest-questions">
-        <div class="create-question-title">퀘스트 이름을 입력해 주세요
-        <span class="create-question-subtext">(10자 이내)</span></div>
-        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">
+        <div class="create-question-title">
+          <div>
+            퀘스트 이름을 입력해 주세요
+            <span class="create-question-subtext">(14자 이내)</span>
+          </div>
+          <div class="create-question-needed">
+            필수
+          </div>
+        </div>
+        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="14" placeholder="예) 미라클 모닝">
       </div>
 
       <div class="create-quest-questions">
-        <div class="create-question-title">간단한 설명을 입력해 주세요
-        <span class="create-question-subtext">(14자 이내)</span></div>
-        <input class="create-quest-input" v-model="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <div class="create-question-title">
+          <div>
+            간단한 설명을 입력해 주세요
+            <span class="create-question-subtext">(25자 이내)</span>
+          </div>
+          <div class="create-question-needed">
+            필수
+          </div>
+          </div>
+        <input class="create-quest-input" v-model="description" type="text" maxlength="25" placeholder="예) 매일 30분 독서하기">
       </div>
 
       <div class="create-quest-questions">
-        <div class="create-question-title">시작일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <div class="create-question-title">
+          시작일을 지정해 주세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="startAt" type="date" :min="startDate">
+        <div v-if="error.startAt" class="create-quest-error">종료일 이전의 날짜만 선택 가능합니다</div>
       </div>
 
       <div class="create-quest-questions">
-        <div class="create-question-title">종료일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="finishAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
+        <div class="create-question-title">
+          종료일을 지정해 주세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">
+        <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>
       </div>
 
       <div class="create-quest-questions">
-        <div class="create-question-title" >인증 방법을 입력하세요</div>
+        <div class="create-question-title" >
+          인증 방법을 입력하세요
+          <div class="create-question-needed">필수</div>
+        </div>
         <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
         </textarea>
       </div>
 
-    <div class="solo-img-input" style="width: 80%; margin-left: 15px">
-      <AwsImageUploader
-          id="image-input" ref="aws"
-          @preview="onPreview" @on-error="onError"/>
-    </div>
-      <div class="solo-quest-image">
-  <!--      <img v-if="isUpdate" :src="quest.picture" alt="">-->
-        <img v-if="preview" :src="preview" style="width: 200px; height: 200px; padding-top:20px" alt="">
-        <div v-else class="solo-upload-info">
-          등록한 이미지는 수정이 불가합니다.
-          <br/>신중히 선택해 주세요.
-          <br/><br/>
-          5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
+      <div class="create-quest-questions">
+        <div class="create-question-title">퀘스트 대표이미지를 등록하세요</div>
+
+        <div class="solo-quest-image">
+          <img v-if="preview" :src="preview" alt="">
+          <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
+          <div v-if="error.picture" class="error-text" >
+            <div v-html="error.picture"></div>
+            <button @click="$refs.aws.onReset()" class="cancel-select">선택취소</button>
+          </div>
         </div>
-        <div id="image-error" v-html="error" v-if="error"></div>
-
       </div>
+          <div class="solo-img-input">
+            <AwsImageUploader
+                id="image-input" ref="aws"
+                @preview="onPreview" @on-error="onError"/>
+          </div>
 
-      <button class="button" @click="onClick">생 성 하 기</button>
+          <div class="solo-upload-info">
+            <span style="font-family: GongGothicMedium">5MB</span> 이내의
+            <span style="font-family: GongGothicMedium">.jpg/ .jpeg/ .png</span> 파일만 <br/>등록 가능합니다.
+          </div>
+
+      <button class="button" :disabled="buttonDisabled" @click="onClick">생 성 하 기</button>
       </div>
     </div>
 </template>
@@ -56,6 +91,7 @@
 import {mapGetters, mapState} from "vuex";
 import QuestApi from "../../api/QuestApi";
 import AwsImageUploader from "@/components/common/AwsImageUploader";
+import moment from "moment";
 
 export default {
   name: "CreateSingle",
@@ -67,7 +103,7 @@ export default {
       userId: '',
       title: '',
       description: '',
-      startAt: '',
+      startAt: moment().format('YYYY-MM-DD'),
       finishAt: '',
       picture: '',
       certification: '',
@@ -75,15 +111,30 @@ export default {
       //image
       selectedFile: '',
       preview: '',
-      error: '',
+      error: {
+        startAt: false,
+        finishAt: false,
+        picture: false
+      },
       isSaved: false,
+      // today: moment()
     }
   },
   //computed
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-    })
+    }),
+    startDate() {
+      return moment().format('YYYY-MM-DD')
+    },
+    endDate() {
+      return this.startAt
+    },
+    buttonDisabled() {
+      return !(this.title && this.description && this.startAt && this.finishAt && this.certification) ||
+          Object.keys(this.error).some(key => this.error[key])
+    }
   },
   //methods
   methods: {
@@ -91,10 +142,13 @@ export default {
       this.preview = preview
     },
     onError(error) {
-      this.error = error
+      this.error.picture = error
     },
     async onClick() {
-      this.picture = await this.$refs.aws.uploadFile()
+      if (this.preview) {
+        this.picture = await this.$refs.aws.uploadFile()
+      }
+
       this.onSubmit()
     },
     onSubmit() {
@@ -125,6 +179,22 @@ export default {
           })
       },
     },
+  watch: {
+    finishAt: function(v) {
+      if (moment(v).isAfter(this.startAt)) {
+        this.error.startAt = false
+      }
+    },
+    startAt: function(v) {
+      if(moment(v).isAfter(this.finishAt)) {
+        this.error.startAt = true
+        this.startAt = moment().format('YYYY-MM-DD')
+        this.finishAt = ''
+      } else {
+        // this.error.startAt = false
+      }
+    }
+  }
 
   }
 </script>
@@ -135,14 +205,30 @@ export default {
   text-align: left;
 }
 
-.create-question-title {
-  margin-bottom: 7px;
-  font-size: 1.0em;
+.create-quest-info {
+  /*font-family: GongGothicBold;*/
+  margin: 10px 0 30px;
+}
 
+.create-question-title {
+  margin: 10px 0 5px;
+  border-bottom: 1px solid #f6c453;
+  padding-bottom: 5px;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: space-between;
+  /*margin-bottom: 7px;*/
+  /*font-family: GongGothicLight;*/
 }
 
 .create-question-subtext {
   font-size: 0.6em;
+  font-family: GongGothicLight;
+}
+
+.create-question-needed {
+  font-family: GongGothicLight;
+  color: #cd4e3e;
 }
 
 .create-quest-input {
@@ -156,6 +242,13 @@ export default {
   height: 30px;
   padding-top: 5px;
   padding-bottom: 5px;
+  font-family: GongGothicLight;
+}
+
+.create-quest-error {
+  /*font-family: GongGothicLight;*/
+  font-size: 0.8em;
+  color: #cd4e3e;
 }
 
 .create-quest-textarea {
@@ -164,6 +257,7 @@ export default {
   margin-bottom: 10px;
   width: 100%;
   font-size: 0.8em;
+  font-family: GongGothicLight;
   padding-left: 10px;
   border-radius: 10px;
   height: 70px;
@@ -178,7 +272,6 @@ label {
   margin-right: 5px;
 }
 
-
 .button {
   width: 90%;
   height: 50px;
@@ -190,24 +283,82 @@ label {
   color: #e1eedd;
   cursor: pointer;
 }
-/*.solo-img-input{*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*}*/
-.solo-quest-image{
-  width: 250px;
-  height: 250px;
-  /*margin-left: 50px;*/
-  margin: 20px auto;
-  border: #292929 1px solid;
-  border-radius: 25px;
 
+.button:disabled {
+  opacity: 0.6;
+}
+
+.solo-img-input{
+  font-family: GongGothicLight;
+  font-size: 0.9em;
+  margin-left: 15px;
+  width: calc(100% - 150px);
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+}
+
+
+.solo-quest-image-input-set {
+  display: flex;
+}
+
+.solo-quest-image{
+  position: relative;
+  width: 90%;
+  height: 90%;
+  /*border-radius: 50%;*/
+  object-fit: cover;
+  padding: 2px;
+  /*width: 250px;*/
+  /*height: 250px;*/
+  /*margin-left: 50px;*/
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  /*border: #183a1d 1px solid;*/
+  /*border-radius: 25px;*/
+}
+
+.solo-quest-image .error-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #cd4e3e;
+  font-size: 0.8em;
+}
+
+.error-text .cancel-select {
+  margin-top: 10px;
+  /*border: 1px solid #292929;*/
+  border-radius: 8px;
+  background-color: #cd4e3e;
+  /*background-color: rgba(255, 255, 255, 0.7);*/
+  color: #ffffff;
+  padding: 2px 3px;
+}
+
+.solo-quest-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 2px;
+  border: 1px solid #183a1d;
 }
 
 .solo-upload-info{
-  padding-top: 50px;
+  margin: 10px 20px;
+  font-family: GongGothicLight;
+  font-size: 0.8em;
+  text-align: left;
 }
 
 </style>

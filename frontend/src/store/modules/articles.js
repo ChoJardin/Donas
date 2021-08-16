@@ -12,7 +12,7 @@ const state ={
       image: "",
       content: "",
       type: "",
-      isLike: false,
+      like: false,
       heartCnt: 0,
       commentCnt: 0,
       makerImage: null,
@@ -78,7 +78,7 @@ const state ={
       image: "",
       content: "",
       type: "",
-      isLike: false,
+      like: false,
       heartCnt: 0,
       commentCnt: 0,
       makerImage: null,
@@ -134,6 +134,7 @@ const mutations = {
   },
   // 피드에 댓글 개수 반영
   ADD_COMMENT_CNT(state, idx) {
+
     state.feeds[idx].commentCnt += 1
   },
   DELETE_COMMENT_CNT(state, idx) {
@@ -183,7 +184,7 @@ const actions = {
     commit('SET_COMMENT_LIST', commentList)
   },
   // 수정된 댓글 개수 피드에도 반영
-  resetCommentCnt({commit}, {isAdd, articleId}) {
+  resetCommentCnt({commit, state}, {isAdd, articleId}) {
     const idx = state.feeds.findIndex(article => article.id === articleId)
     if (isAdd)
       commit('ADD_COMMENT_CNT', idx)
@@ -194,6 +195,7 @@ const actions = {
   },
   // 작성한 게시글 피드에 추가
   addNewArticle({commit, state}, article) {
+    console.log('add new article')
     // const articles = [article, ...state.feeds]
     const articles = [article].concat(state.feeds)
     commit('SET_SELECTED_ARTICLE', article)

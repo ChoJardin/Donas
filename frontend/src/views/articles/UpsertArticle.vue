@@ -135,8 +135,17 @@ export default {
       this.picture = await this.$refs.aws.uploadFile()
       this.onSubmit()
     },
+    setSavedArticle(data) {
+      this.savedArticle = data
+      this.savedArticle.makerName = this.loginUser.nickname
+      this.savedArticle.makerImage = this.loginUser.picture
+      this.savedArticle.like = false
+      this.savedArticle.heartCnt = 0
+      this.savedArticle.commentCnt = 0
+      this.savedArticle.createdAt = this.savedArticle.createAt
+    },
     // 서버로 요청 보내기
-    onSubmit () {
+    async onSubmit () {
       const data = {
         userId: this.loginUser.id,
         questId: this.quest.id,
@@ -144,21 +153,31 @@ export default {
         content: this.content,
         type: this.quest.type,
       }
-      ArticlesApi.createArticle(
+      await ArticlesApi.createArticle(
           data,
-          res => {
+          async res => {
             if (res.data !== 'NOT_FOUND') {
               console.log(res.data)
-              this.savedArticle = res.data
-              this.savedArticle.makerName = this.loginUser.nickname
-              this.savedArticle.makerImage = this.loginUser.picture
-              this.savedArticle.isLike = false
-              this.savedArticle.heartCnt = 0
-              this.savedArticle.commentCnt = 0
-              this.savedArticle.createdAt = this.savedArticle.createAt
+              // this.setSavedArticle(res.data)
+              // console.log(this.savedArticle)
+              // this.savedArticle = res.data
+              // this.savedArticle.makerName = this.loginUser.nickname
+              // this.savedArticle.makerImage = this.loginUser.picture
+              // this.savedArticle.like = false
+              // this.savedArticle.heartCnt = 0
+              // this.savedArticle.commentCnt = 0
+              // this.savedArticle.createdAt = this.savedArticle.createAt
               // this.$store.dispatch('setSelectedArticle', this.savedArticle)
               this.$store.dispatch('addNewArticle', this.savedArticle)
-              this.$store.dispatch('setSelectedId', this.savedArticle.id)
+                  // .then(r =>
+                  //     this.$store.dispatch('setSelectedId', this.Savedarticle.articleId)
+                  .then( r => {
+                      console.log(this)
+                    console.log(this.savedArticle)
+                      this.$router.push({path: '/article', query: {id: this.savedArticle.articleId}})
+                  }
+                  )
+                  // )
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
