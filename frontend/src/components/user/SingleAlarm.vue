@@ -30,6 +30,17 @@
         </div>
       </div>
     </div>
+
+<!--    <div v-if="alarm.articleId === -3" style="text-decoration: none; color: black">-->
+<!--      <div class="alarm-wrap">-->
+<!--        <div class="alarm-read" v-if="alarm.confirm === 1" @click="statusChange"><i class="material-icons" style="font-size: 1em">markunread</i></div>-->
+<!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>-->
+<!--        <div class="alarm-message" @click="toSendPoint">-->
+<!--          <div style="font-size: 0.5em" >{{dateFormatted}}</div>-->
+<!--          <div style="font-size: 1.0em">{{alarm.content}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 <!--    <router-link v-else :to="{name:'ArticleDetail', params:{id:alarm.articleId}}" style="text-decoration: none; color: black">-->
 <!--      <div class="alarm-wrap">-->
 <!--        <div class="alarm-read" v-if="alarm.confirm === '0'"><i class="material-icons" style="font-size: 0.7em">circle</i></div>-->

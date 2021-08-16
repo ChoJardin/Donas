@@ -5,7 +5,7 @@
         <img v-if="loginUser.picture" class="profile-image" :src="loginUser.picture" alt="">
         <img v-else class="profile-image" src="../../assets/donut_profile.png" alt="">
         <div class="profile-info">
-          <router-link :to="{name:'MileageReceipt'}"><div id="mileage-receipt"><span id="mileage-receipt-button">사용 내역</span></div></router-link>
+          <router-link to="/mileage/usage"><div id="mileage-receipt"><span id="mileage-receipt-button">사용 내역</span></div></router-link>
           <h1 class="username">{{loginUser.nickname}}님의 마일리지</h1>
           <div class="mileage-total">{{mileage}} 마일리지</div>
         </div>
