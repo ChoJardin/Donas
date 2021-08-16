@@ -89,7 +89,6 @@ public class AlarmController {
 			res.confirm = alarm.getConfirm();
 			result.add(res);
 		}
-
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
@@ -98,9 +97,31 @@ public class AlarmController {
 	public Object confirmAlarm(@RequestBody ComfirmAlarmRequest alarm) {
 		if(!alarmService.checkAlarm(alarm.getId()))
 			return HttpStatus.NOT_FOUND;		
-		alarmService.update(alarm.getId(),alarm.getConfirm());
-		
+		alarmService.update(alarm.getId(),alarm.getConfirm());		
 		return HttpStatus.OK;
+	}
+	
+	// 알림 전체 읽음	
+	@PatchMapping("{userId}")
+	@ApiOperation(value="알림 전체 읽음")
+	public Object confirmAlarmAll(@PathVariable long userId) {		
+		List<Alarm> alarms = alarmService.confirmAlarmAll(userService.getUser(userId));
+		if(alarms.size()==0)
+			return new ResponseEntity<>("알림 없음", HttpStatus.OK);
+		
+		final List<AlarmResponse> result = new ArrayList<AlarmResponse>();
+		for(Alarm alarm : alarms) {
+			AlarmResponse res = new AlarmResponse();
+			res.id = alarm.getId();
+			res.receiveId = alarm.getUser().getId();
+			res.sendName = alarm.getSendName();
+			res.articleId = alarm.getArticleId();
+			res.content = alarm.getContents();
+			res.sendTime = alarm.getSendTime();
+			res.confirm = alarm.getConfirm();
+			result.add(res);
+		}
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
 	/*
