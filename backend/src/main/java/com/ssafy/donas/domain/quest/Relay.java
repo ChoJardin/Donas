@@ -43,8 +43,8 @@ public class Relay extends Quest{
 	public Relay() {}
 	
 	@Builder
-	public Relay(String type, String title, String description, Date startAt, String picture, String certification, long mileage, int order, int targetCnt) {
-		super(type, title, description, startAt, null, picture, certification, mileage);
+	public Relay(String type, String title, String description, Date startAt, Date finishAt, String picture, String certification, long mileage, int order, int targetCnt) {
+		super(type, title, description, startAt, finishAt, picture, certification, mileage);
 		this.order = order;
 		this.targetCnt = targetCnt;
 //		this.userStatus = userStatus;
