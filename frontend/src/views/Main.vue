@@ -7,7 +7,7 @@
         <p>&nbsp;님,</p>
       </div>
       <div class="comment">
-        <span>오늘도 준비 되셨나요?</span>
+        <span>오늘도 도전할 준비 되셨나요?</span>
       </div>
     </div>
 
