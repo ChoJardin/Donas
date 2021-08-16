@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import user from "@/store/modules/user";
 import articles from "@/store/modules/articles";
@@ -15,6 +16,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {user, articles, mileages, quests, },
+  plugins: [
+    createPersistedState({
+      path: ['articles.feeds'],
+    })
+  ]
 })
 
 // export default store
