@@ -29,7 +29,7 @@ public class PushService {
 		if(tokens.size()!=0) {		
 			for (Token token : tokens) {
 				try {
-					fcmService.sendMessageTo(token.getToken(), "title이 뭘 뜻하는지 몰람", content);
+					fcmService.sendMessageTo(token.getToken(), "Donas 알림 ^^", content);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
