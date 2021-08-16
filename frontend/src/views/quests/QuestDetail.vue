@@ -38,7 +38,7 @@
           <div>인증 개시글</div>
           <button v-if="isItMine" @click="$router.push('/article/create/')">인증 생성</button>
 <!--          <button @click="onCreate">인증 생성</button>-->
-          <button v-else-if="isItMine === false && questDetail.type==='P'">참여 하기</button>
+          <button v-else-if="isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
         </div>
         <div id="quest-detail-article-wrap">
           <div class="article-image" v-for="article in articles" :key="article.id">
@@ -78,6 +78,22 @@ export default {
     onCreate() {
       this.$store.dispatch('setSelectedId', 0)
       this.$router.push('/article/create/')
+    },
+    participateSingle() {
+      const data = {
+        questId : this.questId,
+        userId : this.loginUser.id
+      }
+      QuestApi.participate(
+          data,
+          res => {
+            console.log(res)
+            this.$router.push({name: 'OnGoingQuests'})
+          },
+          err => {
+            console.log(err)
+          }
+      )
     }
   },
   // computed

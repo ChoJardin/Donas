@@ -8,6 +8,13 @@
     </div>
 
     <router-view id="quest-router-view"/>
+
+<!--    <MidModal  v-if="showModal" @close="showModal= !showModal">-->
+<!--      <v-btn id="explain-model" class="mx-2 text-decoration-none" fab color="indigo">-->
+
+<!--      </v-btn>-->
+<!--    </MidModal>-->
+
     <v-btn v-if="isLoggedIn" id="create-button" class="mx-2 text-decoration-none" fab color="indigo">
       <router-link to="/quests/create"><i class="fas fa-plus fa-lg" style="color: #f19b36"></i></router-link>
 
@@ -18,9 +25,18 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import QuestApi from "../../api/QuestApi";
+// import MidModal from "../../components/common/MidModal";
 
 export default {
   name: 'QuestAll',
+  // components: {
+  //   MidModal
+  // },
+  data() {
+    return {
+      showModal: false,
+    }
+  },
   methods:{
     ...mapActions(['setSelectedType'])
   },

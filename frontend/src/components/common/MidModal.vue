@@ -18,13 +18,6 @@
 
             <hr>
 
-            <div class="mid-modal-body">
-              <slot name="opt2">
-                default body
-              </slot>
-            </div>
-          </div>
-
           <div class="mid-modal-container">
             <div class="mid-modal-footer">
               <slot name="opt3">
