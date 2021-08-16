@@ -1,5 +1,6 @@
 package com.ssafy.donas.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.donas.domain.Alarm;
 import com.ssafy.donas.domain.User;
+import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestAlarm;
+import com.ssafy.donas.domain.quest.QuestParticipants;
 import com.ssafy.donas.domain.quest.Relay;
 import com.ssafy.donas.request.AcceptGroupRequest;
 import com.ssafy.donas.request.AcceptRelayRequest;
@@ -162,6 +165,7 @@ public class AlarmController {
 		
 		if(!questService.checkQuest(questId) || !userService.checkId(userId) || !questAlarmService.checkQuestAlarm(alarmId))
 			return HttpStatus.NOT_FOUND;
+		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questId));
 		
 		// 참여중인 퀘스트에 추가
 		questParticipantsService.addParticipant(userId, questId);
@@ -174,6 +178,15 @@ public class AlarmController {
 		
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
+		
+		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+		for(QuestParticipants qp : participants) {
+			User user =  userService.getUser(userId);
+			Quest quest = qp.getQuest();
+			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));
+			
+		}
+		
 		
 		return HttpStatus.OK;
 	}
@@ -207,12 +220,22 @@ public class AlarmController {
 		
 		if(!questService.checkQuest(questId) || !userService.checkId(userId) || !questAlarmService.checkQuestAlarm(alarmId))
 			return HttpStatus.NOT_FOUND;
+		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questId));
 		
 		// 참여중인 퀘스트에 추가
 		questParticipantsService.addParticipant(userId, questId);
 		
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
+		
+		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+		for(QuestParticipants qp : participants) {
+			User user =  userService.getUser(userId);
+			Quest quest = qp.getQuest();
+			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));			
+		}
+			
+		
 		
 		return HttpStatus.OK;
 	}
@@ -222,9 +245,17 @@ public class AlarmController {
 	public Object rejectGroup(@RequestParam long alarmId, @RequestParam long userId) {
 		if(!questAlarmService.checkQuestAlarm(alarmId))
 			return HttpStatus.NOT_FOUND;
+		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questAlarmService.getAlarm(alarmId).getQuest().getId()));
 		
 		// 알람 응답 칼럼 거절으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 3);
+		
+		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+		for(QuestParticipants qp : participants) {
+			User user =  userService.getUser(userId);
+			Quest quest = qp.getQuest();
+			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));			
+		}
 		
 		return HttpStatus.OK;
 	}	

@@ -28,8 +28,10 @@ public class QuestParticipantsService {
 	@Autowired
 	QuestRepo questRepo;
 	
-	
-	
+	public List<QuestParticipants> participantsList(Quest quest){
+		List<QuestParticipants> userList = questParticipantsRepo.findQuestParticipantsByQuest(quest);
+		return userList;
+	}
 	
 	public void addParticipants(User adminUser, List<User> participants, Quest groupQuest) {
 		QuestParticipants admin = new QuestParticipants(adminUser, groupQuest);
