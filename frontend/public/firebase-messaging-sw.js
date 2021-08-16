@@ -45,7 +45,7 @@ const messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler((payload) => {
   console.log('background', payload);
   // Customize notification here
-  const title = 'Background Message Title'
+  const title = '도나쓰 알림'
   const options = {
     body: payload.data.message,
     icon: '/firebase-logo.png'
