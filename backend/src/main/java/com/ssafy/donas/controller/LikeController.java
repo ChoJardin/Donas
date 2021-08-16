@@ -57,9 +57,9 @@ public class LikeController {
 			return new ResponseEntity<>("이미 누름",HttpStatus.NOT_FOUND);	
 	
 		Article article = articleService.getArticleById(like.getArticleId());
-		User sendUser = userService.getUser(like.getUserId());
-		likeService.addLike(sendUser, article);
-		if(!alarmService.addAlarm(sendUser,article.getUser().getNickname(),article.getId(),sendUser.getNickname()+"님이 "+article.getQuest().getTitle()+" 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
+		User receivedUser = article.getUser();
+		likeService.addLike(receivedUser, article);
+		if(!alarmService.addAlarm(receivedUser,article.getUser().getNickname(),article.getId(),sendUser.getNickname()+"님이 "+article.getQuest().getTitle()+" 게시물을 좋아합니다.", LocalDateTime.now().plusHours(9)))
 			return HttpStatus.CONFLICT;
 		return HttpStatus.OK;
 	}
