@@ -36,12 +36,12 @@
     </div>
       <div class="relay-quest-image">
   <!--      <img v-if="isUpdate" :src="quest.picture" alt="">-->
-        <img v-if="preview" :src="preview" style="width: 200px; height: 200px" alt="">
+        <img v-if="preview" :src="preview" style="width: 200px; height: 200px; padding-top:20px" alt="">
         <div v-else class="relay-upload-info">
           등록한 이미지는 수정이 불가합니다.
           <br/>신중히 선택해 주세요.
           <br/><br/>
-          3. 1MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
+          5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
         </div>
         <div id="image-error" v-html="error" v-if="error"></div>
 
@@ -199,6 +199,13 @@ label {
   /*margin-left: 50px;*/
   /*margin-top: 20px;*/
   margin: 20px auto;
+  border: #292929 1px solid;
+  border-radius: 25px;
+
+}
+
+.relay-upload-info{
+  padding-top: 50px;
 }
 
 </style>

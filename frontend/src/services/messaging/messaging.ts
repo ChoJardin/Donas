@@ -27,7 +27,7 @@ messaging.usePublicVapidKey("BNtJjn9ch7RFp8N9V3C6SDBE02Zr-_W_OIoZSZcP6uT31Nlzsw2
 
 messaging.getToken().then((currentToken) => {
     if (currentToken) {
-        console.log(currentToken);
+        // console.log(currentToken);
         token.value = currentToken;
     } else {
         // Show permission request.
@@ -36,7 +36,7 @@ messaging.getToken().then((currentToken) => {
 });
 messaging.onMessage((payload) => {
     console.log('foreground',payload);
-    const title = '도나쓰 알림';
+    const title = '도나쓰';
     const options = {
         body: payload.data.message,
         icon: '/firebase-logo.png',

@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="branch">
+      <router-link :to="{name:'DonationUsage'}" class="button">기부 내역</router-link>
+<!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
+      <router-link :to="{name:'CashUsage'}" class="button">출금 내역</router-link>
+    </div>
+
+    <router-view class="router-view"/>
   </div>
 </template>
 
@@ -21,8 +28,8 @@ export default {
     MileagesApi.requestMileageUsage(
         donation,
         res => {
-          console.log(res)
-          this.$store.dispatch('setDonationUsage', res.data)
+          // console.log(res)
+          this.$store.dispatch('setDonationUsage', res)
         },
         err => {
           console.log(err)
@@ -32,8 +39,8 @@ export default {
     MileagesApi.requestMileageUsage(
         cash,
         res => {
-          console.log(res)
-          this.$store.dispatch('setCashUsage', res.data)
+          // console.log(res)
+          this.$store.dispatch('setCashUsage', res)
         },
         err => {
           console.log(err)
@@ -45,5 +52,28 @@ export default {
 </script>
 
 <style scoped>
+.branch {
+  height: 30px;
+  margin: 10px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.branch a.router-link-exact-active {
+  border-bottom: #f0a04b solid;
+}
+
+.button {
+  width: 90%;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-bottom: lightgray solid 1px;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
 
 </style>

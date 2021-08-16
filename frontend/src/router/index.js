@@ -37,6 +37,8 @@ import CharityDetail from "../components/mileages/CharityDetail";
 import CashOut from "@/components/mileages/CashOut";
 import CashOutResult from "@/components/mileages/CashOutResult"
 import MileageReceipt from "../components/mileages/MileageReceipt";
+import DonationUsage from "../components/mileages/DonationUsage"
+import CashUsage from "../components/mileages/CashUsage";
 
 // 프로필
 import Profile from "@/views/user/Profile";
@@ -66,10 +68,13 @@ import PageNotFound from "@/views/common/PageNotFound";
 import ImageInput from "@/components/common/ImageInput";
 import Test from "@/views/Test";
 import SignInUp from "@/views/user/SignInUp";
+
+
 import MyQuests from "@/views/quests/MyQuests";
 import CompletedQuests from "@/components/quests/CompletedQuests";
 import OnGoingQuests from "@/components/quests/OnGoingQuests";
 import UpcomingQuests from "@/components/quests/UpcomingQuests";
+
 
 
 Vue.use(VueRouter)
@@ -136,7 +141,13 @@ const routes = [
       {path: 'success', name: 'CashOutResult',component: CashOutResult, meta: { transitionName: 'slide' }},
     ]
   },
-  {path: '/user/mileage/usage', name: 'MileageReceipt', component: MileageReceipt},
+  {path: '/mileage/usage', component: MileageReceipt,
+    children: [
+      {path: '', name: 'DonationUsage', component: DonationUsage},
+      {path: 'cash', name: 'CashUsage', component: CashUsage},
+
+    ]
+  },
 
   {path: '/charity/:id', name: 'CharityDetail', component: CharityDetail},
 
