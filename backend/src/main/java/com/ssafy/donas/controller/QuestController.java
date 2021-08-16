@@ -107,8 +107,45 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 		if(questParticipantsService.participantByQuest(userService.getUser(quest.getUserId()))!=null)
 			return HttpStatus.NOT_FOUND;
-		questParticipantsService.addParticipant(quest.getUserId(), quest.getQuestId());		
-		return HttpStatus.OK;
+		questParticipantsService.addParticipant(quest.getUserId(), quest.getQuestId());
+		
+		Quest nowQuest = questService.getQuestById(quest.getQuestId());
+
+		final QuestDetailResponse response = new QuestDetailResponse();
+		response.setId(nowQuest.getId());
+		response.setTitle(nowQuest.getTitle());
+		response.setDescription(nowQuest.getDescription());
+		response.setPicture(nowQuest.getPicture());
+		response.setType(nowQuest.getType());
+		response.setStartAt(nowQuest.getStartAt());
+		response.setFinishAt(nowQuest.getFinishAt());
+		response.setMileage(nowQuest.getMileage());
+		response.setPercent(nowQuest.getPercent());
+		response.setCertification(nowQuest.getCertification());
+		response.setSuccess(nowQuest.getSuccess());
+
+		// 참여하는 유저 리스트 보내기
+		List<UserInfo> users = new ArrayList<>();
+
+		List<QuestParticipants> participants = nowQuest.getParticipants();
+		for (QuestParticipants qp : participants) {
+			User user = qp.getUser();
+			users.add(new UserInfo(user.getId(), user.getNickname(), user.getPicture(), user.getDescription()));
+		}
+		response.setUsers(users);
+
+		// 게시글 리스트 보내기
+		// 퀘스트 내의 게시글을 보는데 유저가 좋아요를 누른 것인지 확인도 해야함
+		response.setArticles(articleService.getArticleInfoByQuest(quest.getQuestId(), userService.getUser(quest.getUserId())));
+
+		// 릴레이의 경우 목표 인원 & 현재 달성 인원 보내기
+		if ("R".equals(nowQuest.getType())) {
+			Relay relay = relayService.getById(quest.getQuestId());
+			response.setTargetCnt(relay.getTargetCnt());
+			response.setNowCnt(relay.getOrder());
+		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
 	}
 
 	@PostMapping("/group")
