@@ -169,12 +169,10 @@ export default {
               // this.savedArticle.createdAt = this.savedArticle.createAt
               // this.$store.dispatch('setSelectedArticle', this.savedArticle)
               this.$store.dispatch('addNewArticle', this.savedArticle)
-                  // .then(r =>
-                  //     this.$store.dispatch('setSelectedId', this.Savedarticle.articleId)
                   .then( r => {
-                      console.log(this)
                     console.log(this.savedArticle)
-                      this.$router.push({path: '/article', query: {id: this.savedArticle.articleId}})
+                    console.log(this.$store.state.articles.feeds)
+                    this.$router.push({path: '/article', query: {id: this.savedArticle.articleId}})
                   }
                   )
                   // )

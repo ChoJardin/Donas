@@ -18,6 +18,7 @@
     "moment": "^2.29.1",
     "password-validator": "^5.1.1",
     "register-service-worker": "^1.7.2",
+    "velocity-animate": "^1.5.2",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
     "vue-infinite-loading": "^2.4.5",
