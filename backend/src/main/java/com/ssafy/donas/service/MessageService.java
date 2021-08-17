@@ -86,8 +86,7 @@ public class MessageService {
 		
 	}
 	
+	// 채팅 내용
 	
-	
-	//
 
 }

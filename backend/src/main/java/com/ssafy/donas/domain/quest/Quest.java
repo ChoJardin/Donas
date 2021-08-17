@@ -108,7 +108,7 @@ public abstract class Quest {
 //	}
 
 	public Quest(String type, String title, String description, Date startAt, Date finishAt, String picture,
-			String certification, long mileage) {
+			String certification, long mileage, int minArticleCount) {
 		super();
 		this.type = type;
 		this.title = title;
@@ -118,6 +118,7 @@ public abstract class Quest {
 		this.picture = picture;
 		this.certification = certification;
 		this.mileage = mileage;
+		this.minArticleCount = minArticleCount;
 	}
 	
 }

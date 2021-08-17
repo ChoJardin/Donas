@@ -92,7 +92,7 @@ public class QuestController {
 			return HttpStatus.NO_CONTENT;
 
 		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
-				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage());
+				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(),quest.getMinArticleCount());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
 
 		return HttpStatus.OK;
@@ -159,7 +159,7 @@ public class QuestController {
 
 		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
 				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(),
-				quest.getParticipants().size() + 1);
+				quest.getParticipants().size() + 1,quest.getMinArticleCount());
 
 		List<String> participantUsers = quest.getParticipants();
 		List<User> participants = new ArrayList<>();
