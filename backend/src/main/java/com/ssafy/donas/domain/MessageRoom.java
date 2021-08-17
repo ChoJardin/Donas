@@ -27,7 +27,7 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-@Table(name="MessageRoom")
+@Table(name="Message_room")
 public class MessageRoom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
