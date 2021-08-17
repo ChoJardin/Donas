@@ -34,7 +34,7 @@ public class ChatService {
 	// 처음일 때 새로 방 만들기
 	public List<Chat> enterChattingRoom(User sendUser, User receivedUser){
 		List<Chat> chatting = null;
-		chatRepo.fi
+//		chatRepo.fi
 		return chatting;		
 	}
 	
