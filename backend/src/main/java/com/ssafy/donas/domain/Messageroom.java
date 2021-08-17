@@ -40,9 +40,9 @@ public class Messageroom {
 	@JoinColumn(name = "usertwo_id")
 	private User user2;
 	
-//	@OneToMany(mappedBy = "messageRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonIgnore
-//	private List<Message> msg = new ArrayList<>();
+	@OneToMany(mappedBy = "messageroom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Message> msg = new ArrayList<>();
 	
 	public Messageroom() {}
 	
