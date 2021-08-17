@@ -1,6 +1,8 @@
 package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,9 +55,19 @@ public class QuestAlarmService {
 		
 		return true;		
 	}
-	
+	// 퀘스트 알림 리스트 가져오기
 	public List<QuestAlarm> getAlarms(User user){
-		return questAlarmRepo.findQuestAlarmByUser(user);
+		List<QuestAlarm> questAlarms = questAlarmRepo.findQuestAlarmByUser(user);
+		Collections.sort(questAlarms,new Comparator<QuestAlarm>() {
+
+			@Override
+			public int compare(QuestAlarm o1, QuestAlarm o2) {
+				if(o2.getSendTime().isAfter(o1.getSendTime()))
+					return 1;
+				return -1;
+			}			
+		});
+		return questAlarms;
 	}
 
 	public void updateConfirm(long alarmId, int confirm) {
