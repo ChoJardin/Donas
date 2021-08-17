@@ -32,21 +32,10 @@ public class MessageService {
 	
 	@Autowired
 	MessageRoomRepo messageRoomRepo;
-	
+		
 	@Autowired
 	PushService pushService;
 	
-	// 새로운 채팅방 들어가기
-	// 원래 있으면 기존 채팅방으로 들어가기
-	// 처음일 때 새로 방 만들기
-	public List<Message> enterMessageRoom(long sendId, long receivedId){
-		User sendUser = userRepo.getById(sendId);
-		User receivedUser = userRepo.getById(receivedId);
-		
-		List<Message> messages = messageRepo.findChatBySendUserAndReceivedUser(sendUser, receivedUser);
-
-		return messages;		
-	}
 	// 채팅 보내기
 	public boolean sendMessage(long sendId, long receivedId, String content, LocalDateTime time) {
 		User sendUser = userRepo.getById(sendId);
@@ -63,6 +52,7 @@ public class MessageService {
 		}		
 		if(messageRepo.save(new Message(content,sendUser,receivedUser,time,room1))==null)
 			return false;
+		pushService.searchReceivedUser(receivedUser, sendUser.getNickname()+" : "+content, time);
 		return true;
 	}
 		
