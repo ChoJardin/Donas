@@ -88,7 +88,7 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
   position: fixed;
-  width: 100vw;
+  width: 100%;
   height: 60px;
   display: flex;
   align-items: center;
@@ -96,6 +96,7 @@ export default {
   padding-bottom: 5px;
   border-bottom: 1px solid #e4e6e9;
 }
+
 
 #logo {
   margin-top: 5px;

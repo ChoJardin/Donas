@@ -12,7 +12,7 @@
     <v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>
 
     <MidModal  v-if="showModal" @close="showModal= !showModal">
-      <div slot="header" @click="showModal = false"><div style="padding-left: 30px">퀘스트 설명<i class="material-icons" style="margin-left: 70px">close</i></div> </div>
+      <div slot="header" @click="showModal = false" style="width: 100%">퀘스트 설명</div>
       <div slot="opt1">
         <div style="margin-bottom: 5px">개인 퀘스트</div>
         <div> 개별적으로 참여하는 퀘스트입니다. </div>

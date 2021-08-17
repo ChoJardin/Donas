@@ -59,6 +59,19 @@
 
       <div class="create-quest-questions">
         <div class="create-question-title">
+          <div>
+            목표인원을 설정해 주세요
+            <span class="create-question-subtext">(최대 10명)</span>
+          </div>
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="targetCnt" type="number" name="members" min="2" max="10"
+        placeholder="2 ~ 10 사이의 인원을 선택해주세요">
+        <div v-if="error.targetCnt" class="create-quest-error">2 ~ 10 사이의 인원을 선택해주세요</div>
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
           시작일을 지정해 주세요
           <div class="create-question-needed">필수</div>
         </div>
@@ -66,14 +79,14 @@
         <div v-if="error.startAt" class="create-quest-error">종료일 이전의 날짜만 선택 가능합니다</div>
       </div>
 
-      <div class="create-quest-questions">
-        <div class="create-question-title">
-          종료일을 지정해 주세요
-          <div class="create-question-needed">필수</div>
-        </div>
-        <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">
-        <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>
-      </div>
+      <!--<div class="create-quest-questions">-->
+      <!--  <div class="create-question-title">-->
+      <!--    종료일을 지정해 주세요-->
+      <!--    <div class="create-question-needed">필수</div>-->
+      <!--  </div>-->
+      <!--  <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">-->
+      <!--  <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>-->
+      <!--</div>-->
 
       <div class="create-quest-questions">
         <div class="create-question-title" >
@@ -95,56 +108,56 @@
 
 
 
-    <!--주희-->
-    <div>
-      <div class="create-quest-questions">
-        <div class="create-question-title">퀘스트 이름을 입력해 주세요
-        <span class="create-question-subtext">(10자 이내)</span></div>
-        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">
-      </div>
+  <!--  &lt;!&ndash;주희&ndash;&gt;-->
+  <!--  <div>-->
+  <!--    <div class="create-quest-questions">-->
+  <!--      <div class="create-question-title">퀘스트 이름을 입력해 주세요-->
+  <!--      <span class="create-question-subtext">(10자 이내)</span></div>-->
+  <!--      <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">-->
+  <!--    </div>-->
 
-      <div class="create-quest-questions">
-        <div class="create-question-title">간단한 설명을 입력해 주세요
-        <span class="create-question-subtext">(14자 이내)</span></div>
-        <input class="create-quest-input" v-model="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">
-      </div>
+  <!--    <div class="create-quest-questions">-->
+  <!--      <div class="create-question-title">간단한 설명을 입력해 주세요-->
+  <!--      <span class="create-question-subtext">(14자 이내)</span></div>-->
+  <!--      <input class="create-quest-input" v-model="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">-->
+  <!--    </div>-->
 
-      <div class="create-quest-questions">
-        <div class="create-question-title">목표인원을 설정해 주세요</div>
-        <input class="create-quest-input" v-model="targetCnt" type="number" maxlength="2">
-      </div>
+  <!--    <div class="create-quest-questions">-->
+  <!--      <div class="create-question-title">목표인원을 설정해 주세요</div>-->
+  <!--      <input class="create-quest-input" v-model="targetCnt" type="number" maxlength="2">-->
+  <!--    </div>-->
 
-      <div class="create-quest-questions">
-        <div class="create-question-title">시작일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
-      </div>
+  <!--    <div class="create-quest-questions">-->
+  <!--      <div class="create-question-title">시작일을 지정해 주세요</div>-->
+  <!--      <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">-->
+  <!--    </div>-->
 
-      <div class="create-quest-questions">
-        <div class="create-question-title" >인증 방법을 입력하세요</div>
-        <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
-        </textarea>
-      </div>
+  <!--    <div class="create-quest-questions">-->
+  <!--      <div class="create-question-title" >인증 방법을 입력하세요</div>-->
+  <!--      <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">-->
+  <!--      </textarea>-->
+  <!--    </div>-->
 
-      <div class="relay-img-input" style="width: 80%; margin-left: 15px">
-      <AwsImageUploader
-          id="image-input" ref="aws"
-          @preview="onPreview" @on-error="onError"/>
-    </div>
-      <div class="relay-quest-image">
-  <!--      <img v-if="isUpdate" :src="quest.picture" alt="">-->
-        <img v-if="preview" :src="preview" style="width: 200px; height: 200px; padding-top:20px" alt="">
-        <div v-else class="relay-upload-info">
-          등록한 이미지는 수정이 불가합니다.
-          <br/>신중히 선택해 주세요.
-          <br/><br/>
-          5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
-        </div>
-        <div id="image-error" v-html="error" v-if="error"></div>
+  <!--    <div class="relay-img-input" style="width: 80%; margin-left: 15px">-->
+  <!--    <AwsImageUploader-->
+  <!--        id="image-input" ref="aws"-->
+  <!--        @preview="onPreview" @on-error="onError"/>-->
+  <!--  </div>-->
+  <!--    <div class="relay-quest-image">-->
+  <!--&lt;!&ndash;      <img v-if="isUpdate" :src="quest.picture" alt="">&ndash;&gt;-->
+  <!--      <img v-if="preview" :src="preview" style="width: 200px; height: 200px; padding-top:20px" alt="">-->
+  <!--      <div v-else class="relay-upload-info">-->
+  <!--        등록한 이미지는 수정이 불가합니다.-->
+  <!--        <br/>신중히 선택해 주세요.-->
+  <!--        <br/><br/>-->
+  <!--        5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.-->
+  <!--      </div>-->
+  <!--      <div id="image-error" v-html="error" v-if="error"></div>-->
 
-      </div>
+  <!--    </div>-->
 
-      <button class="button" @click="onClick">생 성 하 기</button>
-      </div>
+  <!--    <button class="button" @click="onClick">생 성 하 기</button>-->
+  <!--    </div>-->
 
   </div>
 </template>
@@ -153,6 +166,9 @@
 import {mapGetters, mapState} from "vuex";
 import QuestApi from "../../api/QuestApi";
 import AwsImageUploader from "@/components/common/AwsImageUploader";
+import moment from "moment";
+
+import('@/assets/style/quests/create-quests.css')
 
 export default {
   name: "CreateRelay",
@@ -164,23 +180,35 @@ export default {
       userId: '',
       title: '',
       description: '',
-      startAt:'',
-      picture:'../../assets/donut_flag.png',
+      startAt: moment().format('YYYY-MM-DD'),
+      picture: '',
       certification: '',
-      mileage:2000,
+      mileage: 2000,
       targetCnt: '',
       //image
       selectedFile: '',
       preview: '',
-      error: '',
+      error: {
+        startAt: false,
+        picture: false,
+        targetCnt: false
+      },
       isSaved: false,
+      isSubmit: false,
     }
   },
   //computed
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-    })
+    }),
+    buttonDisabled() {
+      return !(this.title && this.description && this.startAt && this.certification) ||
+          Object.keys(this.error).some(key => this.error[key]) || this.isSubmit
+    },
+    startDate() {
+      return moment().format('YYYY-MM-DD')
+    },
   },
   //methods
   methods: {
@@ -191,6 +219,7 @@ export default {
       this.error = error
     },
     async onClick() {
+      this.isSubmit = true
       this.picture = await this.$refs.aws.uploadFile()
       this.onSubmit()
     },
@@ -214,6 +243,7 @@ export default {
             console.log(res)
             if(res === "NO_CONTENT") {
               alert('입력확인')
+              this.isSubmit = false
             }
             else{
               this.$router.push('/quests/relay')
@@ -223,85 +253,23 @@ export default {
             console.log(err)
           })
       }
-    }
+    },
+  watch: {
+    targetCnt: function(v) {
+      if (this.targetCnt == 1) {
+        this.error.targetCnt = true
+      } else if ( 2 > this.targetCnt || this.targetCnt > 10) {
+        this.targetCnt = ''
+        this.error.targetCnt = true
+      } else {
+        this.error.targetCnt = false
+      }
+}
   }
+}
 </script>
 
 <style scoped>
-.create-quest-questions {
-  margin: 0px 15px 15px 15px;
-  text-align: left;
-}
 
-.create-question-title {
-  margin-bottom: 7px;
-  font-size: 1.0em;
-
-}
-
-.create-question-subtext {
-  font-size: 0.6em;
-}
-
-.create-quest-input {
-  border: black solid 1px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  width: 100%;
-  font-size: 0.8em;
-  padding-left: 10px;
-  border-radius: 10px;
-  height: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.create-quest-textarea {
-  border: black solid 1px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  width: 100%;
-  font-size: 0.8em;
-  padding-left: 10px;
-  border-radius: 10px;
-  height: 70px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.create-solo-questions .create-quest-img {
-  /*height: 10px;*/
-}
-label {
-  font-size: 0.8em;
-  margin-right: 5px;
-}
-
-
-.button {
-  width: 90%;
-  height: 50px;
-  border-radius:25px;
-  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
-  font-size: 1em;
-  /*font-weight: bold;*/
-  background-color: #183a1d;
-  color: #e1eedd;
-  cursor: pointer;
-}
-
-.relay-quest-image{
-  width: 250px;
-  height: 250px;
-  /*margin-left: 50px;*/
-  /*margin-top: 20px;*/
-  margin: 20px auto;
-  border: #292929 1px solid;
-  border-radius: 25px;
-
-}
-
-.relay-upload-info{
-  padding-top: 50px;
-}
 
 </style>

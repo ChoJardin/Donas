@@ -58,13 +58,29 @@
 
       <div class="create-quest-questions">
         <div class="create-question-title">
-          <div>함께 할 동료를 선택해 주세요</div>
+          <div>
+            함께 할 동료를 선택해 주세요
+            <span class="create-question-subtext">(최소 1명)</span>
+          </div>
           <div class="create-question-needed">필수</div>
         </div>
-        <MidModal>
-            <div slot="header">친구 찾기</div>
-            <CreateGroupFriend slot="opt1" @participants="onSelect"></CreateGroupFriend>
-        </MidModal>
+          <input @click="isModal = true" class="create-quest-input" type="text" placeholder="친구를 검색해보세요" readonly>
+          <MidModal v-if="isModal" @close="isModal = false">
+              <div slot="header" style="width: 100%; text-align: center">친구 찾기</div>
+              <CreateGroupFriend slot="opt1"
+                                 :friends.sync="participants"
+                                 :participants="participants"
+                                 @on-friend-select="onFriendSelect" ref="friends"></CreateGroupFriend>
+          </MidModal>
+          <div style="margin: 5px 0 10px">
+            <span
+                @click="onDelete(`${friend}`)"
+                v-for="(friend, idx) in participants" :key="idx"
+                class="name-tag"
+            >
+              {{friend}}&nbsp;&nbsp;X
+            </span>
+          </div>
       </div>
 
       <div class="create-quest-questions">
@@ -143,6 +159,8 @@ export default {
         picture: false
       },
       isSaved: false,
+      isSubmit: false,
+      isModal: false
     }
   },
   //computed
@@ -157,12 +175,18 @@ export default {
       return this.startAt
     },
     buttonDisabled() {
-      return !(this.title && this.description && this.startAt && this.finishAt && this.certification) ||
+      return !(this.title && this.description && this.startAt && this.finishAt && this.certification && !!this.participants.length) ||
           Object.keys(this.error).some(key => this.error[key]) || this.isSubmit
     }
   },
   //methods
   methods: {
+    onFriendSelect() {
+      this.participants = this.$refs.friends.friends
+    },
+    onDelete(name) {
+      this.participants = this.participants.filter(participant => participant !== name)
+    },
     onPreview(preview) {
       this.preview = preview
     },
@@ -170,6 +194,7 @@ export default {
       this.error = error
     },
     async onClick() {
+      this.isSubmit = true
       this.picture = await this.$refs.aws.uploadFile()
       this.onSubmit()
     },
@@ -193,6 +218,7 @@ export default {
             console.log(res)
             if(res === "NO_CONTENT") {
               alert('입력확인')
+              this.isSubmit = false
             }
             else{
               this.$router.push('/quests/group')
@@ -240,43 +266,5 @@ export default {
 </script>
 
 <style scoped>
-.create-solo-questions .create-quest-img {
-  /*height: 10px;*/
-}
-label {
-  font-size: 0.8em;
-  margin-right: 5px;
-}
-
-.create-quest-img {
-  width: 100%;
-}
-
-.button {
-  width: 90%;
-  height: 50px;
-  border-radius:25px;
-  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
-  font-size: 1em;
-  /*font-weight: bold;*/
-  background-color: #183a1d;
-  color: #e1eedd;
-  cursor: pointer;
-}
-
-.group-quest-image{
-  width: 200px;
-  height: 200px;
-  /*margin-left: 50px;*/
-  /*margin-top: 20px;*/
-  margin: 20px auto;
-  border: #292929 1px solid;
-  border-radius: 25px;
-
-}
-
-.group-upload-info{
-  padding-top: 50px;
-}
 
 </style>

@@ -24,7 +24,7 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class Chat {
+public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +43,17 @@ public class Chat {
 	
 	@Column(nullable = false, updatable = false)
 	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private LocalDateTime time;	
+	private LocalDateTime time;
+	
+//	@Column(nullable = false, updatable = false)
+//	private MessageRoom messageRoom;
+
+	public Message(String content, User sendUser, User receivedUser, LocalDateTime time) {
+		this.content = content;
+		this.sendUser = sendUser;
+		this.receivedUser = receivedUser;
+		this.time = time;
+//		this.messageRoom = messageRoom;
+	}	
 	
 }
