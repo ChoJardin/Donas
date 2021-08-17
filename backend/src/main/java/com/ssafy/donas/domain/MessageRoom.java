@@ -38,7 +38,7 @@ public class MessageRoom {
 	@JoinColumn(name = "user2_id")
 	private User user2;
 	
-	@OneToMany(mappedBy = "MessageRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "messageRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Message> messages = new ArrayList<Message>();
 
 	public MessageRoom() {};
