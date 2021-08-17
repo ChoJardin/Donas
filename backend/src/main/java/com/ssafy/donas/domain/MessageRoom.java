@@ -45,7 +45,6 @@ public class MessageRoom {
 //	@JsonIgnore
 //	private List<Message> msg = new ArrayList<>();
 
-	public MessageRoom() {};
 	
 	public MessageRoom(User user1, User user2) {
 
