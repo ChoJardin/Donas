@@ -28,7 +28,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Table(name="Message_room")
-public class MessageRoom {
+public class Messageroom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -45,7 +45,7 @@ public class MessageRoom {
 //	@JsonIgnore
 //	private List<Message> msg = new ArrayList<>();
 	
-	public MessageRoom(User user1, User user2) {
+	public Messageroom(User user1, User user2) {
 
 		this.user1 = user1;
 		this.user2 = user2;
