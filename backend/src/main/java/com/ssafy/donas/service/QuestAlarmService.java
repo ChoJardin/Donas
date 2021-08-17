@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.donas.domain.Alarm;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestAlarm;
@@ -67,7 +69,11 @@ public class QuestAlarmService {
 				return -1;
 			}			
 		});
-		return questAlarms;
+		List<QuestAlarm> top15Alarms = new ArrayList<QuestAlarm>();
+		for(int i=0;i<15;i++) {
+			top15Alarms.add(questAlarms.get(i));
+		}		
+		return top15Alarms;
 	}
 
 	public void updateConfirm(long alarmId, int confirm) {
