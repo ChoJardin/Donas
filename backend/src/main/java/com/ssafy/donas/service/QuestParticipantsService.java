@@ -32,9 +32,9 @@ public class QuestParticipantsService {
 		List<QuestParticipants> userList = questParticipantsRepo.findQuestParticipantsByQuest(quest);
 		return userList;
 	}
-	public User participantByQuest(User user) {
+	public User participantByQuest(Quest quest,User user) {
 		
-		List<QuestParticipants> participants = questParticipantsRepo.findQuestParticipantsByUser(user);
+		List<QuestParticipants> participants = questParticipantsRepo.findQuestParticipantsByQuest(quest);
 		for(QuestParticipants qp : participants) {
 			if(qp.getUser().getId()==user.getId()) {
 				return qp.getUser();
