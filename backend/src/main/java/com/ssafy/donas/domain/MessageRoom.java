@@ -1,8 +1,10 @@
 package com.ssafy.donas.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.ColumnDefault;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -24,25 +25,29 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class Chat {
-
+public class MessageRoom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "content")
-	private String content;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user1_id")
+	private User user1;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "send_id")
-	private User sendUser;
+	@JoinColumn(name = "user2_id")
+	private User user2;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "receive_id")
-	private User receivedUser;
+	@OneToMany(mappedBy = "MessageRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Message> messages = new ArrayList<Message>();
+
+	public MessageRoom() {};
 	
-	@Column(nullable = false, updatable = false)
-	@ColumnDefault("CURRENT_TIMESTAMP()")
-	private LocalDateTime time;	
+	public MessageRoom(User user1, User user2) {
+
+		this.user1 = user1;
+		this.user2 = user2;
+	}
+	
 	
 }
