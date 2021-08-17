@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Message;
-
+import com.ssafy.donas.domain.MessageRoom;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.repository.AlarmRepo;
 import com.ssafy.donas.repository.MessageRepo;
-
+import com.ssafy.donas.repository.MessageRoomRepo;
 import com.ssafy.donas.repository.UserRepo;
 
 @Service
@@ -30,8 +30,8 @@ public class MessageService {
 	@Autowired
 	MessageRepo messageRepo;
 	
-//	@Autowired
-//	MessageRoomRepo messageRoomRepo;
+	@Autowired
+	MessageRoomRepo messageRoomRepo;
 	
 	@Autowired
 	PushService pushService;
@@ -51,17 +51,17 @@ public class MessageService {
 	public boolean sendChat(long sendId, long receivedId, String content, LocalDateTime time) {
 		User sendUser = userRepo.getById(sendId);
 		User receivedUser = userRepo.getById(receivedId);
-//		MessageRoom room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(sendUser, receivedUser);
-//		if(room1==null)	{			
-//			room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(receivedUser,sendUser);		
-//			// 메세지 보낸 적있는지 확인
-//			if(room1==null) {
-//				// 새로운 메세지방 만들기
-//				messageRoomRepo.save(new MessageRoom(sendUser,receivedUser));
-//			}
-//		}		
-//		if(messageRepo.save(new Message(content,sendUser,receivedUser,time,room1))==null)
-//			return false;
+		MessageRoom room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(sendUser, receivedUser);
+		if(room1==null)	{			
+			room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(receivedUser,sendUser);		
+			// 메세지 보낸 적있는지 확인
+			if(room1==null) {
+				// 새로운 메세지방 만들기
+				messageRoomRepo.save(new MessageRoom(sendUser,receivedUser));
+			}
+		}		
+		if(messageRepo.save(new Message(content,sendUser,receivedUser,time,room1))==null)
+			return false;
 		return true;
 	}
 		
