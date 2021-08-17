@@ -8,6 +8,7 @@
               <slot name="header">
                 default he
               </slot>
+              <i class="material-icons" @click="$emit('close')">close</i>
             </div>
 
             <div class="mid-modal-body">
@@ -67,8 +68,8 @@ export default {
 
 .mid-modal-container {
   width: 300px;
-  margin: 10px auto;
-  padding: 0 20px;
+  margin: 0px auto;
+  padding: 20px 20px;
   background-color: rgba(255, 255, 255);
   /*border-top-left-radius: 30px;*/
   /*border-top-right-radius: 30px;*/
@@ -82,14 +83,22 @@ export default {
 }
 
 .mid-modal-header {
-  margin-top: 0;
   color: #000302;
-  padding-top: 5px;
-  float: right;
   width: 100%;
-  padding-left: 50px;
-  padding-bottom: 20px;
+  height: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
+
+.mid-modal-header .material-icons {
+  position: absolute;
+  float: right;
+  top: 0;
+  right: 0;
+  /*flex: 1 1 0;*/
+}
+
 
 .mid-modal-body button {
   padding: 20px;

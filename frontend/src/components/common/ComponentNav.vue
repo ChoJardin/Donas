@@ -43,15 +43,22 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
+  width: 100%;
   color: #183a1d;
   position: fixed;
   left: 0;
-  width: 100vw;
   z-index: 3;
   background: white;
-  top: 60px;
+  top: 0;
   border-bottom: 1px solid #e4e6e9;
 }
+
+  @media screen and (min-width: 425px) {
+    #component-nav {
+      width: 425px;
+    }
+}
+
 
 .material-icons.color292929 {
   color: #183a1d;
