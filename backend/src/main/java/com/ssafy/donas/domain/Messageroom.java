@@ -27,23 +27,24 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-@Table(name="Message_room")
 public class Messageroom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user1_id")
+	@JoinColumn(name = "userone_id")
 	private User user1;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user2_id")
+	@JoinColumn(name = "usertwo_id")
 	private User user2;
 	
 //	@OneToMany(mappedBy = "messageRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	@JsonIgnore
 //	private List<Message> msg = new ArrayList<>();
+	
+	public Messageroom() {}
 	
 	public Messageroom(User user1, User user2) {
 
