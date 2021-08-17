@@ -147,7 +147,7 @@ public class QuestService {
 
 	public long addRelayQuest(String title, String description, Date startAt, Date finishAt, String picture,
 			String certification, long mileage, int targetCnt) {
-		Relay relay = new Relay("R", title, description, startAt, finishAt, picture, certification, mileage, 1, targetCnt);
+		Relay relay = new Relay("R", title, description, startAt, finishAt, picture, certification, mileage, 1, targetCnt,0);
 		relayRepo.save(relay);
 
 		return relay.getId();
