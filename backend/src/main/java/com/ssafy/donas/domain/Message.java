@@ -46,14 +46,14 @@ public class Message {
 	private LocalDateTime time;
 	
 	@Column(nullable = false, updatable = false)
-	private MessageRoom room;
+	private MessageRoom messageRoom;
 
-	public Message(String content, User sendUser, User receivedUser, LocalDateTime time, MessageRoom room) {
+	public Message(String content, User sendUser, User receivedUser, LocalDateTime time, MessageRoom messageRoom) {
 		this.content = content;
 		this.sendUser = sendUser;
 		this.receivedUser = receivedUser;
 		this.time = time;
-		this.room = room;
+		this.messageRoom = messageRoom;
 	}	
 	
 }
