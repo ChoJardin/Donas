@@ -66,7 +66,10 @@ export default {
   z-index: 9998;
   top: 0;
   left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 100%;
+  max-width: 425px;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
@@ -77,8 +80,11 @@ export default {
   display: table-cell;
   vertical-align: middle;
   position: absolute;
-  bottom: 0;
-  left: calc((100% - 300px) / 2);
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  /*left: calc((100% - 300px) / 2);*/
 }
 
 .modal-container {

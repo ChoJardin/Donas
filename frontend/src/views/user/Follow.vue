@@ -1,12 +1,13 @@
 <template>
   <div>
-    <componentNav title="팔로우" @on-arrow="$router.push(`/user/profile/${nickname}`)" />
+    <!--<componentNav title="팔로우" @on-arrow="$router.push(`/user/profile/${nickname}`)" />-->
+    <componentNav title="팔로우" @on-arrow="$router.back()" />
 
     <div id="follow-wrap">
-        <router-link :to="`/follow/${nickname}/follower`" class="follow">
+        <router-link :to="`/follow/${nickname}/follower`" class="follow" replace>
           팔로워&nbsp;&nbsp;{{ followerCnt }}
         </router-link>
-        <router-link :to="`/follow/${nickname}/following`" class="follow">
+        <router-link :to="`/follow/${nickname}/following`" class="follow" replace>
           팔로잉&nbsp;&nbsp;{{ followingCnt }}
         </router-link>
     </div>
@@ -49,7 +50,7 @@ export default {
 <style scoped>
 #follow-wrap {
   height: 30px;
-  margin: 70px 0 10px 0;
+  margin: 60px 0 10px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;

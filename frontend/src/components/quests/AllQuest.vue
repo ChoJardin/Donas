@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import QuestSingle from "@/components/quests/QuestSingle";
 import {mapActions, mapState} from 'vuex'
 import QuestApi from "../../api/QuestApi";
+import QuestSingle from "@/components/quests/QuestSingle";
 
 export default {
   name: "QuestAll",
   // components
   components: {
-    QuestSingle
+    QuestSingle,
   },
   // props
   // data

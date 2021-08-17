@@ -51,7 +51,10 @@ export default {
   z-index: 9998;
   top: 0;
   left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 100%;
+  max-width: 425px;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
@@ -63,7 +66,7 @@ export default {
   vertical-align: middle;
   position: absolute;
   top: 20%;
-  left: calc((100vw - 300px) / 2);
+  left: calc((100% - 300px) / 2);
 }
 
 .mid-modal-container {

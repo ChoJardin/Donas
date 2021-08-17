@@ -1,5 +1,8 @@
 <template>
   <div>
+
+    <ComponentNav @on-arrow="$router.back()" title="프로필"></ComponentNav>
+
     <!--profile start-->
     <div class="profile-flex-container" id="profile">
 
@@ -98,6 +101,7 @@ import UserApi from "@/api/UserApi";
 
 import ArticleImage from "@/components/articles/ArticleImage";
 import MyOnGoingQuests from "@/components/quests/MyOnGoingQuests";
+import ComponentNav from "@/components/common/ComponentNav";
 
 import('@/assets/style/user/Profile.css')
 
@@ -106,7 +110,8 @@ export default {
   // components
   components: {
     ArticleImage,
-    MyOnGoingQuests
+    MyOnGoingQuests,
+    ComponentNav
   },
   // props
   // data

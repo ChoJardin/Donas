@@ -3,13 +3,13 @@
     <ComponentNav title="나의 퀘스트" @on-arrow="$router.back()"></ComponentNav>
 
     <div id="follow-wrap">
-      <router-link :to="{name: 'CompletedQuests'}" class="follow">
+      <router-link :to="{name: 'CompletedQuests'}" class="follow" replace>
         완료
       </router-link>
-      <router-link :to="{name: 'OnGoingQuests'}" class="follow">
+      <router-link :to="{name: 'OnGoingQuests'}" class="follow" replace>
         진행중
       </router-link>
-      <router-link :to="{name: 'UpcomingQuests'}" class="follow">
+      <router-link :to="{name: 'UpcomingQuests'}" class="follow" replace>
         예정
       </router-link>
     </div>

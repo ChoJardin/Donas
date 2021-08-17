@@ -2,12 +2,12 @@
   position: fixed;
   top: 0;
   right: 15px;
-  bottom: 0;
   left: 15px;
+  margin: 0 auto 50px;
   max-width: 410px;
   overflow: scroll;
   background: white;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   z-index: 2;
   /*스크롤바 숨기기*/
   -ms-overflow-style: none;

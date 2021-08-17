@@ -184,7 +184,7 @@ export default {
       picture: '',
       certification: '',
       mileage: 2000,
-      targetCnt: '',
+      targetCnt: 0,
       //image
       selectedFile: '',
       preview: '',
@@ -209,6 +209,11 @@ export default {
     startDate() {
       return moment().format('YYYY-MM-DD')
     },
+    endDate() {
+      const start = moment(this.startAt, "YYYY-MM-DD")
+      const duration = parseInt(this.targetCnt) * 2
+      return start.add(duration,'d').format( "YYYY-MM-DD")
+    }
   },
   //methods
   methods: {
@@ -220,7 +225,11 @@ export default {
     },
     async onClick() {
       this.isSubmit = true
-      this.picture = await this.$refs.aws.uploadFile()
+
+      if (this.preview) {
+        this.picture = await this.$refs.aws.uploadFile()
+      }
+
       this.onSubmit()
     },
     onSubmit(){
@@ -233,7 +242,8 @@ export default {
         picture: this.picture,
         certification: this.certification,
         mileage: this.mileage,
-        targetCnt: this.targetCnt
+        targetCnt: this.targetCnt,
+        finishedAt: this.endDate
         }
       console.log(data)
       let path

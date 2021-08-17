@@ -3,7 +3,7 @@
 <!--    <hr class="footer-line">-->
     <div id="flex-container">
       <router-link to="/main"><i class="material-icons" style="font-size: 30px">home</i></router-link>
-      <router-link to="/quests"><i class="material-icons" style="font-size: 30px">sports_score</i></router-link>
+      <router-link :to="{path: '/quests', params: {history: $route.fullPath}}"><i class="material-icons" style="font-size: 30px">sports_score</i></router-link>
       <router-link to="/feed"><i class="material-icons" style="font-size: 30px">menu</i></router-link>
       <router-link to="/user/mileage"><i class="material-icons" style="font-size: 30px">savings</i></router-link>
       <router-link :to="`/user/profile/${nickname}`"><i class="material-icons" style="font-size: 30px">person</i></router-link>
@@ -41,11 +41,6 @@ export default {
   }
 
 
-@media screen and (min-width: 425px) {
-    #flex-container {
-      max-width: 425px;
-    }
-}
 
 
 #flex-container a {
