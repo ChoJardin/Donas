@@ -46,6 +46,7 @@ public class Messageroom {
 	
 	public Messageroom() {}
 	
+	@Builder
 	public Messageroom(User user1, User user2) {
 
 		this.user1 = user1;
