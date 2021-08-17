@@ -95,6 +95,7 @@ export default {
   justify-content: space-between;
   padding-bottom: 5px;
   border-bottom: 1px solid #e4e6e9;
+  box-shadow: 0 0 15px -8px #292929;
 }
 
 

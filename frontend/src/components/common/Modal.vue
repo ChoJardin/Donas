@@ -77,8 +77,8 @@ export default {
   display: table-cell;
   vertical-align: middle;
   position: absolute;
-  bottom: 0;
-  left: calc((100% - 300px) / 2);
+  /*bottom: 0;*/
+  /*left: calc((100% - 300px) / 2);*/
 }
 
 .modal-container {

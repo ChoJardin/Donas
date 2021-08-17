@@ -63,7 +63,7 @@ export default {
   vertical-align: middle;
   position: absolute;
   top: 20%;
-  left: calc((100vw - 300px) / 2);
+  left: calc((100% - 300px) / 2);
 }
 
 .mid-modal-container {

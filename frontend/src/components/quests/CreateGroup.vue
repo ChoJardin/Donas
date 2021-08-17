@@ -169,7 +169,7 @@ export default {
       loginUser: state => state.user.loginUser,
     }),
     startDate() {
-      return moment().format('YYYY-MM-DD')
+      return moment().add(2, 'days').format('YYYY-MM-DD')
     },
     endDate() {
       return this.startAt

@@ -1,10 +1,10 @@
 <template>
   <div id="app">
 
-    <div>
+    <div id="app-wrap">
+
 
     <navBar id="navBar"/>
-    </div>
 
     <div id="app-content">
         <router-view/>
@@ -15,6 +15,7 @@
 <!--    </div>-->
 
     <Footer id="footer"/>
+    </div>
     </div>
 </template>
 
@@ -61,30 +62,22 @@ export default {
 </script>
 
 <style>
-#navBar{
-  position: fixed;
-  width: 100%;
-  height: 60px;
-}
-
 #app {
   position: relative;
-  /*max-width: 425px;*/
-  /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   font-family: 'GongGothicMedium';
   /* 행간 조정 */
   line-height: 1.2em;
-  /*max-width: 425px;*/
-  /*margin: 0 calc((100vw - 425px) / 2);*/
 }
 
-#app-wrap {
-
-
+#navBar{
+  position: fixed;
+  width: 100%;
+  height: 60px;
 }
+
 
 #app-content {
   position: fixed;
@@ -96,6 +89,9 @@ export default {
   overflow: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  box-shadow: 0 5px 15px -9px #292929;
+
+
 }
 
 #app-content::-webkit-scrollbar {
