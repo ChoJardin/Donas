@@ -9,6 +9,6 @@ import com.ssafy.donas.domain.User;
 
 public interface ChatRepo extends JpaRepository<Chat, Long>{
 	
-	List<Chat> findChatBySendIdandReceivedId(long sendId, long receivedId);
+	List<Chat> findChatBySendIdAndReceivedId(long sendId, long receivedId);
 
 }
