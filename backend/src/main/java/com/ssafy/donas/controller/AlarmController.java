@@ -224,14 +224,15 @@ public class AlarmController {
 		
 		// 참여중인 퀘스트에 추가
 		questParticipantsService.addParticipant(userId, questId);
-		
+		System.out.println("참여를 하는거지?");
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
 		
 		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
 		for(QuestParticipants qp : participants) {
-			
+			System.out.println("유저가 없는거냐???????");
 			User user =  userService.getUser(userId);
+			System.out.println(user.getNickname());
 			Quest quest = qp.getQuest();
 			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+" 퀘스트 참여에 수락하였습니다.", LocalDateTime.now().plusHours(9));			
 		}
