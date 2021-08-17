@@ -229,12 +229,12 @@ public class AlarmController {
 		questAlarmService.updateConfirm(alarmId, 2);
 		
 		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+		User user =  userService.getUser(userId);
 		for(QuestParticipants qp : participants) {
 			System.out.println("유저가 없는거냐???????");
-			User user =  userService.getUser(userId);
 			System.out.println(user.getNickname());
 			Quest quest = qp.getQuest();
-			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+" 퀘스트 참여에 수락하였습니다.", LocalDateTime.now().plusHours(9));			
+			questAlarmService.addQuestAlarm(qp.getUser().getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+" 퀘스트 참여에 수락하였습니다.", LocalDateTime.now().plusHours(9));			
 		}
 			
 		
@@ -252,11 +252,11 @@ public class AlarmController {
 		// 알람 응답 칼럼 거절으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 3);
 		
-		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+		// 퀘스트에 참여중인 유저에게 거절의사 알림
+		User user =  userService.getUser(userId);
 		for(QuestParticipants qp : participants) {
-			User user =  userService.getUser(userId);
 			Quest quest = qp.getQuest();
-			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));			
+			questAlarmService.addQuestAlarm(qp.getUser().getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"퀘스트 참여를 거절하였습니다.", LocalDateTime.now().plusHours(9));			
 		}
 		
 		return HttpStatus.OK;
