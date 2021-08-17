@@ -253,12 +253,12 @@ const actions = {
     commit('SET_COMMON_ALARMS', common)
   },
 
-  async updateCommonAlarms ({dispatch, state}, {id}) {
+  async updateCommonAlarms ({dispatch, state}) {
     await UserApi.requestCommonAlert(
-      id,
+      state.loginUser.id,
       async (res) => {
         if (res.data !== 'NOT_FOUND') {
-          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          res.data.id = state.loginUser.id  // id는 없어서 따로 추가가 필요합니다.
           await dispatch('setCommonAlarms', res.data)
         }
       },
@@ -271,12 +271,12 @@ const actions = {
     commit('SET_QUEST_ALARMS', quest)
   },
 
-  async updateQuestAlarms ({dispatch, state}, {id}) {
+  async updateQuestAlarms ({dispatch, state}) {
     await UserApi.requestQuestAlert(
-      id,
+      state.loginUser.id,
       async (res) => {
         if (res.data !== 'NOT_FOUND') {
-          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          res.data.id = state.loginUser.id  // id는 없어서 따로 추가가 필요합니다.
           await dispatch('setQuestAlarms', res.data)
         }
       },
@@ -301,7 +301,7 @@ const actions = {
   },
 
   setPayload ({commit}, payload){
-    console.log(payload)
+    // console.log(payload)
     commit('SET_PAYLOAD', payload)
   }
 
