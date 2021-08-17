@@ -1,9 +1,16 @@
 <template>
     <div id="staggered-list">
-      <input v-model="query" style="border: 1px solid #292929" placeholder="친구를 검색해보세요">
+      <input v-model="query" placeholder="친구를 검색해보세요"
+          class="create-quest-input" type="text" >
 
-      <div v-if="friends">
-        <span v-for="(friend, idx) in friends" :key="idx">{{friend.nickname}}</span>
+      <div style="margin: 5px 0 10px">
+        <span
+            @click="onDelete(`${friend}`)"
+            v-for="(friend, idx) in friends" :key="idx"
+            class="name-tag"
+        >
+          {{friend}}&nbsp;&nbsp;X
+        </span>
       </div>
 
       <transition-group
@@ -20,10 +27,11 @@
           v-bind:data-index="index"
         >
           <input
-              type="checkbox" v-model="friends" @click="onChange(`${mutual.nickname}`)"
-                 :id="`${mutual.nickname}`" :value="`${mutual.nickname}`" style="display: none">
+              type="checkbox" v-model="friends" @change="($emit('update:friends', friends))"
+              :id="`${mutual.nickname}`" :value="`${mutual.nickname}`" style="display: none">
           <label :for="`${mutual.nickname}`" class="checkbox">
             <!--<span class="material-icons-round">radio_button_unchecked</span>-->
+            <!--@click="onChange(`${mutual.nickname}`)"-->
 
           </label>
           <label :for="`${mutual.nickname}`">
@@ -42,9 +50,14 @@ import Velocity from 'velocity-animate'
 import UserProfileCard from "@/components/user/UserProfileCard";
 
 export default {
-  name: "CreateRelayFriends",
+  name: "CreateGroupFriends",
   components: {
     UserProfileCard
+  },
+  props: {
+    participants: {
+      type: Array,
+    }
   },
   data() {
     return{
@@ -53,16 +66,9 @@ export default {
     }
   },
   methods: {
-    onChange(justAdded) {
-      let idx = this.friends.indexOf(justAdded)
-      let changed
-      if (idx !== -1) {
-        changed = this.friends.splice(idx, 1)
-      } else {
-        changed = [...this.friends, justAdded]
-      }
-      this.$emit('participants', changed)
-      console.log(justAdded)
+    onDelete(name) {
+      this.friends = this.friends.filter(friend => friend !== name)
+      this.$emit('update:friends', this.friends)
     },
 
     beforeEnter: function (el) {
@@ -102,12 +108,13 @@ export default {
       })
     }
   },
+  created() {
+    this.friends = this.participants
+  }
 
 }
 </script>
 
 <style scoped>
-li label.checkbox::before {
 
-}
 </style>

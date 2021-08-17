@@ -38,8 +38,15 @@ export default {
   display: flex;
   align-items: center;
   box-shadow: 0 0 20px -9px rgba(0, 0, 0, 0.55);
-
   }
+
+
+@media screen and (min-width: 425px) {
+    #flex-container {
+      max-width: 425px;
+    }
+}
+
 
 #flex-container a {
   flex: auto;

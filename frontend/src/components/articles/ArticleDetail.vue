@@ -1,13 +1,14 @@
 <template>
   <div class="overlay">
-    <div id="article-detail">
 
+
+    <div id="article-detail">
       <!--nav-->
       <componentNav v-if="isHeartList"
         @on-arrow="isHeartList = !isHeartList"
         title="좋아요"/>
       <component-nav v-else @on-arrow="$router.push({path: '/article', query: {id: selectedArticle.id}})" title="인증 게시글"/>
-      <button v-if="isMine && !isHeartList" @click="showModal = !showModal" class="material-icons-round more">more_horiz</button>
+    <button v-if="isMine && !isHeartList" @click="showModal = !showModal" class="material-icons-round more">more_horiz</button>
       <!--<div v-if="openModal" class="change-article">-->
       <!--  <button @click="onEdit" >-->
       <!--    수정-->
@@ -224,14 +225,14 @@ export default {
 </script>
 
 <style scoped>
-/*//.overlay {*/
-/*//  position: fixed;*/
-/*//  top: 60px;*/
-/*//  right: 15px;*/
-/*//  bottom: 0;*/
-/*//  left: 15px;*/
-/*//  overflow: scroll;*/
-/*//  background: white;*/
-/*//}*/
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 15px;
+  bottom: 0;
+  left: 15px;
+  /*overflow: scroll;*/
+  background: white;
+}
 
 </style>

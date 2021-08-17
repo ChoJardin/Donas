@@ -1,6 +1,10 @@
 <template>
   <div id="app">
+
+    <div>
+
     <navBar id="navBar"/>
+    </div>
 
     <div id="app-content">
         <router-view/>
@@ -11,7 +15,7 @@
 <!--    </div>-->
 
     <Footer id="footer"/>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -59,9 +63,13 @@ export default {
 <style>
 #navBar{
   position: fixed;
+  width: 100%;
+  height: 60px;
 }
 
 #app {
+  position: relative;
+  /*max-width: 425px;*/
   /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,15 +81,27 @@ export default {
   /*margin: 0 calc((100vw - 425px) / 2);*/
 }
 
-#app-content {
-  position: absolute;
-  top: 60px;
-  bottom: 60px;
-  width: 100%;
-  max-width: 425px;
-  padding: 0 15px;
-  overflow: auto;
+#app-wrap {
+
+
 }
+
+#app-content {
+  position: fixed;
+  top: 60px;
+  bottom: 50px;
+  background-color: #ffffff;
+  width: 100%;
+  padding: 0 15px 15px;
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#app-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 
 #footer {
   height: 50px;
@@ -90,5 +110,16 @@ export default {
   bottom: 0;
   background: #e1eedd;
 }
+
+  @media screen and (min-width: 425px) {
+    #app-content,
+    #footer,
+    #navBar {
+      max-width: 425px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+}
+
 
 </style>

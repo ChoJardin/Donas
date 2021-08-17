@@ -13,7 +13,8 @@
 
 .material-icons-round.more {
   position: fixed;
-  top: 70px;
+  top: 25px;
+    transform: translateY(-50%);
   right: 15px;
     z-index: 4;
 }

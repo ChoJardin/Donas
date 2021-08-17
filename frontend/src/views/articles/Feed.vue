@@ -64,7 +64,7 @@ export default {
 
 <style scoped>
 #feed-article-wrap {
-  margin-top: 70px;
+  margin-top: 60px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
