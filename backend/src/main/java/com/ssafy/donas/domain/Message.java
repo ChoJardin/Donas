@@ -45,15 +45,18 @@ public class Message {
 	@ColumnDefault("CURRENT_TIMESTAMP()")
 	private LocalDateTime time;
 	
-//	@Column(nullable = false, updatable = false)
-//	private Messageroom messageroom;
-//
-//	public Message(String content, User sendUser, User receivedUser, LocalDateTime time, Messageroom messageroom) {
-//		this.content = content;
-//		this.sendUser = sendUser;
-//		this.receivedUser = receivedUser;
-//		this.time = time;
-//		this.messageroom = messageroom;
-//	}	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "room_id")
+	private MessageRoom messageRoom;
+	
+	public Message() {}
+
+	public Message(String content, User sendUser, User receivedUser, LocalDateTime time, MessageRoom messageRoom) {
+		this.content = content;
+		this.sendUser = sendUser;
+		this.receivedUser = receivedUser;
+		this.time = time;
+		this.messageRoom = messageRoom;
+	}	
 	
 }
