@@ -105,6 +105,19 @@
       </div>
 
       <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div>
+            인증빈도를 설정해 주세요
+            <span class="create-question-subtext">(몇일에 한번 인증)</span>
+          </div>
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="frequency" type="number" name="members" min="1"
+        placeholder="인증 빈도를 정해주세요">
+        <div v-if="error.frequency" class="create-quest-error">퀘스트 기간에 맞는 빈도수를 기재해야 합니다</div>
+      </div>
+
+      <div class="create-quest-questions">
         <div class="create-question-title" >
           인증 방법을 입력하세요
           <div class="create-question-needed">필수</div>
@@ -156,11 +169,13 @@ export default {
       error: {
         startAt: false,
         finishAt: false,
-        picture: false
+        picture: false,
+        frequency: false
       },
       isSaved: false,
       isSubmit: false,
-      isModal: false
+      isModal: false,
+      frequency: 0,
     }
   },
   //computed
@@ -177,6 +192,15 @@ export default {
     buttonDisabled() {
       return !(this.title && this.description && this.startAt && this.finishAt && this.certification && !!this.participants.length) ||
           Object.keys(this.error).some(key => this.error[key]) || this.isSubmit
+    },
+    articleNeededTotal(){
+      const start = moment(this.startAt, "YYYY-MM-DD")
+      const end = moment(this.finishAt, "YYYY-MM-DD")
+      return moment.duration(end.diff(start)).asDays();
+    },
+
+    minArticle() {
+      return Math.floor(this.articleNeededTotal / parseInt(this.frequency))
     }
   },
   //methods
@@ -208,7 +232,8 @@ export default {
         picture: this.picture,
         certification: this.certification,
         mileage: this.mileage,
-        participants: this.participants
+        participants: this.participants,
+        minArticleCount: this.minArticle
         }
       console.log(data)
       let path
@@ -246,6 +271,16 @@ export default {
         this.finishAt = ''
       } else {
         // this.error.startAt = false
+      }
+    },
+    frequency: function(v) {
+      if (parseInt(this.frequency) > this.articleNeededTotal) {
+        this.error.frequency = true
+      } else if ( 1 > parseInt(this.frequency)) {
+        this.frequency = ''
+        this.error.frequency = true
+      } else {
+        this.error.frequency = false
       }
     }
   },
