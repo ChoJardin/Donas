@@ -49,7 +49,7 @@ export default {
 <style scoped>
 #follow-wrap {
   height: 30px;
-  margin: 70px 0 10px 0;
+  margin: 60px 0 10px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;

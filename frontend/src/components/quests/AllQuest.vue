@@ -1,6 +1,5 @@
 <template>
   <div>
-    <ComponentNav ></ComponentNav>
     <div  id="quest-list" v-for="quest in quests" :key="quest.id">
       <QuestSingle class="quest-single" :quest="quest" @click.native=setQuestId(quest.id) />
     </div>
@@ -11,14 +10,12 @@
 import {mapActions, mapState} from 'vuex'
 import QuestApi from "../../api/QuestApi";
 import QuestSingle from "@/components/quests/QuestSingle";
-import ComponentNav from "@/components/common/ComponentNav";
 
 export default {
   name: "QuestAll",
   // components
   components: {
     QuestSingle,
-    ComponentNav
   },
   // props
   // data

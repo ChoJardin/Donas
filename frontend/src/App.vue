@@ -75,7 +75,12 @@ export default {
 #navBar{
   position: fixed;
   width: 100%;
+  max-width: 425px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   height: 60px;
+  z-index: 3;
 }
 
 
@@ -85,13 +90,15 @@ export default {
   bottom: 50px;
   background-color: #ffffff;
   width: 100%;
+  max-width: 425px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   padding: 0 15px 15px;
   overflow: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   box-shadow: 0 5px 15px -9px #292929;
-
-
 }
 
 #app-content::-webkit-scrollbar {
@@ -101,21 +108,16 @@ export default {
 
 #footer {
   height: 50px;
-  width: 100vw;
+  width: 100%;
+  max-width: 425px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   position: fixed;
   bottom: 0;
   background: #e1eedd;
 }
 
-  @media screen and (min-width: 425px) {
-    #app-content,
-    #footer,
-    #navBar {
-      max-width: 425px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-}
 
 
 </style>

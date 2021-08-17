@@ -1,7 +1,10 @@
 .main-greeting {
     position: fixed;
-    left: 0;
     width: 100%;
+    max-width: 425px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     height: 150px;
     padding: 10px 25px 50px;
     text-align: left;
@@ -111,3 +114,4 @@
     margin: 5px 0;
     border: 1px solid #183a1d;
 }
+

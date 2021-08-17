@@ -89,13 +89,15 @@ export default {
   padding-right: 10px;
   position: fixed;
   width: 100%;
+  max-width: 425px;
+  /*width: 100vw;*/
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5px;
   border-bottom: 1px solid #e4e6e9;
-  box-shadow: 0 0 15px -8px #292929;
+  box-shadow: 0 -5px 15px -8px #292929;
 }
 
 

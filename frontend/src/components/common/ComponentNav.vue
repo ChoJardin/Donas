@@ -46,10 +46,12 @@ export default {
   width: 100%;
   color: #183a1d;
   position: fixed;
+  top: 60px;
   left: 0;
+  right: 0;
+  margin: 0 auto;
   z-index: 3;
   background: white;
-  top: 0;
   border-bottom: 1px solid #e4e6e9;
 }
 
