@@ -1,5 +1,101 @@
 <template>
   <div>
+
+    <div class="create-quest-info">
+      생성된 퀘스트는 수정 및 삭제가 <span style="color: #cd4e3e">불가</span>합니다. <br/> 신중한 생성바랍니다.
+    </div>
+
+    <!--대표 이미지 등록-->
+    <div class="create-quest-questions">
+      <div class="create-question-title">퀘스트 대표이미지를 등록하세요</div>
+      <div class="create-quest-image">
+        <img v-if="preview" :src="preview" alt="">
+        <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
+        <div v-if="error.picture" class="error-text" >
+          <div v-html="error.picture"></div>
+          <button @click="$refs.aws.onReset()" class="cancel-select">선택취소</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-quest-img-input">
+      <AwsImageUploader
+          id="image-input" ref="aws"
+          @preview="onPreview" @on-error="onError"/>
+    </div>
+
+    <div class="create-quest-upload-info">
+      <span style="font-family: GongGothicMedium">5MB</span> 이내의
+      <span style="font-family: GongGothicMedium">.jpg/ .jpeg/ .png</span> 파일만 <br/>등록 가능합니다.
+    </div>
+    <!--대표 이미지 등록-->
+
+
+    <div>
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div>
+            퀘스트 이름을 입력해 주세요
+            <span class="create-question-subtext">(14자 이내)</span>
+          </div>
+          <div class="create-question-needed">
+            필수
+          </div>
+        </div>
+        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="14" placeholder="예) 미라클 모닝">
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div>
+            간단한 설명을 입력해 주세요
+            <span class="create-question-subtext">(25자 이내)</span>
+          </div>
+          <div class="create-question-needed">
+            필수
+          </div>
+          </div>
+        <input class="create-quest-input" v-model="description" type="text" maxlength="25" placeholder="예) 매일 30분 독서하기">
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          시작일을 지정해 주세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="startAt" type="date" :min="startDate">
+        <div v-if="error.startAt" class="create-quest-error">종료일 이전의 날짜만 선택 가능합니다</div>
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          종료일을 지정해 주세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">
+        <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title" >
+          인증 방법을 입력하세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
+        </textarea>
+      </div>
+
+      <!--<ButtonBig value="생 성 하 기" @click.native="onClick"></ButtonBig>-->
+      <button class="create-quest-submit" :disabled="buttonDisabled" @click="onClick">생 성 하 기</button>
+      </div>
+
+
+
+
+
+
+
+
+    <!--주희-->
     <div>
       <div class="create-quest-questions">
         <div class="create-question-title">퀘스트 이름을 입력해 주세요

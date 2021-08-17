@@ -1,58 +1,104 @@
 <template>
   <div>
-    <div>
-      <div class="create-quest-questions">
-        <div class="create-question-title">퀘스트 이름을 입력해 주세요
-        <span class="create-question-subtext">(10자 이내)</span></div>
-        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">
-      </div>
+    <div class="create-quest-info">
+      생성된 퀘스트는 수정 및 삭제가 <span style="color: #cd4e3e">불가</span>합니다. <br/> 신중한 생성바랍니다.
+    </div>
 
-      <div class="create-quest-questions">
-        <div class="create-question-title">간단한 설명을 입력해 주세요
-        <span class="create-question-subtext">(14자 이내)</span></div>
-        <input class="create-quest-input" v-model="description" type="search" maxlength="20" placeholder="예) 매일 30분 독서하기">
+    <!--대표 이미지 등록-->
+    <div class="create-quest-questions">
+      <div class="create-question-title">퀘스트 대표이미지를 등록하세요</div>
+      <div class="create-quest-image">
+        <img v-if="preview" :src="preview" alt="">
+        <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
+        <div v-if="error.picture" class="error-text" >
+          <div v-html="error.picture"></div>
+          <button @click="$refs.aws.onReset()" class="cancel-select">선택취소</button>
+        </div>
       </div>
-
-      <div class="create-quest-questions">
-        <div class="create-question-title">함께 할 동료를 선택해 주세요</div>
-        <CreateGroupFriend @participants="onSelect"></CreateGroupFriend>
-      </div>
-
-      <div class="create-quest-questions">
-        <div class="create-question-title">시작일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
-      </div>
-
-      <div class="create-quest-questions">
-        <div class="create-question-title">종료일을 지정해 주세요</div>
-        <input class="create-quest-input" v-model="finishAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">
-      </div>
-
-      <div class="create-quest-questions">
-        <div class="create-question-title" >인증 방법을 입력하세요</div>
-        <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
-        </textarea>
-      </div>
-
-      <div style="width: 80%; margin-left: 15px">
+    </div>
+    <div class="create-quest-img-input">
       <AwsImageUploader
           id="image-input" ref="aws"
           @preview="onPreview" @on-error="onError"/>
     </div>
-      <div class="group-quest-image">
-  <!--      <img v-if="isUpdate" :src="quest.picture" alt="">-->
-        <img v-if="preview" :src="preview" style="width: 180px; height: 180px; padding-top:20px" alt="">
-        <div v-else class="group-upload-info">
-          등록한 이미지는 수정이 불가합니다.
-          <br/>신중히 선택해 주세요.
-          <br/><br/>
-          5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.
-        </div>
-        <div id="image-error" v-html="error" v-if="error"></div>
 
+    <div class="create-quest-upload-info">
+      <span style="font-family: GongGothicMedium">5MB</span> 이내의
+      <span style="font-family: GongGothicMedium">.jpg/ .jpeg/ .png</span> 파일만 <br/>등록 가능합니다.
+    </div>
+    <!--대표 이미지 등록-->
+
+
+    <div>
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div>
+            퀘스트 이름을 입력해 주세요
+            <span class="create-question-subtext">(14자 이내)</span>
+          </div>
+          <div class="create-question-needed">
+            필수
+          </div>
+        </div>
+        <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="14" placeholder="예) 미라클 모닝">
       </div>
 
-      <button class="button" @click="onClick">생 성 하 기</button>
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div>
+            간단한 설명을 입력해 주세요
+            <span class="create-question-subtext">(25자 이내)</span>
+          </div>
+          <div class="create-question-needed">
+            필수
+          </div>
+          </div>
+        <input class="create-quest-input" v-model="description" type="text" maxlength="25" placeholder="예) 매일 30분 독서하기">
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div>함께 할 동료를 선택해 주세요</div>
+          <div class="create-question-needed">필수</div>
+        </div>
+        <MidModal>
+            <div slot="header">친구 찾기</div>
+            <CreateGroupFriend slot="opt1" @participants="onSelect"></CreateGroupFriend>
+        </MidModal>
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          <div style="width: 100%">
+          시작일을 지정해 주세요
+          <span class="create-question-needed" style="float: right">필수</span>
+        <div class="create-question-subtext">(생성일 기준 이틀 후의 날짜부터 선택 가능합니다)</div>
+          </div>
+        </div>
+        <input class="create-quest-input" v-model="startAt" type="date" :min="startDate">
+        <div v-if="error.startAt" class="create-quest-error">종료일 이전의 날짜만 선택 가능합니다</div>
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          종료일을 지정해 주세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">
+        <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>
+      </div>
+
+      <div class="create-quest-questions">
+        <div class="create-question-title" >
+          인증 방법을 입력하세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">
+        </textarea>
+      </div>
+
+
+      <button class="create-quest-submit" :disabled="buttonDisabled" @click="onClick">생 성 하 기</button>
       </div>
 
   </div>
@@ -60,10 +106,14 @@
 
 <script>
 import {mapGetters, mapState} from "vuex";
+import moment from "moment";
 import QuestApi from "../../api/QuestApi";
 import UserApi from "../../api/QuestApi";
 import CreateGroupFriend from "./CreateGroupFriend";
 import AwsImageUploader from "../common/AwsImageUploader";
+import MidModal from "@/components/common/MidModal";
+
+import('@/assets/style/quests/create-quests.css')
 
 
 export default {
@@ -71,22 +121,27 @@ export default {
   components: {
     CreateGroupFriend,
     AwsImageUploader,
+    MidModal
   },
   data: () => {
     return {
       userId: '',
       title: '',
       description: '',
-      startAt:'',
+      startAt: moment().add(2, 'days').format('YYYY-MM-DD'),
       finishAt: '',
-      picture:'../../assets/donut_flag.png',
+      picture: '',
       certification: '',
       mileage:2000,
       participants: [],
       //image
       selectedFile: '',
       preview: '',
-      error: '',
+      error: {
+        startAt: false,
+        finishAt: false,
+        picture: false
+      },
       isSaved: false,
     }
   },
@@ -94,7 +149,17 @@ export default {
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-    })
+    }),
+    startDate() {
+      return moment().format('YYYY-MM-DD')
+    },
+    endDate() {
+      return this.startAt
+    },
+    buttonDisabled() {
+      return !(this.title && this.description && this.startAt && this.finishAt && this.certification) ||
+          Object.keys(this.error).some(key => this.error[key]) || this.isSubmit
+    }
   },
   //methods
   methods: {
@@ -142,6 +207,22 @@ export default {
       this.participants = friends
     }
   },
+  watch: {
+    finishAt: function(v) {
+      if (moment(v).isAfter(this.startAt)) {
+        this.error.startAt = false
+      }
+    },
+    startAt: function(v) {
+      if(moment(v).isAfter(this.finishAt)) {
+        this.error.startAt = true
+        this.startAt = moment().format('YYYY-MM-DD')
+        this.finishAt = ''
+      } else {
+        // this.error.startAt = false
+      }
+    }
+  },
   created() {
     console.log('friends fetched')
     UserApi.requestGroupFriends(
@@ -154,51 +235,11 @@ export default {
           console.log(err)
         }
     )
-  }
+  },
 }
 </script>
 
 <style scoped>
-.create-quest-questions {
-  margin: 0px 15px 15px 15px;
-  text-align: left;
-}
-
-.create-question-title {
-  margin-bottom: 7px;
-  font-size: 1.0em;
-
-}
-
-.create-question-subtext {
-  font-size: 0.6em;
-}
-
-.create-quest-input {
-  border: black solid 1px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  width: 100%;
-  font-size: 0.8em;
-  padding-left: 10px;
-  border-radius: 10px;
-  height: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.create-quest-textarea {
-  border: black solid 1px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  width: 100%;
-  font-size: 0.8em;
-  padding-left: 10px;
-  border-radius: 10px;
-  height: 70px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
 .create-solo-questions .create-quest-img {
   /*height: 10px;*/
 }
