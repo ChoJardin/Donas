@@ -1,10 +1,10 @@
 <template>
-  <div id="follow-user-profile" :class="{background: isColored}">
-    <router-link :to="`/user/profile/${profile.nickname}`" id="follow-profile-wrap">
+  <div  @click="onClick" id="follow-user-profile" :class="{background: isColored}">
+    <div id="follow-profile-wrap">
         <img v-if="profile.picture" class="profile-image card" :src="profile.picture" alt="">
         <img v-else class="profile-image card" src="@/assets/donut_profile.png" alt="">
       <div id="follow-profile-nickname">{{profile.nickname}}</div>
-    </router-link>
+    </div>
   </div>
 </template>
 
@@ -12,7 +12,21 @@
 export default {
   name: "FollowUserProfile",
   props: {
-    profile: Object
+    profile: {
+        type: Object
+    },
+    click: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    onClick() {
+      if (this.click)
+        this.$emit('on-click')
+      else
+        this.$router.push(`/user/profile/${this.profile.nickname}`)
+    }
   },
   computed: {
     isColored() {

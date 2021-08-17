@@ -5,6 +5,31 @@
       생성된 퀘스트는 수정 및 삭제가 <span style="color: #cd4e3e">불가</span>합니다. <br/> 신중한 생성바랍니다.
     </div>
 
+    <!--대표 이미지 등록-->
+    <div class="create-quest-questions">
+      <div class="create-question-title">퀘스트 대표이미지를 등록하세요</div>
+      <div class="create-quest-image">
+        <img v-if="preview" :src="preview" alt="">
+        <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
+        <div v-if="error.picture" class="error-text" >
+          <div v-html="error.picture"></div>
+          <button @click="$refs.aws.onReset()" class="cancel-select">선택취소</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-quest-img-input">
+      <AwsImageUploader
+          id="image-input" ref="aws"
+          @preview="onPreview" @on-error="onError"/>
+    </div>
+
+    <div class="create-quest-upload-info">
+      <span style="font-family: GongGothicMedium">5MB</span> 이내의
+      <span style="font-family: GongGothicMedium">.jpg/ .jpeg/ .png</span> 파일만 <br/>등록 가능합니다.
+    </div>
+    <!--대표 이미지 등록-->
+
+
     <div>
       <div class="create-quest-questions">
         <div class="create-question-title">
@@ -59,44 +84,24 @@
         </textarea>
       </div>
 
-      <div class="create-quest-questions">
-        <div class="create-question-title">퀘스트 대표이미지를 등록하세요</div>
-
-        <div class="solo-quest-image">
-          <img v-if="preview" :src="preview" alt="">
-          <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_flag.png" alt="">
-          <div v-if="error.picture" class="error-text" >
-            <div v-html="error.picture"></div>
-            <button @click="$refs.aws.onReset()" class="cancel-select">선택취소</button>
-          </div>
-        </div>
-      </div>
-          <div class="solo-img-input">
-            <AwsImageUploader
-                id="image-input" ref="aws"
-                @preview="onPreview" @on-error="onError"/>
-          </div>
-
-          <div class="solo-upload-info">
-            <span style="font-family: GongGothicMedium">5MB</span> 이내의
-            <span style="font-family: GongGothicMedium">.jpg/ .jpeg/ .png</span> 파일만 <br/>등록 가능합니다.
-          </div>
-
-      <button class="button" :disabled="buttonDisabled" @click="onClick">생 성 하 기</button>
+      <!--<ButtonBig value="생 성 하 기" @click.native="onClick"></ButtonBig>-->
+      <button class="create-quest-submit" :disabled="buttonDisabled" @click="onClick">생 성 하 기</button>
       </div>
     </div>
 </template>
 
 <script>
 import {mapGetters, mapState} from "vuex";
+import moment from "moment";
 import QuestApi from "../../api/QuestApi";
 import AwsImageUploader from "@/components/common/AwsImageUploader";
-import moment from "moment";
+import ButtonBig from "@/components/common/ButtonBig";
 
 export default {
   name: "CreateSingle",
   components: {
     AwsImageUploader,
+    // ButtonBig
   },
   data: () => {
     return {
@@ -117,7 +122,7 @@ export default {
         picture: false
       },
       isSaved: false,
-      // today: moment()
+      isSubmit: false,
     }
   },
   //computed
@@ -133,7 +138,7 @@ export default {
     },
     buttonDisabled() {
       return !(this.title && this.description && this.startAt && this.finishAt && this.certification) ||
-          Object.keys(this.error).some(key => this.error[key])
+          Object.keys(this.error).some(key => this.error[key]) || this.isSubmit
     }
   },
   //methods
@@ -145,6 +150,8 @@ export default {
       this.error.picture = error
     },
     async onClick() {
+      this.isSubmit = true
+
       if (this.preview) {
         this.picture = await this.$refs.aws.uploadFile()
       }
@@ -162,13 +169,13 @@ export default {
         certification: this.certification,
         mileage: this.mileage
         }
-      // console.log(data)
       // let path
       QuestApi.createPersonalQuest(
           data,
           res => {
             if(res === "NO_CONTENT") {
               alert('입력확인')
+              this.isSubmit = false
             }
             else{
               this.$router.push('/quests/solo')
@@ -355,10 +362,11 @@ label {
 }
 
 .solo-upload-info{
-  margin: 10px 20px;
+  margin: 10px 20px 20px;
   font-family: GongGothicLight;
   font-size: 0.8em;
   text-align: left;
+
 }
 
 </style>
