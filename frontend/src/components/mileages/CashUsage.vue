@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div v-if="usageCash === undefined">
+      <h1>{{loginUser.nickname}}님, </h1>
+      <h4>인출내역이 없습니다.</h4>
+    </div>
+
+
     <div>
     <h1>{{loginUser.nickname}}님, </h1>
     <h4>총  {{currencyString(usageCash.total)}} 마일리지를 인출하셨습니다.</h4>

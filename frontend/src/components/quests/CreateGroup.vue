@@ -219,7 +219,11 @@ export default {
     },
     async onClick() {
       this.isSubmit = true
-      this.picture = await this.$refs.aws.uploadFile()
+
+      if (this.preview) {
+        this.picture = await this.$refs.aws.uploadFile()
+      }
+
       this.onSubmit()
     },
     onSubmit(){
