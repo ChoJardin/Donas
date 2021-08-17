@@ -1,6 +1,9 @@
 package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Message;
 import com.ssafy.donas.domain.MessageRoom;
+import com.ssafy.donas.domain.MsgInfo;
 import com.ssafy.donas.repository.MessageRoomRepo;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.repository.AlarmRepo;
@@ -57,6 +61,30 @@ public class MessageService {
 	}
 		
 	// 채팅방 리스트
+	public List<MsgInfo> messageList(long userId){
+		User user = userRepo.getById(userId);
+		List<MessageRoom> list = messageRoomRepo.findMessageRoomByUser1OrUser2(user, user);
+		// 채팅방 목록
+		// 채팅방 id, 상대방 id, 상대방 닉네임, 최근 메세지
+		List<MsgInfo> msgInfo = new ArrayList<MsgInfo>();
+		for(MessageRoom msR : list) {
+			List<Message> msg = msR.getMsg();		
+			Collections.sort(msg, new Comparator<Message>() {
+				@Override
+				public int compare(Message o1, Message o2) {
+					if(o2.getTime().isAfter(o1.getTime()))
+						return 1;
+					return -1;
+				}			
+			});
+			if(msR.getUser1().equals(user))
+				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser1().getId(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+			else
+				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+		}
+	return msgInfo;
+		
+	}
 	
 	
 	
