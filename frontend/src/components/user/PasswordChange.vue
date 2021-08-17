@@ -158,7 +158,7 @@ export default {
 
 .overlay {
   position: fixed;
-  top: 60px;
+  top: 0;
   right: 15px;
   bottom: 0;
   left: 15px;
