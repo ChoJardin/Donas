@@ -1,6 +1,7 @@
 package com.ssafy.donas.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -57,7 +58,6 @@ public class AlarmService {
 	public List<Alarm> getAlarms(User user) {
 		List<Alarm> alarms = alarmRepo.findAlarmByUser(user);
 		Collections.sort(alarms, new Comparator<Alarm>() {
-
 			@Override
 			public int compare(Alarm o1, Alarm o2) {
 				if (o2.getSendTime().isAfter(o1.getSendTime())) {
@@ -66,7 +66,11 @@ public class AlarmService {
 				return -1;
 			}
 		});
-		return alarms;
+		List<Alarm> top15Alarms = new ArrayList<Alarm>();
+		for(int i=0;i<15;i++) {
+			top15Alarms.add(alarms.get(i));
+		}		
+		return top15Alarms;
 	}
 
 	public List<Alarm> confirmAlarmAll(User user) {
@@ -85,7 +89,11 @@ public class AlarmService {
 				}
 			});
 		}
-		return alarms;
+		List<Alarm> top15Alarms = new ArrayList<Alarm>();
+		for(int i=0;i<15;i++) {
+			top15Alarms.add(alarms.get(i));
+		}		
+		return top15Alarms;
 	}
 
 	public void update(long id, int confirm) {
