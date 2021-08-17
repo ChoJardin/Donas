@@ -1,21 +1,13 @@
 #article-detail {
-  position: absolute;
-  top: 60px;
+    position: absolute;
+    top: 110px;
     width: 100%;
-
-/*  right: 15px;*/
-/*  bottom: 50px;*/
-/*  left: 15px;*/
-/*  overflow: scroll;*/
-/*  background: white;*/
-/*    padding-bottom: 20px;*/
 }
 
 .material-icons-round.more {
-  position: fixed;
-  top: 25px;
-    transform: translateY(-50%);
-  right: 15px;
+  position: sticky;
+    top: 70px;
+    float: right;
     z-index: 4;
 }
 
