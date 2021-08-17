@@ -144,7 +144,7 @@ public class ArticleService {
 	public List<ArticleInfo> getArticleInfoByUserAndType(long userId, String type, String own ) {
 		User presentUser = userService.getUser(userId);		
 		List<ArticleInfo> articles = new ArrayList<ArticleInfo>();
-		List<Article> own_articles = null;
+		List<Article> own_articles = new ArrayList<Article>();
 		if(own.equals("mine")) {
 			if(type.equals("A")) {
 				own_articles = articleRepo.findArticleByUserOrderByIdDesc(presentUser);
@@ -176,7 +176,7 @@ public class ArticleService {
 						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
 						boolean isLike = false;
 						for(Like like: a.getLikes()) {
-							if(like.getUser() == user) {
+							if(like.getUser() == presentUser) {
 								isLike = true;
 								break;
 							}
@@ -190,7 +190,7 @@ public class ArticleService {
 						// 유저가 해당 게시글에 하트를 눌렀는지 여부 확인
 						boolean isLike = false;
 						for(Like like: a.getLikes()) {
-							if(like.getUser() == user) {
+							if(like.getUser() == presentUser) {
 								isLike = true;
 								break;
 							}

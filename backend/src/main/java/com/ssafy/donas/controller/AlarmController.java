@@ -230,9 +230,10 @@ public class AlarmController {
 		
 		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
 		for(QuestParticipants qp : participants) {
+			
 			User user =  userService.getUser(userId);
 			Quest quest = qp.getQuest();
-			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));			
+			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+" 퀘스트 참여에 수락하였습니다.", LocalDateTime.now().plusHours(9));			
 		}
 			
 		
