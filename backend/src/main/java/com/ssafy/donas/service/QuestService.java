@@ -131,16 +131,16 @@ public class QuestService {
 	}
 
 	public long addPersonalQuest(String title, String description, Date startAt, Date finishAt,
-			String picture, String certification, long mileage) {
-		Personal quest = new Personal("P", title, description, startAt, finishAt, picture, certification, mileage);
+			String picture, String certification, long mileage, int minArticleCount) {
+		Personal quest = new Personal("P", title, description, startAt, finishAt, picture, certification, mileage,minArticleCount);
 		personalRepo.save(quest);
 
 		return quest.getId();
 	}
 
 	public Quest addGroupQuest(String title, String description, Date startAt, Date finishAt, String picture,
-			String certification, long mileage, int userCnt) {
-		Group quest = new Group("G", title, description, startAt, finishAt, picture, certification, mileage, userCnt);
+			String certification, long mileage, int userCnt, int minArticleCount) {
+		Group quest = new Group("G", title, description, startAt, finishAt, picture, certification, mileage, userCnt,minArticleCount);
 		groupRepo.save(quest);
 		return quest;
 	}

@@ -46,6 +46,10 @@ public class AddPersonalQuestRequest {
 	@ApiModelProperty(required = true)
     @NotNull
 	long mileage;
+	
+	@ApiModelProperty(required = true)
+    @NotNull
+	int minArticleCount;
 
 	public long getUserId() {
 		return userId;
@@ -109,6 +113,14 @@ public class AddPersonalQuestRequest {
 
 	public void setMileage(long mileage) {
 		this.mileage = mileage;
+	}
+
+	public int getMinArticleCount() {
+		return minArticleCount;
+	}
+
+	public void setMinArticleCount(int minArticleCount) {
+		this.minArticleCount = minArticleCount;
 	}
 	
 }
