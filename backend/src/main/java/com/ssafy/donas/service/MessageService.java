@@ -57,7 +57,8 @@ public class MessageService {
 			// 메세지 보낸 적있는지 확인
 			if(room1==null) {
 				// 새로운 메세지방 만들기
-				messageRoomRepo.save(new MessageRoom(sendUser,receivedUser));
+				room1 = messageRoomRepo.save(new MessageRoom(sendUser,receivedUser));
+
 			}
 		}		
 		if(messageRepo.save(new Message(content,sendUser,receivedUser,time,room1))==null)
