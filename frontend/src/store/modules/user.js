@@ -253,8 +253,8 @@ const actions = {
     commit('SET_COMMON_ALARMS', common)
   },
 
-  async updateCommonAlarms ({dispatch, state}) {
-    await UserApi.requestCommonAlert(
+  updateCommonAlarms ({dispatch, state}) {
+    UserApi.requestCommonAlert(
       state.loginUser.id,
       async (res) => {
         if (res.data !== 'NOT_FOUND') {
