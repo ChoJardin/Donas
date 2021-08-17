@@ -2,10 +2,10 @@
   <div>
       <ComponentNav @on-arrow="$router.back()" title="퀘스트"></ComponentNav>
     <div class="quest-branch">
-      <router-link to="/quests" class="quest-button">전체</router-link>
-      <router-link to="/quests/solo" class="quest-button">개인</router-link>
-      <router-link to="/quests/group" class="quest-button">공동</router-link>
-      <router-link to="/quests/relay" class="quest-button">릴레이</router-link>
+      <router-link to="/quests" class="quest-button" replace>전체</router-link>
+      <router-link to="/quests/solo" class="quest-button" replace>개인</router-link>
+      <router-link to="/quests/group" class="quest-button" replace>공동</router-link>
+      <router-link to="/quests/relay" class="quest-button" replace>릴레이</router-link>
     </div>
 
     <router-view id="quest-router-view"/>

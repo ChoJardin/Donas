@@ -1,9 +1,12 @@
 <template>
   <div>
+
+    <ComponentNav @on-arrow="$router.back()"></ComponentNav>
+
     <div class="branch">
-      <router-link :to="{name:'DonationUsage'}" class="button">기부 내역</router-link>
+      <router-link :to="{name:'DonationUsage'}" class="button" replace>기부 내역</router-link>
 <!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
-      <router-link :to="{name:'CashUsage'}" class="button">출금 내역</router-link>
+      <router-link :to="{name:'CashUsage'}" class="button" replace>출금 내역</router-link>
     </div>
 
     <router-view class="router-view"/>
@@ -11,12 +14,16 @@
 </template>
 
 <script>
-import MileagesApi from "../../api/MileagesApi";
 import {mapGetters,mapState} from "vuex";
+import MileagesApi from "../../api/MileagesApi";
+import ComponentNav from "@/components/common/ComponentNav";
 
 
 export default {
   name: "MileageReceipt",
+  components: {
+    ComponentNav
+  },
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser
@@ -54,7 +61,7 @@ export default {
 <style scoped>
 .branch {
   height: 30px;
-  margin: 10px 0;
+  margin: 70px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;

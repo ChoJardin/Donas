@@ -1,12 +1,13 @@
 <template>
   <div>
-    <componentNav title="팔로우" @on-arrow="$router.push(`/user/profile/${nickname}`)" />
+    <!--<componentNav title="팔로우" @on-arrow="$router.push(`/user/profile/${nickname}`)" />-->
+    <componentNav title="팔로우" @on-arrow="$router.back()" />
 
     <div id="follow-wrap">
-        <router-link :to="`/follow/${nickname}/follower`" class="follow">
+        <router-link :to="`/follow/${nickname}/follower`" class="follow" replace>
           팔로워&nbsp;&nbsp;{{ followerCnt }}
         </router-link>
-        <router-link :to="`/follow/${nickname}/following`" class="follow">
+        <router-link :to="`/follow/${nickname}/following`" class="follow" replace>
           팔로잉&nbsp;&nbsp;{{ followingCnt }}
         </router-link>
     </div>

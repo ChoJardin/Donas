@@ -42,7 +42,7 @@
               <i v-else class="material-icons">favorite_border</i>
               &nbsp;{{article.heartCnt}}
             </button>
-            <router-link :to="`/article/${article.id}`" :key="`ca${article.id}`" class="single-article-details">
+            <router-link :to="`/article/${article.id}`" :key="`ca${article.id}`" class="single-article-details" replace>
             <i class="material-icons-outlined">comment</i>
               &nbsp;<span>{{article.commentCnt}}</span>
             </router-link>
