@@ -1,5 +1,6 @@
 package com.ssafy.donas.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -168,17 +169,19 @@ public class UserController {
 			return HttpStatus.NOT_FOUND;		
 		
 		final MypageResponse result = new MypageResponse();
-		ResponseEntity response = null;	
-
+		Date time = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		cal.add(Calendar.HOUR, 9);
+		time = cal.getTime();
 		result.nickname = user.getNickname();
 		result.email = user.getEmail();
 		result.picture = user.getPicture();
 		result.description = user.getDescription();
 		result.mileage = user.getMileage();
-		result.questCnt = questParticipantsService.getQuestCntById(id, new Date());
+		result.questCnt = questParticipantsService.getQuestCntById(id, time);
 		result.questPercent = user.getQuestPercent();
-		response = new ResponseEntity<>(result, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}	
 	
 	@PatchMapping("/mileage/{userId}")
