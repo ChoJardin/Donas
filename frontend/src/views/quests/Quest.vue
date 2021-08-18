@@ -7,8 +7,19 @@
       <router-link to="/quests/group" class="quest-button" replace>공동</router-link>
       <router-link to="/quests/relay" class="quest-button" replace>릴레이</router-link>
     </div>
-
     <router-view id="quest-router-view"/>
+
+    <div class="button-float-wrap">
+
+    <router-link class="button-float" to="/quests/create" style="text-decoration: none">
+        <i class="fas fa-plus fa-lg" style="color: #f0a04b"></i>
+    </router-link>
+
+    <div class="button-float question" @click="showModal = !showModal">
+        ?
+    </div>
+
+    </div>
 
     <!--<v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>-->
 
@@ -38,13 +49,6 @@
      <!--<v-btn id="create-button" class="text-decoration-none" fab color="indigo">-->
     <!--</v-btn>-->
 
-      <router-link class="button-float add" to="/quests/create" style="text-decoration: none">
-            <i class="fas fa-plus fa-lg" style="color: #f0a04b"></i>
-      </router-link>
-
-    <div class="button-float question" @click="showModal = !showModal">
-        ?
-    </div>
 
   </div>
 </template>
@@ -145,7 +149,12 @@ export default {
 }
 
 #quest-router-view {
-  margin-top: 110px
+  margin-top: 110px;
+}
+
+.button-float-wrap {
+  float: right;
+  width: 15%;
 }
 
 .button-float {
@@ -153,9 +162,11 @@ export default {
   height: 50px;
   border-radius: 50%;
   background-color: #ffff;
-  position: sticky;
-  bottom: 25px;
-  left: 86%;
+  position: fixed;
+  bottom: 75px;
+  /*left: 18%;*/
+  /*right: 0;*/
+  /*margin: 0 auto;*/
   box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
@@ -164,7 +175,8 @@ export default {
 }
 
 .button-float.question {
-  bottom: 85px
+  bottom: 135px
 }
+
 
 </style>
