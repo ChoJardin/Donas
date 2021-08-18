@@ -22,8 +22,8 @@
           :input.sync="newPasswordConfirm" :error="error.newPasswordConfirm"
           @keyup-enter="onSubmit" ref="newPasswordConfirm"/>
 
-      <ButtonBig value="새로운 비밀번호 저장" @click.native="onSubmit"/>
-
+      <ButtonBig class="save-password" :class="{disabled: isDisabled}"
+                 value="새로운 비밀번호 저장" @click.native="onSubmit"/>
 
     </div>
 
@@ -126,6 +126,13 @@ export default {
     },
   },
   // computed
+  computed: {
+    isDisabled() {
+      return !(this.password && this.newPassword && this.newPasswordConfirm &&
+          !Object.keys(this.error).some(key => this.error[key])
+      )
+    }
+  },
   // watch
   watch: {
     password: function(v) {
@@ -170,6 +177,11 @@ export default {
   margin-top: 85px;
   width: 90%;
   margin-left: 5%;
+}
+
+.save-password.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 </style>

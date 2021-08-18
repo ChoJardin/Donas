@@ -38,7 +38,7 @@ messaging.getToken().then((currentToken) => {
 messaging.onMessage((payload) => {
     // console.log('foreground',payload);
     store.dispatch('setPayload', payload)
-    store.dispatch('updateCommonAlarms')
+    store.dispatch('fetchCommonAlarms')
     const title = '도나쓰';
     const options = {
         body: payload.data.message,

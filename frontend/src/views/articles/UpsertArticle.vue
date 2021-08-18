@@ -70,7 +70,7 @@
 import ComponentNav from "@/components/common/ComponentNav";
 import AwsImageUploader from "@/components/common/AwsImageUploader";
 import ButtonBig from "@/components/common/ButtonBig";
-import {mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import ArticlesApi from "@/api/ArticlesApi";
 
 import('@/assets/style/articles/UpsertArticle.css')
@@ -100,6 +100,9 @@ export default {
   },
   // methods
   methods: {
+    ...mapActions({
+
+    }),
     onPreview(preview) {
       this.preview = preview
     },
@@ -135,15 +138,6 @@ export default {
       this.picture = await this.$refs.aws.uploadFile()
       this.onSubmit()
     },
-    setSavedArticle(data) {
-      this.savedArticle = data
-      this.savedArticle.makerName = this.loginUser.nickname
-      this.savedArticle.makerImage = this.loginUser.picture
-      this.savedArticle.like = false
-      this.savedArticle.heartCnt = 0
-      this.savedArticle.commentCnt = 0
-      this.savedArticle.createdAt = this.savedArticle.createAt
-    },
     // 서버로 요청 보내기
     async onSubmit () {
       const data = {
@@ -157,25 +151,7 @@ export default {
           data,
           async res => {
             if (res.data !== 'NOT_FOUND') {
-              console.log(res.data)
-              // this.setSavedArticle(res.data)
-              // console.log(this.savedArticle)
-              // this.savedArticle = res.data
-              // this.savedArticle.makerName = this.loginUser.nickname
-              // this.savedArticle.makerImage = this.loginUser.picture
-              // this.savedArticle.like = false
-              // this.savedArticle.heartCnt = 0
-              // this.savedArticle.commentCnt = 0
-              // this.savedArticle.createdAt = this.savedArticle.createAt
-              // this.$store.dispatch('setSelectedArticle', this.savedArticle)
-              this.$store.dispatch('addNewArticle', this.savedArticle)
-                  .then( r => {
-                    console.log(this.savedArticle)
-                    console.log(this.$store.state.articles.feeds)
-                    this.$router.push({path: '/article', query: {id: this.savedArticle.articleId}})
-                  }
-                  )
-                  // )
+              this.$store.dispatch('setQuestId', this.quest.id)
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
@@ -233,7 +209,7 @@ export default {
         // this.$store.dispatch('addNewArticle', this.savedArticle)
         // }
         // setTimeout(() => {
-          this.$router.push({path: '/article', query: {id: this.savedArticle.id}})
+        //   this.$router.push({path: '/article', query: {id: this.savedArticle.id}})
     // }
             // , 100)
     }

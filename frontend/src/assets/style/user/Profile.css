@@ -26,7 +26,8 @@
   object-fit: cover;
   border: 1.3px solid #183a1d;
   border-radius: 50%;
-  padding: 3px
+  padding: 3px;
+  cursor: pointer;
 }
 
 #profile-info {
