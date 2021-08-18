@@ -142,7 +142,7 @@ export default {
 
 <style scoped>
 .cashout{
-  margin-top: 20px;
+  margin: 10px 0;
 }
 
 .cashout-warning{
@@ -150,6 +150,7 @@ export default {
   text-align: left;
   margin-bottom: 5px;
   color: #cd4e3e;
+  font-family: GongGothicLight;
 }
 
 .cashout-amount{

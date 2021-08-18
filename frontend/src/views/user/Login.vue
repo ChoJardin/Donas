@@ -45,19 +45,19 @@
     <!--</div>-->
     <!--소셜 로그인-->
     <!--to 회원가입-->
-    <div id="login-to-signup">
-      <div class="login-description">
-        <hr>
-        <span> 소셜 로그인 </span>
-        <hr>
-      </div>
-      <KakaoLogin class="kakao-login-long"></KakaoLogin>
+    <!--<div id="login-to-signup">-->
+    <!--  <div class="login-description">-->
+    <!--    <hr>-->
+    <!--    <span> 소셜 로그인 </span>-->
+    <!--    <hr>-->
+    <!--  </div>-->
+    <!--  <KakaoLogin class="kakao-login-long"></KakaoLogin>-->
     <!--<img src="@/assets/kakao_login_medium_wide.png" alt="" class="kakao-login-long">-->
 
     <!--<ButtonBig-->
     <!--    @on-click="$router.push({name: 'Signup', params: $route.params})"-->
     <!--    value="회 원 가 입" color="#e1eedd" text="#183a1d" id="to-signup-button"/>-->
-    </div>
+    <!--</div>-->
     <!--to 회원가입-->
 
 
@@ -81,7 +81,7 @@ export default {
   components: {
     // ComponentNav,
     UserInput,
-    KakaoLogin
+    // KakaoLogin
     // ButtonBig
   },
   // props
@@ -193,10 +193,11 @@ export default {
     },
     isLoggedIn() {
       // 이전에 거쳐온 히스토리 기록이 없으면 메인 페이지로 -> 새로고침으로 인한 현상
-      if (Object.keys(this.$route.params).length === 0) {
-        this.$router.push('/main')
+      // if (Object.keys(this.$route.params).length === 0) {
+      //   this.$router.push('/main')
         // 프로필 페이지에서 넘어왔음
-      } else if (this.$route.params.history === '/user/profile/undefined') {
+      // } else
+        if (this.$route.params.history === '/user/profile/undefined') {
         const nickname = this.$store.state.user.loginUser.nickname
         this.$router.push(`/user/profile/${nickname}`)
       // 이전에 왔던 곳으로

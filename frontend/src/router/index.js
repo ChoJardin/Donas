@@ -214,10 +214,12 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
   scrollBehavior (to, from, savedPosition) {
-    if (to.name === 'CharityDetail') {
-      document.getElementById('app').scrollIntoView();
+    if (savedPosition) {
+     return savedPosition
+    } else {
+      document.getElementById('app-content').scrollTo(0, 0)
     }
-}
+  }
 })
 
 router.beforeEach((to, from, next) => {
@@ -230,6 +232,7 @@ router.beforeEach((to, from, next) => {
     store.dispatch('updateCommonAlarms', user);
     //     // store.dispatch('setCommonAlarms', user)
   }
+
 
   // if (store.getters.isLoggedIn) {
   //   store.dispatch('updateUserInfo')
