@@ -79,14 +79,14 @@
         <div v-if="error.startAt" class="create-quest-error">종료일 이전의 날짜만 선택 가능합니다</div>
       </div>
 
-      <!--<div class="create-quest-questions">-->
-      <!--  <div class="create-question-title">-->
-      <!--    종료일을 지정해 주세요-->
-      <!--    <div class="create-question-needed">필수</div>-->
-      <!--  </div>-->
-      <!--  <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">-->
-      <!--  <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>-->
-      <!--</div>-->
+      <div class="create-quest-questions">
+        <div class="create-question-title">
+          종료일을 지정해 주세요
+          <div class="create-question-needed">필수</div>
+        </div>
+        <input class="create-quest-input" v-model="finishAt" type="date" :min="endDate">
+        <div v-if="error.finishAt">시작일 이후의 날짜만 선택 가능합니다</div>
+      </div>
 
       <div class="create-quest-questions">
         <div class="create-question-title" >
@@ -181,6 +181,7 @@ export default {
       title: '',
       description: '',
       startAt: moment().format('YYYY-MM-DD'),
+      finishAt: '',
       picture: '',
       certification: '',
       mileage: 2000,
@@ -210,10 +211,13 @@ export default {
       return moment().format('YYYY-MM-DD')
     },
     endDate() {
-      const start = moment(this.startAt, "YYYY-MM-DD")
-      const duration = parseInt(this.targetCnt) * 2
-      return start.add(duration,'d').format( "YYYY-MM-DD")
-    }
+      return this.startAt
+    },
+    // endDate() {
+    //   const start = moment(this.startAt, "YYYY-MM-DD")
+    //   const duration = parseInt(this.targetCnt) * 2
+    //   return start.add(duration,'d').format( "YYYY-MM-DD")
+    // }
   },
   //methods
   methods: {

@@ -226,8 +226,8 @@ router.beforeEach((to, from, next) => {
   // const user = cookies.get('login-user')
   if (user) {
     store.dispatch('updateUserInfo', user);
-    store.dispatch('updateQuestAlarms', user);
-    store.dispatch('updateCommonAlarms', user);
+    store.dispatch('updateQuestAlarms', user.id);
+    store.dispatch('updateCommonAlarms', user.id);
     //     // store.dispatch('setCommonAlarms', user)
   }
 

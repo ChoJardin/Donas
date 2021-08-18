@@ -253,7 +253,20 @@ const actions = {
     commit('SET_COMMON_ALARMS', common)
   },
 
-  updateCommonAlarms ({dispatch, state}) {
+  updateCommonAlarms ({dispatch, state}, id) {
+    UserApi.requestCommonAlert(
+      id,
+      async (res) => {
+        if (res.data !== 'NOT_FOUND') {
+          res.data.id = id  // id는 없어서 따로 추가가 필요합니다.
+          await dispatch('setCommonAlarms', res.data)
+        }
+      },
+      (err) => {console.log(err)}
+    )
+  },
+
+  fetchCommonAlarms ({dispatch, state}) {
     UserApi.requestCommonAlert(
       state.loginUser.id,
       async (res) => {
