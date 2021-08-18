@@ -268,7 +268,7 @@ public class QuestController {
 
 			@Override
 			public int compare(QuestResponse o1, QuestResponse o2) {
-				if(o1.startAt.before(o2.startAt))
+				if(o2.startAt.before(o1.startAt))
 					return 1;
 				return -1;
 			}
@@ -303,7 +303,7 @@ public class QuestController {
 
 			@Override
 			public int compare(QuestResponse o1, QuestResponse o2) {
-				if(o1.startAt.before(o2.startAt))
+				if(o2.startAt.before(o1.startAt))
 					return 1;
 				return -1;
 			}
@@ -338,7 +338,7 @@ public class QuestController {
 
 			@Override
 			public int compare(QuestResponse o1, QuestResponse o2) {
-				if(o1.startAt.before(o2.startAt))
+				if(o2.startAt.before(o1.startAt))
 					return 1;
 				return -1;
 			}
@@ -373,7 +373,7 @@ public class QuestController {
 
 			@Override
 			public int compare(QuestResponse o1, QuestResponse o2) {
-				if(o1.startAt.before(o2.startAt))
+				if(o2.startAt.before(o1.startAt))
 					return 1;
 				return -1;
 			}
@@ -456,7 +456,7 @@ public class QuestController {
 
 			@Override
 			public int compare(QuestResponse o1, QuestResponse o2) {
-				if(o1.startAt.before(o2.startAt))
+				if(o2.startAt.before(o1.startAt))
 					return 1;
 				return -1;
 			}
