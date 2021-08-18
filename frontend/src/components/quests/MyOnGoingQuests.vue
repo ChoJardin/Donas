@@ -89,6 +89,7 @@ export default {
 .to-my-quests {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .nothing-participated {
