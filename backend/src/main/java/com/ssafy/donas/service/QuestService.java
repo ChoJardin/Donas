@@ -83,6 +83,8 @@ public class QuestService {
 					continue;
 				// 나의 게시글 개수
 				for(Article ac : articles) {
+					System.out.println(ac.getUser().getId());
+					System.out.println(userId);
 					if(ac.getUser().getId()==userId)
 						cnt++;
 				}
