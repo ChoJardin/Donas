@@ -69,6 +69,8 @@ public class MessageController {
 			return HttpStatus.NOT_FOUND;
 		MessageResponse result = new MessageResponse();
 		result.id = messageService.roomId(user, other);
+		if(result.id==-1)
+			return HttpStatus.NOT_FOUND;
 		result.otherName = other.getNickname();
 		result.otherPicture = other.getPicture();
 		result.messages = messageService.showMessage(user, other);
