@@ -76,7 +76,9 @@ public class MessageService {
 	// 채팅방 리스트
 	public List<MsgInfo> messageList(long userId){
 		User user = userRepo.getById(userId);
+
 		List<MessageRoom> list = messageRoomRepo.findMessageRoomByUser1OrUser2(user, user);
+	
 		// 채팅방 목록
 		// 채팅방 id, 상대방 id, 상대방 닉네임, 최근 메세지
 		List<MsgInfo> msgInfo = new ArrayList<MsgInfo>();
@@ -102,12 +104,15 @@ public class MessageService {
 	public List<MessageInfo> showMessage(User sendUser, User receiveUser, long roomId){
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
 		MessageRoom room = messageRoomRepo.getById(roomId);
+		System.out.println("방 찾았음");
 		for(Message msg : room.getMsg()) {
 			System.out.println(msg.getSendUser());
+			System.out.println("메세지 보낸사람 찾음");
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
 			else
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
+			System.out.println("메세지 추가 했다");
 		}	
 		return messages;	
 	}
