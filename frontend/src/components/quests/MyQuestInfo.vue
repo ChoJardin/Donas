@@ -31,7 +31,7 @@ export default {
   props: ['quest'],
   methods: {
     dateFormatted(date) {
-      return moment(String(date)).format('YYYY/MM/DD')
+      return moment.parseZone(date).format('YYYY/MM/DD')
     },
 
   },
