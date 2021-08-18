@@ -1,7 +1,9 @@
 package com.ssafy.donas.service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +78,10 @@ public class QuestService {
 		for (QuestParticipants q : qp) {
 			Quest quest = q.getQuest();
 			// 확인 안된 완료 퀘스트 찾기
-			System.out.println(time);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(time);
+			cal.add(Calendar.HOUR, 9);
+			System.out.println("시간이 제발 맞아라 : "+time);
 			if (quest.getFinishAt().before(time)) { // 완료 시간 지난 퀘스트
 				List<Article> articles = quest.getArticles();
 				System.out.println("현재 퀘스트의 게시물 개수");
