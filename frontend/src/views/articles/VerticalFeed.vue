@@ -1,7 +1,7 @@
 <template>
   <div id="vertical-feed-wrap">
 
-    <ComponentNav @on-arrow="$router.back()" title="친구 게시글 보기"></ComponentNav>
+    <ComponentNav v-if="$route.path === '/article'" @on-arrow="$router.back()" title="친구 게시글 보기"></ComponentNav>
 
       <SingleArticle
           v-for="article in articles" :key="article.id"
@@ -62,6 +62,7 @@ export default {
   },
   // navigation guard
   beforeRouteEnter(to, from, next) {
+
     if (from.name === 'UpsertArticle') {
       console.log('여기는 왔냐?')
       next(vm => vm.$router.push(`/article/${vm.$route.query.id}`))

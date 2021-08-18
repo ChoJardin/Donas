@@ -57,21 +57,59 @@
     </div>
     <textarea v-model="content" name="content" id="content" cols="28" rows="5"></textarea>
 
+
+    <div v-if="quest.type === 'R' && !isUpdate">
+
+      <div class="element-wrap">
+        <div class="title">
+          다음 주자 지목
+        </div>
+        <div class="info">
+          필수 등록값 입니다
+        </div>
+      </div>
+
+      <span v-if="participant" class="name-tag inside-input">{{participant.nickname}}</span>
+      <input v-if="participant" type="text"
+             @click="isModal = true" class="create-quest-input select-user"
+             placeholder="">
+      <input v-else @click="isModal = true" class="create-quest-input select-user" type="text" placeholder="다음 주자를 선택해주세요" readonly>
+
+
+      <MidModal v-if="isModal" @close="isModal = false">
+        <div slot="header" style="width: 100%; text-align: center">다음 주자 지목</div>
+        <SelectNextParticipant slot="opt1"
+                               :user.sync="participant"
+                               @on-friend-select="onFriendSelect" ref="friends"></SelectNextParticipant>
+      </MidModal>
+    </div>
+
     <ButtonBig
         class="submit-button" value="작 성 완 료"
         @click.native="onClick" :class="{disabled: disabled}"
     />
     </div>
 
+
+
+
+
+
+
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters, mapState} from "vuex";
+import ArticlesApi from "@/api/ArticlesApi";
+
 import ComponentNav from "@/components/common/ComponentNav";
 import AwsImageUploader from "@/components/common/AwsImageUploader";
 import ButtonBig from "@/components/common/ButtonBig";
-import {mapActions, mapGetters, mapState} from "vuex";
-import ArticlesApi from "@/api/ArticlesApi";
+import MidModal from "@/components/common/MidModal";
+import SelectNextParticipant from "@/components/quests/SelectNextParticipant";
+import UserApi from "@/api/UserApi";
+import QuestApi from "@/api/QuestApi";
 
 import('@/assets/style/articles/UpsertArticle.css')
 
@@ -81,7 +119,10 @@ export default {
   components: {
     ComponentNav,
     AwsImageUploader,
-    ButtonBig
+    ButtonBig,
+    MidModal,
+    SelectNextParticipant
+
   },
   // props
   // data
@@ -96,6 +137,12 @@ export default {
       error: '',
       content: '',
       savedArticle: {},
+      // 버튼 눌렸을 경우
+      isSubmit: false,
+      // 다음 참가자 선택
+      isModal: false,
+      users: [],
+      participant: '',
     }
   },
   // methods
@@ -124,6 +171,7 @@ export default {
     },
     // 버튼 눌렀을 때,
     onClick() {
+      this.isSubmit = true
       // 수정하는 경우
       if (this.isUpdate) {
         this.onEdit()
@@ -151,7 +199,30 @@ export default {
           data,
           async res => {
             if (res.data !== 'NOT_FOUND') {
-              this.$store.dispatch('setQuestId', this.quest.id)
+              // 릴레이인 경우 다음주자 선정
+              const data = {
+                questId: this.quest.id,
+                userId: this.loginUser.id,
+                nextId: this.participant.id
+              }
+              await QuestApi.requestNextRelay(
+                  data,
+                  res => {
+                    console.log(res)
+                  },
+                  err => {
+                    console.log(err)
+                  }
+
+              )
+              if (this.quest.type === 'R') {
+                this.isModal = true
+              }
+              // 릴레이 아닌 경우 퀘스트 디테일로 바로 보내기
+              else {
+                this.$store.dispatch('setQuestId', this.quest.id)
+                this.isSubmit = false
+              }
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
@@ -171,10 +242,16 @@ export default {
               this.savedArticle['content'] = this.content
               this.$store.dispatch('replaceOldArticle', this.savedArticle)
               this.$store.dispatch('setSelectedId', 0)
+
+              this.isSubmit = false
+
             } else this.$router.push('/404')
           },
           err => this.$router.push('/error')
       )
+    },
+    onFriendSelect() {
+      // 릴레이 친구 선택 끝난 경우
     }
 
   },
@@ -188,9 +265,11 @@ export default {
     // 버튼 비활성화
     disabled() {
       if (this.isUpdate)
-        return this.content === this.selectedArticle.content || !this.content
+        return this.content === this.selectedArticle.content || !this.content || this.isSubmit
+      else if (this.quest.type === 'R')
+        return !(this.preview && this.content && this.participant && !this.error) || this.isSubmit
       else
-        return !(this.preview && this.content && !this.error)
+        return !(this.preview && this.content && !this.error) || this.isSubmit
     },
     isArticleSelected() {
       return this.$store.getters.isArticleSelected
@@ -198,23 +277,25 @@ export default {
   },
   // watch
   watch: {
-    // watcher on computed
     isArticleSelected(v) {
-      // if (this.isUpdate) {
         this.$router.push({path: '/article', query: {id: this.savedArticle.id}})
-
-      // } else  {
-        // 게시글을 작성하고 저장했기 때문에 피드로 보내주겠습니다.
-        // 그 전에 먼저 피드에 내 새로운 게시물을 넣어주겠어요.
-        // this.$store.dispatch('addNewArticle', this.savedArticle)
-        // }
-        // setTimeout(() => {
-        //   this.$router.push({path: '/article', query: {id: this.savedArticle.id}})
-    // }
-            // , 100)
     }
   },
   // lifecycle hook
+  created() {
+    // 릴레이인 경우 미리 참가자 목록 불러오기
+    if (!this.isUpdate && this.quest.type === 'R') {
+      QuestApi.requestGroupFriends(
+        this.loginUser.id,
+          res => {
+            if (res.data !== 'NOT_FOUND') {
+              this.users = this.res.data
+            }
+          },
+          err => this.$router.push('/error')
+      )
+    }
+  },
   // navigation guard
   beforeRouteEnter: (to, from, next) => {
     if (from.name === 'QuestDetail')
@@ -227,10 +308,22 @@ export default {
       })
     else
       next('/404')
-  }
+  },
+  // beforeRouteLeave: (to, from, next) => {
+    // 릴레이 퀘스트인 경우에는
+    // if (to.name === 'QuestDetail' && this.quest.type === 'R') {
+    //   this.isModal = true
+
+    // }
+  // }
 }
 </script>
 
 <style scoped>
-
+.name-tag.inside-input {
+  border-radius: 10px;
+  position: absolute;
+  left: 36px;
+  margin-top: 9px;
+}
 </style>

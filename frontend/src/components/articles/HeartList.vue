@@ -49,7 +49,7 @@ export default {
 <style scoped>
 #heart-list {
   position: absolute;
-  top: 60px;
+  top: 120px;
   width: 100%;
 }
 
