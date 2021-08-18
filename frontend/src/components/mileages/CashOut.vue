@@ -5,22 +5,27 @@
     <div class="cashout-amount">
       <div class="cashout-input-label" >출금 금액:</div>
       <div style="display: flex; align-items: center">
-        <div class="cashout-currency">₩</div>
+        <div class="cashout-currency">₩&nbsp;</div>
         <input type="number" class="cashout-input" v-model="inputAmount">
       </div>
     </div>
+    <div class="cashout-warning" style="float: right" v-if="error.inputAmount">{{error.inputAmount}}</div>
 
     <div class="donation-amount">
-        <div >{{donationAmount}}원이 자동 기부 됩니다.</div>
+        <div class="cashout-warning" style="text-align: right; color: #183a1d">{{donationAmount}}원이 자동 기부 됩니다.</div>
     </div>
 
       <div class="cashout-donation">
-        <div> 후원 단체 </div>
-        <select v-model="charityId" class="cashout-charity">
+        <div class="cashout-input-label-md"> 후원 단체 </div>
+
+        <div class="select">
+        <div v-if="!charityId" class="placeholder">후원단체를 선택해주세요</div>
+        <select v-model="charityId" id="charity-select" class="cashout-charity">
           <option v-for="charity in charityList" :key="charity.id" :value="charity.id">
             {{charity.name}}
           </option>
         </select>
+        </div>
       </div>
 
 
@@ -29,26 +34,32 @@
     <div class="cashout-info">
       <div class="cashout-input-label" style="text-align: left">출금 정보</div>
       <div class="cashout-amount">
-        <div class="cashout-input-label">이름</div>
+        <div class="cashout-input-label-md">이름</div>
         <input type="text" v-model="name" class="cashout-input">
       </div>
 
       <div class="cashout-donation">
-        <div> 이체 은행 </div>
-        <select v-model="bank" class="cashout-charity">
-          <option v-for="(bank,idx) in bankList" :key="idx" :value="bank">
-            {{bank}}
-          </option>
-        </select>
+        <div class="cashout-input-label-md"> 이체 은행 </div>
+
+        <div class="select">
+        <div v-if="!bank" class="placeholder">은행을 선택해주세요</div>
+          <select v-model="bank" class="cashout-charity">
+            <option v-for="(bank,idx) in bankList" :key="idx" :value="bank">
+              {{bank}}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div class="cashout-amount">
-        <div class="cashout-input-label">계좌번호</div>
+        <div class="cashout-input-label-md">계좌번호</div>
         <input type="text" v-model="account" class="cashout-input">
       </div>
+      <div class="cashout-warning" style="float: right" v-if="error.account">{{error.account}}</div>
+
     </div>
 
-    <button class="button" @click="confirmPage">확인</button>
+    <button class="button" :class="{disabled: isDisabled}" @click="confirmPage">확인</button>
 
   </div>
 </template>
@@ -66,6 +77,11 @@ export default {
       bank: '',
       account:'',
       charityId:'',
+      error: {
+        inputAmount: false,
+        name: false,
+        account: false,
+      }
     }
   },
   //methods
@@ -131,10 +147,28 @@ export default {
       loginUser: state => state.user.loginUser,
       charityList: state => state.mileages.charityList,
       bankList: state => state.mileages.bankList
-    })
+    }),
+    isDisabled() {
+      return !(this.account && this.bank && this.charityId && this.inputAmount && this.name &&
+              Object.keys(this.error).every(key => !this.error[key])
+      )
+    }
   },
   watch: {
-
+    inputAmount: function (v) {
+      if (v > this.loginUser.mileage) {
+        this.error.inputAmount = '보유 마일리지를 초과하는 금액은 입력하실 수 없습니다'
+      } else {
+        this.error.inputAmount = false
+      }
+    },
+    account: function(v) {
+      if (v.length < 10) {
+        this.error.account = '유효한 계좌번호를 입력해주세요'
+      } else {
+        this.error.account = false
+      }
+    }
   }
 
 }
@@ -180,8 +214,13 @@ export default {
 }
 
 .cashout-input-label{
+  font-family: GongGothicLight;
   /*display: flex;*/
   /*align-items: center;*/
+}
+
+.cashout-input-label-md {
+  font-family: GongGothicLight;
 }
 
 .cashout-currency{
@@ -194,6 +233,7 @@ export default {
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 0.8em;
+  font-family: GongGothicLight;
   padding-left: 10px;
   border-radius: 10px;
   height: 30px;
@@ -213,5 +253,79 @@ export default {
   font-size: 1em;
   cursor: pointer;
 }
+
+.button.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/*select box*/
+select {
+  /* Reset Select */
+  appearance: none;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  flex: 1;
+  padding: 0 1em;
+  /*border: 1px solid #292929;*/
+  /*background-color: #ffffff;*/
+  background-image: none;
+  cursor: pointer;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+
+.placeholder {
+  position: absolute;
+  z-index: -1;
+  font-family: GongGothicLight;
+  font-size: 0.8em;
+  top: 5px;
+  left: 8px;
+}
+
+/* Custom Select wrapper */
+.select {
+  position: relative;
+  display: flex;
+  width: 60%;
+  /*border-radius: 12px;*/
+  overflow: hidden;
+  height: 30px;
+  font-family: GongGothicLight;
+  color: #183a1d;
+}
+.select::before {
+  color: #183a1d;
+}
+
+
+/* Arrow */
+.select::after {
+  content: '▼';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  color: #e1eedd;
+  background-color: #183a1d;
+  transition: .25s all ease;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  background-color: #e1eedd;
+  color: #183a1d;
+}
+
+/*.charity-select-label {*/
+/*  position: ;*/
+/*}*/
+
+
 
 </style>

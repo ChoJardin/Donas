@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <ComponentNav @on-arrow="$router.back()"></ComponentNav>
+    <ComponentNav @on-arrow="$router.back()" title="마일리지 사용내역"></ComponentNav>
 
     <div class="branch">
-      <router-link :to="{name:'DonationUsage'}" class="button" replace>기부 내역</router-link>
+      <router-link :to="{name:'DonationUsage'}" class="button" replace>기부내역</router-link>
 <!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
-      <router-link :to="{name:'CashUsage'}" class="button" replace>출금 내역</router-link>
+      <router-link :to="{name:'CashUsage'}" class="button" replace>출금내역</router-link>
     </div>
 
     <router-view class="router-view"/>
@@ -79,8 +79,9 @@ export default {
   margin-right: 1%;
   border-bottom: lightgray solid 1px;
   text-decoration: none;
-  color: black;
+  color: #183a1d;
   text-align: center;
+  font-family: GongGothicLight;
 }
 
 </style>

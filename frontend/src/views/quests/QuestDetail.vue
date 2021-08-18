@@ -35,7 +35,7 @@
           </div>
         <!--article start-->
         <div class="quest-detail-articles">
-          <div>인증 개시글</div>
+          <div>인증 게시글</div>
           <button v-if="isItMine" @click="$router.push('/article/create/')">인증 생성</button>
 <!--          <button @click="onCreate">인증 생성</button>-->
           <button v-else-if="isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
