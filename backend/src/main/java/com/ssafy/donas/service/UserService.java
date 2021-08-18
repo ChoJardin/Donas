@@ -41,9 +41,10 @@ public class UserService {
 		if (user == null) {
 			return null;
 		}
-		
+		System.out.println("여기까지는 유저 아이디 확인한 거고");
 		Optional<Token> userToken = tokenRepo.findTokenByTokenAndUser_id(token, user.getId());
 		if (userToken.isEmpty()) {
+			System.out.println("토큰이 없음(같은 기기에서 로그인이 안 되어 있음");
 			Token tokenId = new Token(token, user);
 			tokenRepo.save(tokenId);
 		}
