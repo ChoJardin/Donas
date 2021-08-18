@@ -103,62 +103,6 @@
 
 
 
-
-
-
-
-
-  <!--  &lt;!&ndash;주희&ndash;&gt;-->
-  <!--  <div>-->
-  <!--    <div class="create-quest-questions">-->
-  <!--      <div class="create-question-title">퀘스트 이름을 입력해 주세요-->
-  <!--      <span class="create-question-subtext">(10자 이내)</span></div>-->
-  <!--      <input autofocus class="create-quest-input" v-model="title" type="text" maxlength="10" placeholder="예) 미라클 모닝">-->
-  <!--    </div>-->
-
-  <!--    <div class="create-quest-questions">-->
-  <!--      <div class="create-question-title">간단한 설명을 입력해 주세요-->
-  <!--      <span class="create-question-subtext">(14자 이내)</span></div>-->
-  <!--      <input class="create-quest-input" v-model="description" type="text" maxlength="100" placeholder="예) 매일 30분 독서하기">-->
-  <!--    </div>-->
-
-  <!--    <div class="create-quest-questions">-->
-  <!--      <div class="create-question-title">목표인원을 설정해 주세요</div>-->
-  <!--      <input class="create-quest-input" v-model="targetCnt" type="number" maxlength="2">-->
-  <!--    </div>-->
-
-  <!--    <div class="create-quest-questions">-->
-  <!--      <div class="create-question-title">시작일을 지정해 주세요</div>-->
-  <!--      <input class="create-quest-input" v-model="startAt" type="date" maxlength="100" placeholder="예) 매일 30분 독서하기">-->
-  <!--    </div>-->
-
-  <!--    <div class="create-quest-questions">-->
-  <!--      <div class="create-question-title" >인증 방법을 입력하세요</div>-->
-  <!--      <textarea class="create-quest-textarea" v-model="certification" type="text" placeholder="예) 시간이 나오고 책 페이지가 나오게 사진 찍기">-->
-  <!--      </textarea>-->
-  <!--    </div>-->
-
-  <!--    <div class="relay-img-input" style="width: 80%; margin-left: 15px">-->
-  <!--    <AwsImageUploader-->
-  <!--        id="image-input" ref="aws"-->
-  <!--        @preview="onPreview" @on-error="onError"/>-->
-  <!--  </div>-->
-  <!--    <div class="relay-quest-image">-->
-  <!--&lt;!&ndash;      <img v-if="isUpdate" :src="quest.picture" alt="">&ndash;&gt;-->
-  <!--      <img v-if="preview" :src="preview" style="width: 200px; height: 200px; padding-top:20px" alt="">-->
-  <!--      <div v-else class="relay-upload-info">-->
-  <!--        등록한 이미지는 수정이 불가합니다.-->
-  <!--        <br/>신중히 선택해 주세요.-->
-  <!--        <br/><br/>-->
-  <!--        5MB 이내의 .jpg/ .jpeg/ .png 파일만 <br/>등록 가능합니다.-->
-  <!--      </div>-->
-  <!--      <div id="image-error" v-html="error" v-if="error"></div>-->
-
-  <!--    </div>-->
-
-  <!--    <button class="button" @click="onClick">생 성 하 기</button>-->
-  <!--    </div>-->
-
   </div>
 </template>
 
@@ -241,13 +185,12 @@ export default {
         userId: this.loginUser.id,
         title: this.title,
         description: this.description,
-        startAt: this.startAt,
-        finishAt: this.finishAt,
+        startAt: this.startAt  + ' 00:00:00',
+        finishAt: this.finishAt + ' 23:59:59',
         picture: this.picture,
         certification: this.certification,
         mileage: this.mileage,
         targetCnt: this.targetCnt,
-        finishedAt: this.endDate
         }
       console.log(data)
       let path

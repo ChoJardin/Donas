@@ -14,7 +14,8 @@
               <div class="quest-status-tag" v-else>시작예정</div>
               <div>{{ quest.title }}</div>
             </div>
-            <div id="single-quest-description">{{quest.description}}</div>
+            <div class="single-quest-date">{{startDate}} - {{endDate}}</div>
+            <div class="single-quest-description">{{quest.description}}</div>
           </div>
         </div>
         <!--게시글 작성 정보-->
@@ -31,16 +32,25 @@ export default {
   name: "QuestList",
   props: {
     quest: Object,
+    data() {
+      return {
+
+      }
+    }
   },
   computed: {
+    endDate: function (){
+      return moment.parseZone(this.quest.finishAt).format('YYYY-MM-DD')
+    },
+    startDate: function() {
+      return moment.parseZone(this.quest.startAt).format('YYYY-MM-DD')
+    },
     isItEnded: function () {
-      const end = moment.parseZone(this.quest.finishAt).format('YYYY-MM-DD HH:mm')
-      return moment().isAfter(end)
+
+      return moment().isAfter(this.endDate)
     },
     isItBetween: function () {
-      const start = moment.parseZone(this.quest.startAt).format('YYYY-MM-DD HH:mm')
-      const end = moment.parseZone(this.quest.finishAt).format('YYYY-MM-DD HH:mm')
-      return moment().isBetween(start, end)
+      return moment().isBetween(this.startDate, this.endDate)
     },
   }
 
@@ -98,17 +108,22 @@ export default {
   font-weight: bold;
   font-size: 1.0em;
 }
+.single-quest-date{
+  font-size: 0.5em;
+  display: flex;
+  justify-content: left;
+}
 
 .quest-status-tag{
     background-color: #f6c453;
     font-size: 0.5em;
     font-family: GongGothicLight;
     padding: 0 2px;
-    margin: 5px;
+    margin: 5px 5px 5px 0;
     border-radius: 5px;
 }
 
-#single-quest-description {
+.single-quest-description {
   margin-top: 20px;
   display: flex;
   font-size: 0.8em;

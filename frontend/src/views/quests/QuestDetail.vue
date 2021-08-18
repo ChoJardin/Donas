@@ -37,7 +37,9 @@
         <div class="quest-detail-articles">
           <div>인증 개시글</div>
           <div v-if="!isItEnded">
-            <button v-if="isItMine" @click="$router.push('/article/create/')">인증 생성</button>
+            <div v-if="isItMine">
+              <button  @click="$router.push('/article/create/')">인증 생성</button>
+            </div>
   <!--          <button @click="onCreate">인증 생성</button>-->
             <button v-else-if="isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
           </div>
@@ -96,7 +98,10 @@ export default {
             console.log(err)
           }
       )
-    }
+    },
+    // isItRelay() {
+    //   if (this.questDetail)
+    // }
   },
   // computed
   computed: {
@@ -116,7 +121,7 @@ export default {
     isItEnded: function () {
       const end = moment.parseZone(this.questDetail.finishAt).format('YYYY-MM-DD HH:mm')
       return moment().isAfter(end)
-    } ,
+    },
 
 
     ...mapState({
