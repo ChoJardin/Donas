@@ -102,6 +102,7 @@
     display: block;
     margin: 10px 7%;
     text-align: start;
+    cursor: pointer;
 }
 
 #article-detail .quest-type {
@@ -125,7 +126,6 @@
     font-size: 0.9em;
     font-family: GongGothicLight;
     text-align: start;
-    overflow: scroll;
     text-overflow:ellipsis;
     resize: none;
 }
