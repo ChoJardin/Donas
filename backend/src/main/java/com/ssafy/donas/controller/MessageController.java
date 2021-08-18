@@ -73,7 +73,7 @@ public class MessageController {
 		result.otherPicture = other.getPicture();
 		result.messages = messageService.showMessage(user, other);
 		
-		return HttpStatus.OK;
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 }
