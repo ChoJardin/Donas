@@ -1,6 +1,7 @@
 package com.ssafy.donas.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -90,12 +91,7 @@ public class QuestController {
 
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
-		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
-		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
-		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
-		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
-		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
-		System.out.println(quest.getFinishAt());
+
 		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
 				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(),quest.getMinArticleCount());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
@@ -358,6 +354,10 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 		
 		Date time = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		cal.add(Calendar.HOUR, 9);
+		time = cal.getTime();
 		List<QuestResponse> result = new ArrayList<QuestResponse>();
 		List<QuestInfo> quests = questService.getQuestInfoByUserId(userId);
 		
