@@ -25,13 +25,10 @@ public class RelayWaitService {
 	@Autowired
 	UserRepo userRepo;
 	
-	public void addWaitList(Quest relay, List<Long> nextUsers, int order) {
-		int idx = 1;
-		for(Long userId : nextUsers) {
-			User user = userRepo.getById(userId);
-			RelayWait rw = new RelayWait((Relay)relay, idx++, user, order);
+	public void addWaitList(Quest relay, long nextId, int order) {
+			User user = userRepo.getById(nextId);
+			RelayWait rw = new RelayWait((Relay)relay, user, order);
 			relayWaitRepo.save(rw);
-		}
 	}
 	
 	public void updateDeadline(Quest relay, long nextUserId, LocalDateTime time) {
@@ -52,12 +49,12 @@ public class RelayWaitService {
 		return relayWaitRepo.findByRelayAndUser(relay, user);
 	}
 	
-	public boolean checkLastWait(Relay relay, User user) {
-		if(countByRelay(relay) == findByRelayAndUser(relay, user).getWaitRank())
-			return true;
-		
-		return false;
-	}
+//	public boolean checkLastWait(Relay relay, User user) {
+//		if(countByRelay(relay) == findByRelayAndUser(relay, user).getWaitRank())
+//			return true;
+//		
+//		return false;
+//	}
 	
 	
 }

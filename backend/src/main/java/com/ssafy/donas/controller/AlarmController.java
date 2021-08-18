@@ -202,13 +202,13 @@ public class AlarmController {
 		// 알람 응답 칼럼 거절으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 3);
 		
-		// 마지막 대기 주자였다면 퀘스트 종료
-		Relay relay = relayService.getById(questAlarmService.getAlarm(alarmId).getQuest().getId());
-		if(relayWaitService.checkLastWait(relay, userService.getUser(userId))) {
-			questService.quitQuest(relay.getId(), -1);
-			
-			// ***퀘스트 종료 알림 : 퀘스트에 참여한 모든 사람에게 종료(실패) 알림***
-		}
+//		// 마지막 대기 주자였다면 퀘스트 종료
+//		Relay relay = relayService.getById(questAlarmService.getAlarm(alarmId).getQuest().getId());
+//		if(relayWaitService.checkLastWait(relay, userService.getUser(userId))) {
+//			questService.quitQuest(relay.getId(), -1);
+//			
+//			// ***퀘스트 종료 알림 : 퀘스트에 참여한 모든 사람에게 종료(실패) 알림***
+//		}
 		
 		return HttpStatus.OK;
 	}	

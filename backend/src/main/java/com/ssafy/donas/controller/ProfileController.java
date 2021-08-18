@@ -106,7 +106,7 @@ public class ProfileController {
 		result.articles = articleService.getArticleInfosByUser(otherUser,userService.getUser(myid));
 		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
-		System.out.println(result.articles);
+
 		return response;
 	}
 
