@@ -63,7 +63,7 @@ public class QuestParticipantsService {
 		List<QuestParticipants> questParticipants = questParticipantsRepo.findQuestParticipantsByUser(userRepo.getById(userId));
 		int questCnt = 0;
 		for(QuestParticipants qp : questParticipants) {
-			 if(questRepo.getById(qp.getQuest().getId()).getStartAt().before(time) &&questRepo.getById(qp.getQuest().getId()).getFinishAt().after(time))
+			 if(questRepo.getById(qp.getQuest().getId()).getStartAt().before(time) && (questRepo.getById(qp.getQuest().getId()).getFinishAt()==null||questRepo.getById(qp.getQuest().getId()).getFinishAt().after(time)))
 				 questCnt++;
 		 }
 		return questCnt;
