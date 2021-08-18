@@ -156,7 +156,7 @@ public class QuestController {
 
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
-
+		System.out.println(quest.getFinishAt());
 		Quest groupQuest = questService.addGroupQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
 				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(),
 				quest.getParticipants().size() + 1,quest.getMinArticleCount());
