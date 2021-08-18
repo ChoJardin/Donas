@@ -35,6 +35,7 @@ import com.ssafy.donas.service.CashService;
 import com.ssafy.donas.service.DonationService;
 import com.ssafy.donas.service.MileageService;
 import com.ssafy.donas.service.QuestParticipantsService;
+import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -58,6 +59,9 @@ public class UserController {
 	
 	@Autowired
 	QuestParticipantsService questParticipantsService;
+	
+	@Autowired
+	QuestService questService;
 
 	@PostMapping("/signin")
 	@ApiOperation(value = "로그인")
@@ -78,11 +82,13 @@ public class UserController {
 		// 로그인 아이디별 토큰 저장		
 		result.id = user.getId();
 		result.nickname = user.getNickname();
-		System.out.println("뭐 땜시");
 		result.questCnt = user.getQuestCnt();
-		System.out.println("뭐 땜시ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
 		response = new ResponseEntity<>(result, HttpStatus.OK);
-		System.out.println();
+		
+		// 완료 퀘스트 성공/실패 여부
+		Date time = new Date();
+		questService.checkQuestSuccess(result.id, time);
+		
 		return response;
 	}
 	
