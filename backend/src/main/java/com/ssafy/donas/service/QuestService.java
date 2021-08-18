@@ -71,8 +71,6 @@ public class QuestService {
 		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId),0);
 		if(qp.size()==0)
 			return;
-		System.out.println("퀘스트 존재!!!!!!!!");
-		System.out.println(qp.size());
 		for(QuestParticipants q : qp) {
 			Quest quest = q.getQuest();
 			// 확인 안된 완료 퀘스트 찾기
@@ -84,21 +82,17 @@ public class QuestService {
 					continue;
 				// 나의 게시글 개수
 				for(Article ac : articles) {
-					System.out.println(ac.getUser().getId());
-					System.out.println(userId);
 					if(ac.getUser().getId()==userId)
 						cnt++;
 				}
 			}
-			System.out.println(quest.getTitle());
-			System.out.println("게시글 작성 개수 : "+ cnt);
 			// 성공 최소 개수 이상 게시물 올렸나 확인
 			double percent = (cnt*100)/(double)quest.getMinArticleCount();
-			System.out.println("성공률 : "+percent);
+
 			if(percent>=90)
-				quest.setSuccess(1);
+				q.setSuccess(1);
 			else
-				quest.setSuccess(2);
+				q.setSuccess(2);
 		}
 	}	
 
