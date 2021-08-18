@@ -13,18 +13,16 @@ public class MsgInfo {
 	
 	private long id;
 	private long otherId;
-	private String otherImage;
+	private String otherPicture;
 	private String content;
 	private LocalDateTime lastTime;
 	
 	@Builder
-	public MsgInfo(long id, long otherId, String otherImage, String content, LocalDateTime lastTime) {
-		super();
+	public MsgInfo(long id, long otherId, String otherPicture, String content, LocalDateTime lastTime) {
 		this.id = id;
 		this.otherId = otherId;
-		this.otherImage = otherImage;
+		this.otherPicture = otherPicture;
 		this.content = content;
 		this.lastTime = lastTime;
 	}
-
 }

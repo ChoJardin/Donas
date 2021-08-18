@@ -166,6 +166,15 @@ public class AlarmController {
 		if(!questService.checkQuest(questId) || !userService.checkId(userId) || !questAlarmService.checkQuestAlarm(alarmId))
 			return HttpStatus.NOT_FOUND;
 		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questId));
+
+		
+//		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+//		for(QuestParticipants qp : participants) {
+//			User user =  userService.getUser(userId);
+//			Quest quest = qp.getQuest();
+//			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));
+//			
+//		}
 		
 		// 참여중인 퀘스트에 추가
 		questParticipantsService.addParticipant(userId, questId);
@@ -179,13 +188,6 @@ public class AlarmController {
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
 		
-		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
-		for(QuestParticipants qp : participants) {
-			User user =  userService.getUser(userId);
-			Quest quest = qp.getQuest();
-			questAlarmService.addQuestAlarm(qp.getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"에 참여하였습니다.", LocalDateTime.now().plusHours(9));
-			
-		}
 		
 		
 		return HttpStatus.OK;
@@ -222,22 +224,18 @@ public class AlarmController {
 			return HttpStatus.NOT_FOUND;
 		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questId));
 		
+//		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
+//		User user =  userService.getUser(userId);
+//		for(QuestParticipants qp : participants) {
+//			Quest quest = qp.getQuest();
+//			questAlarmService.addQuestAlarm(qp.getUser().getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+" 퀘스트 참여에 수락하였습니다.", LocalDateTime.now().plusHours(9));			
+//		}
+		
 		// 참여중인 퀘스트에 추가
 		questParticipantsService.addParticipant(userId, questId);
 		System.out.println("참여를 하는거지?");
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
-		
-		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
-		User user =  userService.getUser(userId);
-		for(QuestParticipants qp : participants) {
-			System.out.println("유저가 없는거냐???????");
-			System.out.println(user.getNickname());
-			Quest quest = qp.getQuest();
-			questAlarmService.addQuestAlarm(qp.getUser().getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+" 퀘스트 참여에 수락하였습니다.", LocalDateTime.now().plusHours(9));			
-		}
-			
-		
 		
 		return HttpStatus.OK;
 	}
@@ -257,8 +255,7 @@ public class AlarmController {
 		for(QuestParticipants qp : participants) {
 			Quest quest = qp.getQuest();
 			questAlarmService.addQuestAlarm(qp.getUser().getId(), quest,user.getNickname(), user.getNickname()+"님이 "+"\""+quest.getTitle()+"\""+"퀘스트 참여를 거절하였습니다.", LocalDateTime.now().plusHours(9));			
-		}
-		
+		}		
 		return HttpStatus.OK;
 	}	
 	

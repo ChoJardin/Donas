@@ -1,6 +1,8 @@
 <template>
   <div class="donation">
-    <h3>기부하실 단체를 선택해 주세요</h3>
+    <div>
+      기부하실 단체를 선택해 주세요
+    </div>
 
       <div id="org-list" v-for="charity in charityList" :key="charity.id">
           <OrgList class="org-single"  :charity= "charity" @click.native=setCharityId(charity.id) />
@@ -33,14 +35,19 @@ export default {
     //   this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
     //   return
     // }
-  }
+  },
+
+
 }
 </script>
 
 <style scoped>
 .donation {
-  margin-top: 20px;
-
+  margin-top: 10px;
+}
+.donation > div {
+  font-family: GongGothicLight;
+  font-size: 0.9em;
 }
 
 .org-single {
