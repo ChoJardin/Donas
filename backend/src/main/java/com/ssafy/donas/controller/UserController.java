@@ -66,10 +66,13 @@ public class UserController {
 		ResponseEntity response = null;
 		
 		String email = request.getEmail();
+		System.out.println(email);
 		String password = request.getPassword();
+		System.out.println(password);
 		String token = request.getToken();
+		System.out.println(token);
 		User user = userService.checkPassword(email, password, token);
-		
+		System.out.println(user==null);
 		if(user==null)
 			return HttpStatus.NOT_FOUND;		
 		// 로그인 아이디별 토큰 저장		
@@ -77,6 +80,7 @@ public class UserController {
 		result.nickname = user.getNickname();
 		result.questCnt = user.getQuestCnt();
 		response = new ResponseEntity<>(result, HttpStatus.OK);
+		System.out.println();
 		return response;
 	}
 	
