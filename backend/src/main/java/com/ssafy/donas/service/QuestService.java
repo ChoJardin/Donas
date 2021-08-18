@@ -79,6 +79,7 @@ public class QuestService {
 			double cnt = 0;
 			if(quest.getFinishAt().after(time)) {
 				List<Article> articles = quest.getArticles();
+				System.out.println(articles.toString());
 				if(articles.size()==0)
 					continue;
 				// 나의 게시글 개수
