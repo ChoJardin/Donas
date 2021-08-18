@@ -40,6 +40,7 @@ export default {
 <style scoped>
 .donation {
   margin-top: 20px;
+
 }
 
 .org-single {
