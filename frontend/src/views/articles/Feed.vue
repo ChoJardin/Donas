@@ -5,6 +5,7 @@
     <!--article start-->
     <div id="feed-article-wrap">
       <div v-if="!articles.length" class="info">
+        <br/>
         아직 팔로우하는 친구가 없거나, <br/>
         친구가 게시글을 작성하지 않았어요!
       </div>

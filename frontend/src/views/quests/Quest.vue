@@ -10,7 +10,7 @@
 
     <router-view id="quest-router-view"/>
 
-    <v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>
+    <!--<v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>-->
 
 
     <MidModal  v-if="showModal" @close="showModal= !showModal">
@@ -35,9 +35,18 @@
       </div>
     </MidModal>
 
-     <v-btn id="create-button" class="text-decoration-none" fab color="indigo">
-      <router-link to="/quests/create"><i class="fas fa-plus fa-lg" style="color: #f19b36"></i></router-link>
-    </v-btn>
+     <!--<v-btn id="create-button" class="text-decoration-none" fab color="indigo">-->
+    <!--</v-btn>-->
+
+      <router-link to="/quests/create" style="text-decoration: none">
+        <div class="button-float add">
+            <i class="fas fa-plus fa-lg" style="color: #f0a04b"></i>
+        </div>
+      </router-link>
+
+    <div class="button-float question" @click="showModal = !showModal">
+        ?
+    </div>
 
   </div>
 </template>
@@ -100,7 +109,7 @@ export default {
 }
 
 .quest-branch a.router-link-exact-active {
-  border-bottom: #f19b36 solid;
+  border-bottom: #f0a04b solid;
   height: 100%;
 }
 
@@ -140,4 +149,24 @@ export default {
 #quest-router-view {
   margin-top: 110px
 }
+
+.button-float {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ffff;
+  position: sticky;
+  bottom: 25px;
+  left: 86%;
+  box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.button-float.question {
+  bottom: 85px
+}
+
 </style>

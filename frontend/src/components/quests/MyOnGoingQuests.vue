@@ -8,7 +8,7 @@
           <span>{{onGoing.title}}</span>
         </button>
         <div @click="$router.push('/quests/mine')" class="to-my-quests">
-          외 {{questCnt -1}}개 진행중
+          <span>외 {{questCnt -1}}개 진행중</span>
         <span class="material-icons-round">navigate_next</span>
         </div>
     </div>
@@ -90,6 +90,7 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 .nothing-participated {
