@@ -108,7 +108,7 @@
         <div class="create-question-title">
           <div>
             인증빈도를 설정해 주세요
-            <span class="create-question-subtext">(몇일에 한번 인증)</span>
+            <span class="create-question-subtext">(며칠에 한번 인증)</span>
           </div>
           <div class="create-question-needed">필수</div>
         </div>
@@ -231,14 +231,16 @@ export default {
         userId: this.loginUser.id,
         title: this.title,
         description: this.description,
-        startAt: this.startAt,
-        finishAt: this.finishAt,
+        startAt: this.startAt + ' 00:00:00',
+        finishAt: this.finishAt + ' 23:59:59',
         picture: this.picture,
         certification: this.certification,
         mileage: this.mileage,
         participants: this.participants,
         minArticleCount: this.minArticle
         }
+        console.log(data.startAt)
+      console.log(data.finishAt)
       console.log(data)
       let path
       QuestApi.createGroupQuest(
