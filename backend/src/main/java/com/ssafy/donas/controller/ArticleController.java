@@ -234,6 +234,7 @@ public class ArticleController {
 		System.out.println("게시글 갱신시간");
 		result.type = article.getType();
 		System.out.println("게시글 타입");
+		result.commentList = new ArrayList<CommentInfo>();
 		if(article.getComments()!=null) {
 			System.out.println("댓글 있다");
 			result.commentCnt = article.getComments().size();
@@ -251,6 +252,7 @@ public class ArticleController {
 		System.out.println("게시글 작성자 프로필");
 		result.makerName = article.getUser().getNickname();
 		System.out.println("게시글 작성자 닉네임");
+		result.likeList = new ArrayList<LikeInfo>();
 		if(article.getLikes()!=null) {
 			System.out.println("좋아요 있음");
 			result.likeCnt = article.getLikes().size();
