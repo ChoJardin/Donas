@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="all-quest">
     <div  id="quest-list" v-for="quest in quests" :key="quest.id">
       <QuestSingle class="quest-single" :quest="quest" @click.native=setQuestId(quest.id) />
     </div>

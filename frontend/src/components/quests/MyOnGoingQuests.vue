@@ -42,8 +42,13 @@ export default {
     onGoing() {
       return this.quests.find(quest => {
         const start = moment(quest.startAt)
+        console.log(start)
+        console.log(quest.startAt)
         const finish = moment(quest.finishAt)
-        return moment().isBetween(start, finish)
+        console.log(moment().isBetween('2021-08-19', '2021-08-20', undefined, []))
+        const result = moment().isBetween(start, finish, undefined, [])
+        console.log(result)
+        return result
       })
     }
   }
