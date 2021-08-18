@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.donas.domain.Message;
+import com.ssafy.donas.domain.MessageInfo;
 import com.ssafy.donas.domain.MessageRoom;
 import com.ssafy.donas.domain.MsgInfo;
 import com.ssafy.donas.repository.MessageRoomRepo;
@@ -39,6 +40,12 @@ public class MessageService {
 		
 	@Autowired
 	PushService pushService;
+	
+	// 채팅방 번호
+	
+	public long roomId(User user1, User user2) {
+		return messageRoomRepo.findMessageRoomByUser1AndUser2(user1, user2).getId();
+	}
 	
 	// 채팅 보내기
 	public boolean sendMessage(long sendId, long receivedId, String content, LocalDateTime time) {
@@ -87,6 +94,24 @@ public class MessageService {
 	}
 	
 	// 채팅 내용
-	
+	public List<MessageInfo> showMessage(User sendUser, User receiveUser){
+		List<MessageInfo> messages = new ArrayList<MessageInfo>();
+		MessageRoom room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(sendUser, receiveUser);
+		if(room1==null)	{			
+			room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(receiveUser,sendUser);		
+			// 메세지 보낸 적있는지 확인
+			if(room1==null) {
+				return null;
+			}
+		}
+		for(Message msg : room1.getMsg()) {
+			if(msg.getSendUser().equals(sendUser))
+				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
+			messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
+		}
+		
+		return messages;
+		
+	}
 
 }
