@@ -227,21 +227,25 @@ public class ArticleController {
 		result.createdAt = article.getCreatedAt();
 		result.updateAt = article.getUpdatedAt();
 		result.type = article.getType();
-		result.commentCnt = article.getComments().size();
-		for(Comment cm : article.getComments()) {
-			CommentInfo cmIf = new CommentInfo(cm.getId(),cm.getContent(),cm.getCreatedAt(),cm.getUpdatedAt());
-			result.commentList.add(cmIf);
+		if(article.getComments()!=null) {
+			result.commentCnt = article.getComments().size();
+			for(Comment cm : article.getComments()) {
+				CommentInfo cmIf = new CommentInfo(cm.getId(),cm.getContent(),cm.getCreatedAt(),cm.getUpdatedAt());
+				result.commentList.add(cmIf);
+			}
 		}
-		result.likeCnt = article.getLikes().size();
 		result.questTitle = article.getQuest().getTitle();
 		result.makerImage = article.getUser().getPicture();
 		result.makerName = article.getUser().getNickname();
-		for(Like lk : article.getLikes()) {
-			User likeUser = lk.getUser();
-			if(likeUser.getNickname().equals(user.getNickname()))
-				result.like = true;
-			LikeInfo lkf = new LikeInfo(lk.getId(),likeUser.getNickname(),likeUser.getPicture());
-			result.likeList.add(lkf);
+		if(article.getLikes()!=null) {
+			result.likeCnt = article.getLikes().size();
+			for(Like lk : article.getLikes()) {
+				User likeUser = lk.getUser();
+				if(likeUser.getNickname().equals(user.getNickname()))
+					result.like = true;
+				LikeInfo lkf = new LikeInfo(lk.getId(),likeUser.getNickname(),likeUser.getPicture());
+				result.likeList.add(lkf);
+			}
 		}
 		return new ResponseEntity<>(result,HttpStatus.OK);	
 	}
