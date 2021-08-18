@@ -49,8 +49,7 @@ public class MessageService {
 			messageRoom = messageRoomRepo.findMessageRoomByUser1AndUser2(user2, user1);
 			if(messageRoom==null)
 				return -1;
-		}
-		
+		}		
 		return messageRoom.getId();
 	}
 	
