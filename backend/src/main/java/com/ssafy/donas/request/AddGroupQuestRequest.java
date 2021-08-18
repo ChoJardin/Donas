@@ -30,12 +30,12 @@ public class AddGroupQuestRequest {
 	
 	@ApiModelProperty(required = true)
     @NotNull
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd hh:mm:ss")
 	Date startAt;
 	
 	@ApiModelProperty(required = true)
     @NotNull
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd hh:mm:ss")
 	Date finishAt;
 	
 	@ApiModelProperty(required = true)
