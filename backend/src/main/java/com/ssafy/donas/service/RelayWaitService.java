@@ -31,12 +31,6 @@ public class RelayWaitService {
 			relayWaitRepo.save(rw);
 	}
 	
-	public void updateDeadline(Quest relay, long nextUserId, LocalDateTime time) {
-		User user = userRepo.getById(nextUserId);
-		RelayWait rw = relayWaitRepo.findByRelayAndUser(relay, user);
-		rw.setDeadline(time.plusDays(2));
-	}
-
 	public void deleteByRelayAndRelayOrder(Quest questById, int order) {
 		relayWaitRepo.deleteByRelayAndRelayOrder(questById, order);
 	}

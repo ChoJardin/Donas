@@ -475,18 +475,15 @@ public class QuestController {
 			return HttpStatus.NOT_FOUND;
 
 		Quest relay = questService.getQuestById(request.getQuestId());
-		int order = relayService.getById(request.getQuestId()).getOrder() + 1;
+		int order = relayService.getById(request.getQuestId()).getOrder() + 1; // 현재 주자순서 +1
 
 		relayWaitService.addWaitList(relay, request.getNextId(), order);
 
 		User sender = userService.getUser(request.getUserId());
 		LocalDateTime time = LocalDateTime.now().plusHours(9);
-		// 두번째 주자에게 알람
+		// 다음 주자에게 알람
 		questAlarmService.addQuestAlarm(request.getNextId(), relay, sender.getNickname(),
 				"[릴레이 퀘스트 요청] " + relay.getTitle(), time);
-
-		// 두번째 주자 알림 deadline 설정
-		relayWaitService.updateDeadline(relay, request.getNextId(), time);
 
 		return HttpStatus.OK;
 	}
