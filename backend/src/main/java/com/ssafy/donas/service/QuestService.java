@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +67,7 @@ public class QuestService {
 					|| q.getFinishAt().before(time))
 				progressQuest.add(q);
 		}
-		return quests.size();
+		return progressQuest.size();
 	}
 
 	// 완료 퀘스트 성공/실패 여부
@@ -210,6 +212,16 @@ public class QuestService {
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
 					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
 		}
+		Collections.sort(quests,new Comparator<QuestInfo>() {
+
+			@Override
+			public int compare(QuestInfo o1, QuestInfo o2) {
+				
+				if(o1.getStartAt().before(o2.getStartAt()))
+					return 1;				
+				return -1;
+			}
+		});
 
 		return quests;
 	}
@@ -305,6 +317,16 @@ public class QuestService {
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
 					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
 		}
+		Collections.sort(quests,new Comparator<QuestInfo>() {
+
+			@Override
+			public int compare(QuestInfo o1, QuestInfo o2) {
+				
+				if(o1.getStartAt().before(o2.getStartAt()))
+					return 1;				
+				return -1;
+			}
+		});
 		return quests;
 	}
 
