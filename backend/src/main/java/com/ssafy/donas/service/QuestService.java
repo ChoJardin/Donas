@@ -79,7 +79,7 @@ public class QuestService {
 			double cnt = 0;
 			if(quest.getFinishAt().before(time)) {
 				List<Article> articles = quest.getArticles();
-				System.out.println(articles.toString());
+				System.out.println(articles);
 				if(articles.size()==0)
 					continue;
 				// 나의 게시글 개수
