@@ -11,9 +11,7 @@
     <router-view id="quest-router-view"/>
 
     <v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>
-    <v-btn v-if="isLoggedIn" id="create-button" class="mx-2 text-decoration-none" fab color="indigo">
-      <router-link to="/quests/create"><i class="fas fa-plus fa-lg" style="color: #f19b36"></i></router-link>
-    </v-btn>
+
 
     <MidModal  v-if="showModal" @close="showModal= !showModal">
       <div slot="header" @click="showModal = false" style="width: 100%">퀘스트 설명</div>
@@ -36,6 +34,10 @@
         <div>종료일 이후 참여자당 성공보상 200 마일리지가 부여됩니다.</div>
       </div>
     </MidModal>
+
+     <v-btn id="create-button" class="text-decoration-none" fab color="indigo">
+      <router-link to="/quests/create"><i class="fas fa-plus fa-lg" style="color: #f19b36"></i></router-link>
+    </v-btn>
 
   </div>
 </template>
