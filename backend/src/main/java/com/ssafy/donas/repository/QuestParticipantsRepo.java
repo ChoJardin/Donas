@@ -10,7 +10,7 @@ import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.domain.quest.QuestParticipants;
 
 public interface QuestParticipantsRepo extends JpaRepository<QuestParticipants, Long>{
-
+	List<QuestParticipants> findQuestParticipantsByUser(User user);
 	List<QuestParticipants> findQuestParticipantsByUserAndSuccess(User user, int success);
 	List<QuestParticipants> findQuestParticipantsByQuest(Quest quest);
 }
