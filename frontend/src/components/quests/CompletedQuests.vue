@@ -1,7 +1,13 @@
 <template>
   <div>
 
-    <MyQuestInfo @click.native="setQuestId(quest.id)"
+    <div v-if="!quests.length" class="no-quests">
+      <br/>
+        아직 완료한 퀘스트가 없습니다. <br/>
+        조금만 더 힘을 내요!
+    </div>
+
+    <MyQuestInfo v-else @click.native="setQuestId(quest.id)"
         v-for="quest in quests" :key="quest.id" :quest="quest">
     </MyQuestInfo>
 
@@ -63,5 +69,11 @@ export default {
 </script>
 
 <style scoped>
-
+.no-quests {
+  font-family: GongGothicLight;
+  line-height: 1.5em;
+}
+.no-quests a {
+  color: #292929;
+}
 </style>

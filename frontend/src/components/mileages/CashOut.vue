@@ -9,10 +9,10 @@
         <input type="number" class="cashout-input" v-model="inputAmount">
       </div>
     </div>
-    <div class="cashout-warning" style="float: right" v-if="error.inputAmount">{{error.inputAmount}}</div>
 
     <div class="donation-amount">
-        <div class="cashout-warning" style="text-align: right; color: #183a1d">{{donationAmount}}원이 자동 기부 됩니다.</div>
+      <div v-if="error.inputAmount" class="cashout-warning" style="float: right" >{{error.inputAmount}}</div>
+      <div v-else class="cashout-warning" style="text-align: right; color: #183a1d">{{donationAmount}}원이 자동 기부 됩니다.</div>
     </div>
 
       <div class="cashout-donation">
