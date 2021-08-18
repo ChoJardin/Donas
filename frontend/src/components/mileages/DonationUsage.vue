@@ -1,9 +1,11 @@
 <template>
   <div>
     <div v-if="usageDonation === undefined">
-      <h1>{{loginUser.nickname}}님, </h1>
-      <h4>아직 기부 내역이 없습니다.</h4>
-      <h4>도전의 결과를 나눠주세요!</h4>
+      <div class="nothing-donated-yet">
+        <span>{{loginUser.nickname}}</span>&nbsp;님,<br><br>
+        아직 기부 내역이 없습니다.<br>
+        도전의 결과를 나눠주세요!
+      </div>
     </div>
 
     <div v-else>
@@ -68,5 +70,11 @@ export default {
 </script>
 
 <style scoped>
-
+.nothing-donated-yet {
+  font-family: GongGothicLight;
+}
+.nothing-donated-yet span {
+  font-family: GongGothicBold;
+  font-size: 1.1em;
+}
 </style>

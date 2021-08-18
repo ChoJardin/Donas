@@ -6,9 +6,13 @@
           <img v-if="loginUser.picture" class="profile-image" :src="loginUser.picture" alt="">
           <img v-else class="profile-image" src="../../assets/donut_profile.png" alt="">
           <div class="profile-info">
-            <router-link to="/mileage/usage"><div id="mileage-receipt"><span id="mileage-receipt-button">사용 내역</span></div></router-link>
-            <div class="username"><span>{{loginUser.nickname}}</span>님의 마일리지</div>
-            <div class="mileage-total">{{currencyString}} 마일리지</div>
+            <div class="user-mileage">
+              <div><span class="mileage-username">{{loginUser.nickname}} </span>님의 마일리지</div>
+              <div>
+                <span class="mileage-username">{{currencyString}} </span>마일리지
+                <router-link to="/mileage/usage" class="inline-button"><div id="mileage-receipt"><span id="mileage-receipt-button">사용 내역</span></div></router-link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -129,11 +133,29 @@ export default {
   padding-left: 15px;
 }
 
+.user-mileage {
+  display: flex;
+  flex-direction: column;
+  font-family: GongGothicLight;
+}
+
+.mileage-username {
+  font-family: GongGothicBold;
+  font-size: 1.1em;
+}
+
 #mileage-receipt{
   text-align: right;
   font-size: 0.7em;
   line-height: 1.2em;
+  display: inline-block;
 }
+
+.inline-button {
+  float: right;
+  color: #183a1d;
+}
+
 
 #mileage-receipt-button {
   border: #183a1d solid 1px;
