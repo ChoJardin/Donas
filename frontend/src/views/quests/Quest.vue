@@ -38,10 +38,8 @@
      <!--<v-btn id="create-button" class="text-decoration-none" fab color="indigo">-->
     <!--</v-btn>-->
 
-      <router-link to="/quests/create" style="text-decoration: none">
-        <div class="button-float add">
+      <router-link class="button-float add" to="/quests/create" style="text-decoration: none">
             <i class="fas fa-plus fa-lg" style="color: #f0a04b"></i>
-        </div>
       </router-link>
 
     <div class="button-float question" @click="showModal = !showModal">
