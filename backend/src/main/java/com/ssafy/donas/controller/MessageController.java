@@ -73,7 +73,7 @@ public class MessageController {
 			return HttpStatus.NOT_FOUND;
 		result.otherName = other.getNickname();
 		result.otherPicture = other.getPicture();
-		result.messages = messageService.showMessage(user, other);
+		result.messages = messageService.showMessage(user, other,result.id);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

@@ -100,20 +100,14 @@ public class MessageService {
 	}
 	
 	// 채팅 내용
-	public List<MessageInfo> showMessage(User sendUser, User receiveUser){
+	public List<MessageInfo> showMessage(User sendUser, User receiveUser,long roomId){
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
-		MessageRoom room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(sendUser, receiveUser);
-		if(room1==null)	{			
-			room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(receiveUser,sendUser);		
-			// 메세지 보낸 적있는지 확인
-			if(room1==null) {
-				return null;
-			}
-		}
+		MessageRoom room1 = messageRoomRepo.getById(roomId);
 		for(Message msg : room1.getMsg()) {
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
-			messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
+			else
+				messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
 		}
 		
 		return messages;
