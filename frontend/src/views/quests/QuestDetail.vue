@@ -36,9 +36,11 @@
         <!--article start-->
         <div class="quest-detail-articles">
           <div>인증 개시글</div>
-          <button v-if="isItMine" @click="$router.push('/article/create/')">인증 생성</button>
-<!--          <button @click="onCreate">인증 생성</button>-->
-          <button v-else-if="isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
+          <div v-if="!isItEnded">
+            <button v-if="isItMine" @click="$router.push('/article/create/')">인증 생성</button>
+  <!--          <button @click="onCreate">인증 생성</button>-->
+            <button v-else-if="isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
+          </div>
         </div>
         <div id="quest-detail-article-wrap">
           <div class="article-image" v-for="article in articles" :key="article.id">
@@ -111,13 +113,11 @@ export default {
       const me = this.loginUser.id
       return this.participants.some(function(element){ if(element.id === me) {return true}})
       },
+    isItEnded: function () {
+      const end = moment.parseZone(this.questDetail.finishAt).format('YYYY-MM-DD HH:mm')
+      return moment().isAfter(end)
+    } ,
 
-      // return participants.filter(participant => {
-      //   if (participant.id === this.loginUser.id)
-      //     return 1
-      //   else
-      //     return 0
-      // })
 
     ...mapState({
       questDetail: state => state.quests.questDetail,
@@ -127,7 +127,7 @@ export default {
       isLoggedIn: state => state.user.isLoggedIn,
     }),
       dateFormatted: function () {
-        return moment(String(this.questDetail.startAt)).format('YYYY/MM/DD')
+        return moment.parseZone(String(this.questDetail.startAt)).format('YYYY/MM/DD')
       },
       userCount: function () {
         return this.questDetail.users.length
