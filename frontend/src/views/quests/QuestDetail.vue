@@ -35,7 +35,7 @@
           </div>
         <!--article start-->
         <div class="quest-detail-articles">
-          <div>인증 개시글</div>
+          <div>인증 게시글</div>
           <div v-if="!isItEnded">
             <div v-if="isItMine">
               <button  @click="$router.push('/article/create/')">인증 생성</button>

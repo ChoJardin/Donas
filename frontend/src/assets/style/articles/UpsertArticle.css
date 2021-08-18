@@ -118,3 +118,9 @@
     /*cursor: default;*/
     pointer-events: none;
 }
+
+/* 릴레이 다음 주자 지목 */
+.create-quest-input.select-user {
+    width: 90%;
+    height: 35px;
+}

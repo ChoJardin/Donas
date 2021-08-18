@@ -11,7 +11,8 @@ const ROUTES = {
   requestAllQuest: '/quest',
   requestQuestDetail: '/quest/detail',
   myQuests: '/quest/participant',
-  participate: '/quest/personal/participant'
+  participate: '/quest/personal/participant',
+  nextRelay: '/quest/relay/next'
 }
 
 
@@ -104,6 +105,13 @@ const participate = (data, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const requestNextRelay = async (data, callback, errorCallback) => {
+  const requestNextRelayPath = URL + ROUTES.nextRelay
+  axios.post(requestNextRelayPath, data)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 
 const UserApi = {
   URL,
@@ -116,6 +124,7 @@ const UserApi = {
   requestQuestDetail:(data,callback, errorCallback) => requestQuestDetail(data,callback, errorCallback),
   requestMyQuests:(data,callback, errorCallback) => requestMyQuests(data,callback, errorCallback),
   participate:(data,callback, errorCallback) => participate(data,callback, errorCallback),
+  requestNextRelay:(data,callback, errorCallback) => requestNextRelay(data,callback, errorCallback),
 
 
 }

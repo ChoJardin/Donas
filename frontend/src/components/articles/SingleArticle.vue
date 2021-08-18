@@ -37,7 +37,7 @@
           <!--좋아요/ 댓글-->
           <div id="single-article-article-detail">
             <!--<likeBtn :article="article"></likeBtn>-->
-            <button @click="onLike" class="single-article-details">
+            <button @click="onLike" class="single-article-details" :disabled="isSubmit">
               <i v-if="article.like" class="material-icons red">favorite</i>
               <i v-else class="material-icons">favorite_border</i>
               &nbsp;{{article.heartCnt}}
@@ -74,26 +74,31 @@ export default {
   props: {
     article: Object
   },
+  data() {
+    return {
+     isSubmit: false,
+    }
+  },
   // methods
   methods: {
     // 좋아요
     onLike() {
+      this.isLikeSubmit = true
       const data = {articleId: this.article.id, userId: this.loginUser.id}
       ArticlesApi.requestLike(
           !this.article.like,
           data,
           res => {
             if (res.data === 'OK') {
-              data['like'] = this.article.like
+              data['isLike'] = this.article.like
               this.$store.dispatch('setLike', data)
+              this.isLikeSubmit = false
             } else this.$router.push('/404')
           },
           err => {
-            console.log('here')
             this.$router.push('/error')
           }
       )
-
     },
     ...mapActions(["setQuestId"])
   },
