@@ -77,7 +77,7 @@ public class QuestService {
 			Quest quest = q.getQuest();
 			// 확인 안된 완료 퀘스트 찾기
 			double cnt = 0;
-			if(quest.getFinishAt().after(time)) {
+			if(quest.getFinishAt().before(time)) {
 				List<Article> articles = quest.getArticles();
 				System.out.println(articles.toString());
 				if(articles.size()==0)
