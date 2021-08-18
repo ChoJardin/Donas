@@ -60,7 +60,7 @@
 
       <!--좋아요/ 댓글-->
       <div class="heart-comment">
-        <button @click="onLike" class="heart-cnt">
+        <button @click="onLike" class="heart-cnt" :disabled="isLikeSubmit">
           <i v-if="selectedArticle.like" class="material-icons red">favorite</i>
           <i v-else class="material-icons">favorite_border</i>
           &nbsp;{{selectedArticle.heartCnt}}
@@ -119,6 +119,7 @@ export default {
     return {
       showModal: false,
       isHeartList: false,
+      isLikeSubmit: false,
     }
   },
   // methods
@@ -146,6 +147,7 @@ export default {
     },
     // 좋아요
     onLike() {
+      this.isLikeSubmit = true
       const data = {articleId: this.selectedArticle.id, userId: this.loginUser.id}
       ArticlesApi.requestLike(
           !this.selectedArticle.like,
@@ -154,6 +156,7 @@ export default {
             if (res.data === 'OK') {
               data['isLike'] = this.selectedArticle.like
               this.$store.dispatch('setLike', data)
+              this.isLikeSubmit = false
             } else this.$router.push('/404')
           },
           err => {

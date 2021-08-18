@@ -82,7 +82,13 @@ export default {
   font-family: GongGothicLight;
   height: 500px;
   overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   /*font-family: Helvetica, Arial, sans-serif;*/
+}
+
+.mid-modal-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 .mid-modal-header {

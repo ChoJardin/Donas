@@ -8,18 +8,18 @@
           <span>{{onGoing.title}}</span>
         </button>
         <div @click="$router.push('/quests/mine')" class="to-my-quests">
-          <span>외 {{questCnt -1}}개 진행중</span>
-        <span class="material-icons-round">navigate_next</span>
+          <span style="text-decoration: underline">외 {{questCnt -1}}개 진행중</span>
+        <span class="material-icons-round ">navigate_next</span>
         </div>
     </div>
 
-    <div v-else @click="$router.push('/quests')" class="nothing-participated">
+    <div v-else @click="$router.push('/quests/mine')" class="nothing-participated">
       <div>
         현재 진행중인 퀘스트가 없어요!
       </div>
-      <div class="lets-go">
-        퀘스트에 참여하러 가볼까요?
-      </div>
+      <!--<div class="lets-go">-->
+      <!--  퀘스트에 참여하러 가볼까요?-->
+      <!--</div>-->
     </div>
 
   </div>
@@ -95,7 +95,6 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
-  text-decoration: underline;
 }
 
 .nothing-participated {
@@ -105,6 +104,7 @@ export default {
   padding: 10px;
   width: 100%;
   color: #292929;
+  text-decoration: underline;
 }
 .nothing-participated div {
   align-self: center;
