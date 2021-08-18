@@ -94,7 +94,6 @@ public class AlarmService {
 		}			
 		return top15Alarms;
 	}
-
 	public void update(long id, int confirm) {
 		Alarm alarm = alarmRepo.findAlarmById(id).get();
 		if (alarm.getConfirm() == 1)
