@@ -48,53 +48,67 @@ public class QuestService {
 
 	@Autowired
 	QuestParticipantsRepo qpRepo;
-		
+
 	public long getAllQuestCnt() {
-		return questRepo.count();			
+		return questRepo.count();
 	}
-	
 
 	public long getProgressQuestCnt(Date time) {
 		List<Quest> quests = questRepo.findAll();
 		List<Quest> progressQuest = new ArrayList<Quest>();
-		for(Quest q : quests) {
-			if(q.getStartAt()==null || q.getFinishAt()==null)
+		for (Quest q : quests) {
+			if (q.getStartAt() == null || q.getFinishAt() == null)
 				return -1;
-			if(q.getStartAt().equals(time) ||q.getStartAt().after(time) && q.getFinishAt().equals(time) || q.getFinishAt().before(time))
+			if (q.getStartAt().equals(time) || q.getStartAt().after(time) && q.getFinishAt().equals(time)
+					|| q.getFinishAt().before(time))
 				progressQuest.add(q);
 		}
 		return quests.size();
 	}
+
 	// 완료 퀘스트 성공/실패 여부
 	public void checkQuestSuccess(long userId, Date time) {
-		// 현재 기준 내가 속한 완료된 퀘스트 중 성공/실패여부 확인 안한 퀘스트 
-		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId),0);
-		if(qp.size()==0)
+		// 현재 기준 내가 속한 완료된 퀘스트 중 성공/실패여부 확인 안한 퀘스트
+		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId), 0);
+		if (qp.size() == 0)
 			return;
-		for(QuestParticipants q : qp) {
+		for (QuestParticipants q : qp) {
 			Quest quest = q.getQuest();
 			// 확인 안된 완료 퀘스트 찾기
-			double cnt = 0;
-			if(quest.getFinishAt().before(time)) {
+			if (quest.getFinishAt().before(time)) { // 완료 시간 지난 퀘스트
 				List<Article> articles = quest.getArticles();
-				System.out.println(articles.size());
-				if(articles.size()==0)
+				if (articles.size() == 0) {
+					q.setSuccess(2);
 					continue;
-				// 나의 게시글 개수
-				for(Article ac : articles) {
-					if(ac.getUser().getId()==userId)
-						cnt++;
+				}
+				if (quest.getType().equals("P")) {
+					double cnt = 0;
+					for (Article ac : articles) {
+						if (ac.getUser().getId() == userId)
+							cnt++;
+					}
+					// 성공 최소 개수 이상 게시물 올렸나 확인 => 개인 퀘스트 성공 기준
+					double percent = (cnt * 100) / (double) quest.getMinArticleCount();
+					if (percent >= 90)
+						q.setSuccess(1);
+					else
+						q.setSuccess(2);
+				} 
+				// 공동 성공 기준
+				else if (quest.getType().equals("G")) {
+					List<QuestParticipants> ptp = quest.getParticipants();
+					for(QuestParticipants pps : ptp) {
+						double ppCnt=0;
+						for (Article ac : articles) {
+							if (ac.getUser().getId() == pps.getUser().getId())
+								ppCnt++;
+						}
+					}
 				}
 			}
-			// 성공 최소 개수 이상 게시물 올렸나 확인
-			double percent = (cnt*100)/(double)quest.getMinArticleCount();
-
-			if(percent>=90)
-				q.setSuccess(1);
-			else
-				q.setSuccess(2);
 		}
-	}	
+
+	}
 
 	public boolean checkQuest(long id) {
 		Optional<Quest> quest = questRepo.findById(id);
@@ -116,7 +130,7 @@ public class QuestService {
 			return false;
 		return true;
 	}
-	
+
 	public boolean checkRelay(long id) {
 		Optional<Relay> relay = relayRepo.findById(id);
 		if (relay.isEmpty())
@@ -149,7 +163,7 @@ public class QuestService {
 
 		List<QuestInfo> quests = new ArrayList<>();
 		for (QuestParticipants qs : questSummaries) {
-			Quest q = qs.getQuest(); 
+			Quest q = qs.getQuest();
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
 					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
 		}
@@ -157,9 +171,10 @@ public class QuestService {
 		return quests;
 	}
 
-	public long addPersonalQuest(String title, String description, Date startAt, Date finishAt,
-			String picture, String certification, long mileage, int minArticleCount) {
-		Personal quest = new Personal("P", title, description, startAt, finishAt, picture, certification, mileage,minArticleCount);
+	public long addPersonalQuest(String title, String description, Date startAt, Date finishAt, String picture,
+			String certification, long mileage, int minArticleCount) {
+		Personal quest = new Personal("P", title, description, startAt, finishAt, picture, certification, mileage,
+				minArticleCount);
 		personalRepo.save(quest);
 
 		return quest.getId();
@@ -167,14 +182,16 @@ public class QuestService {
 
 	public Quest addGroupQuest(String title, String description, Date startAt, Date finishAt, String picture,
 			String certification, long mileage, int userCnt, int minArticleCount) {
-		Group quest = new Group("G", title, description, startAt, finishAt, picture, certification, mileage, userCnt,minArticleCount);
+		Group quest = new Group("G", title, description, startAt, finishAt, picture, certification, mileage, userCnt,
+				minArticleCount);
 		groupRepo.save(quest);
 		return quest;
 	}
 
 	public long addRelayQuest(String title, String description, Date startAt, Date finishAt, String picture,
 			String certification, long mileage, int targetCnt) {
-		Relay relay = new Relay("R", title, description, startAt, finishAt, picture, certification, mileage, 1, targetCnt,0);
+		Relay relay = new Relay("R", title, description, startAt, finishAt, picture, certification, mileage, 1,
+				targetCnt, 0);
 		relayRepo.save(relay);
 
 		return relay.getId();
@@ -197,7 +214,7 @@ public class QuestService {
 				return false;
 			questParticipants = personalRepo.getById(questId).getParticipants();
 			personalRepo.deleteById(questId);
-			
+
 			personalRepo.flush();
 
 		} else if (type.equals("G")) {
@@ -209,15 +226,15 @@ public class QuestService {
 
 		} else {
 			if (!checkRelay(questId))
-				return false;			
+				return false;
 			questParticipants = relayRepo.getById(questId).getParticipants();
 			relayRepo.deleteById(questId);
 			relayRepo.flush();
 		}
-		if(questParticipants!=null) {
-			for(QuestParticipants qp : questParticipants) {
+		if (questParticipants != null) {
+			for (QuestParticipants qp : questParticipants) {
 				User user = qp.getUser();
-				user.setQuestCnt(user.getQuestCnt()-1);
+				user.setQuestCnt(user.getQuestCnt() - 1);
 			}
 		}
 		return true;
@@ -227,27 +244,25 @@ public class QuestService {
 		Quest quest = questRepo.getById(questId);
 		quest.setSuccess(success);
 	}
-	
-	public List<QuestMainInfo> getQuestList(String type){
+
+	public List<QuestMainInfo> getQuestList(String type) {
 		List<Quest> quests = questRepo.findTop10ByTypeOrderByIdDesc(type);
-		if(quests.size()==0)
+		if (quests.size() == 0)
 			return null;
 		List<QuestMainInfo> questInfo = new ArrayList<QuestMainInfo>();
-		for(Quest q : quests) {
-			questInfo.add(new QuestMainInfo(q.getId(),q.getTitle(),q.getPicture(),q.getDescription()));
+		for (Quest q : quests) {
+			questInfo.add(new QuestMainInfo(q.getId(), q.getTitle(), q.getPicture(), q.getDescription()));
 		}
 		return questInfo;
 	}
 
 	public List<QuestInfo> findAll() {
 		List<QuestInfo> quests = new ArrayList<>();
-		for(Quest q : questRepo.findAll()) {
-			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(), q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
-		}	
+		for (Quest q : questRepo.findAll()) {
+			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
+		}
 		return quests;
 	}
-
-
-
 
 }
