@@ -103,14 +103,14 @@ public class MessageService {
 	// 채팅 내용
 	public List<MessageInfo> showMessage(User sendUser, User receiveUser, long roomId){
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
-		MessageRoom room = messageRoomRepo.getById(roomId);
+		List<Message> msgs = messageRepo.findMessageByMessageRoom(messageRoomRepo.getById(roomId));
 		System.out.println("방 찾았음");
-		for(Message msg : room.getMsg()) {
+		for(Message msg : msgs) {
 			System.out.println(msg.getSendUser());
 			System.out.println("메세지 보낸사람 찾음");
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
-			else
+			else 
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
 			System.out.println("메세지 추가 했다");
 		}	
