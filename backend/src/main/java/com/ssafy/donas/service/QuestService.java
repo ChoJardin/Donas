@@ -77,18 +77,23 @@ public class QuestService {
 			// 확인 안된 완료 퀘스트 찾기
 			if (quest.getFinishAt().before(time)) { // 완료 시간 지난 퀘스트
 				List<Article> articles = quest.getArticles();
+				System.out.println("현재 퀘스트의 게시물 개수");
+				System.out.println(articles.size());
 				if (articles.size() == 0) {
 					q.setSuccess(2);
 					continue;
 				}
 				if (quest.getType().equals("P")) {
+					System.out.println("현재 개인 퀘스트인 것에서 보고 있음");
 					double cnt = 0;
 					for (Article ac : articles) {
 						if (ac.getUser().getId() == userId)
 							cnt++;
 					}
+					System.out.println("나의 게시물 개수가 "+cnt);
 					// 성공 최소 개수 이상 게시물 올렸나 확인 => 개인 퀘스트 성공 기준
 					double percent = (cnt * 100) / (double) quest.getMinArticleCount();
+					System.out.println("현재 퍼센트 : "+percent);
 					if (percent >= 90)
 						q.setSuccess(1);
 					else
