@@ -66,7 +66,7 @@ public class QuestParticipantsService {
 		for(QuestParticipants qp : questParticipants) {
 			Date startAt = questRepo.getById(qp.getQuest().getId()).getStartAt();
 			Date finishAt = questRepo.getById(qp.getQuest().getId()).getFinishAt();
-			 if(startAt.before(time) && (finishAt==null||(finishAt!=null && finishAt.after(time))))
+			 if((startAt.equals(time) ||startAt.before(time)) && (finishAt.equals(time)||finishAt.after(time)))
 				 questCnt++;
 		 }
 		return questCnt;
