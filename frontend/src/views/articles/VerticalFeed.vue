@@ -1,6 +1,8 @@
 <template>
   <div id="vertical-feed-wrap">
 
+    <ComponentNav @on-arrow="$router.back()" title="친구 게시글 보기"></ComponentNav>
+
       <SingleArticle
           v-for="article in articles" :key="article.id"
           :id="`a${article.id}`"
@@ -19,12 +21,14 @@ import {mapState} from "vuex";
 
 import SingleArticle from "@/components/articles/SingleArticle";
 import TransitionPage from "@/components/common/TransitionPage";
+import ComponentNav from "@/components/common/ComponentNav";
 
 export default {
   name: "VerticalFeed",
   components: {
     SingleArticle,
     TransitionPage,
+    ComponentNav
   },
   data() {
     return {
@@ -70,6 +74,7 @@ export default {
 #vertical-feed-wrap {
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
 }
 
 .slide-right-enter {
