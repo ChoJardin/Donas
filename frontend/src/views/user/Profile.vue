@@ -215,7 +215,7 @@ export default {
   // lifecycle hook
   created() {
     if (!this.isLoggedIn && this.$route.params.nickname === 'undefined') {
-      this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+      this.$router.replace({name: 'Login', params: {history: this.$route.fullPath}})
       return
     }
     // 페이지 로딩시 초기 정보 요청
