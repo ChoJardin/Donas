@@ -217,7 +217,7 @@ public class QuestService {
 			@Override
 			public int compare(QuestInfo o1, QuestInfo o2) {
 				
-				if(o1.getStartAt().before(o2.getStartAt()))
+				if(o2.getStartAt().before(o1.getStartAt()))
 					return 1;				
 				return -1;
 			}
@@ -322,7 +322,7 @@ public class QuestService {
 			@Override
 			public int compare(QuestInfo o1, QuestInfo o2) {
 				
-				if(o1.getStartAt().before(o2.getStartAt()))
+				if(o2.getStartAt().before(o1.getStartAt()))
 					return 1;				
 				return -1;
 			}
