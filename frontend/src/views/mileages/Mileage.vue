@@ -62,7 +62,7 @@ export default {
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-      mileage: state => state.user.userMileage,
+      mileage: state => state.user.loginUser.mileage
     }),
     ...mapGetters(['isLoggedIn']),
     currencyString: function (){
@@ -71,16 +71,6 @@ export default {
     }
   },
   created() {
-      UserApi.requestLoginUser(
-          this.loginUser.id,
-          res => {
-            // console.log(res)
-            this.$store.dispatch('setMileage', res.data.mileage)
-          },
-          err => {
-            console.log(err)
-          }
-      );
       MileagesApi.requestCharityList(
         res => {
           this.$store.dispatch('setCharityList', res)

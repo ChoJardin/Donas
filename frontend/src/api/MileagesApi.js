@@ -47,9 +47,9 @@ const createDonationRequest = (data, callback, errorCallback) => {
 
 const requestCharityList = (callback, errorCallback) => {
   const requestCharityListPath = URL + ROUTES.requestCharityList
-axios.get(requestCharityListPath)
-    .then(res => callback(res.data))
-    .catch(error => errorCallback(error))
+    axios.get(requestCharityListPath)
+      .then(res => callback(res.data))
+      .catch(error => errorCallback(error))
 }
 
 const requestMileageUsage = (data, callback, errorCallback) => {

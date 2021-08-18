@@ -54,6 +54,7 @@ export default {
   width: 100%;
   display: flex;
 
+
     /*padding-top: 10px;*/
     /*width: 100%;*/
 }
@@ -76,6 +77,7 @@ export default {
   /*flex: 3 3 0;*/
   text-align: left;
   margin: 10px;
+
 
 }
 
