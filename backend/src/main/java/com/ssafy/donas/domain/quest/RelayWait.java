@@ -1,6 +1,6 @@
 package com.ssafy.donas.domain.quest;
 
-import java.time.*;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.donas.domain.User;
@@ -38,8 +34,6 @@ public class RelayWait {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	private LocalDateTime deadline;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "relay_id")
