@@ -269,6 +269,20 @@ export default {
       }
     },
   watch: {
+    finishAt: function(v) {
+      if (moment(v).isAfter(this.startAt)) {
+        this.error.startAt = false
+      }
+    },
+    startAt: function(v) {
+      if(moment(v).isAfter(this.finishAt)) {
+        this.error.startAt = true
+        this.startAt = moment().format('YYYY-MM-DD')
+        this.finishAt = ''
+      } else {
+        // this.error.startAt = false
+      }
+    },
     targetCnt: function(v) {
       if (this.targetCnt == 1) {
         this.error.targetCnt = true
