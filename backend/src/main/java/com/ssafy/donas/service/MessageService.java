@@ -41,15 +41,15 @@ public class MessageService {
 	@Autowired
 	PushService pushService;
 	
-	// 채팅방 번호
-	
+	// 채팅방 번호	
 	public long roomId(User user1, User user2) {
 		MessageRoom messageRoom = messageRoomRepo.findMessageRoomByUser1AndUser2(user1, user2);
 		if(messageRoom==null) {
 			messageRoom = messageRoomRepo.findMessageRoomByUser1AndUser2(user2, user1);
 			if(messageRoom==null)
 				return -1;
-		}		
+		}
+		System.out.println(messageRoom.getId());
 		return messageRoom.getId();
 	}
 	
@@ -95,8 +95,7 @@ public class MessageService {
 			else
 				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 		}
-	return msgInfo;
-		
+	return msgInfo;		
 	}
 	
 	// 채팅 내용
