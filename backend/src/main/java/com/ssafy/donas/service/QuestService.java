@@ -70,6 +70,7 @@ public class QuestService {
 	public void checkQuestSuccess(long userId, Date time) {
 		// 현재 기준 내가 속한 완료된 퀘스트 중 성공/실패여부 확인 안한 퀘스트
 		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId), 0);
+		System.out.println("내가 속한 퀘스트 개수 : "+qp.size());
 		if (qp.size() == 0)
 			return;
 		for (QuestParticipants q : qp) {
