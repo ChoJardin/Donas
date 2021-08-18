@@ -107,7 +107,8 @@ public class MessageService {
 		for(Message msg : room1.getMsg()) {
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
-			messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
+			else
+				messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
 		}
 		
 		return messages;
