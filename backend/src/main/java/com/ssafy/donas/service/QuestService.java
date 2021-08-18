@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-
+import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Group;
 import com.ssafy.donas.domain.quest.Personal;
@@ -73,10 +73,24 @@ public class QuestService {
 			return;
 		for(QuestParticipants q : qp) {
 			Quest quest = q.getQuest();
-			// 완료가 된 것 중 
+			// 확인 안된 완료 퀘스트 찾기
+			double cnt = 0;
 			if(quest.getFinishAt().after(time)) {
-				
+				List<Article> articles = quest.getArticles();
+				if(articles.size()==0)
+					continue;
+				// 나의 게시글 개수
+				for(Article ac : articles) {
+					if(ac.getUser().getId()==userId)
+						cnt++;
+				}
 			}
+			// 성공 최소 개수 이상 게시물 올렸나 확인
+			double percent = (cnt*100)/(double)quest.getMinArticleCount();
+			if(percent>=90)
+				quest.setSuccess(1);
+			else
+				quest.setSuccess(2);
 		}
 	}	
 
