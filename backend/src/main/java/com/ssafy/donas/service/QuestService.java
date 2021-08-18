@@ -58,8 +58,6 @@ public class QuestService {
 		List<Quest> quests = questRepo.findAll();
 		List<Quest> progressQuest = new ArrayList<Quest>();
 		for(Quest q : quests) {
-			System.out.println(q.getStartAt());
-			System.out.println(q.getFinishAt());
 			if(q.getStartAt()==null || q.getFinishAt()==null)
 				return -1;
 			if(q.getStartAt().equals(time) ||q.getStartAt().after(time) && q.getFinishAt().equals(time) || q.getFinishAt().before(time))
@@ -67,9 +65,20 @@ public class QuestService {
 		}
 		return quests.size();
 	}
-	
-	
-
+	// 완료 퀘스트 성공/실패 여부
+	public void checkQuestSuccess(long userId, Date time) {
+		// 현재 기준 내가 속한 완료된 퀘스트 중 성공/실패여부 확인 안한 퀘스트 
+		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId),0);
+		if(qp.size()==0)
+			return;
+		for(QuestParticipants q : qp) {
+			Quest quest = q.getQuest();
+			// 완료가 된 것 중 
+			if(quest.getFinishAt().after(time)) {
+				
+			}
+		}
+	}	
 
 	public boolean checkQuest(long id) {
 		Optional<Quest> quest = questRepo.findById(id);
