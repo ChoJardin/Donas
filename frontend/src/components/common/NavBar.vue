@@ -9,9 +9,6 @@
       </div>
 
       <div v-if="!isLoggedIn" class="group-right" style="float: right">
-        <div class="search">
-          <router-link to="/search"><i class="material-icons" style="font-size: 30px">search</i></router-link>
-        </div>
         <button class="button1" style="float:right"><router-link :to="{name: 'Login', params: {history: $route.fullPath}}">Login</router-link></button>
       </div>
 
@@ -21,7 +18,11 @@
         </div>
         <div class="notification" >
           <router-link :to="{name:'QuestAlert', params:{nickname:nickname, id:id}}"><span><i class="material-icons" style="font-size: 30px">notifications_none</i></span>
-          <span class="badge" ><i  class="fas fa-circle fa-xs" v-if="newQuestAlarm || newCommonAlarm"></i></span></router-link>
+          <span class="badge" ><i  class="material-icons" v-if="newQuestAlarm || newCommonAlarm" style="font-size: 1.1em">fiber_manual_record</i></span></router-link>
+        </div>
+        <div class="chat">
+         <div><i class="material-icons-outlined">textsms</i></div>
+          <span class="chat-badge" ><i  class="material-icons"  style="font-size: 1.1em">fiber_manual_record</i></span>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
       </div>
@@ -165,6 +166,22 @@ export default {
   position: absolute;
   top: 5px;
   right: 5px;
+  color: red;
+}
+.chat {
+  display: inline-block;
+  position: relative;
+  text-decoration-color: transparent;
+  float: right;
+  padding-right: 5px;
+  padding-top: 10px;
+  margin: 3px 1px;
+
+}
+.chat-badge {
+  position: absolute;
+  top: 7px;
+  left: 13px;
   color: red;
 }
 
