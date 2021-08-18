@@ -265,7 +265,7 @@ public class ArticleController {
 					
 					System.out.println("내가 좋아요 눌렀음");
 				}
-				LikeInfo lkf = new LikeInfo(lk.getId(),likeUser.getNickname(),likeUser.getPicture());
+				LikeInfo lkf = new LikeInfo(likeUser.getId(),likeUser.getNickname(),likeUser.getPicture());
 				System.out.println("좋아요 저장");
 				result.likeList.add(lkf);
 			}
