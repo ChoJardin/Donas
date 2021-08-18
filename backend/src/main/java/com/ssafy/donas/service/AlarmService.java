@@ -66,7 +66,7 @@ public class AlarmService {
 			}
 		});
 		List<Alarm> top15Alarms = new ArrayList<Alarm>();
-		for(int i=0;i<15;i++) {
+		for(int i=0;i<alarms.size() && i<15;i++) {
 			top15Alarms.add(alarms.get(i));
 		}		
 		return top15Alarms;
@@ -89,9 +89,9 @@ public class AlarmService {
 			});
 		}
 		List<Alarm> top15Alarms = new ArrayList<Alarm>();
-		for(int i=0;i<15;i++) {
+		for(int i=0;i<alarms.size() && i<15;i++) {
 			top15Alarms.add(alarms.get(i));
-		}		
+		}			
 		return top15Alarms;
 	}
 
