@@ -109,14 +109,37 @@ public class QuestService {
 				} 
 				// 공동 성공 기준
 				else if (quest.getType().equals("G")) {
+					// 공동 퀘스트에 속한 참여자
+					// 전체 참여자가 모두 80% 이상 성공해야 성공
 					List<QuestParticipants> ptp = quest.getParticipants();
+					boolean success = true;
 					for(QuestParticipants pps : ptp) {
 						double ppCnt=0;
 						for (Article ac : articles) {
 							if (ac.getUser().getId() == pps.getUser().getId())
 								ppCnt++;
 						}
+						System.out.println("공동에서 나의 게시물 개수가 "+ppCnt);
+						// 성공 최소 개수 이상 게시물 올렸나 확인 => 개인 퀘스트 성공 기준
+						double percent = (ppCnt * 100) / (double) quest.getMinArticleCount();
+						System.out.println("현재 퍼센트 : "+percent);
+						if(percent<80) {
+							success = false;
+							continue;
+						}				
 					}
+					// 전체가 80% 이상 넘겼을 때 성공 !
+					if(success) {
+						for(QuestParticipants pps : ptp) {
+							pps.setSuccess(1);
+						}
+					}
+					// 한명이라도 80% 아래 있을 때 실패 !
+					else {
+						for(QuestParticipants pps : ptp) {
+							pps.setSuccess(2);
+						}
+					}				
 				}
 			}
 		}
