@@ -9,7 +9,7 @@
         <div style="padding-bottom: 40px; border-bottom: #292929 dotted 1px">{{loginUser.nickname}}님의 최근 사용자 검색 결과 입니다.</div>
         <div class="search-recent-list" v-for="(recent,idx) in recentSearch" :key="idx" >
           <router-link class="search-recent-text" :to="`/user/profile/${recent.nickname}`">
-            <i class="material-icons" style="font-size: 1.1em; margin-right: 20px">find_in_page</i>
+            <i class="material-icons-outlined" style="font-size: 1.1em; margin-right: 20px">find_in_page</i>
             <div>{{recent.nickname}}</div>
           </router-link>
         </div>
@@ -24,7 +24,7 @@
         <div class="auto-search" v-for="(auto,idx) in autoResult" :key="idx" @click="resultSelected(user.nickname)">
           <div class="auto-text" v-if="noResult==0">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 20%">
-              <i class="material-icons" style="font-size: 1.2em; margin-right: 5px">find_in_page</i>
+              <i class="material-icons-outlined" style="font-size: 1.2em; margin-right: 5px">find_in_page</i>
               <div>{{auto.nickname}}</div>
             </div>
               <i class="material-icons" style="font-size: 1.2em">keyboard_arrow_right</i>
