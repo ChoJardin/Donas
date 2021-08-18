@@ -41,16 +41,10 @@ public class MessageService {
 	@Autowired
 	PushService pushService;
 	
-	// 채팅방 번호	
+	// 채팅방 번호
+	
 	public long roomId(User user1, User user2) {
-		MessageRoom messageRoom = messageRoomRepo.findMessageRoomByUser1AndUser2(user1, user2);
-		if(messageRoom==null) {
-			messageRoom = messageRoomRepo.findMessageRoomByUser1AndUser2(user2, user1);
-			if(messageRoom==null)
-				return -1;
-		}
-		System.out.println(messageRoom.getId());
-		return messageRoom.getId();
+		return messageRoomRepo.findMessageRoomByUser1AndUser2(user1, user2).getId();
 	}
 	
 	// 채팅 보내기
@@ -76,9 +70,7 @@ public class MessageService {
 	// 채팅방 리스트
 	public List<MsgInfo> messageList(long userId){
 		User user = userRepo.getById(userId);
-
 		List<MessageRoom> list = messageRoomRepo.findMessageRoomByUser1OrUser2(user, user);
-	
 		// 채팅방 목록
 		// 채팅방 id, 상대방 id, 상대방 닉네임, 최근 메세지
 		List<MsgInfo> msgInfo = new ArrayList<MsgInfo>();
@@ -97,22 +89,30 @@ public class MessageService {
 			else
 				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 		}
-	return msgInfo;		
-	}	
+	return msgInfo;
+		
+	}
+	
 	// 채팅 내용
-	public List<MessageInfo> showMessage(User sendUser, User receiveUser, long roomId){
+	public List<MessageInfo> showMessage(User sendUser, User receiveUser){
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
-		List<Message> msgs = messageRepo.findMessageByMessageRoom(messageRoomRepo.getById(roomId));
-		System.out.println("방 찾았음");
-		for(Message msg : msgs) {
-			System.out.println(msg.getSendUser());
-			System.out.println("메세지 보낸사람 찾음");
+		MessageRoom room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(sendUser, receiveUser);
+		if(room1==null)	{			
+			room1 = messageRoomRepo.findMessageRoomByUser1AndUser2(receiveUser,sendUser);		
+			// 메세지 보낸 적있는지 확인
+			if(room1==null) {
+				return null;
+			}
+		}
+		for(Message msg : room1.getMsg()) {
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
 			messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
-			System.out.println("메세지 추가 했다");
-		}	
-		return messages;	
+		}
+		
+		return messages;
+		
 	}
+
 
 }
