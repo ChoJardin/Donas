@@ -98,8 +98,7 @@ public class MessageService {
 				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 		}
 	return msgInfo;		
-	}
-	
+	}	
 	// 채팅 내용
 	public List<MessageInfo> showMessage(User sendUser, User receiveUser, long roomId){
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
@@ -110,8 +109,7 @@ public class MessageService {
 			System.out.println("메세지 보낸사람 찾음");
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
-			else 
-				messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
+			messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
 			System.out.println("메세지 추가 했다");
 		}	
 		return messages;	
