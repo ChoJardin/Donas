@@ -21,11 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.donas.domain.Article;
 import com.ssafy.donas.domain.ArticleInfo;
 import com.ssafy.donas.domain.ArticleShortInfo;
+import com.ssafy.donas.domain.Comment;
+import com.ssafy.donas.domain.CommentInfo;
 import com.ssafy.donas.domain.Follow;
+import com.ssafy.donas.domain.Like;
+import com.ssafy.donas.domain.LikeInfo;
 import com.ssafy.donas.domain.User;
 import com.ssafy.donas.domain.quest.Quest;
 import com.ssafy.donas.request.AddArticleRequest;
 import com.ssafy.donas.request.UpdateArticleRequest;
+import com.ssafy.donas.response.ArticleDetailResponse;
 import com.ssafy.donas.response.ArticleResponse;
 import com.ssafy.donas.response.ArticleShortResponse;
 import com.ssafy.donas.service.ArticleService;
@@ -207,4 +212,50 @@ public class ArticleController {
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
+	@GetMapping("/detail")
+	@ApiOperation(value = "게시물 상세 정보")
+	public Object getArticleDetail(@RequestParam long articleId, @RequestParam long userId) {
+		ArticleDetailResponse result = new ArticleDetailResponse();
+		Article article = articleService.getArticleById(articleId);
+		User user = userService.getUser(userId);
+		if(article==null || user==null)
+			return HttpStatus.NOT_FOUND;
+		result.articleId = article.getId();
+		result.questId = article.getQuest().getId();
+		result.image = article.getImage();
+		result.content = article.getContent();
+		result.createdAt = article.getCreatedAt();
+		result.updateAt = article.getUpdatedAt();
+		result.type = article.getType();
+		result.commentCnt = article.getComments().size();
+		for(Comment cm : article.getComments()) {
+			CommentInfo cmIf = new CommentInfo(cm.getId(),cm.getContent(),cm.getCreatedAt(),cm.getUpdatedAt());
+			result.commentList.add(cmIf);
+		}
+		result.likeCnt = article.getLikes().size();
+		result.questTitle = article.getQuest().getTitle();
+		result.makerImage = article.getUser().getPicture();
+		result.makerName = article.getUser().getNickname();
+		for(Like lk : article.getLikes()) {
+			User likeUser = lk.getUser();
+			if(likeUser.getNickname().equals(user.getNickname()))
+				result.like = true;
+			LikeInfo lkf = new LikeInfo(lk.getId(),likeUser.getNickname(),likeUser.getPicture());
+			result.likeList.add(lkf);
+		}
+		return new ResponseEntity<>(result,HttpStatus.OK);	
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
