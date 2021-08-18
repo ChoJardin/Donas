@@ -221,29 +221,50 @@ public class ArticleController {
 		if(article==null || user==null)
 			return HttpStatus.NOT_FOUND;
 		result.articleId = article.getId();
+		System.out.println("게시글아이디");
 		result.questId = article.getQuest().getId();
+		System.out.println("퀘스트 아이디");
 		result.image = article.getImage();
+		System.out.println("게시글 이미지");
 		result.content = article.getContent();
+		System.out.println("게시글 내용");
 		result.createdAt = article.getCreatedAt();
+		System.out.println("게시글 생성시간");
 		result.updateAt = article.getUpdatedAt();
+		System.out.println("게시글 갱신시간");
 		result.type = article.getType();
+		System.out.println("게시글 타입");
 		if(article.getComments()!=null) {
+			System.out.println("댓글 있다");
 			result.commentCnt = article.getComments().size();
 			for(Comment cm : article.getComments()) {
+				System.out.println("댓글 정보 저장");
 				CommentInfo cmIf = new CommentInfo(cm.getId(),cm.getContent(),cm.getCreatedAt(),cm.getUpdatedAt());
+				System.out.println("댓글 정보 저장11111111111111111");
 				result.commentList.add(cmIf);
+				System.out.println("댓글 정보 저장222222222222");
 			}
 		}
 		result.questTitle = article.getQuest().getTitle();
+		System.out.println("퀘스트 타이틀");
 		result.makerImage = article.getUser().getPicture();
+		System.out.println("게시글 작성자 프로필");
 		result.makerName = article.getUser().getNickname();
+		System.out.println("게시글 작성자 닉네임");
 		if(article.getLikes()!=null) {
+			System.out.println("좋아요 있음");
 			result.likeCnt = article.getLikes().size();
 			for(Like lk : article.getLikes()) {
+				System.out.println("좋아요 정보 저장");
 				User likeUser = lk.getUser();
-				if(likeUser.getNickname().equals(user.getNickname()))
+
+				if(likeUser.getNickname().equals(user.getNickname())) {
 					result.like = true;
+					
+					System.out.println("내가 좋아요 눌렀음");
+				}
 				LikeInfo lkf = new LikeInfo(lk.getId(),likeUser.getNickname(),likeUser.getPicture());
+				System.out.println("좋아요 저장");
 				result.likeList.add(lkf);
 			}
 		}
