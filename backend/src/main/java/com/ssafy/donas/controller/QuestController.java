@@ -90,7 +90,12 @@ public class QuestController {
 
 		if ("".equals(quest.getTitle()) || "".equals(quest.getDescription()) || "".equals(quest.getCertification()))
 			return HttpStatus.NO_CONTENT;
-
+		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
+		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
+		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
+		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
+		System.out.println("개인퀘스트 생성 날짜 제대로 나오는지 확인");
+		System.out.println(quest.getFinishAt());
 		long questId = questService.addPersonalQuest(quest.getTitle(), quest.getDescription(), quest.getStartAt(),
 				quest.getFinishAt(), quest.getPicture(), quest.getCertification(), quest.getMileage(),quest.getMinArticleCount());
 		questParticipantsService.addParticipant(quest.getUserId(), questId);
