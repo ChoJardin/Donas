@@ -41,6 +41,9 @@ public class QuestParticipants {
 	@ColumnDefault("0")
 	private float rate;
 	
+	@ColumnDefault("0")
+	private int success;
+	
 	public QuestParticipants() {}
 	
 	@Builder

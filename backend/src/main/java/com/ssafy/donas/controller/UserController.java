@@ -78,11 +78,12 @@ public class UserController {
 		// 로그인 아이디별 토큰 저장		
 		result.id = user.getId();
 		result.nickname = user.getNickname();
-		System.out.println("뭐 땜시");
 		result.questCnt = user.getQuestCnt();
-		System.out.println("뭐 땜시ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
 		response = new ResponseEntity<>(result, HttpStatus.OK);
-		System.out.println();
+		
+		// 완료 퀘스트 성공/실패 여부
+		
+		
 		return response;
 	}
 	

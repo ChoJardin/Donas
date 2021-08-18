@@ -62,11 +62,13 @@ public class QuestService {
 			System.out.println(q.getFinishAt());
 			if(q.getStartAt()==null || q.getFinishAt()==null)
 				return -1;
-			if(q.getStartAt().after(time) && q.getFinishAt().before(time))
+			if(q.getStartAt().equals(time) ||q.getStartAt().after(time) && q.getFinishAt().equals(time) || q.getFinishAt().before(time))
 				progressQuest.add(q);
 		}
 		return quests.size();
 	}
+	
+	
 
 
 	public boolean checkQuest(long id) {
