@@ -44,7 +44,13 @@ public class MessageService {
 	// 채팅방 번호
 	
 	public long roomId(User user1, User user2) {
-		return messageRoomRepo.findMessageRoomByUser1AndUser2(user1, user2).getId();
+		MessageRoom room = messageRoomRepo.findMessageRoomByUser1AndUser2(user1, user2);
+		if(room==null) {
+			room = messageRoomRepo.findMessageRoomByUser1AndUser2(user2, user1);
+			if(room==null)
+				return -1;
+		}
+		return room.getId();
 	}
 	
 	// 채팅 보내기
