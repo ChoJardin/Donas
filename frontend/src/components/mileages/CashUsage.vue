@@ -1,12 +1,14 @@
 <template>
   <div>
     <div v-if="usageCash === undefined">
-      <h1>{{loginUser.nickname}}님, </h1>
-      <h4>인출내역이 없습니다.</h4>
+      <div class="nothing-donated-yet">
+        <span>{{loginUser.nickname}}</span>&nbsp;님,<br><br>
+       아직 인출내역이 없습니다.
+      </div>
     </div>
 
 
-    <div>
+    <div v-else>
     <h1>{{loginUser.nickname}}님, </h1>
     <h4>총  {{currencyString(usageCash.total)}} 마일리지를 인출하셨습니다.</h4>
 
@@ -68,5 +70,13 @@ export default {
 </script>
 
 <style scoped>
+
+.nothing-donated-yet {
+  font-family: GongGothicLight;
+}
+.nothing-donated-yet span {
+  font-family: GongGothicBold;
+  font-size: 1.1em;
+}
 
 </style>
