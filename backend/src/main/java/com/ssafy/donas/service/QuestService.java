@@ -87,11 +87,11 @@ public class QuestService {
 				List<Article> articles = quest.getArticles();
 				System.out.println("현재 퀘스트의 게시물 개수");
 				System.out.println(articles.size());
-				if (articles.size() == 0) {
-					q.setSuccess(2);
-					continue;
-				}
 				if (quest.getType().equals("P")) {
+					if (articles.size() == 0) {
+						q.setSuccess(2);
+						continue;
+					}
 					System.out.println("현재 개인 퀘스트인 것에서 보고 있음");
 					double cnt = 0;
 					for (Article ac : articles) {
@@ -113,6 +113,12 @@ public class QuestService {
 					// 전체 참여자가 모두 80% 이상 성공해야 성공
 					List<QuestParticipants> ptp = quest.getParticipants();
 					System.out.println("참여자 수 : "+ptp.size());
+					if (articles.size() == 0) {
+						for(QuestParticipants pps : ptp) {
+							pps.setSuccess(2);
+						}
+						continue;
+					}
 					boolean success = true;
 					for(QuestParticipants pps : ptp) {
 						double ppCnt=0;
