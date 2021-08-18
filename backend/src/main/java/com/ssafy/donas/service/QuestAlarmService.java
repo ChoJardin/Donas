@@ -70,7 +70,7 @@ public class QuestAlarmService {
 			}			
 		});
 		List<QuestAlarm> top15Alarms = new ArrayList<QuestAlarm>();
-		for(int i=0;i<15;i++) {
+		for(int i=0;i<questAlarms.size() && i<15;i++) {
 			top15Alarms.add(questAlarms.get(i));
 		}		
 		return top15Alarms;
