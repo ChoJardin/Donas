@@ -162,12 +162,17 @@ public class AlarmController {
 		long questId = request.getQuestId();
 		long userId = request.getUserId();
 		int relayOrder = request.getRelayOrder();
-		
-		if(!questService.checkQuest(questId) || !userService.checkId(userId) || !questAlarmService.checkQuestAlarm(alarmId))
+		if(!questService.checkQuest(questId))
 			return HttpStatus.NOT_FOUND;
-		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questId));
+		System.out.println("아이디 있고");
+		if(!userService.checkId(userId))
+			return HttpStatus.NOT_FOUND;
+		System.out.println("유저있고");
+		if(!questAlarmService.checkQuestAlarm(alarmId))
+			return HttpStatus.NOT_FOUND;
+		System.out.println("알림 있고");
 
-		
+		List<QuestParticipants> participants = questParticipantsService.participantsList(questService.getQuestById(questId));		
 //		// 퀘스트에 참여중인 유저에게 추가 참여자 알림
 //		for(QuestParticipants qp : participants) {
 //			User user =  userService.getUser(userId);
@@ -187,8 +192,6 @@ public class AlarmController {
 		
 		// 알람 응답 칼럼 수락으로 업데이트
 		questAlarmService.updateConfirm(alarmId, 2);
-		
-		
 		
 		return HttpStatus.OK;
 	}
