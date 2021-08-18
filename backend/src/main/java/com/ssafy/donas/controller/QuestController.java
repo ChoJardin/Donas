@@ -2,6 +2,8 @@ package com.ssafy.donas.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -262,6 +264,15 @@ public class QuestController {
 			res.mileage = quest.getMileage();
 			result.add(res);
 		}
+		Collections.sort(result,new Comparator<QuestResponse>() {
+
+			@Override
+			public int compare(QuestResponse o1, QuestResponse o2) {
+				if(o1.startAt.before(o2.startAt))
+					return 1;
+				return -1;
+			}
+		});
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -288,6 +299,15 @@ public class QuestController {
 				result.add(qr);
 			}
 		}
+		Collections.sort(result,new Comparator<QuestResponse>() {
+
+			@Override
+			public int compare(QuestResponse o1, QuestResponse o2) {
+				if(o1.startAt.before(o2.startAt))
+					return 1;
+				return -1;
+			}
+		});
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -314,6 +334,15 @@ public class QuestController {
 				result.add(qr);
 			}
 		}
+		Collections.sort(result,new Comparator<QuestResponse>() {
+
+			@Override
+			public int compare(QuestResponse o1, QuestResponse o2) {
+				if(o1.startAt.before(o2.startAt))
+					return 1;
+				return -1;
+			}
+		});
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -340,7 +369,15 @@ public class QuestController {
 				result.add(qr);
 			}
 		}
+		Collections.sort(result,new Comparator<QuestResponse>() {
 
+			@Override
+			public int compare(QuestResponse o1, QuestResponse o2) {
+				if(o1.startAt.before(o2.startAt))
+					return 1;
+				return -1;
+			}
+		});
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -415,6 +452,15 @@ public class QuestController {
 				}
 			}
 		}
+		Collections.sort(result,new Comparator<QuestResponse>() {
+
+			@Override
+			public int compare(QuestResponse o1, QuestResponse o2) {
+				if(o1.startAt.before(o2.startAt))
+					return 1;
+				return -1;
+			}
+		});
 
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
@@ -431,16 +477,16 @@ public class QuestController {
 		Quest relay = questService.getQuestById(request.getQuestId());
 		int order = relayService.getById(request.getQuestId()).getOrder() + 1;
 
-		relayWaitService.addWaitList(relay, request.getNextList(), order);
+		relayWaitService.addWaitList(relay, request.getNextId(), order);
 
 		User sender = userService.getUser(request.getUserId());
-
+		LocalDateTime time = LocalDateTime.now().plusHours(9);
 		// 두번째 주자에게 알람
-		questAlarmService.addQuestAlarm(request.getNextList().get(0), relay, sender.getNickname(),
-				"[릴레이 퀘스트 요청] " + relay.getTitle(), LocalDateTime.now());
+		questAlarmService.addQuestAlarm(request.getNextId(), relay, sender.getNickname(),
+				"[릴레이 퀘스트 요청] " + relay.getTitle(), time);
 
 		// 두번째 주자 알림 deadline 설정
-		relayWaitService.updateDeadline(relay, request.getNextList().get(0), LocalDateTime.now());
+		relayWaitService.updateDeadline(relay, request.getNextId(), time);
 
 		return HttpStatus.OK;
 	}

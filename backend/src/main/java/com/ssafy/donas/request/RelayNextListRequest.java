@@ -21,14 +21,14 @@ public class RelayNextListRequest {
 	
 	@ApiModelProperty(required = true)
     @NotNull
-    List<Long> nextList;
+    long nextId;
 
 	public long getQuestId() {
 		return questId;
 	}
 	
-	public List<Long> getNextList() {
-		return nextList;
+	public long getNextId() {
+		return nextId;
 	}
 
 	public long getUserId() {

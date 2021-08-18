@@ -34,9 +34,6 @@ public class RelayWait {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@Column(nullable = false, name="wait_rank")
-	private int waitRank;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -54,9 +51,8 @@ public class RelayWait {
 	public RelayWait() {}
 	
 	@Builder
-	public RelayWait(Relay relay, int waitRank, User user, int order) {
+	public RelayWait(Relay relay,User user, int order) {
 		this.relay = relay;
-		this.waitRank = waitRank;
 		this.user = user;
 		this.relayOrder = order;
 	}
