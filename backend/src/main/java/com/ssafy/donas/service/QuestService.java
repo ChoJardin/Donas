@@ -112,6 +112,7 @@ public class QuestService {
 					// 공동 퀘스트에 속한 참여자
 					// 전체 참여자가 모두 80% 이상 성공해야 성공
 					List<QuestParticipants> ptp = quest.getParticipants();
+					System.out.println("참여자 수 : "+ptp.size());
 					boolean success = true;
 					for(QuestParticipants pps : ptp) {
 						double ppCnt=0;
@@ -125,7 +126,7 @@ public class QuestService {
 						System.out.println("현재 퍼센트 : "+percent);
 						if(percent<80) {
 							success = false;
-							continue;
+							break;
 						}				
 					}
 					// 전체가 80% 이상 넘겼을 때 성공 !
