@@ -21,7 +21,7 @@
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
           v-on:leave="leave">
-        <div class="auto-search" v-for="(auto,idx) in autoResult" :key="idx" @click="resultSelected(user.nickname)">
+        <div class="auto-search" v-for="(auto,idx) in autoResult" :key="idx" @click="resultSelected(auto.nickname)">
           <div class="auto-text" v-if="noResult==0">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 20%">
               <i class="material-icons-outlined" style="font-size: 1.2em; margin-right: 5px">find_in_page</i>
