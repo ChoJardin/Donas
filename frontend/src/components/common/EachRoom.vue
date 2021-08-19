@@ -6,13 +6,13 @@
 
     <div class="chat-description">
       <div class="chat-name-time">
-        <div class="chat-profile-name">
+        <span class="chat-profile-name">
           {{info.otherName}}
-        </div>
+        </span>
 
-        <div class="chat-profile-time">
+        <span class="chat-profile-time">
           {{dateParsed}}
-        </div>
+        </span>
       </div>
 
       <div class="chat-profile-content">
@@ -66,18 +66,22 @@ export default {
 
 .chat-profile-name {
   font-family: GongGothicBold;
+  /*float: left;*/
 }
 
 .chat-profile-time {
   font-family: GongGothicLight;
   font-size: 0.8em;
+  /*float: right;*/
+  position: absolute;
+  right: 20px;
 }
 
 .chat-profile-content {
   font-family: GongGothicLight;
   font-size: 0.9em;
   text-align: left;
-  width: 100%;
+  width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;  /* 말줄임 적용 */
