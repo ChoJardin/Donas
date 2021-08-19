@@ -36,7 +36,7 @@
         <!--article start-->
         <div class="quest-detail-articles">
           <div class="sub-title">인증 게시글</div>
-          <div v-if="!isItEnded">
+          <div v-if="!isItBefore && !isItEnded">
             <div v-if="isItMine">
               <button v-if="questDetail.type !== 'R'"  @click="$router.push('/article/create/')">인증 생성</button>
               <button v-else-if="questDetail.type === 'R' && !isItRelay"  @click="$router.push('/article/create/')">인증 생성</button>
@@ -44,7 +44,7 @@
               <div></div>
             </div>
   <!--          <button @click="onCreate">인증 생성</button>-->
-            <button v-else-if="isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
+            <button v-else-if="!isItEnded && isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
           </div>
         </div>
         <div id="quest-detail-article-wrap">
@@ -121,6 +121,10 @@ export default {
     isItEnded: function () {
       const end = moment.parseZone(this.questDetail.finishAt).format('YYYY-MM-DD HH:mm')
       return moment().isAfter(end)
+    },
+    isItBefore: function () {
+      const start = moment.parseZone(this.questDetail.startAt).format('YYYY-MM-DD HH:mm')
+      return moment().isBefore(start)
     },
     isItRelay() {
       const me = this.loginUser.nickname
