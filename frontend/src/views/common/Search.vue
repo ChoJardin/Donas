@@ -23,9 +23,11 @@
           v-on:leave="leave">
         <div class="auto-search" v-for="(auto,idx) in autoResult" :key="idx" @click="resultSelected(auto.nickname)">
           <div class="auto-text" v-if="noResult==0">
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 20%">
-              <i class="material-icons-outlined" style="font-size: 1.2em; margin-right: 5px">find_in_page</i>
-              <div>{{auto.nickname}}</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+              <div>
+                <i class="material-icons-outlined" style="font-size: 1.2em; margin-right: 5px">find_in_page</i>
+                {{auto.nickname}}
+              </div>
             </div>
               <i class="material-icons" style="font-size: 1.2em">keyboard_arrow_right</i>
           </div>
@@ -41,7 +43,7 @@
 <!--      </div>-->
       <div class="search-result" v-else-if="searched === 2" >
         <div v-if="noResult === 0">
-          <div>{{keyword}}의 사용자 검색 결과 입니다</div>
+          <div class="search-result-info"><span>{{keyword}}</span>의 사용자 검색 결과 입니다</div>
           <div class="search-result-list" v-for="(user,idx) in searchResult" :key="idx" @click="resultSelected(user.nickname)">
             <img v-if="user.picture" class="search-result-img" :src="`${user.picture}`" style="width: 70px" alt="">
             <img v-else src="../../assets/donut_profile.png" class="search-result-img" style="width: 70px" alt="">
@@ -197,7 +199,7 @@ export default {
   align-items: center;
   border: black solid 1px;
   border-radius: 90em;
-  /*height: 8vh;*/
+  height: 50px;
   margin-top: 20px;
   width: 90%;
   margin-left: 5%;
@@ -205,7 +207,7 @@ export default {
 }
 .search-box {
   padding-left: 5vh;
-  border-right: black solid;
+  border-right: 1.5px black solid;
   width: 80%
 }
 
@@ -258,6 +260,10 @@ export default {
   width: 100%;
   /*padding-bottom: 5px;*/
 
+}
+
+.search-result-info {
+  font-family: GongGothicLight ;
 }
 
 .search-result-list{

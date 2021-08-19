@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="!quests.length" class="no-quests">
+    <div v-if="quests[0].id === 0" class="no-quests">
       <br/>
         예정된 퀘스트가 없습니다. <br/>
       <router-link to="/quests">
