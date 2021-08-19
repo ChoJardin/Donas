@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Message from "@/views/common/Message";
+import Message from "@/views/common/MessageRoom";
 import Success from "@/components/common/Success";
 
 export default {

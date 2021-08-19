@@ -59,6 +59,10 @@ export default {
         transitionName = 'slide-right'
       }
 
+      if (to.name === 'MessageRoom' || from.name === 'MessageRoom') {
+        transitionName = 'slide-right'
+      }
+
       // 피드에서 프로필 이동 -> 왼쪽 슬라이드
       if (to.name === 'Profile' || from.name === 'Profile') {
         transitionName = 'slide-left'
