@@ -431,7 +431,7 @@ public class QuestController {
 		// 완료한 퀘스트
 		else if(status.equals("c")) {
 			for(QuestInfo q : quests) {					
-				if(q.getFinishAt().before(time) ||(q.getType().equals("R") && questService.getQuestById(q.getId()).getSuccess()==1)) {
+				if(q.getFinishAt().before(time) ||("R").equals(q.getType()) && questService.getQuestById(q.getId()).getSuccess()==1)) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();
