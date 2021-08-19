@@ -95,6 +95,18 @@ public class MessageService {
 			else
 				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 		}
+		
+		Collections.sort(msgInfo,new Comparator<MsgInfo>() {
+
+			@Override
+			public int compare(MsgInfo o1, MsgInfo o2) {
+				if(o2.getLastTime().isAfter(o1.getLastTime())) {
+					return 1;
+				}
+				return -1;
+			}
+			
+		});
 	return msgInfo;
 		
 	}
