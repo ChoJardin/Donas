@@ -234,12 +234,12 @@ export default {
       .has().letters()
   },
   beforeRouteLeave(to, from, next) {
-    if (to.name === 'Login') {
-      to.params.history = this.$route.params.history
-      next(to.params)
-    } else {
+    // if (to.name === 'Login') {
+    //   to.params.history = this.$route.params.history
+    //   next(to.params)
+    // } else {
       next()
-    }
+    // }
 
   }
 }

@@ -78,8 +78,9 @@
       <input v-else-if="!participant" @click="isModal = true" class="create-quest-input select-user" type="text" placeholder="다음 주자를 선택해주세요" readonly>
 
 
-      <MidModal v-if="isModal" @close="isModal = false">
+      <MidModal v-if="isModal" @close="isModal = false" :footer="true">
         <div slot="header" style="width: 100%; text-align: center">다음 주자 지목</div>
+        <div slot="footer">확인</div>
         <SelectNextParticipant slot="opt1"
                                :user.sync="participant" @error="onNextError"
                                @on-friend-select="onFriendSelect" ref="friends"></SelectNextParticipant>
