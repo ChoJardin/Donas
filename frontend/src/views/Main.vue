@@ -40,15 +40,21 @@
       </div>
 
 
-      <div class="mileage">
+      <div class="mileage" @click="$router.push('/user/mileage')">
         저금통
+        <br>
+        <span style="font-family: GongGothicLight; font-size: 0.8em">
+          목표: 100,000 마일리지 / 모금액: {{donation}} 마일리지
+        </span>
+
+        <br>
         <div class="progress-bar">
-          <div class="percent" style="width: 75%">
+          <div id="percent">
             <div class="change"></div>
           </div>
         </div>
-        지난 분기 기부내역
-        <div class="charity-history"></div>
+        <!--지난 분기 기부내역-->
+        <!--<div class="charity-history"></div>-->
       </div>
 
       <QuestType title="공동" :quests="questInfo.questG" type="G"/>
@@ -75,11 +81,17 @@ export default {
   // props
   // data
   // methods
+  methods: {
+    setPercentage() {
+      document.getElementById('percent').style.width = `${this.donation / 100000 * 100}%`
+    }
+  },
   // computed
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-      questInfo: state => state.quests.mainQuestInfo
+      questInfo: state => state.quests.mainQuestInfo,
+      donation: state => state.mileages.mainDonationInfo.donation
     }),
     ...mapGetters(['isLoggedIn'])
   },
@@ -98,6 +110,9 @@ export default {
           console.log(err)
         }
     )
+  },
+  mounted() {
+    this.setPercentage()
   }
   // lifecycle hook
   // navigation guard

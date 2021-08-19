@@ -197,10 +197,11 @@ export default {
   align-items: center;
   border: black solid 1px;
   border-radius: 90em;
-  height: 8vh;
+  /*height: 8vh;*/
   margin-top: 20px;
   width: 90%;
   margin-left: 5%;
+  font-family: GongGothicLight;
 }
 .search-box {
   padding-left: 5vh;
