@@ -119,7 +119,8 @@ public class QuestService {
 					System.out.println("현재 퍼센트 : "+percent);
 					if (percent >= 90) {				
 						q.setSuccess(1);
-						user.setMileage(user.getMileage()+100);
+						q.getUser().setMileage(q.getUser().getMileage()+100);
+
 					}
 					else
 						q.setSuccess(2);
@@ -156,7 +157,7 @@ public class QuestService {
 					if(success) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
-							pps.getUser().setMileage(pps.getUser().getMileage()+150);
+							q.getUser().setMileage(q.getUser().getMileage()+150);
 						}
 					}
 					// 한명이라도 80% 아래 있을 때 실패 !
@@ -181,7 +182,7 @@ public class QuestService {
 					if(relay.getTargetCnt()==relay.getOrder()) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
-							pps.getUser().setMileage(pps.getUser().getMileage()+200);
+							q.getUser().setMileage(q.getUser().getMileage()+200);
 						}
 					}
 					// 타켓 수와 참여자 수 다르면 실패
