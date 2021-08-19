@@ -84,6 +84,7 @@ export default {
       otherId: this.$route.params.id
     }
     this.$store.dispatch('setChat', data)
+    this.$store.dispatch('setMessageList')
   },
   mounted() {
     console.log('mounted')
