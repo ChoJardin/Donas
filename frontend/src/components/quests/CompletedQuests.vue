@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="quests[0].id === 0" class="no-quests">
+    <div v-if="quests.length === 0" class="no-quests">
       <br/>
         아직 완료한 퀘스트가 없습니다. <br/>
         조금만 더 힘을 내요!
@@ -27,18 +27,7 @@ export default {
   },
   data() {
     return {
-      quests: [
-          {
-            id: 0,
-            title: '',
-            description: '',
-            picture: '',
-            type: "P",
-            startAt: moment(),
-            finishAt: moment(),
-            mileage: 0
-          }
-      ],
+      quests: '',
     }
   },
   methods: {
@@ -46,12 +35,13 @@ export default {
   },
   computed: {
     ...mapState({
-      loginUser: state => state.user.loginUser
+      loginUser: state => state.user.loginUser,
+      selectedProfile: state => state.user.selectedProfile
     })
   },
   created() {
     const data = {
-      userId: this.loginUser.id,
+      userId: this.selectedProfile.id,
       status: 'c'
     }
     QuestApi.requestMyQuests(
