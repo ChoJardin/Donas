@@ -353,36 +353,31 @@ public class QuestService {
 		return questInfo;
 	}
 
-	public List<List<QuestInfo>> findAll(Date time) {
-		List<List<QuestInfo>> quests = new ArrayList<>();
+	public List<QuestInfo> findAll(Date time) {
+		List<QuestInfo> quests = new ArrayList<>();
 		List<Quest> qt = questRepo.findAll();
 		// 진행중
-		List<QuestInfo> list = new ArrayList<>();
 		for (Quest q : qt) {
 			if(q.getSuccess()!=1 && q.getStartAt().before(time) && q.getFinishAt().after(time)) {				
-				list.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+				quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
 						q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
 			}
 		}
-		quests.add(list);
 		// 시작전
-		list = new ArrayList<>();
 		for (Quest q : qt) {
 			if(q.getStartAt().after(time)) {				
-				list.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+				quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
 						q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
 			}
 		}
-		quests.add(list);
 		// 완료
-		list = new ArrayList<>();
 		for (Quest q : qt) {
 			if(q.getFinishAt().before(time) ||("R").equals(q.getType()) && q.getSuccess()==1) {				
-				list.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+				quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
 						q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
 			}
 		}
-		quests.add(list);
+
 		return quests;
 	}
 
