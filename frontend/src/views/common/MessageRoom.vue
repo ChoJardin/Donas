@@ -67,6 +67,12 @@ export default {
     console.log(messageList)
     messageList.scrollTop = messageList.scrollHeight
     // this.toRecent()
+  },
+  updated() {
+    console.log('여기 왔다 ')
+    var messageList = document.getElementById('message-list').lastElementChild
+    // console.log(messageList)
+    messageList.scrollIntoView()
   }
 }
 </script>
