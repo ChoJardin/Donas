@@ -115,6 +115,7 @@ public class MessageService {
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
 		MessageRoom room1 = messageRoomRepo.getById(roomId);
 		for(Message msg : room1.getMsg()) {
+			msg.setConfirm(1);
 			if(msg.getSendUser().equals(sendUser))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
 			else
