@@ -35,7 +35,7 @@ Back-End
 
 <br>
 
-<img src="img/퀘스트페이지.PNG" width="300" height = "500" >
+<img src="img/퀘스트페이지.png" width="300" height = "500" >
 <img src="img/퀘스트생성페이지.PNG" width="300" height = "500" >
 <img src="기부단체.PNG" width="300" height = "500" >
 
@@ -55,7 +55,7 @@ Back-End
 
 ## :boom: ER DIAGRAM
 
-![image](img/DONAS-ERD.PNG)
+![image](img/DONAS-ERD.PNG )
 
 ## 
 
