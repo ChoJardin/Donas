@@ -1,13 +1,14 @@
 <template>
   <div>
 
-    <div v-if="quests[0].id === 0" class="no-quests">
+    <div v-if="quests.length === 0" class="no-quests">
       <br/>
         예정된 퀘스트가 없습니다. <br/>
       <router-link to="/quests">
         새로운 퀘스트를 시작해보세요!
       </router-link>
     </div>
+
 
     <MyQuestInfo v-else @click.native="setQuestId(quest.id)"
         v-for="quest in quests" :key="quest.id" :quest="quest">
@@ -29,18 +30,7 @@ export default {
   },
   data() {
     return {
-      quests: [
-          {
-            id: 0,
-            title: '',
-            description: '',
-            picture: '',
-            type: "P",
-            startAt: moment(),
-            finishAt: moment(),
-            mileage: 0
-          }
-      ],
+      quests: ''
     }
   },
   methods: {
@@ -48,12 +38,13 @@ export default {
   },
   computed: {
     ...mapState({
-      loginUser: state => state.user.loginUser
+      loginUser: state => state.user.loginUser,
+      selectedProfile: state => state.user.selectedProfile
     })
   },
   created() {
     const data = {
-      userId: this.loginUser.id,
+      userId: this.selectedProfile.id,
       status: 'b'
     }
     QuestApi.requestMyQuests(

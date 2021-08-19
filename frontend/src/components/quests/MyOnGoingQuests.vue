@@ -37,7 +37,7 @@ export default {
   computed: {
     ...mapState({
       quests: state => state.user.selectedProfile.quests,
-      questCnt: state => state.user.loginUser.questCnt
+      questCnt: state => state.user.selectedProfile.questCnt
     }),
     onGoing() {
       return this.quests.find(quest => {
