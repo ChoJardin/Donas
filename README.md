@@ -23,7 +23,6 @@ Back-End
 
 <br>
 
-<img src="README.assets/donas_main-9405201.jpeg" alt="donas_main" style="zoom:33%;" />
 <img src="README.assets/donas_main-9405201.jpeg"  width="300" height = "500" />
 <img src="README.assets/mypage.PNG" width="300" height = "500" >
 <img src="README.assets/alarmpage.PNG" width="300" height = "500" >
@@ -36,7 +35,7 @@ Back-End
 
 <br>
 
-<img src="README.assets/questpage.png" width="300" height = "500" >
+<img src="README.assets/questpage.PNG" width="300" height = "500" >
 <img src="README.assets/questcreate.PNG" width="300" height = "500" >
 <img src="README.assets/charity.PNG" width="300" height = "500" >
 
