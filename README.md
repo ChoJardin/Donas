@@ -55,7 +55,7 @@ Back-End
 
 ## :boom: ER DIAGRAM
 
-![image](.\img\DONAS-ERD.PNG)
+![image](./img/DONAS-ERD.PNG)
 
 ## 
 
