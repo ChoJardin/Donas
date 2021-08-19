@@ -11,7 +11,9 @@
 ```
 Front-End
 1. Node.js - v14.16.1
-2. 
+2. npm - 6.14.12 
+3. vue/cli 4.5.13 
+4. Firebase 8.8.1
 
 Back-End
 1. 개발 IDE - Spring Tool Suit 3
