@@ -84,6 +84,16 @@ public class QuestController {
 	/*
 	 * Quest 생성 : 개인, 공동 (릴레이 없음)
 	 */
+	
+	@GetMapping("/relay/success")
+	@ApiOperation(value = "릴레이 성공 여부")
+	public Object checkRelaySuccess(@RequestParam int order, @RequestParam long questId) {
+		if(questService.getQuestById(questId)==null)
+			return HttpStatus.NOT_FOUND;
+		if(!questService.checkRelaySuccess(order, questId))
+			return HttpStatus.NO_CONTENT;
+		return HttpStatus.OK;
+	}
 
 	@PostMapping("/personal")
 	@ApiOperation(value = "개인퀘스트 생성")
@@ -421,7 +431,7 @@ public class QuestController {
 		// 완료한 퀘스트
 		else if(status.equals("c")) {
 			for(QuestInfo q : quests) {					
-				if(q.getFinishAt().before(time)) {
+				if(q.getFinishAt().before(time) ||(q.getType().equals("R") && questService.getQuestById(q.getId()).getSuccess()==1)) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();

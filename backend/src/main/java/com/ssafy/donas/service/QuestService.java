@@ -69,6 +69,18 @@ public class QuestService {
 		}
 		return progressQuest.size();
 	}
+	
+	// 릴레이 참여자 모두 성공시 (완료 예정일보다 먼저 성공)
+	public boolean checkRelaySuccess(int order, long questId) {
+		Quest q = questRepo.getById(questId);
+		if(q.getMinArticleCount()!=order)
+			return false;
+		for(QuestParticipants qp : q.getParticipants()) {
+			qp.setSuccess(1);
+		}
+		q.setSuccess(1);
+		return true;
+	}
 
 	// 완료 퀘스트 성공/실패 여부
 	public void checkQuestSuccess(long userId, Date time) {
@@ -149,6 +161,30 @@ public class QuestService {
 							pps.setSuccess(2);
 						}
 					}				
+				}
+				// 릴레이 성공 기준
+				else if(quest.getType().equals("R")) {
+					// 
+					List<QuestParticipants> ptp = quest.getParticipants();
+					if (articles.size() == 0) {
+						for(QuestParticipants pps : ptp) {
+							pps.setSuccess(2);
+						}
+						continue;
+					}
+					Relay relay = relayRepo.getById(quest.getId());
+					// 타켓 수와 참여자 수 같으면 성공
+					if(relay.getTargetCnt()==relay.getOrder()) {
+						for(QuestParticipants pps : ptp) {
+							pps.setSuccess(1);
+						}
+					}
+					// 타켓 수와 참여자 수 다르면 실패
+					else{
+						for(QuestParticipants pps : ptp) {
+							pps.setSuccess(2);
+						}
+					}
 				}
 			}
 		}
