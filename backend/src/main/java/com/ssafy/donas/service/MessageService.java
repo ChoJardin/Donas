@@ -91,9 +91,9 @@ public class MessageService {
 				}			
 			});
 			if(msR.getUser1().equals(user))
-				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser1().getId(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 			else
-				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 		}
 	return msgInfo;
 		
