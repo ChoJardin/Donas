@@ -414,7 +414,7 @@ public class QuestController {
 		// 진행 중인 퀘스트
 		if(status.equals("p")) {
 			for(QuestInfo q : quests) {				
-				if((q.getStartAt().equals(time) || q.getStartAt().before(time)) && (q.getFinishAt().equals(time) || q.getFinishAt().after(time))) {
+				if(questService.getQuestById(q.getId()).getSuccess()!=1 && (q.getStartAt().equals(time) || q.getStartAt().before(time)) && (q.getFinishAt().equals(time) || q.getFinishAt().after(time))) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();
@@ -557,7 +557,12 @@ public class QuestController {
 	@GetMapping
 	@ApiOperation(value = "모든 퀘스트 정보")
 	public Object getAllQuests() {
-		return new ResponseEntity<>(questService.findAll(), HttpStatus.OK);
+		Date time = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		cal.add(Calendar.HOUR, 9);
+		time = cal.getTime();
+		return new ResponseEntity<>(questService.findAll(time), HttpStatus.OK);
 	}
 
 }
