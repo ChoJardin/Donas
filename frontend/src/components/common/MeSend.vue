@@ -35,6 +35,7 @@ export default {
   font-family: GongGothicLight;
   font-size: 0.9em;
   color: #292929;
+  text-align: left;
 }
 
 #chat-date {

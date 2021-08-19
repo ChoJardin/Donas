@@ -2,11 +2,7 @@
   <div>
     <ComponentNav @on-arrow="$router.back()"></ComponentNav>
 
-    <div v-if="chatHistory === null">
 
-    </div>
-
-    <div>
 
       <div class="arrow-place" @click="$router.back()"></div>
       <div class="message-profile">
@@ -22,19 +18,17 @@
     </div>
 
 
-    <div id="message-list">
-
-    <div v-for="message in chatHistory.messages" :key="message.id">
-      <div v-if="message.own === 1">
-        <MeSend :message="message"></MeSend>
+    <div v-if="chatHistory.messages !== null">
+      <div id="message-list">
+        <div v-for="message in chatHistory.messages" :key="message.id">
+          <div v-if="message.own === 1">
+            <MeSend :message="message"></MeSend>
+          </div>
+          <div v-else>
+            <YouSend :message="message"></YouSend>
+          </div>
+        </div>
       </div>
-      <div v-else>
-        <YouSend :message="message"></YouSend>
-      </div>
-    </div>
-
-    </div>
-
     </div>
 
     <MessageInput id="message-input" :receiveId="$route.params.id"></MessageInput>
