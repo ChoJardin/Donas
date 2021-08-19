@@ -104,8 +104,7 @@ public class MessageService {
 					return 1;
 				}
 				return -1;
-			}
-			
+			}			
 		});
 	return msgInfo;
 		
