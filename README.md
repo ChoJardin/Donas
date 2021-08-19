@@ -24,6 +24,7 @@ Back-End
 <br>
 
 <img src="README.assets/donas_main-9405201.jpeg" alt="donas_main" style="zoom:33%;" />
+<img src="README.assets/donas_main-9405201.jpeg"  width="300" height = "500" />
 <img src="img/마이페이지.PNG" width="300" height = "500" >
 <img src="img/알림페이지.PNG" width="300" height = "500" >
 
