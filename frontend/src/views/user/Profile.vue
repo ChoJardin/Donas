@@ -17,8 +17,8 @@
           <div id="profile-badges">뱃지</div>
         </div>
         <!--메시지 전송 아이콘?-->
-        <div v-if="!isMine">
-          메세지 전송
+        <div v-if="!isMine" @click="$router.push(`/message/${profile.id}/${profile.nickname}`)">
+          <span class="sending-message">메시지 보내기</span>
         </div>
       </div>
       <!--기본 프로필 end-->
@@ -249,6 +249,14 @@ export default {
 .slide-right-enter {
   opacity: 1;
   transform: translate(100%, 0);
+}
+
+.sending-message {
+  border: 1px solid #292929;
+  padding: 2px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  cursor: pointer;
 }
 
 

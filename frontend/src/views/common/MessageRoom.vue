@@ -2,17 +2,29 @@
   <div>
     <ComponentNav @on-arrow="$router.back()"></ComponentNav>
 
-    <div class="message-profile">
-      <img v-if="chat.otherPicture" :src="chat.otherPicture" alt="" >
-      <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_profile.png" alt="">
+    <div v-if="chatHistory === null">
 
-      <div>{{chat.otherName}}</div>
+    </div>
+
+    <div>
+
+      <div class="arrow-place" @click="$router.back()"></div>
+      <div class="message-profile">
+
+      <div>
+        <img v-if="chatHistory.otherPicture" :src="chatHistory.otherPicture" alt=""
+             @click="$router.push(`/user/profile/${chatHistory.otherName}`)">
+        <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_profile.png" alt=""
+             @click="$router.push(`/user/profile/${chatHistory.otherName}`)">
+      </div>
+
+      <div @click="$router.push(`/user/profile/${chatHistory.otherName}`)">{{chatHistory.otherName}}</div>
     </div>
 
 
     <div id="message-list">
 
-    <div v-for="message in chat.messages" :key="message.id">
+    <div v-for="message in chatHistory.messages" :key="message.id">
       <div v-if="message.own === 1">
         <MeSend :message="message"></MeSend>
       </div>
@@ -23,6 +35,7 @@
 
     </div>
 
+    </div>
 
     <MessageInput id="message-input" :receiveId="$route.params.id"></MessageInput>
   </div>
@@ -58,7 +71,7 @@ export default {
   computed: {
     ...mapState({
       loginUser: state => state.user.loginUser,
-      chat: state => state.user.chatHistory
+      chatHistory: state => state.user.chatHistory
     }),
     // messages() {
       // return this.$state.user.getters.messageCnt
@@ -97,14 +110,26 @@ export default {
 
 <style scoped>
 
+.arrow-place{
+  position: fixed;
+  height: 50px;
+  width: 25px;
+  /*border: 1px solid #292929;*/
+  z-index: 7;
+  cursor: pointer;
+}
+
+
 .message-profile {
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  z-index: 99999999;
-  width: calc(100% - 30px);
-  max-width: 395px;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  /*width: calc(100% - 30px);*/
+  /*max-width: 395px;*/
   height: 50px;
   margin: auto;
 }
@@ -114,12 +139,14 @@ export default {
   width: 35px;
   border-radius: 50%;
   border: 1px solid #292929;
+  cursor: pointer;
 }
 
 .message-profile div {
   margin-left: 5px;
   font-family: GongGothicBold;
   font-size: 1.1em;
+  cursor: pointer;
 
 }
 
