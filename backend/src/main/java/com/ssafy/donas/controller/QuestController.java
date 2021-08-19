@@ -424,6 +424,7 @@ public class QuestController {
 					qr.finishAt = q.getFinishAt();
 					qr.type = q.getType();
 					qr.mileage = q.getMileage();
+					qr.success = q.getSuccess();
 					result.add(qr);
 				}
 			}
@@ -441,6 +442,7 @@ public class QuestController {
 					qr.finishAt = q.getFinishAt();
 					qr.type = q.getType();
 					qr.mileage = q.getMileage();
+					qr.success = q.getSuccess();
 					result.add(qr);
 				}
 			}
@@ -458,6 +460,7 @@ public class QuestController {
 					qr.finishAt = q.getFinishAt();
 					qr.type = q.getType();
 					qr.mileage = q.getMileage();
+					qr.success = q.getSuccess();
 					result.add(qr);
 				}
 			}
