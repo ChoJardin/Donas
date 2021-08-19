@@ -44,7 +44,7 @@
               <div></div>
             </div>
   <!--          <button @click="onCreate">인증 생성</button>-->
-            <button v-else-if="isItBefore && isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
+            <button v-else-if="!isItEnded && isItMine === false && questDetail.type==='P'" @click="participateSingle">참여 하기</button>
           </div>
         </div>
         <div id="quest-detail-article-wrap">
