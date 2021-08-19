@@ -38,7 +38,7 @@ Back-End
 
 <img src="README.assets/퀘스트페이지.png" width="300" height = "500" >
 <img src="README.assets/퀘스트생성페이지.PNG" width="300" height = "500" >
-<img src="README.assets/기부단체.PNG" width="300" height = "500" >
+<img src="README.assets/charity.PNG" width="300" height = "500" >
 
 <br>
 
