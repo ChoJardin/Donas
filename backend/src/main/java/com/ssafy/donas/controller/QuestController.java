@@ -414,7 +414,11 @@ public class QuestController {
 		// 진행 중인 퀘스트
 		if(status.equals("p")) {
 			for(QuestInfo q : quests) {
+				System.out.println(q.getStartAt());
+				System.out.println(q.getFinishAt());
+				System.out.println(time);
 				if(questService.getQuestById(q.getId()).getSuccess()!=1 && q.getStartAt().before(time) &&q.getFinishAt().after(time)) {
+					System.out.println("왜 안 나온?");
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();
