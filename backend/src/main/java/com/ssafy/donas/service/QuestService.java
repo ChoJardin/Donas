@@ -87,6 +87,7 @@ public class QuestService {
 		// 현재 기준 내가 속한 완료된 퀘스트 중 성공/실패여부 확인 안한 퀘스트
 		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId), 0);
 		System.out.println("내가 속한 퀘스트 개수 : "+qp.size());
+		User user = userRepo.getById(userId);
 		if (qp.size() == 0)
 			return;
 		for (QuestParticipants q : qp) {
@@ -116,8 +117,10 @@ public class QuestService {
 					// 성공 최소 개수 이상 게시물 올렸나 확인 => 개인 퀘스트 성공 기준
 					double percent = (cnt * 100) / (double) quest.getMinArticleCount();
 					System.out.println("현재 퍼센트 : "+percent);
-					if (percent >= 90)
+					if (percent >= 90) {				
 						q.setSuccess(1);
+						user.setMileage(user.getMileage()+100);
+					}
 					else
 						q.setSuccess(2);
 				} 
@@ -153,6 +156,7 @@ public class QuestService {
 					if(success) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
+							pps.getUser().setMileage(pps.getUser().getMileage()+150);
 						}
 					}
 					// 한명이라도 80% 아래 있을 때 실패 !
@@ -177,6 +181,7 @@ public class QuestService {
 					if(relay.getTargetCnt()==relay.getOrder()) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
+							pps.getUser().setMileage(pps.getUser().getMileage()+200);
 						}
 					}
 					// 타켓 수와 참여자 수 다르면 실패
