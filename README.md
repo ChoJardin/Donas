@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2학기 공통 프로젝트
 =================
 
@@ -22,9 +23,9 @@ Back-End
 
 <br>
 
-<img src="img\메인페이지.PNG" width="300" height = "500" > 
-<img src="img\마이페이지.PNG" width="300" height = "500" >
-<img src="img\알림페이지.PNG" width="300" height = "500" >
+<img src=".\img\메인페이지.PNG" width="300" height = "500" > 
+<img src=".\img\마이페이지.PNG" width="300" height = "500" >
+<img src=".\img\알림페이지.PNG" width="300" height = "500" >
 
 <br>
 
@@ -34,9 +35,9 @@ Back-End
 
 <br>
 
-<img src="img\퀘스트페이지.PNG" width="300" height = "500" >
-<img src="img\퀘스트생성페이지.PNG" width="300" height = "500" >
-<img src="img\기부단체.PNG" width="300" height = "500" >
+<img src=".\img\퀘스트페이지.PNG" width="300" height = "500" >
+<img src=".\img\퀘스트생성페이지.PNG" width="300" height = "500" >
+<img src=".\img\기부단체.PNG" width="300" height = "500" >
 
 <br>
 
@@ -46,16 +47,17 @@ Back-End
 
 <br>
 
-<img src="img\채팅페이지.PNG" width="300" height = "500" >
-<img src="img\채팅시뮬.PNG" width="600" height = "500" >
+<img src=".\img\채팅페이지.PNG" width="300" height = "500" >
+<img src=".\img\채팅시뮬.PNG" width="600" height = "500" >
 
 
 
 
 ## :boom: ER DIAGRAM
 
-![image](https://lab.ssafy.com/s05-webmobile2-sub3/S05P13A603/-/blob/master/img/DONAS-ERD.PNG)
+![image](.\img\DONAS-ERD.PNG)
 
 ## 
 
 
+=======
