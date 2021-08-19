@@ -36,15 +36,21 @@ export default {
           res => {
             if (res.data === 'OK') {
               // 전체 채팅 목록 다시 불러오기
-              console.log('ok')
+              const chatRoom = {
+                userId: this.loginUser.id,
+                otherId: this.$router.currentRoute.params.id
+              }
+              console.log(chatRoom)
+              console.log('여기?')
+              this.$store.dispatch('setChat', chatRoom)
             }
           }, err => {
             this.$router.push('/error')
           }
       )
-      console.log(this.input)
+      // console.log(this.input)
       this.input = ''
-      console.log('reset')
+      // console.log('reset')
     }
   },
   computed: {

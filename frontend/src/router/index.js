@@ -219,7 +219,7 @@ const router = new VueRouter({
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
      return savedPosition
-    } else if (to.name==='MessageRoom') {
+    } else if (to.name==='MessageRoom' || from.name) {
 
       // console.log('d일단 오기는 했움')
       var messageList = document.getElementById('message-list').lastElementChild
@@ -229,7 +229,7 @@ const router = new VueRouter({
       // document.getElementById('message-list').scrollTo(0, 10)
 
     } else {
-      console.log('여기')
+      console.log('여기2')
       document.getElementById('app-content').scrollTo(0, 0)
 
     }
