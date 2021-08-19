@@ -54,7 +54,7 @@ Back-End
 
 ## :boom: ER DIAGRAM
 
-![image](img\DONAS-ERD.PNG)
+![image](https://lab.ssafy.com/s05-webmobile2-sub3/S05P13A603/-/blob/master/img/DONAS-ERD.PNG)
 
 ## 
 
