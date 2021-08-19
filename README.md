@@ -23,7 +23,9 @@ Back-End
 
 <br>
 
-<img src="img/메인페이지.PNG" width="300" height = "500" > 
+<img src="README.assets/donas_main-9405201.jpeg" alt="donas_main" style="zoom:33%;" />
+
+<img src="README.assets/donas_main.jpeg" alt="donas_main" style="zoom:33%;" />![image-20210820053014430](README.assets/image-20210820053014430.png
 <img src="img/마이페이지.PNG" width="300" height = "500" >
 <img src="img/알림페이지.PNG" width="300" height = "500" >
 
@@ -58,7 +60,6 @@ Back-End
 ![image](img/DONAS-ERD.PNG )
 
 ## 
-
 
 
 
