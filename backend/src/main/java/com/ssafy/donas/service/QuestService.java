@@ -252,7 +252,7 @@ public class QuestService {
 		for (QuestParticipants qs : questSummaries) {
 			Quest q = qs.getQuest();
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
-					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
+					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),qs.getSuccess()));
 		}
 		Collections.sort(quests,new Comparator<QuestInfo>() {
 
@@ -357,7 +357,7 @@ public class QuestService {
 		List<QuestInfo> quests = new ArrayList<>();
 		for (Quest q : questRepo.findAll()) {
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
-					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
+					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),qs.getSuccess()));
 		}
 		Collections.sort(quests,new Comparator<QuestInfo>() {
 
