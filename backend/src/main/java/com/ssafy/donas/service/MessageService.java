@@ -67,7 +67,7 @@ public class MessageService {
 
 			}
 		}		
-		if(messageRepo.save(new Message(content,sendUser,receivedUser,time,room1))==null)
+		if(messageRepo.save(new Message(content,0,sendUser,receivedUser,time,room1))==null)
 			return false;
 		pushService.searchReceivedUser(receivedUser, sendUser.getNickname()+" : "+content, time);
 		return true;
@@ -91,9 +91,9 @@ public class MessageService {
 				}			
 			});
 			if(msR.getUser1().equals(user))
-				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 			else
-				msgInfo.add(new MsgInfo(msR.getId(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
 		}
 		
 		Collections.sort(msgInfo,new Comparator<MsgInfo>() {
