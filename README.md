@@ -6,7 +6,7 @@
 - 원하는 목표를 함께 달성하고 이를 통해 기부를 실천할 수 있는 SNS
 - 개인 , 공동 , 릴레이 퀘스트
 
-## 개발환경
+## :white_check_mark: 개발환경
 ```
 Front-End
 1. 
@@ -16,7 +16,7 @@ Back-End
 2. MySQL - MySQL 8.0
 ```
 
-## 기본 UI
+## :white_check_mark: 기본 UI
 
 ##
 
