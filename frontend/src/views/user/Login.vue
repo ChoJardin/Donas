@@ -193,10 +193,10 @@ export default {
     },
     isLoggedIn() {
       // 이전에 거쳐온 히스토리 기록이 없으면 메인 페이지로 -> 새로고침으로 인한 현상
-      // if (Object.keys(this.$route.params).length === 0) {
-      //   this.$router.push('/main')
+      if (Object.keys(this.$route.params).length === 0) {
+        this.$router.back()
         // 프로필 페이지에서 넘어왔음
-      // } else
+      } else
         if (this.$route.params.history === '/user/profile/undefined') {
         const nickname = this.$store.state.user.loginUser.nickname
         this.$router.push(`/user/profile/${nickname}`)
@@ -209,12 +209,12 @@ export default {
   // lifecycle hook
   //navigation guard
   beforeRouteLeave(to, from, next) {
-    if (to.name === 'Signup') {
-      to.params.history = this.$route.params.history
-      next(to.params)
-    } else {
+    // if (to.name === 'Signup') {
+    //   to.params.history = this.$route.params.history
+    //   next(to.params)
+    // } else {
       next()
-    }
+    // }
 
   }
 }

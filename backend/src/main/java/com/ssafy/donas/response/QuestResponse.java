@@ -22,4 +22,6 @@ public class QuestResponse {
 	public Date finishAt;
 	@ApiModelProperty(value = "mileage", position = 8)
 	public long mileage;
+	@ApiModelProperty(value = "success", position = 8)
+	public int success;
 }

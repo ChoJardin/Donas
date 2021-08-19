@@ -414,7 +414,7 @@ public class QuestController {
 		// 진행 중인 퀘스트
 		if(status.equals("p")) {
 			for(QuestInfo q : quests) {				
-				if((q.getStartAt().equals(time) || q.getStartAt().before(time)) && (q.getFinishAt().equals(time) || q.getFinishAt().after(time))) {
+				if(questService.getQuestById(q.getId()).getSuccess()!=1 && (q.getStartAt().equals(time) || q.getStartAt().before(time)) && (q.getFinishAt().equals(time) || q.getFinishAt().after(time))) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();
@@ -424,6 +424,7 @@ public class QuestController {
 					qr.finishAt = q.getFinishAt();
 					qr.type = q.getType();
 					qr.mileage = q.getMileage();
+					qr.success = q.getSuccess();
 					result.add(qr);
 				}
 			}
@@ -431,7 +432,7 @@ public class QuestController {
 		// 완료한 퀘스트
 		else if(status.equals("c")) {
 			for(QuestInfo q : quests) {					
-				if(q.getFinishAt().before(time) ||("R").equals(q.getType()) && questService.getQuestById(q.getId()).getSuccess()==1)) {
+				if(q.getFinishAt().before(time) ||("R").equals(q.getType()) && questService.getQuestById(q.getId()).getSuccess()==1) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();
@@ -441,6 +442,7 @@ public class QuestController {
 					qr.finishAt = q.getFinishAt();
 					qr.type = q.getType();
 					qr.mileage = q.getMileage();
+					qr.success = q.getSuccess();
 					result.add(qr);
 				}
 			}
@@ -458,6 +460,7 @@ public class QuestController {
 					qr.finishAt = q.getFinishAt();
 					qr.type = q.getType();
 					qr.mileage = q.getMileage();
+					qr.success = q.getSuccess();
 					result.add(qr);
 				}
 			}
@@ -554,7 +557,12 @@ public class QuestController {
 	@GetMapping
 	@ApiOperation(value = "모든 퀘스트 정보")
 	public Object getAllQuests() {
-		return new ResponseEntity<>(questService.findAll(), HttpStatus.OK);
+		Date time = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		cal.add(Calendar.HOUR, 9);
+		time = cal.getTime();
+		return new ResponseEntity<>(questService.findAll(time), HttpStatus.OK);
 	}
 
 }

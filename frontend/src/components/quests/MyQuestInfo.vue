@@ -18,6 +18,8 @@
         {{dateFormatted(quest.startAt)}} ~ {{dateFormatted(quest.finishAt)}}
       </div>
     </div>
+
+    <Success v-if="quest.success === 1" class="success-badge"></Success>
     <!--{{quest}}-->
   </div>
 </template>
@@ -25,9 +27,13 @@
 <script>
 import moment from "moment";
 import PageNotFound from "@/views/common/PageNotFound";
+import Success from "@/components/common/Success";
 
 export default {
   name: "MyQuestInfo",
+  components: {
+    Success
+  },
   props: ['quest'],
   methods: {
     dateFormatted(date) {
@@ -43,6 +49,7 @@ export default {
 <style scoped>
 #my-quest-info {
   /*border: 1px solid #292929;*/
+  position: relative;
   display: flex;
   margin: 15px 10px;
   border-radius: 20px;
@@ -85,7 +92,14 @@ export default {
   font-size: 0.8em;
 }
 
+.success-badge {
+  position: absolute;
+  top: 25%;
+  bottom: 0;
+  right: 5%;
+  margin: auto ;
 
+}
 
 
 </style>

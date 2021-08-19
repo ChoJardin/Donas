@@ -58,7 +58,7 @@
     <textarea v-model="content" name="content" id="content" cols="28" rows="5"></textarea>
 
 
-    <div v-if="quest.type === 'R' && !isUpdate">
+    <div v-if="quest.type === 'R' && quest.targetCnt !== quest.nowCnt && !isUpdate">
 
       <div class="element-wrap">
         <div class="title">
@@ -69,17 +69,20 @@
         </div>
       </div>
 
-      <span v-if="participant" class="name-tag inside-input">{{participant.nickname}}</span>
-      <input v-if="participant" type="text"
+
+      <span v-if="!nextError && participant" class="name-tag inside-input">{{participant.nickname}}</span>
+      <input v-if="nextError" @click="isModal = true" class="create-quest-input select-user" type="text" placeholder="유효한 주자를 선택해주세요" readonly>
+      <input v-else-if="participant" type="text"
              @click="isModal = true" class="create-quest-input select-user"
              placeholder="">
-      <input v-else @click="isModal = true" class="create-quest-input select-user" type="text" placeholder="다음 주자를 선택해주세요" readonly>
+      <input v-else-if="!participant" @click="isModal = true" class="create-quest-input select-user" type="text" placeholder="다음 주자를 선택해주세요" readonly>
 
 
-      <MidModal v-if="isModal" @close="isModal = false">
+      <MidModal v-if="isModal" @close="isModal = false" :footer="true">
         <div slot="header" style="width: 100%; text-align: center">다음 주자 지목</div>
+        <div slot="footer">확인</div>
         <SelectNextParticipant slot="opt1"
-                               :user.sync="participant"
+                               :user.sync="participant" @error="onNextError"
                                @on-friend-select="onFriendSelect" ref="friends"></SelectNextParticipant>
       </MidModal>
     </div>
@@ -143,13 +146,15 @@ export default {
       isModal: false,
       users: [],
       participant: '',
+      nextError: ''
     }
   },
   // methods
   methods: {
-    ...mapActions({
+    onNextError(isError) {
+      this.nextError = isError
+    },
 
-    }),
     onPreview(preview) {
       this.preview = preview
     },
@@ -200,23 +205,23 @@ export default {
           async res => {
             if (res.data !== 'NOT_FOUND') {
               // 릴레이인 경우 다음주자 선정
-              const data = {
-                questId: this.quest.id,
-                userId: this.loginUser.id,
-                nextId: this.participant.id
-              }
-              await QuestApi.requestNextRelay(
-                  data,
-                  res => {
-                    console.log(res)
-                  },
-                  err => {
-                    console.log(err)
-                  }
-
-              )
               if (this.quest.type === 'R') {
-                this.isModal = true
+                const data = {
+                  questId: this.quest.id,
+                  userId: this.loginUser.id,
+                  nextId: this.participant.id
+                }
+                await QuestApi.requestNextRelay(
+                    data,
+                    res => {
+                      this.$store.dispatch('setQuestId', this.quest.id)
+                      this.isSubmit = false
+                      console.log(res)
+                    },
+                    err => {
+                      console.log(err)
+                    }
+                )
               }
               // 릴레이 아닌 경우 퀘스트 디테일로 바로 보내기
               else {
@@ -262,12 +267,16 @@ export default {
       loginUser: state => state.user.loginUser,
       selectedArticle: state => state.articles.selectedArticle
     }),
+    // isUserSelect() {
+    //   return this.quest.type === 'R' &&
+    // }
+
     // 버튼 비활성화
     disabled() {
       if (this.isUpdate)
         return this.content === this.selectedArticle.content || !this.content || this.isSubmit
       else if (this.quest.type === 'R')
-        return !(this.preview && this.content && this.participant && !this.error) || this.isSubmit
+        return !(this.preview && this.content && this.participant && !this.error && !this.nextError) || this.isSubmit
       else
         return !(this.preview && this.content && !this.error) || this.isSubmit
     },
@@ -282,20 +291,21 @@ export default {
     }
   },
   // lifecycle hook
-  created() {
+  // created() {
     // 릴레이인 경우 미리 참가자 목록 불러오기
-    if (!this.isUpdate && this.quest.type === 'R') {
-      QuestApi.requestGroupFriends(
-        this.loginUser.id,
-          res => {
-            if (res.data !== 'NOT_FOUND') {
-              this.users = this.res.data
-            }
-          },
-          err => this.$router.push('/error')
-      )
-    }
-  },
+    // if (!this.isUpdate && this.quest.type === 'R') {
+    //   QuestApi.requestGroupFriends(
+    //     this.loginUser.id,
+    //       res => {
+    //         if (res.data !== 'NOT_FOUND') {
+    //           this.users = this.res.data
+    //         }
+    //       },
+    //       err => console.log(err)
+          // err => this.$router.push('/error')
+      // )
+    // }
+  // },
   // navigation guard
   beforeRouteEnter: (to, from, next) => {
     if (from.name === 'QuestDetail')

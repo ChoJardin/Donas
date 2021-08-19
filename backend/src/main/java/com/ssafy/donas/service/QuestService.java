@@ -87,6 +87,7 @@ public class QuestService {
 		// 현재 기준 내가 속한 완료된 퀘스트 중 성공/실패여부 확인 안한 퀘스트
 		List<QuestParticipants> qp = qpRepo.findQuestParticipantsByUserAndSuccess(userRepo.getById(userId), 0);
 		System.out.println("내가 속한 퀘스트 개수 : "+qp.size());
+		User user = userRepo.getById(userId);
 		if (qp.size() == 0)
 			return;
 		for (QuestParticipants q : qp) {
@@ -116,8 +117,11 @@ public class QuestService {
 					// 성공 최소 개수 이상 게시물 올렸나 확인 => 개인 퀘스트 성공 기준
 					double percent = (cnt * 100) / (double) quest.getMinArticleCount();
 					System.out.println("현재 퍼센트 : "+percent);
-					if (percent >= 90)
+					if (percent >= 90) {				
 						q.setSuccess(1);
+						q.getUser().setMileage(q.getUser().getMileage()+100);
+
+					}
 					else
 						q.setSuccess(2);
 				} 
@@ -153,6 +157,7 @@ public class QuestService {
 					if(success) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
+							q.getUser().setMileage(q.getUser().getMileage()+150);
 						}
 					}
 					// 한명이라도 80% 아래 있을 때 실패 !
@@ -177,6 +182,7 @@ public class QuestService {
 					if(relay.getTargetCnt()==relay.getOrder()) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
+							q.getUser().setMileage(q.getUser().getMileage()+200);
 						}
 					}
 					// 타켓 수와 참여자 수 다르면 실패
@@ -246,7 +252,7 @@ public class QuestService {
 		for (QuestParticipants qs : questSummaries) {
 			Quest q = qs.getQuest();
 			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
-					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
+					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),qs.getSuccess()));
 		}
 		Collections.sort(quests,new Comparator<QuestInfo>() {
 
@@ -347,22 +353,36 @@ public class QuestService {
 		return questInfo;
 	}
 
-	public List<QuestInfo> findAll() {
-		List<QuestInfo> quests = new ArrayList<>();
-		for (Quest q : questRepo.findAll()) {
-			quests.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
-					q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent()));
-		}
-		Collections.sort(quests,new Comparator<QuestInfo>() {
-
-			@Override
-			public int compare(QuestInfo o1, QuestInfo o2) {
-				
-				if(o2.getStartAt().before(o1.getStartAt()))
-					return 1;				
-				return -1;
+	public List<List<QuestInfo>> findAll(Date time) {
+		List<List<QuestInfo>> quests = new ArrayList<>();
+		List<Quest> qt = questRepo.findAll();
+		// 진행중
+		List<QuestInfo> list = new ArrayList<>();
+		for (Quest q : qt) {
+			if(q.getSuccess()!=1 && q.getStartAt().before(time) && q.getFinishAt().after(time)) {				
+				list.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+						q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
 			}
-		});
+		}
+		quests.add(list);
+		// 시작전
+		list = new ArrayList<>();
+		for (Quest q : qt) {
+			if(q.getStartAt().after(time)) {				
+				list.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+						q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
+			}
+		}
+		quests.add(list);
+		// 완료
+		list = new ArrayList<>();
+		for (Quest q : qt) {
+			if(q.getFinishAt().before(time) ||("R").equals(q.getType()) && q.getSuccess()==1) {				
+				list.add(new QuestInfo(q.getId(), q.getType(), q.getTitle(), q.getDescription(), q.getPicture(),
+						q.getStartAt(), q.getFinishAt(), q.getMileage(), q.getPercent(),q.getSuccess()));
+			}
+		}
+		quests.add(list);
 		return quests;
 	}
 

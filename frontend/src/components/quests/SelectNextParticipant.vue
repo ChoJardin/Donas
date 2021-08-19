@@ -4,10 +4,13 @@
           class="create-quest-input" type="text" @change="onSearch">
 
       <div style="margin: 5px 0 10px">
-        <span v-if="user"
+        <span class="search-result-error" v-if="error">{{error}}</span>
+
+        <span v-else-if="user"
             class="name-tag"
         >{{user.nickname}}
         </span>
+
       </div>
 
       <transition-group
@@ -24,7 +27,7 @@
           v-bind:data-index="index"
         >
           <input
-              type="radio" v-model="user" @change="($emit('update:user', user))"
+              type="radio" v-model="user" @change="$emit('update:user', user)"
               :id="`${individual.nickname}`" :value="individual" style="display: none">
           <label :for="`${individual.nickname}`" class="checkbox">
 
@@ -60,6 +63,7 @@ export default {
       user: '',
       query: '',
       userList: [],
+      error: '',
     }
   },
   methods: {
@@ -106,17 +110,34 @@ export default {
           },
           err => this.$router.push('/error')
       )
-
     },
+    onChange() {
+      if (!this.error) {
+        this.$emit('update:user', this.user)
+      }
+    }
   },
-  // computed: {
+  computed: {
+    ...mapState({
+      alreadyIn: state => state.quests.questDetail.users
+    }),
   //   ...mapState({
   //     mutuals: state => state.quests.mutuals,
   //   }),
-  // },
+  },
   watch: {
     query: function(v) {
       this.onSearch()
+    },
+    user: function(v) {
+      // 이미 참여한 사람인 경우
+      if (this.alreadyIn.some(user => user.nickname === v.nickname)) {
+        this.error = '이미 해당 퀘스트에 참여한 유저입니다!'
+        this.$emit('error', true)
+      } else {
+        this.error = false
+        this.$emit('error', false)
+      }
     }
   },
   created() {
@@ -126,5 +147,9 @@ export default {
 </script>
 
 <style scoped>
+.search-result-error {
+  color: #cd4e3e;
+  font-size: 0.8em;
+}
 
 </style>

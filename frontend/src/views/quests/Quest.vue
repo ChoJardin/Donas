@@ -24,7 +24,7 @@
     <!--<v-btn id="explain-modal" @click="showModal = !showModal" class="mx-2 text-decoration-none" fab color="indigo" >?</v-btn>-->
 
 
-    <MidModal  v-if="showModal" @close="showModal= !showModal">
+    <MidModal  v-if="showModal" @close="showModal= !showModal" >
       <div slot="header" @click="showModal = false" style="width: 100%">퀘스트 설명</div>
       <div slot="opt1">
         <div style="margin-bottom: 5px">개인 퀘스트</div>

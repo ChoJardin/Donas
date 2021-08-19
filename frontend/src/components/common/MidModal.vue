@@ -25,15 +25,14 @@
 <!--              </slot>-->
 <!--            </div>-->
 <!--          </div>-->
-            <!--<div class="mid-modal-footer">-->
-            <!--  <slot name="footer">-->
-            <!--    default footer-->
-            <!--    <button class="mid-modal-default-button" @click="$emit('close')">-->
-            <!--      OK-->
-            <!--    </button>-->
-            <!--  </slot>-->
-            <!--</div>-->
         </div>
+            <div v-if="footer" class="mid-modal-footer">
+                <button class="mid-modal-default-button" @click="$emit('close')">
+                  <slot name="footer">
+                    default footer
+                  </slot>
+                </button>
+            </div>
         </div>
       </div>
     </transition>
@@ -41,7 +40,13 @@
 
 <script>
 export default {
-  name: "MidModal"
+  name: "MidModal",
+  props: {
+    footer: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
@@ -119,11 +124,31 @@ export default {
 }
 
 .mid-modal-footer {
-  padding: 20px
+  position: fixed;
+  z-index: 10000000;
+  bottom: 110px;
+  height: 40px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-family: GongGothicLight;
+  background-color: rgba(255, 255, 255);
+    width: 300px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /*padding: 20px;*/
+
 }
 
 .mid-modal-default-button {
-  float: right;
+
+  /*position: fixed;*/
+  /*width: 100%;*/
+  /*max-width: 450px;*/
 }
 
 /*
