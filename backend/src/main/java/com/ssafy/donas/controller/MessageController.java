@@ -71,7 +71,10 @@ public class MessageController {
 		result.id = messageService.roomId(user, other);
 		result.otherName = other.getNickname();
 		result.otherPicture = other.getPicture();
-		result.messages = messageService.showMessage(user, other,result.id);
+		if(result.id==0)
+			result.messages = null;
+		else
+			result.messages = messageService.showMessage(user, other,result.id);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

@@ -90,10 +90,11 @@ public class MessageService {
 					return -1;
 				}			
 			});
+			int own = msg.get(0).getSendUser().equals(user) ? 1: 0;
 			if(msR.getUser1().equals(user))
-				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime(),1));
+				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime(),own));
 			else
-				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime(),0));
+				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime(),own));
 		}
 		
 		Collections.sort(msgInfo,new Comparator<MsgInfo>() {
