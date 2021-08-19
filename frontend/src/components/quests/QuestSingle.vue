@@ -8,14 +8,16 @@
           <img v-if="quest.picture" class="quest-image" :src="quest.picture" alt="">
           <img v-else class="quest-image" src="../../assets/donut1.png">
           <div id="single-quest-text">
-            <div id="single-quest-title">
-              <div class="quest-status-tag" v-if="isItEnded">종료</div>
-              <div class="quest-status-tag" v-else-if="isItBetween">진행중</div>
-              <div class="quest-status-tag" v-else>시작예정</div>
-              <div>{{ quest.title }}</div>
+            <div>
+              <div id="single-quest-title">
+                <div class="quest-status-tag" v-if="isItEnded">종료</div>
+                <div class="quest-status-tag" v-else-if="isItBetween">진행중</div>
+                <div class="quest-status-tag" v-else>시작예정</div>
+                <div>{{ quest.title }}</div>
+              </div>
+              <div class="single-quest-date">{{startDate}} - {{endDate}}</div>
             </div>
-            <div class="single-quest-date">{{startDate}} - {{endDate}}</div>
-            <div class="single-quest-description">{{quest.description}}</div>
+            <div class="single-quest-description" style="font-size: 0.7em">{{quest.description}}</div>
           </div>
         </div>
         <!--게시글 작성 정보-->
@@ -74,7 +76,7 @@ export default {
 #single-quest-wrap {
   width: 320px;
   display: flex;
-  margin-left: 5%;
+  /*margin-left: 5%;*/
 }
 
 /*게시글 작성 정보*/
@@ -82,11 +84,14 @@ export default {
     display: flex;
     padding-top: 10px;
     width: 100%;
+    align-items: center;
+    /*justify-content: center;*/
+    padding-left:45px;
 }
 
 .quest-image {
-    height: 100px;
-    width: 110px;
+    height: 80px;
+    width: 80px;
     border: 1px solid #292929;
     border-radius: 50%;
     margin-bottom: 2px;
@@ -124,7 +129,7 @@ export default {
 }
 
 .single-quest-description {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   font-size: 0.8em;
 
