@@ -247,7 +247,13 @@ public class QuestService {
 	public List<QuestInfo> getQuestInfoByUserId(long id) {
 		User user = userRepo.getById(id);
 		List<QuestParticipants> questSummaries = user.getMyQuests();
-
+		System.out.println(questSummaries.size());
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		List<QuestInfo> quests = new ArrayList<>();
 		for (QuestParticipants qs : questSummaries) {
 			Quest q = qs.getQuest();

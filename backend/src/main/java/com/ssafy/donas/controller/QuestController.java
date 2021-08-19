@@ -413,8 +413,8 @@ public class QuestController {
 		
 		// 진행 중인 퀘스트
 		if(status.equals("p")) {
-			for(QuestInfo q : quests) {				
-				if(questService.getQuestById(q.getId()).getSuccess()!=1 && (q.getStartAt().equals(time) || q.getStartAt().before(time)) && (q.getFinishAt().equals(time) || q.getFinishAt().after(time))) {
+			for(QuestInfo q : quests) {
+				if(questService.getQuestById(q.getId()).getSuccess()!=1 && q.getStartAt().before(time) &&q.getFinishAt().after(time)) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();
@@ -432,7 +432,7 @@ public class QuestController {
 		// 완료한 퀘스트
 		else if(status.equals("c")) {
 			for(QuestInfo q : quests) {					
-				if(q.getFinishAt().before(time) ||("R").equals(q.getType()) && questService.getQuestById(q.getId()).getSuccess()==1) {
+				if(q.getFinishAt().before(time) ||(("R").equals(q.getType()) && questService.getQuestById(q.getId()).getSuccess()==1)) {
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
 					qr.title = q.getTitle();

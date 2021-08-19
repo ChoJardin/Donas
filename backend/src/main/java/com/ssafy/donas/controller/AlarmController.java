@@ -183,7 +183,7 @@ public class AlarmController {
 		
 		// 참여중인 퀘스트에 추가
 		questParticipantsService.addParticipant(userId, questId);
-		
+		System.out.println("참여");
 		// 대기 주자 테이블에서 해당 순서 주자들 제거
 		relayWaitService.deleteByRelayAndRelayOrder(questService.getQuestById(questId), relayOrder);
 		
