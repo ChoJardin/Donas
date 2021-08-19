@@ -76,7 +76,10 @@ export default {
       },
     newChatAlarm(){
       return this.messageList.some(function(element){ if(element.confirm === 0) {return true}})
-    }
+    },
+    // NotMyChat() {
+
+    // }
 
   },
 
