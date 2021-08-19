@@ -1,5 +1,8 @@
 <template>
   <div>
+
+    <ComponentNav @on-arrow="$router.back()" title="마일리지"></ComponentNav>
+
     <div class="mileage-header">
       <div v-if="isLoggedIn" class="flex-container">
         <div class="profile-wrap">
@@ -49,9 +52,11 @@
 import {mapGetters, mapState} from "vuex";
 import UserApi from "../../api/UserApi";
 import MileagesApi from "../../api/MileagesApi";
+import ComponentNav from "@/components/common/ComponentNav";
 export default {
   name: 'Mileage',
   components: {
+    ComponentNav
     // CashOut,
     // Donation
   },
@@ -89,7 +94,7 @@ export default {
   position: fixed;
   width: calc(100% - 30px);
   max-width: 395px;
-  top: 60px;
+  top: 110px;
   left: 15px;
   right: 15px;
   margin: 0 auto;
@@ -203,7 +208,7 @@ export default {
 
 .router-view {
   position: absolute;
-  top: 180px;
+  top: 230px;
   width: calc(100% - 30px);
   max-width: 395px;
   left: 15px;

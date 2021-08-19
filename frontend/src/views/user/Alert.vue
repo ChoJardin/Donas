@@ -1,11 +1,11 @@
 <template>
   <div>
-<!--    <h1>{{nickname}}'s notification</h1>-->
+    <ComponentNav @on-arrow="$router.back()" title="알림"></ComponentNav>
 
     <div class="branch">
-      <router-link :to="`/notification/${loginUser.nickname}`" class="button">퀘스트 알림</router-link>
+      <router-link :to="`/notification/${loginUser.nickname}`" class="button" replace>퀘스트 알림</router-link>
 <!--      <p style="color: #cd4e3e; font-weight: bold; font-size: 1.3em">|</p>-->
-      <router-link :to="`/notification/${loginUser.nickname}/common`" class="button">일반 알림</router-link>
+      <router-link :to="`/notification/${loginUser.nickname}/common`" class="button" replace>일반 알림</router-link>
     </div>
 
     <router-view class="router-view"/>
@@ -15,11 +15,15 @@
 
 <script>
 import {mapState} from "vuex";
+import ComponentNav from "@/components/common/ComponentNav";
 
 
 export default {
   name: "Notification",
   // components
+  components: {
+    ComponentNav
+  },
   // props
   // data
   // methods
@@ -60,13 +64,14 @@ export default {
 
 <style scoped>
 .branch {
+  margin-top: 70px;
   height: 30px;
-  margin: 10px 0;
+  /*margin: 10px 0;*/
   width: 100%;
   display: flex;
   justify-content: space-between;
   font-size: 1em;
-  font-weight: bold;
+  font-family: GongGothicBold;
 }
 
 .branch a.router-link-exact-active {

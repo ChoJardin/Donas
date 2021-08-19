@@ -41,11 +41,14 @@ export default {
     }),
     onGoing() {
       return this.quests.find(quest => {
-        const start = moment(quest.startAt)
-        console.log(start)
-        console.log(quest.startAt)
-        const finish = moment(quest.finishAt)
-        console.log(moment().isBetween('2021-08-19', '2021-08-20', undefined, []))
+        const start = moment.parseZone(quest.startAt).format('YYYY-MM-DD')
+        // console.log(start)
+        // console.log(quest.startAt)
+        // moment.parseZone(quest.startAt).format('YYYY-MM-DD HH:mm')
+        const finish = moment.parseZone(quest.finishAt).format('YYYY-MM-DD')
+        // console.log(moment().isBetween('2021-08-19', '2021-08-20', undefined, []))
+        console.log(moment().isSame(start))
+        console.log(moment.parseZone())
         const result = moment().isBetween(start, finish, undefined, [])
         console.log(result)
         return result

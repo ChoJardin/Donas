@@ -5,8 +5,8 @@
         <div class="alarm-read" @click="statusChange" v-if="alarm.confirm === 1"><i class="material-icons" style="font-size: 1em">markunread</i></div>
         <div class="alarm-read"  v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
         <div class="alarm-message" @click="toSendPoint">
-          <div style="font-size: 0.5em" >{{dateFormatted}}</div>
-          <div style="font-size: 1.0em">{{alarm.content}}</div>
+          <div class="alarm-date-time" >{{dateFormatted}}</div>
+          <div class="alarm-content">{{alarm.content}}</div>
         </div>
       </div>
     </div>
@@ -15,8 +15,8 @@
         <div class="alarm-read"  v-if="alarm.confirm === 1" @click="statusChange"><i class="material-icons" style="font-size: 1em">markunread</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
         <div class="alarm-message"  @click="toSendPoint">
-          <div style="font-size: 0.5em" >{{dateFormatted}}</div>
-          <div style="font-size: 1.0em">{{alarm.content}}</div>
+          <div class="alarm-date-time" >{{dateFormatted}}</div>
+          <div class="alarm-content">{{alarm.content}}</div>
         </div>
       </div>
     </div>
@@ -25,8 +25,8 @@
         <div class="alarm-read" v-if="alarm.confirm === 1" @click="statusChange"><i class="material-icons" style="font-size: 1em">markunread</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
         <div class="alarm-message" @click="toSendPoint">
-          <div style="font-size: 0.5em" >{{dateFormatted}}</div>
-          <div style="font-size: 1.0em">{{alarm.content}}</div>
+          <div class="alarm-date-time" >{{dateFormatted}}</div>
+          <div class="alarm-content">{{alarm.content}}</div>
         </div>
       </div>
     </div>
@@ -36,8 +36,8 @@
         <div class="alarm-read" v-if="alarm.confirm === 1" @click="statusChange"><i class="material-icons" style="font-size: 1em">markunread</i></div>
         <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
         <div class="alarm-message" @click="toArticle">
-          <div style="font-size: 0.5em" >{{dateFormatted}}</div>
-          <div style="font-size: 1.0em">{{alarm.content}}</div>
+          <div class="alarm-date-time" >{{dateFormatted}}</div>
+          <div class="alarm-content">{{alarm.content}}</div>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     dateFormatted: function (){
-      return moment(String(this.alarm.sendTime)).format('MM/DD/YYYY HH:mm')
+      return moment(String(this.alarm.sendTime)).format('YYYY/MM/DD HH:mm')
     }
   },
 
@@ -155,6 +155,16 @@ export default {
   width: 90%;
   text-align: left;
   margin-left: 5px;
+}
+
+.alarm-date-time {
+  font-family: GongGothicLight;
+  font-size: 0.8em;
+}
+
+.alarm-content {
+  /*font-size: 0.9em;*/
+  /*font-family: GongGothicLight;*/
 }
 
 </style>
