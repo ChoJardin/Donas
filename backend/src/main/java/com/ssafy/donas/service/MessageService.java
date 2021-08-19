@@ -48,7 +48,7 @@ public class MessageService {
 		if(room==null) {
 			room = messageRoomRepo.findMessageRoomByUser1AndUser2(user2, user1);
 			if(room==null)
-				return -1;
+				return 0;
 		}
 		return room.getId();
 	}
