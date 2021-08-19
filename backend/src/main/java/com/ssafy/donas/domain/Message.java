@@ -33,6 +33,10 @@ public class Message {
 	@Column(name = "content")
 	private String content;
 	
+	@Column(name = "confirm")
+	@ColumnDefault("0")
+	private int confirm;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "send_id")
 	private User sendUser;
@@ -51,8 +55,9 @@ public class Message {
 	
 	public Message() {}
 
-	public Message(String content, User sendUser, User receivedUser, LocalDateTime time, MessageRoom messageRoom) {
+	public Message(String content,int confirm, User sendUser, User receivedUser, LocalDateTime time, MessageRoom messageRoom) {
 		this.content = content;
+		this.confirm = confirm;
 		this.sendUser = sendUser;
 		this.receivedUser = receivedUser;
 		this.time = time;

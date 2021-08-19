@@ -17,10 +17,12 @@ public class MsgInfo {
 	private String otherPicture;
 	private String content;
 	private LocalDateTime lastTime;
+	private int confirm;
 	
 	@Builder
-	public MsgInfo(long id, long otherId,String otherName, String otherPicture, String content, LocalDateTime lastTime) {
+	public MsgInfo(long id,int confirm, long otherId,String otherName, String otherPicture, String content, LocalDateTime lastTime) {
 		this.id = id;
+		this.confirm = confirm;
 		this.otherId = otherId;
 		this.otherName = otherName;
 		this.otherPicture = otherPicture;
