@@ -38,8 +38,14 @@ messaging.getToken().then((currentToken) => {
 messaging.onMessage((payload) => {
     // console.log('foreground',payload);
     store.dispatch('setPayload', payload)
+    // 울리면 바로 가지고 오게 하는 알람
     store.dispatch('fetchCommonAlarms')
     store.dispatch('updateQuestAlarms')
+    store.dispatch('setMessageAll')
+    // 메세지 불러오는 함수를 여기에 붙여넣으면 된다.
+    // 채팅방을 보고 있을 때는 dispatch 보내서 -> 채팅방 불러오는 애
+    // 아니면 목록 불러오는 애를 실행해야 함.
+    //
     const title = '도나쓰';
     const options = {
         body: payload.data.message,
