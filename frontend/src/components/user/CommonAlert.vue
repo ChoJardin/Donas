@@ -1,9 +1,13 @@
 <template>
   <div class="alert-all">
-    <div id="alarm-wrap">
+    <div id="alarm-wrap" v-if="alarms[0].id !== '' ">
       <div class="single-alarm" v-for="alarm in alarms" :key="alarm.id">
         <SingleAlarm class="inner" :alarm="alarm"/>
       </div>
+    </div>
+
+    <div v-else class="no-alert">
+      알림이 없습니다.
     </div>
 <!--    <h4>{{alarms.content}}</h4>-->
 <!--    <h4>{{ alarms.sendTime}}</h4>-->
@@ -61,5 +65,8 @@ export default {
     /*padding-top: 5px;*/
     /*border-top: rgba(24, 58, 29, 0.5) solid;*/
 
+}
+.no-alert{
+  margin-top: 10%;
 }
 </style>
