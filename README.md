@@ -37,7 +37,7 @@ Back-End
 
 <img src="img/퀘스트페이지.PNG" width="300" height = "500" >
 <img src="img/퀘스트생성페이지.PNG" width="300" height = "500" >
-<img src="img/기부단체.PNG" width="300" height = "500" >
+<img src="기부단체.PNG" width="300" height = "500" >
 
 <br>
 
