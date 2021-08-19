@@ -25,8 +25,8 @@ Back-End
 
 <img src="README.assets/donas_main-9405201.jpeg" alt="donas_main" style="zoom:33%;" />
 <img src="README.assets/donas_main-9405201.jpeg"  width="300" height = "500" />
-<img src="img/마이페이지.PNG" width="300" height = "500" >
-<img src="img/알림페이지.PNG" width="300" height = "500" >
+<img src="README.assets/마이페이지.PNG" width="300" height = "500" >
+<img src="README.assets/알림페이지.PNG" width="300" height = "500" >
 
 <br>
 
@@ -36,9 +36,9 @@ Back-End
 
 <br>
 
-<img src="img/퀘스트페이지.png" width="300" height = "500" >
-<img src="img/퀘스트생성페이지.PNG" width="300" height = "500" >
-<img src="기부단체.PNG" width="300" height = "500" >
+<img src="README.assets/퀘스트페이지.png" width="300" height = "500" >
+<img src="README.assets/퀘스트생성페이지.PNG" width="300" height = "500" >
+<img src="README.assets/기부단체.PNG" width="300" height = "500" >
 
 <br>
 
@@ -48,8 +48,8 @@ Back-End
 
 <br>
 
-<img src="img/채팅페이지.PNG" width="300" height = "500" >
-<img src="img/채팅시뮬.PNG" width="600" height = "500" >
+<img src="README.assets/채팅페이지.PNG" width="300" height = "500" >
+<img src="README.assets/채팅시뮬.PNG" width="600" height = "500" >
 
 
 
