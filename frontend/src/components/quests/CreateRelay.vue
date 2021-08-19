@@ -129,7 +129,7 @@ export default {
       picture: '',
       certification: '',
       mileage: 2000,
-      targetCnt: 0,
+      targetCnt: '',
       //image
       selectedFile: '',
       preview: '',
@@ -227,7 +227,7 @@ export default {
       }
     },
     targetCnt: function(v) {
-      if (this.targetCnt == 1) {
+      if (this.targetCnt <= 1) {
         this.error.targetCnt = true
       } else if ( 2 > this.targetCnt || this.targetCnt > 10) {
         this.targetCnt = ''

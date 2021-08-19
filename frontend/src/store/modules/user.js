@@ -361,12 +361,14 @@ const actions = {
 
   setMessageAll ({dispatch, state}) {
     if (router.currentRoute.name === 'MessageRoom') {
+      console.log('why')
       const data = {
         userId: state.loginUser.id,
         otherId: router.currentRoute.params.id
       }
       dispatch('setChat', data)
     } else {
+      console.log('here')
       dispatch('setMessageList')
     }
   },
@@ -385,6 +387,7 @@ const actions = {
         // 성공적으로 리스트를 불러왔음
         // 메세지 리스트가 없는 경우 [] 들어옵니다.
         commit('SET_MESSAGE_LIST', res.data)
+        console.log(res.data.confirm)
       },
       err => {
         router.push('/error')
