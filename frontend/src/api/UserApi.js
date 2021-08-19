@@ -283,12 +283,11 @@ const UserApi = {
   acceptAlert: (data, callback, errorCallback) => acceptAlert(data, callback, errorCallback),
   declineAlert: (params, callback, errorCallback) => declineAlert(params, callback, errorCallback),
 
-  kakaoLogin: (code) => kakaoLogin(code),
-
   recentSearch: (id, callback, errorCallback) => recentSearch(id, callback, errorCallback),
   searchAuto: (data, callback, errorCallback) => searchAuto(data, callback, errorCallback),
   searchResult: (data, callback, errorCallback) => searchResult(data, callback, errorCallback),
   saveSearch: (data, callback, errorCallback) => saveSearch(data, callback, errorCallback),
+
 }
 
 export default UserApi

@@ -3,6 +3,7 @@ import UserApi from "@/api/UserApi";
 // import axios from 'axios'
 import router from '@/router'
 import moment from "moment";
+import CommonApi from "@/api/CommonApi";
 
 const state ={
   loginUser: {
@@ -92,7 +93,33 @@ const state ={
     description: '',
   }],
 
-  payload: {}
+  payload: {},
+
+  // 메세지
+  messageList: [
+    {
+      id: '',
+      otherId: '',
+      otherName: '',
+      otherPicture: '',
+      content: '',
+      lastTime: '',
+    }
+  ],
+  // 채팅 목록
+  chatHistory: {
+    id: '',
+    otherName: '',
+    otherPicture: '',
+    messages: [
+        {
+            id: '',
+            content: '',
+            own: 0,
+            time: ''
+        },
+    ]
+}
 
 }
 
@@ -101,6 +128,9 @@ const getters = {
   isLoggedIn(state) {
     return !!state.loginUser.nickname
   },
+  messageCnt(state) {
+    return state.chatHistory.messages.length
+  }
   // newQuestAlarm(state) {
   //   return state.questAlarms.some(function(element){ if(element.confirm === '1') {return true}})
   // },
@@ -172,6 +202,15 @@ const mutations = {
 
   SET_PAYLOAD(state, payload) {
     state.payload = payload
+  },
+
+  // 메세지
+  // 메세지 리스트 불러오기
+  SET_MESSAGE_LIST(state, list) {
+    state.messageList = list
+  },
+  SET_CHAT(state, data) {
+    state.chatHistory = data
   }
 }
 
@@ -316,6 +355,58 @@ const actions = {
   setPayload ({commit}, payload){
     // console.log(payload)
     commit('SET_PAYLOAD', payload)
+  },
+
+  // 메세지 관련
+
+  setMessageAll ({dispatch, state}) {
+    if (router.currentRoute.name === 'MessageRoom') {
+      const data = {
+        userId: state.loginUser.id,
+        otherId: router.currentRoute.params.id
+      }
+      dispatch('setChat', data)
+    } else {
+      dispatch('setMessageList')
+    }
+  },
+
+
+
+
+  // 메세지 리스트 세팅
+  setMessageList ({commit, state}) {
+    const data = {
+      userId: state.loginUser.id
+    }
+    CommonApi.requestMessageList(
+      data,
+      res => {
+        // 성공적으로 리스트를 불러왔음
+        // 메세지 리스트가 없는 경우 [] 들어옵니다.
+        commit('SET_MESSAGE_LIST', res.data)
+      },
+      err => {
+        router.push('/error')
+      }
+    )
+  },
+  // 채팅방 세팅
+  setChat({commit, state}, data) {
+    CommonApi.requestEachRoom(
+      data,
+      res => {
+        if (res.data !== 'NOT_FOUND') {
+          commit('SET_CHAT', res.data)
+        } else {
+          // 대화 내역이 없음
+          commit('SET_CHAT', null)
+        }
+      },
+        err => {
+        router.push('/error')
+      }
+    )
   }
 
 }

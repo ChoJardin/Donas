@@ -74,6 +74,8 @@ import MyQuests from "@/views/quests/MyQuests";
 import CompletedQuests from "@/components/quests/CompletedQuests";
 import OnGoingQuests from "@/components/quests/OnGoingQuests";
 import UpcomingQuests from "@/components/quests/UpcomingQuests";
+import MessageList from "@/views/common/MessageList";
+import MessageRoom from "@/views/common/MessageRoom";
 
 
 
@@ -185,7 +187,8 @@ const routes = [
     ]
   },
   // 메세지
-  {path: '/messages/:nickname', name: 'Messages', component: MessageAll},
+  {path: '/messages', name: 'MessageList', component: MessageList},
+  {path: '/message/:id/:nickname', name: 'MessageRoom', component: MessageRoom, meta: { transitionName: 'slide' }},
 
   //검색
   {path: '/search', name: 'Search', component: Search},
@@ -216,8 +219,19 @@ const router = new VueRouter({
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
      return savedPosition
+    } else if (to.name==='MessageRoom' || from.name) {
+
+      // console.log('d일단 오기는 했움')
+      var messageList = document.getElementById('message-list').lastElementChild
+      // console.log(messageList)
+      messageList.scrollIntoView()
+      // return({x: 0, y: -10})
+      // document.getElementById('message-list').scrollTo(0, 10)
+
     } else {
+      console.log('여기2')
       document.getElementById('app-content').scrollTo(0, 0)
+
     }
   }
 })
