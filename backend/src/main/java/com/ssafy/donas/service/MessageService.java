@@ -91,9 +91,9 @@ public class MessageService {
 				}			
 			});
 			if(msR.getUser1().equals(user))
-				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser2().getId(),msR.getUser2().getNickname(),msR.getUser2().getPicture(),msg.get(0).getContent(),msg.get(0).getTime(),1));
 			else
-				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime()));
+				msgInfo.add(new MsgInfo(msR.getId(),msg.get(0).getConfirm(),msR.getUser1().getId(),msR.getUser1().getNickname(),msR.getUser1().getPicture(),msg.get(0).getContent(),msg.get(0).getTime(),0));
 		}
 		
 		Collections.sort(msgInfo,new Comparator<MsgInfo>() {
@@ -111,13 +111,13 @@ public class MessageService {
 	}
 	
 	// 채팅 내용
-	public List<MessageInfo> showMessage(User sendUser, User receiveUser,long roomId){
+	public List<MessageInfo> showMessage(User user, User other,long roomId){
 		List<MessageInfo> messages = new ArrayList<MessageInfo>();
 		MessageRoom room1 = messageRoomRepo.getById(roomId);
 		for(Message msg : room1.getMsg()) {
-			if(!msg.getSendUser().equals(sendUser) && msg.getConfirm()==0)
+			if(msg.getSendUser().equals(other) && msg.getConfirm()==0)
 				msg.setConfirm(1);
-			if(msg.getSendUser().equals(sendUser))
+			if(msg.getSendUser().equals(user))
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),1,msg.getTime()));
 			else
 				messages.add(new MessageInfo(msg.getId(),msg.getContent(),0,msg.getTime()));
