@@ -75,11 +75,8 @@ export default {
       return this.commonAlarms.some(function(element){ if(element.confirm === 1) {return true}})
       },
     newChatAlarm(){
-      return this.messageList.some(function(element){ if(element.confirm === 0) {return true}})
+      return this.messageList.some(function(element){ if(element.confirm === 0 && element.own === 0) {return true}})
     },
-    // NotMyChat() {
-
-    // }
 
   },
 
