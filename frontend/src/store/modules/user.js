@@ -361,14 +361,12 @@ const actions = {
 
   setMessageAll ({dispatch, state}) {
     if (router.currentRoute.name === 'MessageRoom') {
-      console.log('why')
       const data = {
         userId: state.loginUser.id,
         otherId: router.currentRoute.params.id
       }
       dispatch('setChat', data)
     } else {
-      console.log('here')
       dispatch('setMessageList')
     }
   },
