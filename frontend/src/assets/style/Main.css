@@ -73,6 +73,7 @@
     padding: 10px;
     text-align: start;
     font-size: 1em;
+    cursor: pointer;
 }
 
 .mileage .progress-bar {
@@ -86,13 +87,13 @@
 
 }
 
-.mileage .percent {
+.mileage #percent {
     position: absolute;
     width: 100%;
     height: 16px;
 }
 
-.mileage .progress-bar .percent .change {
+.mileage .progress-bar #percent .change {
     background-color: #183a1d;
     border-radius: 15px;
     height: 100%;

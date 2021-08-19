@@ -24,6 +24,11 @@ export default {
   name: "CreateQuest",
   components: {
     ComponentNav
+  },
+  created() {
+    if (!this.isLoggedIn && this.$route.params.nickname === 'undefined') {
+      this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+    }
   }
 }
 </script>
