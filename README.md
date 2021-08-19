@@ -23,9 +23,9 @@ Back-End
 
 <br>
 
-<img src="README.assets/donas_main-9405201.jpeg"  width="300" height = "500" />
-<img src="README.assets/mypage.PNG" width="300" height = "500" >
-<img src="README.assets/alarmpage.PNG" width="300" height = "500" >
+<img src="README.assets/donas_main-9405201.jpeg"  width="250" height = "400" />
+<img src="README.assets/mypage.PNG" width="250" height = "400" >
+<img src="README.assets/alarmpage.PNG" width="250" height = "400" >
 
 <br>
 
@@ -35,9 +35,9 @@ Back-End
 
 <br>
 
-<img src="README.assets/questpage.PNG" width="300" height = "500" >
-<img src="README.assets/questcreate.PNG" width="300" height = "500" >
-<img src="README.assets/charity.PNG" width="300" height = "500" >
+<img src="README.assets/questpage.PNG" width="250" height = "400" >
+<img src="README.assets/questcreate.PNG" width="250" height = "400" >
+<img src="README.assets/charity.PNG" width="250" height = "400" >
 
 <br>
 
@@ -47,8 +47,8 @@ Back-End
 
 <br>
 
-<img src="README.assets/chatpage.PNG" width="300" height = "500" >
-<img src="README.assets/chatingsimul.PNG" width="600" height = "500" >
+<img src="README.assets/chatpage.PNG" width="250" height = "400" >
+<img src="README.assets/chatingsimul.PNG" width="500" height = "400" >
 
 
 
