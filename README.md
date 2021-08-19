@@ -47,8 +47,8 @@ Back-End
 
 <br>
 
-<img src="./img/채팅페이지.PNG" width="300" height = "500" >
-<img src="./img/채팅시뮬.PNG" width="600" height = "500" >
+<img src="/img/채팅페이지.PNG" width="300" height = "500" >
+<img src="/img/채팅시뮬.PNG" width="600" height = "500" >
 
 
 
