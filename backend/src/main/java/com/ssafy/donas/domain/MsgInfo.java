@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 public class MsgInfo {
 	
 	private long id;
+	private int confirm;
 	private long otherId;
 	private String otherName;
 	private String otherPicture;
 	private String content;
 	private LocalDateTime lastTime;
-	private int confirm;
 	
 	@Builder
 	public MsgInfo(long id,int confirm, long otherId,String otherName, String otherPicture, String content, LocalDateTime lastTime) {
