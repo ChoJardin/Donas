@@ -41,6 +41,7 @@ export default {
   padding: 5px;
   margin-bottom: 5px;
   border-bottom: 1px solid #e4e6e9;
+  cursor: pointer;
 }
 
 #follow-profile-wrap {

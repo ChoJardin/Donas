@@ -88,7 +88,7 @@ export default {
   flex-direction: column;
   width: 100%;
   justify-content: space-around;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 
 </style>
