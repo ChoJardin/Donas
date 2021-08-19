@@ -41,7 +41,7 @@ export default {
   created() {
     // 로그인하지 않은 경우
     if (!this.isLoggedIn) {
-      // this.$router.push({name: 'Login', params: {history: this.$route.fullPath}})
+      // this.$router.push({name: 'Login', params: {history: this.$route.params['history']}})
       this.$router.replace('/login')
     } else {
       // 로그인 했으면 내가 팔로우 하고 있는 사람 게시글 보여주기

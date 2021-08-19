@@ -6,10 +6,10 @@
 
     <!--<componentNav  @on-arrow="$router.back()" />-->
     <div id="follow-wrap">
-    <router-link to="/login" class="follow">
+    <router-link to="/login" class="follow" replace>
       로그인
     </router-link>
-    <router-link to="/signup" class="follow">
+    <router-link to="/signup" class="follow" replace>
       회원가입
     </router-link>
     </div>
