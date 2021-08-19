@@ -10,7 +10,7 @@
 ## :white_check_mark: 개발환경
 ```
 Front-End
-1. 
+1. Vue.js - 
 
 Back-End
 1. 개발 IDE - Spring Tool Suit 3
@@ -24,7 +24,7 @@ Back-End
 <br>
 
 <img src="README.assets/donas_main-9405201.jpeg" alt="donas_main" style="zoom:33%;" />
-<img src="img/마이페이지.PNG" width="300" height = "500" >
+<img src="img/마이페이지.PNG" width="300px" height = "500px" >
 <img src="img/알림페이지.PNG" width="300" height = "500" >
 
 <br>
