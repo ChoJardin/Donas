@@ -10,9 +10,9 @@
             <img v-if="questDetail.picture" class="quest-image" :src="questDetail.picture" alt="">
           <img v-else class="quest-image" src="../../assets/donut_flag.png">
             <div id="quest-info">
-              <div v-if="questDetail.type === 'P'" style="font-size: 0.7em">개인 퀘스트</div>
-              <div v-else-if="questDetail.type === 'G'" style="font-size: 0.7em">공동 퀘스트</div>
-              <div v-else-if="questDetail.type === 'R'" style="font-size: 0.7em">릴레이 퀘스트</div>
+              <div v-if="questDetail.type === 'P'"  class="quest-type" >개인 퀘스트</div>
+              <div v-else-if="questDetail.type === 'G'" class="quest-type" >공동 퀘스트</div>
+              <div v-else-if="questDetail.type === 'R'" class="quest-type" >릴레이 퀘스트</div>
               <div id="quest-detail-title" style="margin-bottom: 7px">{{ questDetail.title }}</div>
               <div id="summary" style="padding-bottom:2px">{{ questDetail.description }}</div>
               <div id="quest-detail-date"><span style="font-size:1.0em ">{{dateFormatted}}</span>에 시작</div>
@@ -21,13 +21,13 @@
 
 
           <div id="quest-detail-description">
-            <div>인증 방법</div>
-            <div id="quest-detail-des-text">{{ questDetail.certification }}</div>
+            <div class="sub-title">인증 방법</div>
+            <div id="quest-detail-des-text" v-html="parsedDescription"></div>
           </div>
 
           <div id="quest-detail-contents">
             <router-link :to="{name:'ParticipantsList'}" class="participants">
-              <div>참여 인원:
+              <div class="sub-title">참여 인원:
     <!--          {{questDetail.users}}-->
               <span> {{userCount}}명</span></div>
               <div> <i class="material-icons" style="padding-top: 4px">navigate_next</i> </div>
@@ -35,7 +35,7 @@
           </div>
         <!--article start-->
         <div class="quest-detail-articles">
-          <div>인증 게시글</div>
+          <div class="sub-title">인증 게시글</div>
           <div v-if="!isItEnded">
             <div v-if="isItMine">
               <button v-if="questDetail.type !== 'R'"  @click="$router.push('/article/create/')">인증 생성</button>
@@ -135,12 +135,15 @@ export default {
       loginUser: state => state.user.loginUser,
       isLoggedIn: state => state.user.isLoggedIn,
     }),
-      dateFormatted: function () {
-        return moment.parseZone(String(this.questDetail.startAt)).format('YYYY/MM/DD')
-      },
-      userCount: function () {
-        return this.questDetail.users.length
-      }
+    dateFormatted: function () {
+      return moment.parseZone(String(this.questDetail.startAt)).format('YYYY/MM/DD')
+    },
+    userCount: function () {
+      return this.questDetail.users.length
+    },
+    parsedDescription() {
+      return this.questDetail.certification.replace(/\n/g, '<br/>')
+    }
   },
     // ...mapGetters(['isItMine']),
     // isItMineCheck: function () {
@@ -198,13 +201,13 @@ export default {
 
 #quest-wrap {
   display: flex;
-  border-bottom: rgba(41, 41, 41, 0.2) solid;
+  border-bottom: rgba(41, 41, 41, 0.2) solid 1px;
   padding-bottom: 10px;
 }
 
 .quest-image {
   width: 100px;
-  flex: 1 1 0;
+  /*flex: 1 1 0;*/
   border: rgba(41, 41, 41, 0.2) solid;
   border-radius: 50%;
   height: 100px;
@@ -219,8 +222,17 @@ export default {
 
 }
 
+#quest-info .quest-type {
+  font-family: GongGothicLight;
+  font-size: 0.8em;
+}
+
+.sub-title {
+  margin: 10px 0;
+}
+
+
 #quest-detail-description {
-  height: 50px;
   /*display: flex;*/
   /*align-items: center;*/
   margin-top: 15px;
@@ -238,6 +250,15 @@ export default {
 .quest-detail-articles{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1a64b;
+}
+
+.quest-detail-articles button {
+  border: 1px solid #292929;
+  font-size: 0.9em;
+  padding: 2px 5px;
+  border-radius: 8px;
 }
 
 .article-image {
@@ -270,29 +291,36 @@ export default {
 
 #quest-detail-title {
   font-family: GongGothicBold;
-  font-size: 1.3em;
+  font-size: 1.2em;
+}
+
+#summary {
+  font-family: GongGothicLight;
+  text-align: left;
+  font-size: 0.9em;
 }
 
 #quest-detail-date{
   font-size: 0.8em;
+  font-family: GongGothicLight;
 }
 #quest-detail-description{
-  height: 70px;
+  /*height: 70px;*/
   margin-bottom: 20px;
 }
 #quest-detail-des-text {
   /*border: #f1a64b solid;*/
   background: rgba(241, 166, 75, .3);
   border-radius: 10px;
-  height: 50px;
-  padding-top: 7px;
-  padding-left: 7px;
+  /*height: 50px;*/
+  padding: 7px 7px;
   font-size: 0.8em;
+  font-family: GongGothicLight;
 
 }
 
 #quest-detail-contents{
-  height: 100px;
+  margin-bottom: 20px;
 }
 
 .participants {
@@ -302,5 +330,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   font-size: 1em;
+  border-bottom: 1px solid #f1a64b;
 }
 </style>
