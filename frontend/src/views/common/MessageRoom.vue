@@ -1,11 +1,24 @@
 <template>
   <div>
-    <ComponentNav @on-arrow="$router.back()" :title="$route.params.nickname"></ComponentNav>
+    <ComponentNav @on-arrow="$router.back()"></ComponentNav>
 
-    <div style="display: flex; flex-direction: column" id="message-list">
+    <div class="message-profile">
+      <img v-if="chat.otherPicture" :src="chat.otherPicture" alt="" >
+      <img v-else src="https://donas.s3.ap-northeast-2.amazonaws.com/donuts/donut_profile.png" alt="">
 
-    <div v-for="message in chat.messages" :key="message.id" style="height: 100px">
-      {{message}}
+      <div>{{chat.otherName}}</div>
+    </div>
+
+
+    <div id="message-list">
+
+    <div v-for="message in chat.messages" :key="message.id">
+      <div v-if="message.own === 1">
+        <MeSend :message="message"></MeSend>
+      </div>
+      <div v-else>
+        <YouSend :message="message"></YouSend>
+      </div>
     </div>
 
     </div>
@@ -16,15 +29,20 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
 import MessageInput from "@/components/common/MessageInput";
 import ComponentNav from "@/components/common/ComponentNav";
-import {mapState} from "vuex";
+import MeSend from "@/components/common/MeSend";
+import YouSend from "@/components/common/YouSend";
+import moment from "moment";
 
 export default {
   name: "MessageRoom",
   components: {
     ComponentNav,
-    MessageInput
+    MessageInput,
+    MeSend,
+    YouSend
   },
   data() {
     return {
@@ -63,9 +81,9 @@ export default {
   mounted() {
     console.log('mounted')
     // window.scrollTo(100, 100)
-    var messageList = document.getElementById('message-list')
-    console.log(messageList)
-    messageList.scrollTop = messageList.scrollHeight
+    // var messageList = document.getElementById('message-list')
+    // console.log(messageList)
+    // messageList.scrollTop = messageList.scrollHeight
     // this.toRecent()
   },
   updated() {
@@ -79,6 +97,34 @@ export default {
 
 <style scoped>
 
+.message-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 99999999;
+  width: calc(100% - 30px);
+  max-width: 395px;
+  height: 50px;
+  margin: auto;
+}
+
+.message-profile img {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 1px solid #292929;
+}
+
+.message-profile div {
+  margin-left: 5px;
+  font-family: GongGothicBold;
+  font-size: 1.1em;
+
+}
+
+
+
 #message-list {
   display: flex;
   flex-direction: column;
@@ -86,8 +132,18 @@ export default {
   bottom: 120px;
   top: 120px;
   overflow-y: scroll;
+  width: calc(100% - 30px);
+  max-width: 400px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   /*height: calc(100% - 120px);*/
 }
+
+#message-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+
 
 
 #message-input {

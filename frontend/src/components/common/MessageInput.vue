@@ -40,8 +40,8 @@ export default {
                 userId: this.loginUser.id,
                 otherId: this.$router.currentRoute.params.id
               }
-              console.log(chatRoom)
-              console.log('여기?')
+              // console.log(chatRoom)
+              // console.log('여기?')
               this.$store.dispatch('setChat', chatRoom)
             }
           }, err => {
