@@ -21,8 +21,8 @@
           <span class="badge" ><i  class="material-icons" v-if="newQuestAlarm || newCommonAlarm" style="font-size: 1.1em">fiber_manual_record</i></span></router-link>
         </div>
         <div class="chat">
-         <div><i class="material-icons-outlined">textsms</i></div>
-          <span class="chat-badge" ><i  class="material-icons"  style="font-size: 1.1em">fiber_manual_record</i></span>
+         <router-link :to="{name:'MessageList'}"><span><i class="material-icons-outlined">textsms</i></span>
+          <span class="chat-badge" ><i v-if="newChatAlarm"  class="material-icons"  style="font-size: 1.1em">fiber_manual_record</i></span></router-link>
         </div>
         <button class="button1 b-text" type="button" @click="onLogout">Logout</button>
       </div>
@@ -66,13 +66,18 @@ export default {
       id: state => state.user.loginUser.id,
       questAlarms: state => state.user.questAlarms,
       commonAlarms: state => state.user.commonAlarms,
+      messageList: state => state.user.messageList,
     }),
-   newQuestAlarm(){
+    newQuestAlarm(){
       return this.questAlarms.some(function(element){ if(element.confirm === 0) {return true}})
       },
     newCommonAlarm(){
       return this.commonAlarms.some(function(element){ if(element.confirm === 1) {return true}})
       },
+    newChatAlarm(){
+      return this.messageList.some(function(element){ if(element.confirm === 0) {return true}})
+    }
+
   },
 
   // watch
