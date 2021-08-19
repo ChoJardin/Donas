@@ -10,7 +10,8 @@
 ## :white_check_mark: 개발환경
 ```
 Front-End
-1. Vue.js - 
+1. Node.js - v14.16.1
+2. 
 
 Back-End
 1. 개발 IDE - Spring Tool Suit 3
@@ -23,15 +24,9 @@ Back-End
 
 <br>
 
-
-<img src="README.assets/donas_main-9405201.jpeg" alt="donas_main" style="zoom:33%;" />
-<img src="img/마이페이지.PNG" width="300px" height = "500px" >
-
+<img src="img/메인페이지.PNG" width="300" height = "500" > 
+<img src="img/마이페이지.PNG" width="300" height = "500" >
 <img src="img/알림페이지.PNG" width="300" height = "500" >
-=======
-<img src="README.assets/donas_main-9405201.jpeg"  width="250" height = "400" />
-<img src="README.assets/mypage.PNG" width="250" height = "400" >
-<img src="README.assets/alarmpage.PNG" width="250" height = "400" >
 
 <br>
 
@@ -41,9 +36,9 @@ Back-End
 
 <br>
 
-<img src="README.assets/questpage.PNG" width="250" height = "400" >
-<img src="README.assets/questcreate.PNG" width="250" height = "400" >
-<img src="README.assets/charity.PNG" width="250" height = "400" >
+<img src="img/퀘스트페이지.png" width="300" height = "500" >
+<img src="img/퀘스트생성페이지.PNG" width="300" height = "500" >
+<img src="기부단체.PNG" width="300" height = "500" >
 
 <br>
 
@@ -53,8 +48,8 @@ Back-End
 
 <br>
 
-<img src="README.assets/chatpage.PNG" width="250" height = "400" >
-<img src="README.assets/chatingsimul.PNG" width="500" height = "400" >
+<img src="img/채팅페이지.PNG" width="300" height = "500" >
+<img src="img/채팅시뮬.PNG" width="600" height = "500" >
 
 
 
@@ -63,13 +58,7 @@ Back-End
 
 ![image](img/DONAS-ERD.PNG )
 
-## 개발 과정
-1. 프로젝트 구상
-2. 기능 명세
-(https://docs.google.com/spreadsheets/d/1zouxSlsZXX9zNurkMBaZsU4JgsocsY-zZhKlbs8CJIw/edit#gid=0)
-3. DB 설계
-(https://www.erdcloud.com/d/qpmHGSwazXjGzabCd)
-4. REST API Query (https://docs.google.com/spreadsheets/d/12EH5Twx_H4F5ZXwWWNIza8_HUWE6dTmytOEXz1Z-Z_w/edit#gid=0)
-5. Front-End : Vue.js, PWA 구현 / Back-End : MVC PATTERN , JPA 구현
--> Firebase Cloud Message(FCM)을 활용한 실시간 알림, 채팅 개발
+## 
+
+
 
