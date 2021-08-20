@@ -98,7 +98,7 @@ public class QuestService {
 			cal.add(Calendar.HOUR, 9);
 			time = cal.getTime();
 			System.out.println("시간이 제발 맞아라 : "+time);
-			if (quest.getFinishAt().before(time) ||quest.getType().equals("R")) { // 완료 시간 지난 퀘스트
+			if (quest.getFinishAt().before(time)) { // 완료 시간 지난 퀘스트
 				List<Article> articles = quest.getArticles();
 				System.out.println("현재 퀘스트의 게시물 개수");
 				System.out.println(articles.size());
@@ -182,7 +182,6 @@ public class QuestService {
 					Relay relay = relayRepo.getById(quest.getId());
 					// 타켓 수와 참여자 수 같으면 성공
 					System.out.println("릴레이 성공 판단 : "+articles.size());
-					System.out.println("릴레이 성공 판단 1111111111111: "+relay.getTargetCnt());
 					if(relay.getTargetCnt()==articles.size()) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
