@@ -179,7 +179,7 @@ public class QuestService {
 					}
 					Relay relay = relayRepo.getById(quest.getId());
 					// 타켓 수와 참여자 수 같으면 성공
-					if(relay.getTargetCnt()==relay.getOrder()) {
+					if(relay.getTargetCnt()==articles.size()) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
 							q.getUser().setMileage(q.getUser().getMileage()+200);
