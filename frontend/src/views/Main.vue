@@ -107,7 +107,7 @@ export default {
           this.$store.dispatch('setMainDonationInfo', donationInfo)
         },
         err => {
-          console.log(err)
+          // console.log(err)
         }
     )
   },

@@ -21,7 +21,7 @@
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
           v-on:leave="leave">
-        <div class="auto-search" v-for="(auto,idx) in autoResult" :key="idx" @click="resultSelected(auto.nickname)">
+        <div class="auto-search" v-for="auto in autoResult" :key="auto.nickname" @click="resultSelected(auto.nickname)">
           <div class="auto-text" v-if="noResult==0">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
               <div>
@@ -82,7 +82,7 @@ export default {
       this.noResult = 1
       UserApi.searchAuto(
           data, res => {
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data !== 'NO_CONTENT')
               this.noResult = 0
               this.$store.dispatch('setAutoResult', res.data);
@@ -100,12 +100,12 @@ export default {
       UserApi.searchResult(
           data,
           res => {
-            console.log(res)
+            // console.log(res)
             if (res.data !== 'NO_CONTENT')
               this.$store.dispatch('setSearchResult', res.data);
             else
               this.noResult = 1
-              console.log(this.noResult)
+              // console.log(this.noResult)
           },
           err => {
             console.log(err)
@@ -118,11 +118,11 @@ export default {
         nickname : selectedNickname,
         id : this.loginUser.id
       }
-      console.log(data)
+      // console.log(data)
       UserApi.saveSearch(
           data,
       res => {
-            console.log(res)
+            // console.log(res)
             this.$router.push(`user/profile/${selectedNickname}`)
 
       },

@@ -192,12 +192,12 @@ export default {
         mileage: this.mileage,
         targetCnt: this.targetCnt,
         }
-      console.log(data)
+      // console.log(data)
       let path
       QuestApi.createRelayQuest(
           data,
           res => {
-            console.log(res)
+            // console.log(res)
             if(res === "NO_CONTENT") {
               alert('입력확인')
               this.isSubmit = false
@@ -207,7 +207,7 @@ export default {
             }
           },
           err => {
-            console.log(err)
+            // console.log(err)
           })
       }
     },

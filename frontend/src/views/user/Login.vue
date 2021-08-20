@@ -72,7 +72,6 @@ import ComponentNav from "@/components/common/ComponentNav";
 import UserInput from "@/components/common/UserInput";
 import ButtonBig from "@/components/common/ButtonBig";
 import { token } from '@/services/messaging/messaging.ts';
-import KakaoLogin from "@/views/user/KakaoLogin";
 import cookies from "vue-cookies";
 
 export default {

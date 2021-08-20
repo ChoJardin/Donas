@@ -195,7 +195,7 @@ const actions = {
   },
   // 작성한 게시글 피드에 추가
   addNewArticle({commit, state}, article) {
-    console.log('add new article')
+    // console.log('add new article')
     // const articles = [article, ...state.feeds]
     const articles = [article].concat(state.feeds)
     commit('SET_SELECTED_ARTICLE', article)

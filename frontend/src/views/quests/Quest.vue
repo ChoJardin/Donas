@@ -84,7 +84,7 @@ export default {
           this.$store.dispatch('setQuest', res.data)
         },
         err => {
-          console.log(err)
+          // console.log(err)
         }
     )}
 }

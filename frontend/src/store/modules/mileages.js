@@ -107,17 +107,17 @@ const actions = {
     },
 
     setCharityList({commit}, charityList) {
-        console.log(charityList)
+        // console.log(charityList)
         commit('SET_CHARITY_LIST', charityList)
     },
 
     setDonationUsage({commit}, donation) {
-        console.log(donation)
+        // console.log(donation)
         commit('SET_DONATION_USAGE', donation)
     },
 
     setCashUsage({commit}, cash) {
-        console.log(cash)
+        // console.log(cash)
         commit('SET_CASH_USAGE', cash)
     },
 }

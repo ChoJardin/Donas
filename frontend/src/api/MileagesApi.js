@@ -16,7 +16,7 @@ const createCashOutRequest = (data, callback, errorCallback) => {
   const CashOutRequestPath = URL + ROUTES.createCashOutRequest
   axios.post(CashOutRequestPath, data)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       callback(res.data)
     })
     .catch(error => {
@@ -28,7 +28,7 @@ const createDonationRequest = (data, callback, errorCallback) => {
   const DonationRequestPath = URL + ROUTES.createDonationRequest
   axios.post(DonationRequestPath, data)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       callback(res.data)
     })
     .catch(error => {
