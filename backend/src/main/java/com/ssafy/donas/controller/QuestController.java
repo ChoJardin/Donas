@@ -417,7 +417,7 @@ public class QuestController {
 				System.out.println(q.getStartAt());
 				System.out.println(q.getFinishAt());
 				System.out.println(time);
-				if(questService.getQuestById(q.getId()).getSuccess()!=1 && q.getStartAt().before(time) &&q.getFinishAt().after(time)) {
+				if(questService.getQuestById(q.getId()).getSuccess()!=1 && q.getStartAt().before(time) && q.getFinishAt().after(time)) {
 					System.out.println("왜 안 나온?");
 					QuestResponse qr = new QuestResponse();
 					qr.id = q.getId();
@@ -495,7 +495,7 @@ public class QuestController {
 		int order = relayService.getById(request.getQuestId()).getOrder() + 1; // 현재 주자순서 +1
 
 		relayWaitService.addWaitList(relay, request.getNextId(), order);
-
+		
 		User sender = userService.getUser(request.getUserId());
 		LocalDateTime time = LocalDateTime.now().plusHours(9);
 		// 다음 주자에게 알람
