@@ -58,7 +58,7 @@
     <textarea v-model="content" name="content" id="content" cols="28" rows="5"></textarea>
 
 
-    <div v-if="quest.type === 'R' && quest.targetCnt !== quest.nowCnt && !isUpdate">
+    <div v-if="needNext">
 
       <div class="element-wrap">
         <div class="title">
@@ -205,7 +205,7 @@ export default {
           async res => {
             if (res.data !== 'NOT_FOUND') {
               // 릴레이인 경우 다음주자 선정
-              if (this.quest.type === 'R') {
+              if (this.quest.type === 'R' && !this.quest.targetCnt -1 === this.quest.articles.length) {
                 const data = {
                   questId: this.quest.id,
                   userId: this.loginUser.id,
@@ -267,6 +267,9 @@ export default {
       loginUser: state => state.user.loginUser,
       selectedArticle: state => state.articles.selectedArticle
     }),
+    needNext() {
+      return this.quest.type === 'R' && !this.quest.targetCnt -1 === this.quest.articles.length && !this.isUpdate
+    },
     // isUserSelect() {
     //   return this.quest.type === 'R' &&
     // }
@@ -275,10 +278,10 @@ export default {
     disabled() {
       if (this.isUpdate)
         return this.content === this.selectedArticle.content || !this.content || this.isSubmit
-      else if (this.quest.type === 'R')
-        return !(this.preview && this.content && this.participant && !this.error && !this.nextError) || this.isSubmit
-      else
+      else if (this.quest.type !== 'R' || this.quest.type === 'R' && this.quest.targetCnt -1 === this.quest.articles.length)
         return !(this.preview && this.content && !this.error) || this.isSubmit
+      else
+        return !(this.preview && this.content && this.participant && !this.error && !this.nextError) || this.isSubmit
     },
     isArticleSelected() {
       return this.$store.getters.isArticleSelected

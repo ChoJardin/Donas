@@ -8,7 +8,7 @@
           <span>{{onGoing.title}}</span>
         </button>
         <div @click="$router.push('/quests/mine')" class="to-my-quests">
-          <span style="text-decoration: underline">외 {{questCnt -1}}개 진행중</span>
+          <span style="text-decoration: underline">외 {{loginUser.questCnt -1}}개 진행중</span>
         <span class="material-icons-round ">navigate_next</span>
         </div>
     </div>
@@ -37,7 +37,8 @@ export default {
   computed: {
     ...mapState({
       quests: state => state.user.selectedProfile.quests,
-      questCnt: state => state.user.selectedProfile.questCnt
+      questCnt: state => state.user.selectedProfile.questCnt,
+      loginUser: state => state.user.loginUser
     }),
     onGoing() {
       return this.quests.find(quest => {

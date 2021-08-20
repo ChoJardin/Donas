@@ -103,6 +103,7 @@ export default {
   width: 100%;
   max-width: 425px;
   background-color: #ffffff;
+  z-index: 6;
   display: flex;
   justify-content: space-between;
   font-size: 1em;
