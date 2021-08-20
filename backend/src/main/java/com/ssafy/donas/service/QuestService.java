@@ -170,6 +170,7 @@ public class QuestService {
 				}
 				// 릴레이 성공 기준
 				else if(quest.getType().equals("R")) {
+					System.out.println("릴레이 성공 판단");
 					// 
 					List<QuestParticipants> ptp = quest.getParticipants();
 					if (articles.size() == 0) {
@@ -180,6 +181,8 @@ public class QuestService {
 					}
 					Relay relay = relayRepo.getById(quest.getId());
 					// 타켓 수와 참여자 수 같으면 성공
+					System.out.println("릴레이 성공 판단 : "+articles.size());
+					System.out.println("릴레이 성공 판단 1111111111111: "+relay.getTargetCnt());
 					if(relay.getTargetCnt()==articles.size()) {
 						for(QuestParticipants pps : ptp) {
 							pps.setSuccess(1);
