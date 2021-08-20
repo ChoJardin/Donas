@@ -2,6 +2,7 @@ package com.ssafy.donas.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.ssafy.donas.domain.User;
 import com.ssafy.donas.request.MessageRequest;
 import com.ssafy.donas.response.MessageResponse;
 import com.ssafy.donas.service.MessageService;
+import com.ssafy.donas.service.QuestService;
 import com.ssafy.donas.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +38,8 @@ public class MessageController {
 	
 	@Autowired
 	MessageService messageService;
+	@Autowired
+	QuestService questService;
 	
 	
 	@PostMapping
@@ -57,6 +61,8 @@ public class MessageController {
 	@ApiOperation(value = "메세지 리스트")
 	public Object messageList(@RequestParam long userId) {
 		List<MsgInfo> result = messageService.messageList(userId);	
+		Date time = new Date();
+		questService.checkQuestSuccess(userId, time);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 		
 	}
@@ -75,7 +81,8 @@ public class MessageController {
 			result.messages = null;
 		else
 			result.messages = messageService.showMessage(user, other,result.id);
-		
+		Date time = new Date();
+		questService.checkQuestSuccess(userId, time);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
