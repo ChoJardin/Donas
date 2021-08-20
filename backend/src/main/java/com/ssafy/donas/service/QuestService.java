@@ -159,6 +159,7 @@ public class QuestService {
 							pps.setSuccess(1);
 							q.getUser().setMileage(q.getUser().getMileage()+150);
 						}
+						
 					}
 					// 한명이라도 80% 아래 있을 때 실패 !
 					else {
@@ -184,6 +185,7 @@ public class QuestService {
 							pps.setSuccess(1);
 							q.getUser().setMileage(q.getUser().getMileage()+200);
 						}
+						relay.setSuccess(1);
 					}
 					// 타켓 수와 참여자 수 다르면 실패
 					else{
