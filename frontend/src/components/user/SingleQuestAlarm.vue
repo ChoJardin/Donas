@@ -5,9 +5,9 @@
         <div class="alarm-read"><i class="material-icons-outlined" style="font-size: 1em">drafts</i></div>
 <!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
         <div class="alarm-message">
-          <div style="font-size: 0.5em">{{dateFormatted}}</div>
-          <div style="font-size: 0.8em">{{alarm.content}}</div>
-          <div v-if="alarm.confirm === 2">참여 승락</div>
+          <div class="alarm-date-time" >{{dateFormatted}}</div>
+          <div class="alarm-content">{{alarm.content}}</div>
+          <div v-if="alarm.confirm === 2">참여 완료</div>
           <div v-else>참여 거절</div>
         </div>
       </div>
@@ -16,8 +16,8 @@
         <div class="alarm-read"><i class="material-icons" style="font-size: 1em">markunread</i></div>
 <!--        <div class="alarm-read" v-else><i class="material-icons-outlined" style="font-size: 0.7em">circle</i></div>-->
         <div class="alarm-message">
-          <div style="font-size: 0.5em">{{dateFormatted}}</div>
-          <div style="font-size: 0.8em">{{alarm.content}}</div>
+          <div class="alarm-date-time" >{{dateFormatted}}</div>
+          <div class="alarm-content">{{alarm.content}}</div>
           <div class="decision">
             <button @click="onAccept" class="answer">참여</button>
             <button @click="onDecline" class="answer">거절</button>
@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     dateFormatted: function (){
-      return moment(String(this.alarm.sendTime)).format('MM/DD/YYYY hh:mm')
+      return moment(String(this.alarm.sendTime)).format('YYYY/MM/DD HH:mm')
     },
     ...mapState({
       loginUser: state => state.user.loginUser,
@@ -132,8 +132,14 @@ export default {
   /*float: right;*/
 }
 .answer{
-  border: #f1a64b solid;
+  border: 1.5px#f1a64b solid;
   border-radius: 80em;
   padding: 2px 8px;
+  font-size: 0.9em;
+}
+
+.alarm-date-time {
+  font-family: GongGothicLight;
+  font-size: 0.8em;
 }
 </style>
