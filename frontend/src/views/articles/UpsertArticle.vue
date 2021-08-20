@@ -268,7 +268,7 @@ export default {
       selectedArticle: state => state.articles.selectedArticle
     }),
     needNext() {
-      return this.quest.type === 'R' && !this.quest.targetCnt -1 === this.quest.articles.length && !this.isUpdate
+      return this.quest.type === 'R' && this.quest.targetCnt -1 !== this.quest.articles.length && !this.isUpdate
     },
     // isUserSelect() {
     //   return this.quest.type === 'R' &&

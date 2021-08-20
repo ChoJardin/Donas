@@ -223,13 +223,13 @@ const router = new VueRouter({
 
       // console.log('d일단 오기는 했움')
       // var messageList = document.getElementById('message-list').lastElementChild
-      console.log('messageList')
+      // console.log('messageList')
       // messageList.scrollIntoView()
       // return({x: 0, y: -10})
       // document.getElementById('message-list').scrollTo(0, 10)
 
     } else {
-      console.log('여기2')
+      // console.log('여기2')
       document.getElementById('app-content').scrollTo(0, 0)
 
     }

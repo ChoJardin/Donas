@@ -146,7 +146,7 @@ export default {
       loginUser: state => state.user.loginUser,
     }),
     startDate() {
-      console.log(this.startAt)
+      // console.log(this.startAt)
       return moment().format('YYYY-MM-DD')
     },
     endDate() {
@@ -195,13 +195,13 @@ export default {
         mileage: this.mileage,
         minArticleCount: this.minArticle
         }
-        console.log(data.startAt)
-        console.log(data.finishAt)
+        // console.log(data.startAt)
+        // console.log(data.finishAt)
       // let path
       QuestApi.createPersonalQuest(
           data,
           res => {
-            console.log(res)
+            // console.log(res)
             if(res === "NO_CONTENT") {
               alert('입력확인')
               this.isSubmit = false
@@ -211,7 +211,7 @@ export default {
             }
           },
           err => {
-            console.log(err)
+            // console.log(err)
           })
       },
     },

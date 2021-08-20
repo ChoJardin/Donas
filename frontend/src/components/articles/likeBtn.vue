@@ -21,24 +21,24 @@ export default {
   methods: {
     // 좋아요
     onLike() {
-      console.log(this.article)
-      console.log(this.loginUser)
+      // console.log(this.article)
+      // console.log(this.loginUser)
       const data = {articleId: this.article.id, userId: this.loginUser.id}
-      console.log(data)
+      // console.log(data)
       ArticlesApi.requestLike(
           !this.article.like,
           data,
           res => {
-            console.log(res)
-            console.log(res.status)
+            // console.log(res)
+            // console.log(res.status)
             if (res.data === 'OK') {
               data['isLike'] = this.selectedArticle.like
               this.$store.dispatch('setLike', data)
             } else this.$router.push('/404')
           },
           err => {
-            console.log(err)
-            // this.$router.push('/error')
+            // console.log(err)
+            this.$router.push('/error')
           }
       )
     },

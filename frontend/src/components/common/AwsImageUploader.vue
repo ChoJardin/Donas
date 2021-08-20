@@ -96,7 +96,7 @@ export default {
         }).promise()
         return result.Location
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     }
   }

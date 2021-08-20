@@ -29,11 +29,6 @@ export default {
     EachRoom,
     TransitionPage,
   },
-  methods: {
-    onClick() {
-      console.log('clicked')
-    }
-  },
   computed: {
     ...mapState({
       messageList: state => state.user.messageList

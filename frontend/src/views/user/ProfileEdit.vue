@@ -171,8 +171,8 @@ export default {
             }
           },
           err => {
-            console.log('error occurred')
-            // this.$router.push('/error')
+            // console.log('error occurred')
+            this.$router.push('/error')
           }
       )
     },
@@ -202,7 +202,7 @@ export default {
       // Object.keys(this.isChanged).filter(key => this.isChanged[key]).forEach(
       //     key => data[key] = this[`${key}`]
       // )
-      console.log(data)
+      // console.log(data)
       UserApi.updateProfile(
           this.loginUser.id,
           data,
@@ -213,8 +213,8 @@ export default {
             this.$router.push(path)
           },
           err => {
-            console.log(err)
-            // this.$router.push('/error')
+            // console.log(err)
+            this.$router.push('/error')
           })
     },
     onPwChanged() {
@@ -231,7 +231,7 @@ export default {
     // 이미지 미리보기
     onPreview(preview) {
       this.preview = preview
-      console.log(preview)
+      // console.log(preview)
     },
     // 형식 혹은 크기
     onError(error) {

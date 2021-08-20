@@ -187,35 +187,6 @@ const declineAlert = (data, callback, errorCallback) => {
     })
 }
 
-const kakaoLogin = async (code) => {
-  const Host = "https://kauth.kakao.com"
-  const tokenRequestPath = '/oauth/token'
-  const REST_API_KEY = '67852745621896a093fa2abcffbd1275'
-  // const REDIRECT_URI = 'https://i5a603.p.ssafy.io/login'
-
-  const header = {
-    'Authorization': '406aeac2c2a0e7bcd7940764bc4af504',
-    'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-  }
-
-  const data = {
-    grant_type: 'authorization_code',
-    client_id: REST_API_KEY,
-    redirect_uri: 'http://localhost:8080/login',
-    code: code
-  }
-  const queryString = Object.keys(data)
-    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
-    .join('&')
-  console.log(queryString)
-  const result = await axios.post(Host + tokenRequestPath, queryString, { headers: header })
-  // .then(res=>console.log(res))
-  // .catch(err => console.log(err))
-  console.log(result)
-
-
-
-}
 
 const recentSearch = (id, callback, errorCallback) => {
   const recentSearchPath = URL + ROUTES.recentSearch + id
@@ -239,7 +210,7 @@ const searchAuto = (data, callback, errorCallback) => {
 
 const searchResult = (data,callback, errorCallback) => {
   const searchResultPath = URL + ROUTES.searchResult
-  console.log(searchResultPath)
+  // console.log(searchResultPath)
   axios.get(searchResultPath,  {params: data})
     .then(res => {
       callback(res)

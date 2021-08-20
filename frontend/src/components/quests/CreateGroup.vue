@@ -65,8 +65,9 @@
           <div class="create-question-needed">필수</div>
         </div>
           <input @click="isModal = true" class="create-quest-input" type="text" placeholder="친구를 검색해보세요" readonly>
-          <MidModal v-if="isModal" @close="isModal = false">
+          <MidModal v-if="isModal" @close="isModal = false" :footer="true">
               <div slot="header" style="width: 100%; text-align: center">친구 찾기</div>
+              <div slot="footer">확인</div>
               <CreateGroupFriend slot="opt1"
                                  :friends.sync="participants"
                                  :participants="participants"
@@ -239,14 +240,14 @@ export default {
         participants: this.participants,
         minArticleCount: this.minArticle
         }
-        console.log(data.startAt)
-      console.log(data.finishAt)
-      console.log(data)
+        // console.log(data.startAt)
+      // console.log(data.finishAt)
+      // console.log(data)
       let path
       QuestApi.createGroupQuest(
           data,
           res => {
-            console.log(res)
+            // console.log(res)
             if(res === "NO_CONTENT") {
               alert('입력확인')
               this.isSubmit = false
@@ -256,7 +257,7 @@ export default {
             }
           },
           err => {
-            console.log(err)
+            // console.log(err)
             alert('입력확인')
           })
       },
@@ -291,15 +292,15 @@ export default {
     }
   },
   created() {
-    console.log('friends fetched')
+    // console.log('friends fetched')
     UserApi.requestGroupFriends(
         this.loginUser.id,
         res => {
-          console.log(res)
+          // console.log(res)
           this.$store.dispatch('setMutuals', res.data)
         },
         err => {
-          console.log(err)
+          // console.log(err)
         }
     )
   },

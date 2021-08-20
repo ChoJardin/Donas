@@ -57,7 +57,6 @@ export default {
   },
   methods: {
     toRecent() {
-      console.log('here')
       const messageList = this.$el.querySelector('#message-list')
       messageList.scrollTop(messageList.scrollHeight)
     }
@@ -86,16 +85,7 @@ export default {
     this.$store.dispatch('setChat', data)
     this.$store.dispatch('setMessageList')
   },
-  mounted() {
-    console.log('mounted')
-    // window.scrollTo(100, 100)
-    // var messageList = document.getElementById('message-list')
-    // console.log(messageList)
-    // messageList.scrollTop = messageList.scrollHeight
-    // this.toRecent()
-  },
   updated() {
-    console.log('여기 왔다 ')
     var messageList = document.getElementById('message-list').lastElementChild
     // console.log(messageList)
     messageList.scrollIntoView()
