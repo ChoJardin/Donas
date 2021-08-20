@@ -2,6 +2,7 @@ package com.ssafy.donas.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +93,8 @@ public class AlarmController {
 			res.confirm = alarm.getConfirm();
 			result.add(res);
 		}
+		Date time = new Date();
+		questService.checkQuestSuccess(userId, time);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
@@ -151,7 +154,8 @@ public class AlarmController {
 			res.confirm = alarm.getConfirm();
 			result.add(res);
 		}
-		
+		Date time = new Date();
+		questService.checkQuestSuccess(userId, time);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
